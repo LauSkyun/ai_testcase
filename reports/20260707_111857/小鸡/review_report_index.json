@@ -1,0 +1,243 @@
+{
+  "mode": "dual_pass",
+  "status": "complete",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "deepseek-v4-pro",
+  "selected_report_owner": "pipeline",
+  "selected_report_path": "review_report.md",
+  "selected_source_report_path": "review_report_pipeline.md",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": false,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_gate_failure_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_failure_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_candidate_findings",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "pipeline_report_path": "review_report_pipeline.md",
+  "candidate_report_path": "review_report_candidate.md",
+  "advice_path": "secondary_review_advice.md",
+  "primary_score": "C",
+  "pipeline_score": "C",
+  "candidate_score": "D",
+  "selected_score": "C",
+  "pipeline_finding_count": 10,
+  "candidate_finding_count": 11,
+  "selected_finding_count": 10,
+  "candidate_ready_for_direct_output": false,
+  "candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "lineage_counts": {
+    "kept": 5,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "partial",
+  "readiness_conflict": false,
+  "candidate_structure_drift": true,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [
+    "hot_update_history"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "candidate_block_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_traceability_partial"
+  ],
+  "candidate_block_reason_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_candidate_findings",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "cross_document_section_disabled": true,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 1,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [
+      "历史局配置热更处理规则缺失"
+    ],
+    "materially_changed_count": 7,
+    "materially_changed_titles": [
+      "扣款时机未明确",
+      "按钮状态变化（开始/继续）未明确",
+      "重复点击幂等性与并发控制缺失",
+      "异常流程（弱网、重复点击、并发）验收标准缺失",
+      "服务端权威性未明确声明",
+      "跨文档难度档位映射与概率/倍率数据冲突",
+      "通关条件、格子总数与‘超级大奖’规则缺失/冲突"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "secondary-origin:MISS_01",
+        "issue_id": "deduction_timing",
+        "title": "扣款时机未明确",
+        "change_kinds": [
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_02",
+        "issue_id": "button_state_transition",
+        "title": "按钮状态变化（开始/继续）未明确",
+        "change_kinds": [
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_03",
+        "issue_id": "idempotency",
+        "title": "重复点击幂等性与并发控制缺失",
+        "change_kinds": [
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_05",
+        "issue_id": "test_abnormal_scenarios",
+        "title": "异常流程（弱网、重复点击、并发）验收标准缺失",
+        "change_kinds": [
+          "title_changed",
+          "dimension_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_04",
+        "issue_id": "server_authority",
+        "title": "服务端权威性未明确声明",
+        "change_kinds": [
+          "dimension_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:difficulty_mapping_conflict",
+        "issue_id": "difficulty_mapping_conflict",
+        "title": "跨文档难度档位映射与概率/倍率数据冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:super_prize_missing",
+        "issue_id": "super_prize_missing",
+        "title": "通关条件、格子总数与‘超级大奖’规则缺失/冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "warning": ""
+}

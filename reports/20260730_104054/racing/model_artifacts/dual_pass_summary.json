@@ -1,0 +1,21 @@
+{
+  "status": "primary_only",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "gpt-5.4",
+  "cross_document_section_disabled": true,
+  "traceability_status": "unavailable",
+  "readiness_conflict": false,
+  "candidate_structure_drift": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "candidate_block_reasons": [
+    "candidate_report_unavailable"
+  ],
+  "lineage_counts": {
+    "kept": 0,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "comparison_summary": {}
+}

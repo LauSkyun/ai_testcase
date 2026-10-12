@@ -1,0 +1,222 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心结算公式冲突、数据隔离缺失及最大赔付兜底等高信号问题，整体结构合理，证据引用准确。但在下注扣款时机与幂等性等直接关系资金安全的边界规则上存在遗漏，且部分高阻塞问题内部混合了多个子症状，需在候选稿中分点展开并补充漏项。",
+    "strengths": [
+      "准确抓住了需求文档与数值文档在赔率公式和T变量定义上的根本性冲突。",
+      "正确识别了假数据参与计算和真假赔率映射缺失的严重客诉与资金风险。",
+      "对占位符缺失、音频混合等低/中风险问题进行了合理降级，符合评审原则。"
+    ],
+    "issues": [
+      "遗漏了下注扣款时机与并发幂等性规则这一直接影响资金安全的高信号问题。",
+      "T_VARIABLE_CONFLICT 问题内部混合了公式冲突、变量歧义和取整矛盾三个子症状，未分点展开，影响阅读和开发定位。",
+      "top_blockers 未包含新补充的资金安全高阻塞项。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已完整梳理核心结算冲突、数据隔离及资金安全等高信号问题，结构完整、证据充分、来源可追踪，可直接作为业务方评审与研发排期的依据。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已完整梳理核心结算冲突、数据隔离及资金安全等高信号问题，结构完整、证据充分、来源可追踪，可直接作为业务方评审与研发排期的依据。"
+  },
+  "review_notes": [
+    "主模型在 T_VARIABLE_CONFLICT 中混合了公式冲突、变量歧义和取整矛盾，候选稿已将其在 current_state 中分点展开，未新建子 issue_id。",
+    "新增的 BET_DEDUCTION_IDEMPOTENCY 直接关系资金安全，已提升至安全性与反作弊维度，并加入 top_blockers。",
+    "本期严格遵守约束，未输出 cross_document_issues，所有跨文档冲突已归入对应维度的 findings 中。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "BET_DEDUCTION_IDEMPOTENCY",
+      "title": "下注扣款时机与并发幂等性规则缺失",
+      "primary_dimension": "安全性与反作弊",
+      "evidence_scope": "document",
+      "severity": "高",
+      "current_state": "文档描述了单次、MAX、累加至100万上限等多种下注方式，但未明确下注动作的扣款时机（是点击时实时扣除/冻结，还是开奖后结算扣除），也未说明在弱网、重复点击、开奖阶段并发请求时的幂等性处理规则。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32、37",
+      "risk": "若扣款时机与幂等性规则不清，可能导致重复扣款、余额透支或结算金额与下注金额不一致，引发资金事故。",
+      "suggestion": "明确下注为实时预扣/冻结还是结算时扣除；补充弱网、重复点击、开奖瞬间并发请求的幂等性校验规则，确保服务端以唯一请求ID或状态机锁为准。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DATA_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION"
+        ]
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ]
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ]
+      },
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ]
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ]
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ]
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ]
+      },
+      {
+        "candidate_issue_id": "FAKE_ODDS_MAPPING",
+        "primary_issue_ids": [
+          "FAKE_ODDS_MAPPING"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "BET_DEDUCTION_IDEMPOTENCY",
+        "source_missed_issue_ids": [
+          "BET_DEDUCTION_IDEMPOTENCY"
+        ],
+        "reason": "补充下注扣款时机与幂等性规则缺失这一直接影响资金安全的高信号问题。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已完整梳理核心结算冲突、数据隔离及资金安全等高信号问题，结构完整、证据充分、来源可追踪，可直接作为业务方评审与研发排期的依据。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

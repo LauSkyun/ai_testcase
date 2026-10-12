@@ -1,0 +1,230 @@
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了核心机制（RESPIN、推展）的底层逻辑矛盾、结算公式口径分裂以及风控与封顶规则的冲突，覆盖了大部分高优阻塞问题。但遗漏了需求文档内部关于免费游戏结束次数（3次与5/10/20次）的直接文本冲突。",
+    "strengths": [
+      "准确识别了底层数据生成与RESPIN触发条件的矛盾",
+      "指出了结算公式术语不一致与风控基数口径冲突",
+      "发现了乘数符号ID=0表演逻辑的表述不清"
+    ],
+    "issues": [
+      "遗漏了需求文档内部免费游戏结束条件次数描述的明显笔误/冲突（3次 vs 5/10/20次）"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "Primary 遗漏了核心状态机（免费游戏结束条件）的文本直接冲突，需补充 TERM_01 后方可完整指导开发。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落15]",
+            "钱来了数值文档.docx / [段落22]"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落190]",
+            "钱来了需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落154]",
+            "钱来了需求文档.docx / [段落158]"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "TERM_01"
+          ],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落35]",
+            "钱来了需求文档.docx / [段落122]",
+            "钱来了需求文档.docx / [段落150]",
+            "钱来了需求文档.docx / [段落182]"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落63]",
+            "钱来了需求文档.docx / [段落79]"
+          ],
+          "reason": "source_state=partial; counterevidence=有，引用通用模块1.3投注功能; primary_coverage=not_covered; final=advice_only"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落35]",
+            "钱来了需求文档.docx / [段落125]"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=有，属于平台/中台统一承接的资金事务失败处理; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 表格8",
+            "钱来了数值文档.docx / 表格9"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落168]",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "source_state=partial; counterevidence=有，已有2000倍及100倍强制0的相对边界; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "TERM_01",
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "title": "免费游戏结束条件次数描述与触发档位矛盾",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "需求文档在描述免费游戏结束条件时，称‘免费次数3次全部结束后’弹出结算界面，但在符号规则与触发流程中明确免费旋转符号的档位为5次、10次、20次，且‘符号是5就触发5次’。结束条件的‘3次’与触发档位的‘5/10/20次’存在直接冲突。",
+      "evidence": "钱来了需求文档.docx / [段落35]、[段落150]、[段落182]",
+      "risk": "程序在实现免费游戏结束判定逻辑时，无法确定正确的次数阈值，可能导致免费模式提前异常结束或陷入死循环，直接影响核心玩法结算与玩家体验。",
+      "suggestion": "修正段落35中的‘3次’为变量描述（如‘剩余免费旋转次数耗尽’），确保结束条件与触发档位（5/10/20次）的逻辑闭环。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "需求文档内部关于免费游戏结束次数的文本描述存在版本残留或笔误，导致与触发档位规则直接冲突。",
+      "root_causes": [
+        "需求文档内部关于免费游戏结束次数的文本描述存在版本残留或笔误，导致与触发档位规则直接冲突。"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CROSS_03",
+        "overlap": false,
+        "reason": "Primary CROSS_03 关注的是免费续杯概率配置缺失，未覆盖需求文档内部关于免费游戏基础结束次数（3次 vs 5/10/20次）的文本直接冲突。"
+      },
+      "severity_basis": "high/block_dev：该冲突直接导致核心状态机（免费游戏结束条件）无法编码，阻塞开发。",
+      "fact_check": {
+        "claim_type": "direct_conflict",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落35明确写‘3次全部结束’，而段落150和182明确写触发档位为5/10/20次，两者针对同一对象（免费游戏结束条件）的描述完全互斥，无兼容解释空间。",
+        "searched_locations": [
+          "钱来了需求文档.docx / 全文"
+        ],
+        "same_subject_and_scope": true
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "debit_timing 与 funds_failure_compensation 依赖通用模块/中台能力，当前文档未展示冲突，仅作建议。",
+    "single_round_payout_cap 已有 2000倍及100倍强制0的相对边界，无需单独确认绝对金额封顶缺失。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "game": "racing",
+  "variant_id": "A",
+  "repeat": 2,
+  "status": "failed",
+  "output_dir": "blinded/A/racing/repeat_02",
+  "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+  "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+  "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+  "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+  "secondary_message_hash": "cc8b99899664feea67800fbec6bf6a71221a47048661f261c192847953c72f77",
+  "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+  "protocol_profile": "phase2",
+  "processing_profile": "phase2",
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "0b38b9b8cda38b98a2bba023238509e609abc98c83f73391cee623706bc74b87",
+  "temperature": 0,
+  "error": "secondary_benchmark:A:racing:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

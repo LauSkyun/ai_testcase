@@ -1,0 +1,67 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-001",
+      "target_issue_id": "TEST_01",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "未明确RESPIN过程中点击自动旋转是立即中断还是等结算完成；快捷旋转下RESPIN是“直接显示结果”还是“快速播放累加动画”存在自相矛盾。",
+      "evidence": "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+      "counterevidence": "段落35明确说明自动旋转“RESPIN结算完成后停止”；段落36明确说明快捷旋转下“RESPIN的表现：是快速播放累加动画”。",
+      "rationale": "需求文档已明确自动旋转在RESPIN结算完成后停止，且快捷旋转下RESPIN表现为快速播放累加动画，原finding认为“未明确”和“自相矛盾”与文档实际描述不符，属于证据误读。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-002",
+      "target_issue_id": "CROSS_01",
+      "challenge_type": "duplicate",
+      "challenged_claim": "RESPIN累加算法在需求与数值文档中存在表述冲突",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "counterevidence": "LOGIC_01 已完整覆盖该问题，且 LOGIC_01 被标记为高严重度并列入 top_blockers。",
+      "rationale": "CROSS_01 与 LOGIC_01 的决策对象（RESPIN累加算法）、根因（需求举例加法与数值文档术语暗示乘法的冲突）、修复动作（统一公式与术语）完全相同，属于重复表述，应合并证据至 LOGIC_01。",
+      "recommended_action": "merge_evidence",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "TEST_01",
+      "correction_disposition": "drop",
+      "source_provenance": "requirement_text",
+      "evidence": "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+      "rationale": "文档已明确相关交互规则，原finding基于错误的前提（认为未明确/矛盾），因此应移除该finding。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-002",
+      "challenge_id": "CH-002",
+      "target_issue_id": "CROSS_01",
+      "correction_disposition": "abstain",
+      "source_provenance": "mixed",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "rationale": "CROSS_01 与 LOGIC_01 重复，建议合并证据至 LOGIC_01，无需单独生成修正。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": true,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "protocol_profile=phase3_v1_1; primary_report_hash=411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369"
+  ]
+}

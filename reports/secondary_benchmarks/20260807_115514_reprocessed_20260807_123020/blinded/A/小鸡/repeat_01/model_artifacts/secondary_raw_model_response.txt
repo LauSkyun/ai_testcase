@@ -1,0 +1,274 @@
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了核心数值模型、结算公式与配置表的严重冲突，以及UI表现与世界观的割裂问题。但在资金事务的底层流转节点（扣款时机、失败补偿）上存在遗漏，需补充以确保结算安全。",
+    "strengths": [
+      "准确定位了倍率计算公式与数值表口径的严重冲突",
+      "识别了下注筹码在需求、数值、UI三端的配置不一致",
+      "指出了通关超级大奖与第30格结算的边界歧义"
+    ],
+    "issues": [
+      "遗漏了玩家本金扣除/冻结的具体事务触发节点",
+      "未覆盖真实支付场景下提现失败的资金回滚与补偿机制"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "资金事务节点缺失可能导致开发实现错误或资损风险，需补充 debit_timing 与 funds_failure_compensation 后方可进入开发。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "LOGIC_PAYOUT_FORMULA_CONFLICT",
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 3.3 奖金计算系统 / 段落44-45",
+            "小鸡数值文档.docx / 3. 难度选择 / 表格2"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "CORE_BET_CONFIG_MISMATCH",
+            "CORE_DIFFICULTY_CONFIG_MISMATCH"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+            "小鸡.docx / 图片解析 / 图片1-8"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "SEC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+            "小鸡数值文档.docx / 图片解析 / 图片4"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 2.1 完整游戏流程 / 段落26,28",
+            "小鸡数值文档.docx / 3. 难度选择 / 段落9"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUNDS_DEBIT_TIMING_MISSING"
+          ],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+            "小鸡.docx / 2.1 完整游戏流程 / 段落19-22"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUNDS_FAILURE_COMPENSATION_MISSING"
+          ],
+          "evidence_checked": [
+            "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14",
+            "小鸡数值文档.docx / 4. 撞击概率计算 / 表格3"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14"
+          ],
+          "reason": "source_state=explicit; counterevidence=MAX_MUL已限制最大赔付倍数; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+            "小鸡.docx / 图片解析 / 图片1-8"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "FUNDS_DEBIT_TIMING_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "本金扣除/冻结时机缺失",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "小鸡数值文档.docx 仅说明失败时扣除金币，未明确玩家点击‘开始’时本金的扣除或冻结事务节点。",
+      "evidence": "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+      "risk": "缺乏明确的扣款时机定义，可能导致开发在局中扣款或结算时扣款，引发余额透支或并发刷取奖金的资损风险。",
+      "suggestion": "明确在玩家点击‘开始’按钮且服务端校验通过后，立即冻结或扣除对应下注金额的本金，并在局内状态中记录已扣款标识。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "本金扣除/冻结事务节点未定义",
+      "root_causes": [
+        "本金扣除/冻结事务节点未定义"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 仅覆盖防重入与幂等校验，未定义本金实际扣除/冻结的产品触发节点。"
+      },
+      "severity_basis": "涉及真实资金事务，扣款时机缺失直接导致开发无法实现正确的资金流转，存在资损风险。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文仅提及失败时扣除，未提及开始时扣除或冻结，无兼容解释。",
+        "searched_locations": [
+          "小鸡.docx / 全文",
+          "小鸡数值文档.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "提现失败的资金回滚与补偿机制缺失",
+      "primary_dimension": "安全性与反作弊",
+      "current_state": "小鸡.docx 提及提现对接真实支付，但未说明支付网关失败、超时或异常时的资金回滚、补发或重试机制。",
+      "evidence": "小鸡.docx / 3.4 提现与结算系统 / 段落49",
+      "risk": "真实支付场景下，若提现请求失败但未回滚局内状态或未补偿，将导致玩家资产丢失或引发严重客诉。",
+      "suggestion": "补充提现失败的处理流程：明确支付失败时服务端需回滚提现请求并恢复玩家局内状态或余额，同时提供重试入口或客服补偿通道。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "提现失败的资金回滚与补偿机制未定义",
+      "root_causes": [
+        "提现失败的资金回滚与补偿机制未定义"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 仅覆盖防重复点击的幂等性，未覆盖支付失败后的资金回滚与补偿逻辑。"
+      },
+      "severity_basis": "涉及真实支付事务，失败补偿机制缺失直接导致资金流转异常和客诉风险。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文未提及支付失败的回滚或补偿，无兼容解释。",
+        "searched_locations": [
+          "小鸡.docx / 全文",
+          "小鸡数值文档.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "奖池负值下限、透支回填与熔断条件（pool_negative_floor）属于通用平台能力，当前玩法需求文档未涉及，建议由底层资金中台统一承接，无需在玩法文档中重复定义。",
+    "统计时间窗口（same_metric_window, ui_text_window_alignment）当前文档未涉及任何统计指标与排行榜时间窗口，不适用。",
+    "单局绝对金额封顶（single_round_payout_cap）因已有 MAX_MUL 限制最大赔付倍数，已形成有限赔付边界，无需额外配置绝对金额封顶。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=9ee0325cf08bc103b70db298098b54a5381342957c9674b07b3e6d1b3801c36b"
+  ]
+}

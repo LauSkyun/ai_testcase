@@ -1,0 +1,131 @@
+{
+  "status": "complete",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "deepseek-v4-pro",
+  "cross_document_section_disabled": true,
+  "pipeline_merge_summary": {
+    "added_findings": 2,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0
+  },
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "candidate_gate_failure_categories": {},
+  "candidate_ready_for_direct_output": true,
+  "candidate_ready_reason": "候选报告修正了主模型对公式一致性的误判，并补充了RESPIN阶段权重缺失，报告结构完整，可直接交付业务方。",
+  "lineage_counts": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "readiness_conflict": false,
+  "candidate_structure_drift": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "candidate_block_reasons": [],
+  "candidate_block_reason_categories": {},
+  "trace_warning": "",
+  "comparison_summary": {
+    "pipeline_only_count": 2,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [
+      "RESPIN次数与乘数符号权重概率未定义，影响RTP核算",
+      "RESPIN结算规则缺失最大赔付、断线恢复、自动旋转停止等边界条件"
+    ],
+    "candidate_only_titles": [],
+    "materially_changed_count": 2,
+    "materially_changed_titles": [
+      "RESPIN公式在需求与数值文档中表述不一致",
+      "基础盘面与乘数轴权重未区分全局/条件概率，RTP无法核算"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CROSS_DOC_RESPIN_FORMULA",
+        "issue_id": "CROSS_DOC_RESPIN_FORMULA",
+        "title": "RESPIN公式在需求与数值文档中表述不一致",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:PROBABILITY_WEIGHT_SCOPE",
+        "issue_id": "PROBABILITY_WEIGHT_SCOPE",
+        "title": "基础盘面与乘数轴权重未区分全局/条件概率，RTP无法核算",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  }
+}

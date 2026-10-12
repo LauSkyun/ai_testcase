@@ -1,0 +1,207 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了核心结算公式冲突、基础符号定义倒置、风控与RESPIN冲突等关键问题，但遗漏了所有权重配置均为100、概率无差异这一严重阻塞项，导致RTP无法实现。此外，对推展机制结算倍数定义不清的风险评估过低。整体思路清晰，但需补充权重全等问题。",
+    "strengths": [
+      "准确识别了RESPIN结算公式举例与数值公式的数学冲突",
+      "指出了基础符号any系列定义与盘面生成逻辑的倒置",
+      "揭示风控强制0倍与RESPIN累加机制的时序冲突",
+      "对RESPIN终止条件缺失及推展恢复验收有明确要求"
+    ],
+    "issues": [
+      "遗漏了所有基础权重、表演权重、RESPIN次数及乘数表权重均为100的事实，未指出概率无差异导致RTP无法实现",
+      "未指出推展机制触发条件中结算倍数的定义不清可能影响核心逻辑",
+      "部分finding严重度评估偏低（如推展机制）"
+    ],
+    "suggestion_level": "high",
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "review_notes": [
+    "主模型报告遗漏了权重全为100的严重问题，已在候选报告中新增WEIGHT_ALL_100，置于逻辑一致性与数值平衡维度。",
+    "推展机制finding（PUSH_ANIM）严重度从低提升至中，并补充了结算倍数定义不清的描述，以准确反映其对核心逻辑的影响。",
+    "所有主模型finding均保留，未做合并或删除。",
+    "建议在后续迭代中，将权重全等问题与基础符号定义倒置问题合并考虑，但当前分开处理以保持高信号清晰度。",
+    "dual_pass 协议提示：quality_assessment.ready_for_direct_output 与 candidate_readiness.ready_for_direct_output 不一致，已统一降为 false。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_WEIGHT_ALL_100",
+      "title": "所有基础权重、表演权重、RESPIN次数及乘数表权重均为100，概率无差异，RTP无法控制",
+      "description": "需求文档表格1、表格2、表格3和数值文档表格2、表格3、表格4、表格6、表格7、表格8中，所有项的权重全部为100，未体现任何概率差异。例如基础符号ID 0-8权重均为100，表演权重1个空/2个空/3个空均为100，RESPIN次数1-10权重均为100，RESPIN乘数ID 1-5权重均为100，卷轴方案权重均为100。这导致所有事件等概率，无法实现预期的RTP，无法进行数值调控，游戏无法正常运作。",
+      "evidence": "疯狂777需求文档修改后.docx / 表格1、表格2、表格3；crazy777数值文档修改后.docx / 表格2、表格3、表格4、表格6、表格7、表格8",
+      "severity": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "SYM_DEF",
+        "primary_issue_ids": [
+          "SYM_DEF"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UI_FORMAT",
+        "primary_issue_ids": [
+          "UI_FORMAT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RESPIN_TERM",
+        "primary_issue_ids": [
+          "RESPIN_TERM"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RISK_CTRL",
+        "primary_issue_ids": [
+          "RISK_CTRL"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RESPIN_FORMULA",
+        "primary_issue_ids": [
+          "RESPIN_FORMULA"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PUSH_ANIM",
+        "primary_issue_ids": [
+          "PUSH_ANIM"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_WIN",
+        "primary_issue_ids": [
+          "MAX_WIN"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "WEIGHT_ALL_100",
+        "source_missed_issue_ids": [
+          "MISS_WEIGHT_ALL_100"
+        ],
+        "reason": "主模型未覆盖权重全为100的严重阻塞问题，需要补充"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": true,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": true,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。",
+  "candidate_block_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "readiness_conflict",
+    "normalized_candidate_not_ready",
+    "suggestion_level_high"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": true,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": false,
+    "normalized_candidate_ready": false,
+    "suggestion_level_allowed": false,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {
+    "quality_blockers": [
+      "quality_assessment_not_ready",
+      "suggestion_level_high"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "readiness_conflict",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

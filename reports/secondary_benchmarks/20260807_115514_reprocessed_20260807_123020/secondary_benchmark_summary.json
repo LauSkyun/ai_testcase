@@ -1,0 +1,1192 @@
+{
+  "schema_version": 1,
+  "benchmark_type": "frozen_primary_secondary_ab",
+  "created_at": "2026-08-07T12:22:01+08:00",
+  "source": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856",
+  "blinding": {
+    "public_outputs_use_variant_ids_only": true,
+    "provider_mapping_path": "_private/provider_mapping.json",
+    "annotation_status": "pending_human_review"
+  },
+  "design": {
+    "game_count": 5,
+    "secondary_variant_count": 1,
+    "repeats_per_variant_per_game": 2,
+    "expected_secondary_calls": 10,
+    "primary_calls": 0,
+    "vision_calls": 0,
+    "temperature": 0,
+    "comparison_axis": "single_profile",
+    "reprocessed_with_profile": "phase2"
+  },
+  "completion": {
+    "completed_secondary_calls": 10,
+    "failed_secondary_calls": 0,
+    "all_calls_paired": true
+  },
+  "fairness_invariants": {
+    "passed": true,
+    "comparison_axis": "single_profile",
+    "only_secondary_provider_varies": false,
+    "only_protocol_profile_varies": false,
+    "only_intended_variable_varies": true,
+    "primary_calls_observed": 0,
+    "vision_calls_observed": 0,
+    "per_game": [
+      {
+        "game": "777",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+          "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+          "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+          "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c"
+        }
+      },
+      {
+        "game": "racing",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+          "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+          "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+          "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5"
+        }
+      },
+      {
+        "game": "tiger",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+          "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+          "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+          "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8"
+        }
+      },
+      {
+        "game": "小鸡",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+          "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+          "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+          "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11"
+        }
+      },
+      {
+        "game": "钱来了",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+          "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+          "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+          "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794"
+        }
+      }
+    ]
+  },
+  "variant_metrics": [
+    {
+      "variant_id": "A",
+      "expected_calls": 10,
+      "completed_calls": 10,
+      "candidate_gate_pass_rate": 0.9,
+      "candidate_default_adoption_rate": 0.9,
+      "average_claimed_added_count": 1.9,
+      "average_admitted_added_count": 1.6,
+      "total_rejected_added_count": 3,
+      "added_rejection_reason_counts": {
+        "primary_duplicate_root": 1,
+        "coverage_ledger_invalid": 2
+      },
+      "average_materialized_added_count": 1.6,
+      "average_primary_top_blocker_retention": 0.9667,
+      "minimum_primary_top_blocker_retention": 0.6667,
+      "primary_top3_gate_pass_rate": 1.0,
+      "average_field_completeness": 1.0,
+      "average_admitted_field_completeness": 1.0,
+      "average_coverage_ledger_completeness": 1.0,
+      "coverage_ledger_valid_rate": 0.9,
+      "coverage_schema_v2_rate": 1.0,
+      "coverage_evidence_packet_echo_rate": 1.0,
+      "phase2_protocol_gate_pass_rate": 1.0,
+      "phase2_delta_only_compliance_rate": 1.0,
+      "deterministic_candidate_generation_rate": 1.0,
+      "phase2_admission_all_pass_rate": 0.8,
+      "candidate_score_lock_rate": 1.0,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch_count": 0,
+      "materialization_mismatch_count": 0,
+      "major_judgment_drift_count": 0
+    }
+  ],
+  "stability_comparison": [
+    {
+      "variant_id": "A",
+      "game": "777",
+      "completed_repeats": 2,
+      "expected_repeats": 2,
+      "added_root_overlap": 0.0,
+      "high_added_root_overlap": null,
+      "severity_consistency": 0.0,
+      "top_blocker_overlap": 1.0,
+      "coverage_confirmed_overlap": 0.0,
+      "coverage_confirmed_control_overlap": 0.0,
+      "candidate_adoption_consistent": true
+    },
+    {
+      "variant_id": "A",
+      "game": "racing",
+      "completed_repeats": 2,
+      "expected_repeats": 2,
+      "added_root_overlap": 0.5,
+      "high_added_root_overlap": 0.5,
+      "severity_consistency": 1.0,
+      "top_blocker_overlap": 1.0,
+      "coverage_confirmed_overlap": 0.5,
+      "coverage_confirmed_control_overlap": 0.4,
+      "candidate_adoption_consistent": true
+    },
+    {
+      "variant_id": "A",
+      "game": "tiger",
+      "completed_repeats": 2,
+      "expected_repeats": 2,
+      "added_root_overlap": 1.0,
+      "high_added_root_overlap": 1.0,
+      "severity_consistency": 1.0,
+      "top_blocker_overlap": 1.0,
+      "coverage_confirmed_overlap": 1.0,
+      "coverage_confirmed_control_overlap": 1.0,
+      "candidate_adoption_consistent": true
+    },
+    {
+      "variant_id": "A",
+      "game": "小鸡",
+      "completed_repeats": 2,
+      "expected_repeats": 2,
+      "added_root_overlap": 0.0,
+      "high_added_root_overlap": 0.0,
+      "severity_consistency": 0.0,
+      "top_blocker_overlap": 0.5,
+      "coverage_confirmed_overlap": 1.0,
+      "coverage_confirmed_control_overlap": 0.5,
+      "candidate_adoption_consistent": false
+    },
+    {
+      "variant_id": "A",
+      "game": "钱来了",
+      "completed_repeats": 2,
+      "expected_repeats": 2,
+      "added_root_overlap": 0.0,
+      "high_added_root_overlap": 0.0,
+      "severity_consistency": 0.0,
+      "top_blocker_overlap": 1.0,
+      "coverage_confirmed_overlap": 1.0,
+      "coverage_confirmed_control_overlap": 0.0,
+      "candidate_adoption_consistent": true
+    }
+  ],
+  "human_metrics": {
+    "status": "pending_human_annotation",
+    "valid_added_finding_count": null,
+    "added_finding_precision": null,
+    "high_value_added_count": null,
+    "duplicate_add_rate": null
+  },
+  "calls": [
+    {
+      "game": "777",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "completed",
+      "output_dir": "blinded/A/777/repeat_01",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "4c995d24e8f1c660d29fb151981139d635c985f9b38fa7aa02eb608778380395",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "b00ebca67c974627af3eb435c161029729d858877f5e750ee86cd51242a997fa",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 0,
+      "admitted_added_count": 0,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 0,
+      "added_root_keys": [],
+      "high_added_root_keys": [],
+      "added_severity_by_root": {},
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [],
+      "coverage_confirmed_control_keys": [],
+      "selected_top_blocker_keys": [
+        "title:respin累加算法存在加法与乘法的严重歧义",
+        "title:基础符号盘面生成规则描述混乱开发无法实现",
+        "title:风控强制0倍逻辑与respin触发条件存在致命冲突"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": null,
+      "admitted_field_completeness": null,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 9
+    },
+    {
+      "game": "777",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "completed",
+      "output_dir": "blinded/A/777/repeat_02",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "4c995d24e8f1c660d29fb151981139d635c985f9b38fa7aa02eb608778380395",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "f480c33cac72c85f48f6fa1c84e4dfcf1e29cb1a3ec2c8e82e7fa936cde9c885",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 1,
+      "admitted_added_count": 1,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 1,
+      "added_root_keys": [
+        "control:funds_deduction_payout:payout_timing"
+      ],
+      "high_added_root_keys": [],
+      "added_severity_by_root": {
+        "control:funds_deduction_payout:payout_timing": "medium"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "funds_deduction_payout"
+      ],
+      "coverage_confirmed_control_keys": [
+        "payout_timing"
+      ],
+      "selected_top_blocker_keys": [
+        "title:respin累加算法存在加法与乘法的严重歧义",
+        "title:基础符号盘面生成规则描述混乱开发无法实现",
+        "title:风控强制0倍逻辑与respin触发条件存在致命冲突"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 10
+    },
+    {
+      "game": "racing",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "completed",
+      "output_dir": "blinded/A/racing/repeat_01",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "cc8b99899664feea67800fbec6bf6a71221a47048661f261c192847953c72f77",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "0b38b9b8cda38b98a2bba023238509e609abc98c83f73391cee623706bc74b87",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "51812026bc909602c9f432415a325da2df5cdb73897838aa80a2acd97f275248",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 5,
+      "admitted_added_count": 4,
+      "rejected_added_count": 1,
+      "added_rejection_reasons": [
+        "primary_duplicate_root"
+      ],
+      "materialized_added_count": 4,
+      "added_root_keys": [
+        "control:funds_deduction_payout:debit_timing",
+        "control:funds_deduction_payout:funds_failure_compensation",
+        "control:funds_deduction_payout:payout_timing",
+        "control:max_payout_economic_boundary:relative_payout_cap"
+      ],
+      "high_added_root_keys": [
+        "control:funds_deduction_payout:debit_timing",
+        "control:funds_deduction_payout:funds_failure_compensation",
+        "control:funds_deduction_payout:payout_timing",
+        "control:max_payout_economic_boundary:relative_payout_cap"
+      ],
+      "added_severity_by_root": {
+        "control:funds_deduction_payout:debit_timing": "high",
+        "control:funds_deduction_payout:payout_timing": "high",
+        "control:funds_deduction_payout:funds_failure_compensation": "high",
+        "control:max_payout_economic_boundary:relative_payout_cap": "high"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "funds_deduction_payout",
+        "max_payout_economic_boundary"
+      ],
+      "coverage_confirmed_control_keys": [
+        "debit_timing",
+        "funds_failure_compensation",
+        "payout_timing",
+        "pool_negative_floor",
+        "relative_payout_cap"
+      ],
+      "selected_top_blocker_keys": [
+        "cluster:display_real_data_isolation",
+        "cluster:formula_odds_conflict",
+        "title:实际赔率与假赔率的客户端展示与服务端结算映射缺失"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": false,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 12
+    },
+    {
+      "game": "racing",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "completed",
+      "output_dir": "blinded/A/racing/repeat_02",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "cc8b99899664feea67800fbec6bf6a71221a47048661f261c192847953c72f77",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "0b38b9b8cda38b98a2bba023238509e609abc98c83f73391cee623706bc74b87",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "34debe5a431b0a932dc963e4147b5583b480803b73f1fa6ecde8477c397f16c9",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 2,
+      "admitted_added_count": 2,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 2,
+      "added_root_keys": [
+        "control:funds_deduction_payout:debit_timing",
+        "control:funds_deduction_payout:payout_timing"
+      ],
+      "high_added_root_keys": [
+        "control:funds_deduction_payout:debit_timing",
+        "control:funds_deduction_payout:payout_timing"
+      ],
+      "added_severity_by_root": {
+        "control:funds_deduction_payout:debit_timing": "high",
+        "control:funds_deduction_payout:payout_timing": "high"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "funds_deduction_payout"
+      ],
+      "coverage_confirmed_control_keys": [
+        "debit_timing",
+        "payout_timing"
+      ],
+      "selected_top_blocker_keys": [
+        "cluster:display_real_data_isolation",
+        "cluster:formula_odds_conflict",
+        "title:实际赔率与假赔率的客户端展示与服务端结算映射缺失"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 10
+    },
+    {
+      "game": "tiger",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "completed",
+      "output_dir": "blinded/A/tiger/repeat_01",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "597827d131da853d7b9efb6850258c365bbaecb35eb5ca902fed2f94f59aed0b",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "80ea9102b79607dba176c2e020b45a1ce4f4390be3f1516f60c218d16cd4ad27",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 3,
+      "admitted_added_count": 3,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 3,
+      "added_root_keys": [
+        "control:max_payout_economic_boundary:pool_negative_floor",
+        "control:statistics_time_window:same_metric_window",
+        "control:statistics_time_window:ui_text_window_alignment"
+      ],
+      "high_added_root_keys": [
+        "control:max_payout_economic_boundary:pool_negative_floor"
+      ],
+      "added_severity_by_root": {
+        "control:max_payout_economic_boundary:pool_negative_floor": "high",
+        "control:statistics_time_window:same_metric_window": "medium",
+        "control:statistics_time_window:ui_text_window_alignment": "medium"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "coverage_confirmed_control_keys": [
+        "pool_negative_floor",
+        "same_metric_window",
+        "ui_text_window_alignment"
+      ],
+      "selected_top_blocker_keys": [
+        "issue:COMP_RECONNECT_REENTER_MISSING",
+        "title:开奖兜底逻辑存在导致开出无人投注选项（0赔付）的机制缺陷",
+        "title:开奖阈值强依赖投入人数但正文缺失机器人假人投放机制"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 13
+    },
+    {
+      "game": "tiger",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "completed",
+      "output_dir": "blinded/A/tiger/repeat_02",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "597827d131da853d7b9efb6850258c365bbaecb35eb5ca902fed2f94f59aed0b",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "289eaaf82523b2669a8c199a8066dd8f9608e9173236aec5e312068a4667ebc1",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 3,
+      "admitted_added_count": 3,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 3,
+      "added_root_keys": [
+        "control:max_payout_economic_boundary:pool_negative_floor",
+        "control:statistics_time_window:same_metric_window",
+        "control:statistics_time_window:ui_text_window_alignment"
+      ],
+      "high_added_root_keys": [
+        "control:max_payout_economic_boundary:pool_negative_floor"
+      ],
+      "added_severity_by_root": {
+        "control:max_payout_economic_boundary:pool_negative_floor": "high",
+        "control:statistics_time_window:same_metric_window": "medium",
+        "control:statistics_time_window:ui_text_window_alignment": "medium"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "coverage_confirmed_control_keys": [
+        "pool_negative_floor",
+        "same_metric_window",
+        "ui_text_window_alignment"
+      ],
+      "selected_top_blocker_keys": [
+        "issue:COMP_RECONNECT_REENTER_MISSING",
+        "title:开奖兜底逻辑存在导致开出无人投注选项（0赔付）的机制缺陷",
+        "title:开奖阈值强依赖投入人数但正文缺失机器人假人投放机制"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 13
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "completed",
+      "output_dir": "blinded/A/小鸡/repeat_01",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "bdc9aafdd2b799820220c2a73a98ec6afe6dc29e95f6a53b1eac3b6a5380c165",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "9ee0325cf08bc103b70db298098b54a5381342957c9674b07b3e6d1b3801c36b",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "d03550f4740c03b0659e8463d2cc8f7f9c4b127255c0dac1a6bdf7a744e78ec7",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "pipeline",
+      "candidate_gate_passed": false,
+      "candidate_recommendation_status": "fallback_pipeline",
+      "traceability_status": "complete",
+      "claimed_added_count": 2,
+      "admitted_added_count": 0,
+      "rejected_added_count": 2,
+      "added_rejection_reasons": [
+        "coverage_ledger_invalid",
+        "coverage_ledger_invalid"
+      ],
+      "materialized_added_count": 0,
+      "added_root_keys": [],
+      "high_added_root_keys": [],
+      "added_severity_by_root": {},
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": false,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [
+        "coverage_control_invalid:trigger_state_termination:trigger_entry:decision_primary_coverage_status_mismatch"
+      ],
+      "coverage_confirmed_audit_keys": [
+        "funds_deduction_payout"
+      ],
+      "coverage_confirmed_control_keys": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ],
+      "selected_top_blocker_keys": [
+        "issue:CORE_BET_CONFIG_MISMATCH",
+        "issue:CORE_JACKPOT_RULE_MISSING",
+        "issue:LOGIC_PAYOUT_FORMULA_CONFLICT"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": null,
+      "phase2_admission_all_passed": false,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 5
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "completed",
+      "output_dir": "blinded/A/小鸡/repeat_02",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "bdc9aafdd2b799820220c2a73a98ec6afe6dc29e95f6a53b1eac3b6a5380c165",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "9ee0325cf08bc103b70db298098b54a5381342957c9674b07b3e6d1b3801c36b",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "72e5d612263ad83baebc61fa928d80c9952ce9ed7ecdec120b4f3defd505a590",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 1,
+      "admitted_added_count": 1,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 1,
+      "added_root_keys": [
+        "control:funds_deduction_payout:debit_timing"
+      ],
+      "high_added_root_keys": [
+        "control:funds_deduction_payout:debit_timing"
+      ],
+      "added_severity_by_root": {
+        "control:funds_deduction_payout:debit_timing": "high"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "funds_deduction_payout"
+      ],
+      "coverage_confirmed_control_keys": [
+        "debit_timing"
+      ],
+      "selected_top_blocker_keys": [
+        "cluster:formula_odds_conflict",
+        "issue:CORE_BET_CONFIG_MISMATCH",
+        "issue:CORE_JACKPOT_RULE_MISSING"
+      ],
+      "primary_top_blocker_retention": 0.6667,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 6
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "completed",
+      "output_dir": "blinded/A/钱来了/repeat_01",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b94519c3b8f9aa0bf46ac19f43e5fb8819cf5f58e499bc232e60e02f9d6fd99a",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "7e11db08124fb1b37a29092dbe02ca67980942899a143b8b4c8f0a3b89e40537",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 1,
+      "admitted_added_count": 1,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 1,
+      "added_root_keys": [
+        "control:trigger_state_termination:termination_priority"
+      ],
+      "high_added_root_keys": [
+        "control:trigger_state_termination:termination_priority"
+      ],
+      "added_severity_by_root": {
+        "control:trigger_state_termination:termination_priority": "high"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "trigger_state_termination"
+      ],
+      "coverage_confirmed_control_keys": [
+        "termination_priority"
+      ],
+      "selected_top_blocker_keys": [
+        "issue:LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "title:乘数符号id0的表演权重替换逻辑表述不清",
+        "title:底层数据生成规则与respin触发条件矛盾"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 7
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "completed",
+      "output_dir": "blinded/A/钱来了/repeat_02",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b94519c3b8f9aa0bf46ac19f43e5fb8819cf5f58e499bc232e60e02f9d6fd99a",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891",
+      "temperature": 0,
+      "attempt_count": 0,
+      "reprocessed_saved_raw": true,
+      "secondary_response_hash": "5751b736e3f13ab8d0a0fb7ac4f522805fc44392824eb3d0e3005d484ab7a529",
+      "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+      "selected_report_owner": "candidate",
+      "candidate_gate_passed": true,
+      "candidate_recommendation_status": "recommended",
+      "traceability_status": "complete",
+      "claimed_added_count": 1,
+      "admitted_added_count": 1,
+      "rejected_added_count": 0,
+      "added_rejection_reasons": [],
+      "materialized_added_count": 1,
+      "added_root_keys": [
+        "control:trigger_state_termination:trigger_entry"
+      ],
+      "high_added_root_keys": [
+        "control:trigger_state_termination:trigger_entry"
+      ],
+      "added_severity_by_root": {
+        "control:trigger_state_termination:trigger_entry": "high"
+      },
+      "coverage_ledger_completeness": 1.0,
+      "coverage_schema_version": 2,
+      "coverage_ledger_valid": true,
+      "coverage_evidence_packet_echoed": true,
+      "phase2_delta_only_compliant": true,
+      "phase2_protocol_gate_passed": true,
+      "coverage_ledger_errors": [],
+      "coverage_confirmed_audit_keys": [
+        "trigger_state_termination"
+      ],
+      "coverage_confirmed_control_keys": [
+        "trigger_entry"
+      ],
+      "selected_top_blocker_keys": [
+        "issue:LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "title:乘数符号id0的表演权重替换逻辑表述不清",
+        "title:底层数据生成规则与respin触发条件矛盾"
+      ],
+      "primary_top_blocker_retention": 1.0,
+      "field_completeness": 1.0,
+      "admitted_field_completeness": 1.0,
+      "phase2_admission_all_passed": true,
+      "primary_top3_retention_gate_passed": true,
+      "candidate_score_locked_to_primary": true,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch": false,
+      "materialization_mismatch": false,
+      "major_judgment_drift": false,
+      "selected_finding_count": 7
+    }
+  ],
+  "phase2_acceptance": {
+    "applicable": true,
+    "status": "failed",
+    "eligible_for_next_stage": false,
+    "phase2_variant_ids": [
+      "A"
+    ],
+    "thresholds": {
+      "raw_field_completeness_min": 0.9,
+      "admitted_field_completeness_min": 1.0,
+      "ledger_completeness_min": 1.0,
+      "ledger_valid_rate_min": 1.0,
+      "coverage_schema_v2_rate_min": 1.0,
+      "coverage_evidence_packet_echo_rate_min": 1.0,
+      "phase2_protocol_gate_pass_rate_min": 1.0,
+      "phase2_delta_only_compliance_rate_min": 1.0,
+      "deterministic_candidate_generation_rate_min": 1.0,
+      "candidate_gate_pass_rate_min": 0.9,
+      "primary_top3_retention_min": 0.6667,
+      "admitted_precision_min": 0.8,
+      "valid_added_count_min": 10,
+      "high_value_added_count_min": 5,
+      "duplicate_rate_max": 0.15,
+      "high_added_root_overlap_min": 0.25
+    },
+    "checks": {
+      "phase2_calls_complete": {
+        "ready": true,
+        "passed": true,
+        "observed": "10/10",
+        "target": "100%"
+      },
+      "fairness_invariants": {
+        "ready": true,
+        "passed": true,
+        "observed": true,
+        "target": "true"
+      },
+      "raw_field_completeness": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=0.9"
+      },
+      "admitted_field_completeness": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "coverage_ledger_completeness": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "coverage_ledger_valid_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": 0.9,
+        "target": ">=1.0"
+      },
+      "coverage_schema_v2_rate": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "coverage_evidence_packet_echo_rate": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "phase2_protocol_gate_pass_rate": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "phase2_delta_only_compliance_rate": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "deterministic_candidate_generation_rate": {
+        "ready": true,
+        "passed": true,
+        "observed": 1.0,
+        "target": ">=1.0"
+      },
+      "candidate_gate_pass_rate": {
+        "ready": true,
+        "passed": true,
+        "observed": 0.9,
+        "target": ">=0.9"
+      },
+      "primary_top3_retention": {
+        "ready": true,
+        "passed": true,
+        "observed": 0.6667,
+        "target": ">=2/3"
+      },
+      "machine_multiroot": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "unsupported_severity_change": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "unsupported_blocking_change": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "lineage_mismatch": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "materialization_mismatch": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "major_judgment_drift": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "high_added_root_overlap": {
+        "ready": true,
+        "passed": true,
+        "observed": 0.375,
+        "target": ">=0.25"
+      },
+      "human_admitted_precision": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": ">=0.8"
+      },
+      "human_valid_added_count": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": ">=10"
+      },
+      "human_high_value_added_count": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": ">=5"
+      },
+      "human_duplicate_rate": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "<=0.15"
+      },
+      "human_unsupported": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "0"
+      },
+      "human_overstated": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "0"
+      },
+      "human_multiroot": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "0"
+      }
+    },
+    "blocking_reasons": [
+      "coverage_ledger_valid_rate"
+    ],
+    "pending_reasons": [
+      "human_admitted_precision",
+      "human_valid_added_count",
+      "human_high_value_added_count",
+      "human_duplicate_rate",
+      "human_unsupported",
+      "human_overstated",
+      "human_multiroot"
+    ],
+    "high_added_root_overlap_evaluable_games": 4
+  }
+}

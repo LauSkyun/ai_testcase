@@ -1,0 +1,201 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心数值冲突与流程矛盾，结构清晰，证据引用充分，但遗漏了少量低风险边界条件和配置占位符问题。",
+    "strengths": [
+      "准确抓住了赔率公式冲突、地形时序矛盾、干预映射缺失等核心阻塞问题",
+      "问题分类清晰，严重程度与阻塞级别合理",
+      "提供了可操作的修改建议和测试要点"
+    ],
+    "issues": [
+      "遗漏下注余额不足边界的说明",
+      "遗漏假数据刷新间隔和赔率抽水比例占位符的明确要求",
+      "未将引导流程假数据污染风险单独列出，但已在干预逻辑问题中提及"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "主模型报告已覆盖所有高信号阻塞问题，少量低风险补充项不影响报告整体可交付性，修正后可直接输出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "主模型报告已覆盖所有高信号阻塞问题，少量低风险补充项不影响报告整体可交付性，修正后可直接输出。"
+  },
+  "review_notes": [
+    "主模型报告质量较高，但遗漏了余额不足边界和两个占位符，已在候选报告中补充为低风险问题。",
+    "引导流程假数据污染风险已在干预逻辑问题中提及，不再单独拆分，保持报告简洁。",
+    "赔率公式冲突问题虽涉及两份文档，但根据本期规则禁止输出跨文档一致性问题，已归入逻辑一致性维度。",
+    "所有证据引用均保留原文出处，未引入外部信息。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "balance_boundary",
+      "title": "下注余额不足时MAX按钮行为未定义",
+      "primary_dimension": "清晰度与完整性",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32",
+      "severity": "低",
+      "current_state": "段落32定义MAX消耗所有余额，但未说明当用户余额为0或不足以支付最低档位10宝石时，MAX按钮是否可用、点击后的提示文案。",
+      "risk": "若余额为0时点击MAX，可能产生无效下注请求或前端异常，影响用户体验。",
+      "suggestion": "明确余额不足时MAX按钮的置灰逻辑和提示文案，例如“余额不足，请充值”。"
+    },
+    {
+      "issue_id": "placeholder_missing",
+      "title": "假数据刷新间隔与赔率抽水比例占位符未定义",
+      "primary_dimension": "可测试性与验收标准",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落22-23、段落28",
+      "severity": "低",
+      "current_state": "段落22-23定义假人数/假金额每[001]S更新一次，段落28定义实时赔率=合计下注/本选项下注*[001]%，但[001]S和[001]%均为占位符，未提供具体数值或默认值。",
+      "risk": "开发无法配置定时刷新频率和抽水比例，测试无法验证假数据更新节奏与赔率精度。",
+      "suggestion": "将占位符替换为具体数值（如1S、5%），或提供后台配置默认值与取值范围。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "terrain_timing",
+        "primary_issue_ids": [
+          "terrain_timing"
+        ]
+      },
+      {
+        "candidate_issue_id": "intervention_mapping",
+        "primary_issue_ids": [
+          "intervention_mapping"
+        ]
+      },
+      {
+        "candidate_issue_id": "intervention_priority",
+        "primary_issue_ids": [
+          "intervention_priority"
+        ]
+      },
+      {
+        "candidate_issue_id": "odds_formula_conflict",
+        "primary_issue_ids": [
+          "odds_formula_conflict"
+        ]
+      },
+      {
+        "candidate_issue_id": "stats_denominator",
+        "primary_issue_ids": [
+          "stats_denominator"
+        ]
+      },
+      {
+        "candidate_issue_id": "pool_threshold",
+        "primary_issue_ids": [
+          "pool_threshold"
+        ]
+      },
+      {
+        "candidate_issue_id": "fund_flow_payout",
+        "primary_issue_ids": [
+          "fund_flow_payout"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "balance_boundary",
+        "source_missed_issue_ids": [
+          "balance_boundary"
+        ],
+        "reason": "主模型遗漏下注余额不足边界，补充后提升完整性"
+      },
+      {
+        "candidate_issue_id": "placeholder_missing",
+        "source_missed_issue_ids": [
+          "placeholder_missing"
+        ],
+        "reason": "主模型未单独指出假数据刷新间隔和赔率抽水比例占位符，补充后可测试性更完整"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "主模型报告已覆盖所有高信号阻塞问题，少量低风险补充项不影响报告整体可交付性，修正后可直接输出。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

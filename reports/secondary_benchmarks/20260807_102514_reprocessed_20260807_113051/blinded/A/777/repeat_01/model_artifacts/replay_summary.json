@@ -1,0 +1,830 @@
+{
+  "status": "completed",
+  "game": "777",
+  "variant_id": "A",
+  "repeat": 1,
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_1",
+      "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "echo_required": true,
+      "echo_matched": true,
+      "delta_only_required": false,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [
+        "candidate_report",
+        "candidate_lineage",
+        "candidate_readiness"
+      ],
+      "passed": true,
+      "errors": []
+    },
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_control_invalid:funds_deduction_payout:payout_timing:primary_control_mismatch:CLARITY_03"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 0,
+    "materially_changed_titles": [],
+    "materially_changed_examples": []
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": false,
+      "results": [],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": false,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [],
+        "confirmed_control_keys": [],
+        "candidate_to_audit_key": {},
+        "candidate_to_control_key": {},
+        "finding_audit_keys": {},
+        "finding_control_keys": {},
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "inferred_coverage_schema_version:2_from_complete_control_shape"
+        ],
+        "errors": [
+          "coverage_control_invalid:funds_deduction_payout:payout_timing:primary_control_mismatch:CLARITY_03"
+        ],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_01",
+              "CLARITY_01",
+              "CLARITY_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 二、需求描述，段落18-19",
+              "crazy777数值文档修改后.docx / 四、基础游戏・投注与中奖计算，段落29-34",
+              "疯狂777需求文档修改后.docx / 二、需求描述，段落10-13",
+              "crazy777数值文档修改后.docx / 三、基础游戏・乘数符号，段落21及表格4"
+            ],
+            "reason": "主模型LOGIC_01已覆盖结算公式中RESPIN累加算法的加法与乘法歧义问题。；主模型CLARITY_01和CLARITY_02已覆盖盘面生成规则混乱及乘数符号0与空白图案定义混淆的映射问题。",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 二、需求描述，段落18-19",
+                  "crazy777数值文档修改后.docx / 四、基础游戏・投注与中奖计算，段落29-34"
+                ],
+                "reason": "主模型LOGIC_01已覆盖结算公式中RESPIN累加算法的加法与乘法歧义问题。",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CLARITY_01",
+                  "CLARITY_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 二、需求描述，段落10-13",
+                  "crazy777数值文档修改后.docx / 三、基础游戏・乘数符号，段落21及表格4"
+                ],
+                "reason": "主模型CLARITY_01和CLARITY_02已覆盖盘面生成规则混乱及乘数符号0与空白图案定义混淆的映射问题。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_02",
+              "TEST_01",
+              "LOGIC_04"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 二、需求描述，段落17-18",
+              "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落42",
+              "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+              "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61"
+            ],
+            "reason": "主模型LOGIC_02已覆盖RESPIN触发入口条件（123列均不为空）与风控强制0倍（至少一列为空）之间的致命冲突。；主模型TEST_01和LOGIC_04已覆盖RESPIN状态下的自动旋转停止逻辑、快捷旋转表现及重转次数与乘数值的抽取终止逻辑。",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 二、需求描述，段落17-18",
+                  "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落42"
+                ],
+                "reason": "主模型LOGIC_02已覆盖RESPIN触发入口条件（123列均不为空）与风控强制0倍（至少一列为空）之间的致命冲突。",
+                "errors": []
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "TEST_01",
+                  "LOGIC_04"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+                  "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61"
+                ],
+                "reason": "主模型TEST_01和LOGIC_04已覆盖RESPIN状态下的自动旋转停止逻辑、快捷旋转表现及重转次数与乘数值的抽取终止逻辑。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "advice_only",
+            "primary_issue_ids": [
+              "CLARITY_03"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落37",
+              "疯狂777需求文档修改后.docx / 游戏主模块展示界面，段落30",
+              "疯狂777需求文档修改后.docx / 异常断线处理，段落20"
+            ],
+            "reason": "原文明确说明‘点击单次投注按钮后消耗对应的货币进行投注开奖’，扣款节点清晰，无缺失。；主模型CLARITY_03已覆盖中奖金额缩位展示规则中‘向下取整’与‘直接截断’的表述不严谨问题。；原文已明确‘复用中台统一处理流程’处理断线与重进恢复，属于公共模块能力，无需作为玩法专属高危问题新增，仅作建议提醒。",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落37"
+                ],
+                "reason": "原文明确说明‘点击单次投注按钮后消耗对应的货币进行投注开奖’，扣款节点清晰，无缺失。",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CLARITY_03"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 游戏主模块展示界面，段落30"
+                ],
+                "reason": "主模型CLARITY_03已覆盖中奖金额缩位展示规则中‘向下取整’与‘直接截断’的表述不严谨问题。",
+                "errors": [
+                  "primary_control_mismatch:CLARITY_03"
+                ]
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 异常断线处理，段落20"
+                ],
+                "reason": "原文已明确‘复用中台统一处理流程’处理断线与重进恢复，属于公共模块能力，无需作为玩法专属高危问题新增，仅作建议提醒。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "advice_only",
+            "primary_issue_ids": [
+              "LOGIC_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9",
+              "疯狂777需求文档修改后.docx / 全文",
+              "crazy777数值文档修改后.docx / 全文"
+            ],
+            "reason": "主模型LOGIC_02已覆盖100倍相对赔付上限（强制0倍）与RESPIN触发条件之间的冲突。；当前文档未涉及奖池透支或负值下限设计，属于通用中台或不在本玩法专属规则范围内。；原文已配置100倍相对赔付上限（强制0倍），已有相对边界兜底。单局绝对金额封顶未明确，但基于现有相对上限，仅作补充建议，不确认为完全缺失。",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9"
+                ],
+                "reason": "主模型LOGIC_02已覆盖100倍相对赔付上限（强制0倍）与RESPIN触发条件之间的冲突。",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 全文",
+                  "crazy777数值文档修改后.docx / 全文"
+                ],
+                "reason": "当前文档未涉及奖池透支或负值下限设计，属于通用中台或不在本玩法专属规则范围内。",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9"
+                ],
+                "reason": "原文已配置100倍相对赔付上限（强制0倍），已有相对边界兜底。单局绝对金额封顶未明确，但基于现有相对上限，仅作补充建议，不确认为完全缺失。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "not_applicable",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 全文",
+              "crazy777数值文档修改后.docx / 全文"
+            ],
+            "reason": "当前文档未涉及需要统一时间窗口的统计指标设计。；当前文档未涉及需要核对正文与UI截图时间窗口一致性的统计指标。",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 全文",
+                  "crazy777数值文档修改后.docx / 全文"
+                ],
+                "reason": "当前文档未涉及需要统一时间窗口的统计指标设计。",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "疯狂777需求文档修改后.docx / 全文",
+                  "crazy777数值文档修改后.docx / 全文"
+                ],
+                "reason": "当前文档未涉及需要核对正文与UI截图时间窗口一致性的统计指标。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": true,
+        "protocol_gate": {
+          "required": true,
+          "protocol_revision": "phase2_v2_1",
+          "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+          "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+          "echo_required": true,
+          "echo_matched": true,
+          "delta_only_required": false,
+          "delta_only_compliant": true,
+          "forbidden_fields_present": [
+            "candidate_report",
+            "candidate_lineage",
+            "candidate_readiness"
+          ],
+          "passed": true,
+          "errors": []
+        }
+      },
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_1",
+        "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+        "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+        "echo_required": true,
+        "echo_matched": true,
+        "delta_only_required": false,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [
+          "candidate_report",
+          "candidate_lineage",
+          "candidate_readiness"
+        ],
+        "passed": true,
+        "errors": []
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": false,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [],
+      "confirmed_control_keys": [],
+      "candidate_to_audit_key": {},
+      "candidate_to_control_key": {},
+      "finding_audit_keys": {},
+      "finding_control_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [
+        "coverage_control_invalid:funds_deduction_payout:payout_timing:primary_control_mismatch:CLARITY_03"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01",
+            "CLARITY_01",
+            "CLARITY_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落18-19",
+            "crazy777数值文档修改后.docx / 四、基础游戏・投注与中奖计算，段落29-34",
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落10-13",
+            "crazy777数值文档修改后.docx / 三、基础游戏・乘数符号，段落21及表格4"
+          ],
+          "reason": "主模型LOGIC_01已覆盖结算公式中RESPIN累加算法的加法与乘法歧义问题。；主模型CLARITY_01和CLARITY_02已覆盖盘面生成规则混乱及乘数符号0与空白图案定义混淆的映射问题。",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 二、需求描述，段落18-19",
+                "crazy777数值文档修改后.docx / 四、基础游戏・投注与中奖计算，段落29-34"
+              ],
+              "reason": "主模型LOGIC_01已覆盖结算公式中RESPIN累加算法的加法与乘法歧义问题。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_01",
+                "CLARITY_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 二、需求描述，段落10-13",
+                "crazy777数值文档修改后.docx / 三、基础游戏・乘数符号，段落21及表格4"
+              ],
+              "reason": "主模型CLARITY_01和CLARITY_02已覆盖盘面生成规则混乱及乘数符号0与空白图案定义混淆的映射问题。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "TEST_01",
+            "LOGIC_04"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落17-18",
+            "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落42",
+            "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+            "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61"
+          ],
+          "reason": "主模型LOGIC_02已覆盖RESPIN触发入口条件（123列均不为空）与风控强制0倍（至少一列为空）之间的致命冲突。；主模型TEST_01和LOGIC_04已覆盖RESPIN状态下的自动旋转停止逻辑、快捷旋转表现及重转次数与乘数值的抽取终止逻辑。",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 二、需求描述，段落17-18",
+                "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落42"
+              ],
+              "reason": "主模型LOGIC_02已覆盖RESPIN触发入口条件（123列均不为空）与风控强制0倍（至少一列为空）之间的致命冲突。",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "TEST_01",
+                "LOGIC_04"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+                "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61"
+              ],
+              "reason": "主模型TEST_01和LOGIC_04已覆盖RESPIN状态下的自动旋转停止逻辑、快捷旋转表现及重转次数与乘数值的抽取终止逻辑。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CLARITY_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落37",
+            "疯狂777需求文档修改后.docx / 游戏主模块展示界面，段落30",
+            "疯狂777需求文档修改后.docx / 异常断线处理，段落20"
+          ],
+          "reason": "原文明确说明‘点击单次投注按钮后消耗对应的货币进行投注开奖’，扣款节点清晰，无缺失。；主模型CLARITY_03已覆盖中奖金额缩位展示规则中‘向下取整’与‘直接截断’的表述不严谨问题。；原文已明确‘复用中台统一处理流程’处理断线与重进恢复，属于公共模块能力，无需作为玩法专属高危问题新增，仅作建议提醒。",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落37"
+              ],
+              "reason": "原文明确说明‘点击单次投注按钮后消耗对应的货币进行投注开奖’，扣款节点清晰，无缺失。",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_03"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 游戏主模块展示界面，段落30"
+              ],
+              "reason": "主模型CLARITY_03已覆盖中奖金额缩位展示规则中‘向下取整’与‘直接截断’的表述不严谨问题。",
+              "errors": [
+                "primary_control_mismatch:CLARITY_03"
+              ]
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 异常断线处理，段落20"
+              ],
+              "reason": "原文已明确‘复用中台统一处理流程’处理断线与重进恢复，属于公共模块能力，无需作为玩法专属高危问题新增，仅作建议提醒。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9",
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "主模型LOGIC_02已覆盖100倍相对赔付上限（强制0倍）与RESPIN触发条件之间的冲突。；当前文档未涉及奖池透支或负值下限设计，属于通用中台或不在本玩法专属规则范围内。；原文已配置100倍相对赔付上限（强制0倍），已有相对边界兜底。单局绝对金额封顶未明确，但基于现有相对上限，仅作补充建议，不确认为完全缺失。",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9"
+              ],
+              "reason": "主模型LOGIC_02已覆盖100倍相对赔付上限（强制0倍）与RESPIN触发条件之间的冲突。",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "当前文档未涉及奖池透支或负值下限设计，属于通用中台或不在本玩法专属规则范围内。",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9"
+              ],
+              "reason": "原文已配置100倍相对赔付上限（强制0倍），已有相对边界兜底。单局绝对金额封顶未明确，但基于现有相对上限，仅作补充建议，不确认为完全缺失。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "当前文档未涉及需要统一时间窗口的统计指标设计。；当前文档未涉及需要核对正文与UI截图时间窗口一致性的统计指标。",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "当前文档未涉及需要统一时间窗口的统计指标设计。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "当前文档未涉及需要核对正文与UI截图时间窗口一致性的统计指标。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true,
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_1",
+        "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+        "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+        "echo_required": true,
+        "echo_matched": true,
+        "delta_only_required": false,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [
+          "candidate_report",
+          "candidate_lineage",
+          "candidate_readiness"
+        ],
+        "passed": true,
+        "errors": []
+      }
+    },
+    "protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_1",
+      "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "echo_required": true,
+      "echo_matched": true,
+      "delta_only_required": false,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [
+        "candidate_report",
+        "candidate_lineage",
+        "candidate_readiness"
+      ],
+      "passed": true,
+      "errors": []
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "coverage_protocol_revision": "phase2_v2_1",
+  "coverage_evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+  "coverage_evidence_packet_echoed": true,
+  "phase2_delta_only_compliant": true,
+  "phase2_protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase2_v2_1",
+    "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+    "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+    "echo_required": true,
+    "echo_matched": true,
+    "delta_only_required": false,
+    "delta_only_compliant": true,
+    "forbidden_fields_present": [
+      "candidate_report",
+      "candidate_lineage",
+      "candidate_readiness"
+    ],
+    "passed": true,
+    "errors": []
+  }
+}

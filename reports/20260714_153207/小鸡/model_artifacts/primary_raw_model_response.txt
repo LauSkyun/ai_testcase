@@ -1,0 +1,234 @@
+model: gpt-5.4
+wire_api: responses
+stage: primary
+{
+  "overall_evaluation": "文档描述了核心的过马路博弈玩法，主流程基本可理解。但两份文档在筹码、关卡数、难度体系和角色题材上存在严重冲突，且缺乏最大赔付限制与真钱结算链路设计，存在较高的经济与合规风险。",
+  "document_quality_score": "C",
+  "score_reason": "跨文档核心配置严重冲突，且缺失最大赔付限制与资金结算链路，需补充对齐后方可开工。",
+  "top_blockers": [
+    {
+      "severity": "高",
+      "title": "跨文档下注筹码与关卡体系冲突",
+      "owner": "数值策划",
+      "why_now": "两份文档对下注金额和关卡数量的定义完全不一致，直接阻塞下注系统开发与数值配置表落地。"
+    },
+    {
+      "severity": "高",
+      "title": "缺乏最大赔付限制与RTP模型",
+      "owner": "数值策划",
+      "why_now": "难度4第30关倍率超6600万，无封顶限制，存在击穿奖池的严重经济风险；RTP无目标值导致无法验收。"
+    },
+    {
+      "severity": "高",
+      "title": "真钱结算链路与幂等性缺失",
+      "owner": "系统策划",
+      "why_now": "涉及真实资金支付，缺乏开局扣款、提现发奖的防重放与状态恢复设计，可能导致资金流失或客诉。"
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "清晰度与完整性",
+      "dimension_note": "未发现明显问题",
+      "findings": [
+        {
+          "issue_id": "CLARITY_01",
+          "canonical_title": "超级大奖额外奖励规则缺失",
+          "primary_dimension": "清晰度与完整性",
+          "evidence_scope": "document",
+          "severity": "中",
+          "title": "超级大奖的额外奖励规则缺失",
+          "current_state": "需求文档提到通关触发‘超级大奖’获得‘额外高额奖励’，但数值文档仅有30关的累乘倍率，无额外奖励配置。",
+          "evidence": "小鸡.docx / 2.1 完整游戏流程 段落31；小鸡数值文档.docx / 3. 难度选择",
+          "risk": "通关结算逻辑缺失，开发无法实现‘额外奖励’的发放，测试无法验收通关奖励。",
+          "suggestion": "明确‘超级大奖’是固定金额、奖池比例还是额外倍率，并在数值文档中补充对应配置表。",
+          "planner_role": "数值策划",
+          "confidence": "高",
+          "blocking": "阻塞开发"
+        }
+      ]
+    },
+    {
+      "name": "逻辑一致性与数值平衡",
+      "dimension_note": "未发现明显问题",
+      "findings": [
+        {
+          "issue_id": "LOGIC_01",
+          "canonical_title": "缺乏最大赔付限制与RTP控制模型",
+          "primary_dimension": "逻辑一致性与数值平衡",
+          "evidence_scope": "document",
+          "severity": "高",
+          "title": "缺乏最大赔付限制与RTP控制模型",
+          "current_state": "数值文档难度4第30关倍率高达66,278,475.57，若下注1000则赔付超662亿，无MAX_WIN限制；RTP仅提及‘不同RTP设置不同必撞概率’，无具体目标值和推导公式。",
+          "evidence": "小鸡数值文档.docx / 3. 难度选择 表格2；4. 撞击概率计算 段落18",
+          "risk": "存在极大的经济击穿风险；RTP无法验收，测试无法验证概率模型是否符合合规要求。",
+          "suggestion": "增加全局或单局最大赔付（MAX_WIN）配置；补充RTP目标值（如96%）及与MAX_MUL、必撞概率的数学推导或配置表。",
+          "planner_role": "数值策划",
+          "confidence": "高",
+          "blocking": "阻塞开发"
+        }
+      ]
+    },
+    {
+      "name": "可测试性与验收标准",
+      "dimension_note": "未发现明显问题",
+      "findings": [
+        {
+          "issue_id": "TEST_01",
+          "canonical_title": "UI概率展示与底层Crash算法映射缺失",
+          "primary_dimension": "可测试性与验收标准",
+          "evidence_scope": "document",
+          "severity": "中",
+          "title": "UI概率展示与底层Crash算法映射缺失",
+          "current_state": "UI界面显示‘被击中的概率’，但底层采用类似Crash的动态爆炸倍数+固定必爆概率算法，未说明UI展示的是固定值还是动态计算值。",
+          "evidence": "小鸡.docx / 图片1-8（UI截图）；小鸡数值文档.docx / 4. 撞击概率计算",
+          "risk": "若UI展示固定概率，与实际动态概率不符，会导致玩家客诉和合规风险；测试无法制定概率验收用例。",
+          "suggestion": "明确UI‘被击中概率’的计算公式（如基于当前关卡和剩余爆炸倍数的动态概率），或改为展示‘当前关卡安全通过率’。",
+          "planner_role": "系统策划",
+          "confidence": "高",
+          "blocking": "阻塞测试用例设计"
+        }
+      ]
+    },
+    {
+      "name": "跨系统影响与兼容性",
+      "dimension_note": "未发现明显问题",
+      "findings": []
+    },
+    {
+      "name": "安全性与反作弊",
+      "dimension_note": "未发现明显问题",
+      "findings": [
+        {
+          "issue_id": "SEC_01",
+          "canonical_title": "真钱结算链路（扣款/发奖/幂等）缺失",
+          "primary_dimension": "安全性与反作弊",
+          "evidence_scope": "document",
+          "severity": "高",
+          "title": "真钱结算链路（扣款/发奖/幂等）缺失",
+          "current_state": "文档提及‘对接真实支付’和‘模拟到账’，但未说明开局扣款、局内累计、提现发奖的时机、幂等性及防重放机制。",
+          "evidence": "小鸡.docx / 3.4 提现与结算系统 段落49",
+          "risk": "涉及真实资金，缺乏服务端权威和幂等设计可能导致重复扣款、重复发奖或资金流失。",
+          "suggestion": "补充资金结算专属规则：明确开局扣款、提现发奖的服务端接口、幂等键设计、断线重连时的状态恢复与结算继续逻辑。",
+          "planner_role": "系统策划",
+          "confidence": "高",
+          "blocking": "阻塞开发"
+        }
+      ]
+    },
+    {
+      "name": "用户体验与游戏性",
+      "dimension_note": "未发现明显问题",
+      "findings": []
+    }
+  ],
+  "cross_document_issues": [
+    {
+      "issue_id": "CROSS_01",
+      "canonical_title": "下注筹码配置冲突",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "cross_document",
+      "severity": "高",
+      "title": "下注筹码配置冲突",
+      "current_state": "需求文档定义筹码为3/5/10/20，数值文档定义为100/1000。",
+      "evidence": "小鸡.docx / 2.2 详细规则 表格1；小鸡数值文档.docx / 2. 下注规则 表格1",
+      "risk": "开发无法确定下注接口入参和UI展示，阻塞下注系统开发。",
+      "suggestion": "统一两份文档的下注筹码配置，明确是固定档位还是滑动条，并补充业务自定义的边界。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "issue_id": "CROSS_02",
+      "canonical_title": "关卡数量与倍率体系冲突",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "cross_document",
+      "severity": "高",
+      "title": "关卡数量与倍率体系冲突",
+      "current_state": "需求文档未明确马路总数，且示例倍率仅到1.17x；数值文档明确为30个格子，最终倍率超6600万。",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程；小鸡数值文档.docx / 3. 难度选择 表格2",
+      "risk": "关卡数量直接决定UI布局（马路长度、倍率节点显示）和核心循环次数，倍率差异过大导致无法对齐。",
+      "suggestion": "在需求文档中明确预设马路总数（如30条），并确认数值文档的30关倍率表是否为最终版本。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "issue_id": "CROSS_03",
+      "canonical_title": "难度档位与概率/倍率配置割裂",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "cross_document",
+      "severity": "高",
+      "title": "难度档位与概率/倍率配置割裂",
+      "current_state": "需求文档表格2中‘简单’难度的被撞概率为20%-65%，倍率为1.03x-1.17x；而数值文档中‘难度1’的MAX_MUL=24，最终倍率23.9，两者体系完全无法对应。",
+      "evidence": "小鸡.docx / 3.1 下注系统 表格2；小鸡数值文档.docx / 3. 难度选择 表格2 & 4. 撞击概率计算 表格3",
+      "risk": "数值策划与系统策划对难度的定义不一致，导致配置表无法落地，测试无法验收难度差异。",
+      "suggestion": "废弃需求文档中的示例表格，统一以数值文档的4档难度（MAX_MUL=24/62/103/176）为准，并在需求文档中同步更新难度说明。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "issue_id": "CROSS_04",
+      "canonical_title": "核心角色与题材包装冲突",
+      "primary_dimension": "用户体验与游戏性",
+      "evidence_scope": "cross_document",
+      "severity": "中",
+      "title": "核心角色与题材包装冲突",
+      "current_state": "需求文档大篇幅描述‘中东骆驼’及沙漠场景，但UI截图和数值文档均为‘小鸡/CHICKEN ROAD’，且需求提到‘先用小鸡’。",
+      "evidence": "小鸡.docx / 4、题材包装；小鸡数值文档.docx / 1. 游戏简介 及 图片解析",
+      "risk": "美术资源制作与验收口径混乱，可能导致返工。",
+      "suggestion": "明确一期上线的实际角色（小鸡）与场景，将‘中东骆驼’移至迭代计划，统一两份文档的术语和视觉描述。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "建议优化"
+    }
+  ],
+  "missing_information": [
+    "全局或单局最大赔付（MAX_WIN）的具体数值或计算公式。",
+    "RTP目标值及与MAX_MUL、必撞概率的数学推导配置表。",
+    "断线重连、结算中退出、重复点击等异常场景的玩法专属恢复规则。",
+    "超级大奖的额外奖励配置（固定金额、奖池比例或额外倍率）。"
+  ],
+  "test_points": {
+    "功能验证": [
+      "下注筹码选择与扣款逻辑",
+      "30个关卡的累乘倍率计算",
+      "提现与失败清零结算",
+      "超级大奖触发与发放"
+    ],
+    "异常操作": [
+      "断线重连后的局内状态恢复",
+      "结算中退出游戏的资金处理",
+      "重复点击提现/开始按钮的幂等性"
+    ],
+    "兼容性": [
+      "不同分辨率下的马路节点UI适配",
+      "低端机型的动画与碰撞检测性能"
+    ],
+    "安全专项": [
+      "服务端权威校验爆炸倍数与碰撞结果",
+      "防篡改与防重放攻击",
+      "最大赔付封顶校验"
+    ],
+    "回归影响": [
+      "历史局数据在配置热更后的兼容性",
+      "难度配置修改对未结算局的影响"
+    ],
+    "性能与稳定性": [
+      "30个关卡连续播放的内存与帧率稳定性",
+      "高倍率数字跳动动画的性能开销"
+    ],
+    "用户体验": [
+      "新手引导对Crash算法概率的通俗解释",
+      "失败后的情绪安抚与再来一局引导"
+    ]
+  },
+  "quality_notes": [
+    "数值文档中的爆炸倍数公式存在除零或精度风险，需程序验证 RANDBETWEEN(100, MAX_MUL*100) 的边界。",
+    "需求文档提到‘模拟到账或对接真实支付’，需明确一期是否接入真实资金，若为真钱博弈需补充合规与风控设计。"
+  ],
+  "image_analysis_gaps": [
+    "图片中‘被击中的概率’具体数值被截断或不可见，无法验证UI展示值与数值文档的对应关系。",
+    "部分图片中的倍率标识被截断（如左侧的9x或x），无法确认完整马路节点的UI排布规则。"
+  ]
+}

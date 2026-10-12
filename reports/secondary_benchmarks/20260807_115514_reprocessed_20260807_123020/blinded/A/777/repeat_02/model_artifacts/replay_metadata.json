@@ -1,0 +1,70 @@
+{
+  "game": "777",
+  "variant_id": "A",
+  "repeat": 2,
+  "status": "completed",
+  "output_dir": "blinded/A/777/repeat_02",
+  "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+  "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+  "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+  "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+  "secondary_message_hash": "4c995d24e8f1c660d29fb151981139d635c985f9b38fa7aa02eb608778380395",
+  "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+  "protocol_profile": "phase2",
+  "processing_profile": "phase2",
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02",
+  "temperature": 0,
+  "attempt_count": 0,
+  "reprocessed_saved_raw": true,
+  "secondary_response_hash": "f480c33cac72c85f48f6fa1c84e4dfcf1e29cb1a3ec2c8e82e7fa936cde9c885",
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "selected_report_owner": "candidate",
+  "candidate_gate_passed": true,
+  "candidate_recommendation_status": "recommended",
+  "traceability_status": "complete",
+  "claimed_added_count": 1,
+  "admitted_added_count": 1,
+  "rejected_added_count": 0,
+  "added_rejection_reasons": [],
+  "materialized_added_count": 1,
+  "added_root_keys": [
+    "control:funds_deduction_payout:payout_timing"
+  ],
+  "high_added_root_keys": [],
+  "added_severity_by_root": {
+    "control:funds_deduction_payout:payout_timing": "medium"
+  },
+  "coverage_ledger_completeness": 1.0,
+  "coverage_schema_version": 2,
+  "coverage_ledger_valid": true,
+  "coverage_evidence_packet_echoed": true,
+  "phase2_delta_only_compliant": true,
+  "phase2_protocol_gate_passed": true,
+  "coverage_ledger_errors": [],
+  "coverage_confirmed_audit_keys": [
+    "funds_deduction_payout"
+  ],
+  "coverage_confirmed_control_keys": [
+    "payout_timing"
+  ],
+  "selected_top_blocker_keys": [
+    "title:respin累加算法存在加法与乘法的严重歧义",
+    "title:基础符号盘面生成规则描述混乱开发无法实现",
+    "title:风控强制0倍逻辑与respin触发条件存在致命冲突"
+  ],
+  "primary_top_blocker_retention": 1.0,
+  "field_completeness": 1.0,
+  "admitted_field_completeness": 1.0,
+  "phase2_admission_all_passed": true,
+  "primary_top3_retention_gate_passed": true,
+  "candidate_score_locked_to_primary": true,
+  "multiroot_finding_count": 0,
+  "preserved_primary_multiroot_finding_count": 0,
+  "unsupported_severity_change_count": 0,
+  "unsupported_blocking_change_count": 0,
+  "lineage_mismatch": false,
+  "materialization_mismatch": false,
+  "major_judgment_drift": false,
+  "selected_finding_count": 10
+}

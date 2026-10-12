@@ -1,0 +1,360 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+```json
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较高，准确识别了免费游戏封顶与风控规则的根本冲突、Respin表演逻辑缺乏服务端映射约束、购买免费功能配置缺失等核心阻塞问题。但在WIN_FORMULA的定性上可更精确（属于术语歧义而非根本冲突），且遗漏了数值文档中RESPIN概率表存在两份不同配置的问题。",
+    "strengths": [
+      "准确识别了FREE_CAP_VS_RISK这一根本冲突，免费游戏2000倍封顶与单局100倍风控强制0确实无法同时满足",
+      "RESPIN_PERFORMANCE问题抓住了服务端定果与客户端表演的映射缺口，这是Slots游戏的核心体验风险",
+      "PURCHASE_FREE_MISSING问题全面覆盖了购买功能的核心配置缺失、断线恢复、幂等性等多个子症状",
+      "正确识别了需求文档3.5.1节'4个及以上夺宝符号'的复制粘贴错误，并合理吸收到购买免费功能问题中"
+    ],
+    "issues": [
+      "WIN_FORMULA定性为'表述不一致'但未明确区分'术语歧义'与'根本冲突'，实际上两份文档的公式在数学上可兼容实现，只是'符号值'术语定义不清",
+      "数值文档中存在两份RESPIN发生几率表格（0.15/0.1和0.05），主模型仅在quality_notes中提及，未作为正式finding输出",
+      "部分finding的evidence字段为空字符串，缺乏具体的文档段落或表格引用"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的定性偏差，补充了RESPIN概率表不一致的遗漏问题，结构完整、证据可追踪、lineage清晰，可直接给业务方阅读。"
+  },
+  "missed_findings": [
+    {
+      "issue_id": "RESPIN_PROBABILITY_CONFLICT",
+      "title": "数值文档中存在两份不同的RESPIN发生几率配置表",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "severity": "中",
+      "current_state": "数值文档中表格5和表格6均命名为'RESPIN发生几率'，但表格5的值为0.1，表格6的值为0.05，未说明哪份为最终生效配置，也未说明两份配置的适用场景（如普通游戏/免费游戏区分）。",
+      "evidence": "钱来了数值文档.docx / 表格5、表格6",
+      "risk": "开发无法确定RESPIN的实际触发概率，可能导致配置表冗余或触发逻辑错误，影响游戏爆率和玩家体验。",
+      "suggestion": "明确两份RESPIN概率表的适用场景（如表格5用于普通游戏、表格6用于免费游戏），或删除冗余表格，确保配置唯一性。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞配置落地"
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "PURCHASE_FREE_MISSING",
+        "primary_issue_ids": ["PURCHASE_FREE_MISSING"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "BIG_WIN_THRESHOLD",
+        "primary_issue_ids": ["BIG_WIN_THRESHOLD"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "NUM_SYMBOL_DISPLAY",
+        "primary_issue_ids": ["NUM_SYMBOL_DISPLAY"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "ZERO_SYMBOL_DISPLAY",
+        "primary_issue_ids": ["ZERO_SYMBOL_DISPLAY"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RESPIN_PERFORMANCE",
+        "primary_issue_ids": ["RESPIN_PERFORMANCE"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "WIN_FORMULA",
+        "primary_issue_ids": ["WIN_FORMULA"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FREE_CAP_VS_RISK",
+        "primary_issue_ids": ["FREE_CAP_VS_RISK"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "EXPAND_TRIGGER",
+        "primary_issue_ids": ["EXPAND_TRIGGER"],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "RESPIN_PROBABILITY_CONFLICT",
+        "source_missed_issue_ids": ["RESPIN_PROBABILITY_CONFLICT"],
+        "reason": "数值文档中存在两份不同值的RESPIN概率表，主模型仅在quality_notes中提及，未作为正式finding输出，需补充以确保配置落地无歧义。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档主玩法循环与基础界面描述较为清晰，但核心结算公式存在术语歧义、免费游戏风控与封顶规则存在根本冲突、Respin表演逻辑缺乏服务端到客户端的映射约束。此外，购买免费功能配置缺失，RESPIN概率表存在两份不同配置，需修复逻辑冲突并补充边界后方可进入开发。",
+    "document_quality_score": "C",
+    "score_reason": "免费游戏封顶与风控规则存在根本冲突，中奖公式存在术语歧义可能导致实现偏差，Respin表演逻辑缺乏服务端结果映射约束，购买免费功能核心配置缺失，RESPIN概率表存在两份不同配置，需修复逻辑冲突并补充边界后方可开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "免费游戏2000倍封顶与单局100倍风控强制0的规则冲突",
+        "owner": "数值策划",
+        "why_now": "若免费游戏内单局赢奖超过100倍被风控清零，则玩家永远无法达到2000倍封顶，两条核心规则自相矛盾，导致结算逻辑无法实现。",
+        "finding_source": "钱来了需求文档.docx / 3.4.3 免费旋转模式，段落168；钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控，段落49-51",
+        "finding_source_label": "需求文档3.4.3节、数值文档第六章",
+        "source_model": "primary"
+      },
+      {
+        "severity": "高",
+        "title": "中奖金额计算公式存在术语歧义，'符号值'定义不清",
+        "owner": "系统策划",
+        "why_now": "需求示例为'10×100×投注额'，数值公式为'乘数符号×符号值（即基础投注×符号赔率）'，两份文档在数学上可兼容实现，但'符号值'术语定义不清，若被误解为盘面显示的绝对金额，将导致结算金额相差10倍，引发严重资损。",
+        "finding_source": "钱来了需求文档.docx / 3.3.2 中间轴符号，段落147；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算，段落22",
+        "finding_source_label": "需求文档3.3.2节、数值文档第四章",
+        "source_model": "primary"
+      },
+      {
+        "severity": "高",
+        "title": "购买免费游戏的核心规则与配置结构缺失",
+        "owner": "系统策划",
+        "why_now": "开发无法确定扣款金额与发奖逻辑，测试无法设计购买功能的验收用例，直接阻塞该功能落地；同时需求文档3.5.1节存在'4个及以上夺宝符号'的复制粘贴错误，导致续杯触发条件在逻辑上无法成立。",
+        "finding_source": "钱来了需求文档.docx / 3.5.3 购买免费游戏，段落192-198；钱来了需求文档.docx / 3.5.1 基础设定，段落183",
+        "finding_source_label": "需求文档3.5.3节、3.5.1节",
+        "source_model": "primary"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "PURCHASE_FREE_MISSING",
+            "canonical_title": "购买免费游戏核心规则与配置缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "购买免费游戏的核心规则与配置结构缺失",
+            "current_state": "1. 需求文档3.5.3节提到购买免费游戏，但仅说明OMS控制开关和价格系数，未定义购买价格的具体计算公式（如投注额的多少倍），未明确购买后发放的免费次数是固定还是随机，且配置表序号标注为'（？）'。\n2. 需求文档3.5.2节仅说明'中途中断后，下次进入，继续旋转之前未完成的免费次数'，但未明确断线时若处于Respin/推展动画中、或处于续杯结算弹窗中时的恢复逻辑。\n3. 需求文档3.5.3节描述了购买免费游戏的入口和付费规则，但未说明弱网或重复点击下的幂等性处理，以及扣款与发奖的服务端权威边界。\n4. 需求文档3.5.1节'重复触发'规则中写道：'免费旋转期间再次出现4个及以上夺宝符号，可额外追加免费旋转次数'。但本游戏为3轴1行结构，盘面最多只有3个符号位，不可能出现4个符号，属于明显的复制粘贴错误。",
+            "evidence": "钱来了需求文档.docx / 3.5.3 购买免费游戏，段落192-198；钱来了需求文档.docx / 3.5.2 触发流程，段落189；钱来了需求文档.docx / 3.5.1 基础设定，段落183",
+            "risk": "1. 开发无法确定扣款金额与发奖逻辑，测试无法设计购买功能的验收用例，直接阻塞该功能落地。\n2. 测试缺乏异常流程的验收标准，可能导致重进后状态机卡死、动画丢失或次数计算错误。\n3. 若客户端重复发送购买请求，可能导致重复扣款或重复发放免费次数，引发资损。\n4. 明显的文本复制粘贴错误，导致续杯触发条件在逻辑上无法成立，开发无法实现，测试无法验收。",
+            "suggestion": "1. 明确购买价格公式（如：当前投注额 × 固定倍数）；\n2. 明确购买后触发的免费次数规则（如：固定10次，或按权重随机5/10/20次）；\n3. 确认并补全免费游戏调用的配置表序号及字段蓝图。\n4. 补充断线重连的专属规则：明确动画中断时的恢复策略、续杯结算弹窗中断时的处理、服务端如何记录并下发剩余的免费次数与累计赢奖。\n5. 明确购买接口的幂等性设计（如使用唯一订单号/请求ID），明确服务端校验余额、扣款、生成免费游戏局结果的原子性或补偿机制。\n6. 修正续杯条件，应与3.4.3节保持一致，改为'免费模式中再次出现免费旋转符号且左右轴数值匹配，可再次发放免费次数'。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "BIG_WIN_THRESHOLD",
+            "canonical_title": "大奖触发倍数阈值未定义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "大奖（Big Win等）触发倍数阈值未定义",
+            "current_state": "需求文档2.2节说明'根据通用倍数，显示big win\\mega win\\super win'，但未给出具体的倍数阈值区间。",
+            "evidence": "钱来了需求文档.docx / 2.2 大奖获取界面，段落21-22",
+            "risk": "测试无法验收大奖弹窗的触发条件，客户端表现可能与运营预期不符。",
+            "suggestion": "补充Big Win、Mega Win、Super Win的具体触发倍数阈值（如：≥50倍为Big Win，≥200倍为Mega Win等），并明确是单局赢奖/总投注还是单线赢奖/总投注。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "NUM_SYMBOL_DISPLAY",
+            "canonical_title": "数值符号XK显示规则边界不严谨",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "数值符号的'XK'显示规则边界条件不严谨",
+            "current_state": "需求文档3.3.1节说明'如果金额≥10000，则显示XK，如10000显示10K'，但未说明小数处理规则（如9999.9或10500如何显示）。",
+            "evidence": "钱来了需求文档.docx / 3.3.1 符号分类总览，表格3",
+            "risk": "客户端在处理非整数或临界值时可能出现显示异常或UI溢出。",
+            "suggestion": "明确XK显示的取整规则（如向下取整、四舍五入）及小数点保留策略，补充边界值示例（如10500显示10K还是10.5K）。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "ZERO_SYMBOL_DISPLAY",
+            "canonical_title": "数值符号'0倍'在盘面显示规则中的定义矛盾",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "数值符号'0倍/空'与盘面显示规则矛盾",
+            "current_state": "数值文档金币符号表包含ID=0（0倍/空，权重1000）；但需求文档符号分类总览中，数值符号档位仅有0.1, 0.5, 1, 5, 10。",
+            "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号，表格2；钱来了需求文档.docx / 3.3.1 符号分类总览，表格3",
+            "risk": "未明确0倍在盘面上是显示数字'0'还是留白（空白）。若显示0，需增加0的美术资源；若留白，需明确客户端渲染规则。",
+            "suggestion": "明确ID=0在盘面上的表现形式。建议与数值文档对齐，明确0倍即为'空白/无符号'，并在需求文档中补充说明'当随机到0倍时，该轴显示为空'。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "RESPIN_PERFORMANCE",
+            "canonical_title": "Respin表演逻辑缺乏服务端结果映射约束",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "Respin机制的服务端定果与客户端表演逻辑缺乏映射约束",
+            "current_state": "数值文档明确'服务器处理机制为先得到最终结果盘面，再进行一次表演'，'RESPIN必定命中/不命中'；需求文档描述为'左右轴重转，中间轴固定，重转后若左右匹配则中奖'。",
+            "evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制，段落30-39；钱来了需求文档.docx / 3.4.1 重转模式，段落155-156",
+            "risk": "若服务端定死最终结果，客户端在表演'第一次不中，第二次中'时，若第一次随机出的盘面碰巧满足中奖条件，将导致客户端表现与服务端结果不一致，引发玩家对'假转'的客诉。",
+            "suggestion": "程序与策划需明确Respin的表演盘面生成规则：1. 服务端是否直接下发两次盘面结果？2. 若客户端本地表演，第一次盘面生成时必须屏蔽中奖线（如强制1,3列不同），确保表现与最终结果严格对齐。",
+            "planner_role": "程序",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "WIN_FORMULA",
+            "canonical_title": "中奖金额计算公式存在术语歧义",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "中奖金额计算公式存在术语歧义，'符号值'定义不清",
+            "current_state": "需求文档示例为'10×100×投注额'（即数值符号×乘数×投注额）；数值文档公式为'乘数符号×符号值（即基础投注×符号赔率）'，且数值表中符号值定义为0.1~10。两份文档在数学上可兼容实现（若'符号值'='基础投注×符号赔率'），但'符号值'术语定义不清，容易被误解为盘面显示的绝对金额。",
+            "evidence": "钱来了需求文档.docx / 3.3.2 中间轴符号，段落147；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算，段落22",
+            "risk": "若'符号值'被误解为盘面显示的绝对金额（如10元），将导致结算金额相差10倍，引发严重资损。虽然两份文档在数学上可兼容，但术语歧义可能导致实现偏差。",
+            "suggestion": "统一公式表述，建议明确为：单线中奖金额 = 左/右轴数值符号赔率(0.1~10) × 中间轴乘数符号(1~100) × 基础投注额。并在数值文档中补充完整的计算示例，明确'符号值'='基础投注×符号赔率'。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "FREE_CAP_VS_RISK",
+            "canonical_title": "免费游戏封顶规则与风控规则直接冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "免费游戏2000倍封顶与单局100倍风控强制0的规则冲突",
+            "current_state": "需求文档规定免费模式中总赢奖达到投注额的2000倍时自动结束；但数值文档风控规则规定，普通游戏和免费游戏超过100倍时，直接强制0倍（第1列必定为空）。",
+            "evidence": "钱来了需求文档.docx / 3.4.3 免费旋转模式，段落168；钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控，段落49-51",
+            "risk": "若免费游戏内单局赢奖超过100倍被风控清零，则玩家永远无法达到2000倍封顶，两条核心规则自相矛盾，导致结算逻辑无法实现。",
+            "suggestion": "数值策划需明确免费游戏内的风控策略：1. 免费游戏是否豁免100倍强制0的风控？2. 若需保留风控，2000倍封顶是否改为'单局100倍封顶'或调整风控阈值？需统一两份文档的结算口径。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "EXPAND_TRIGGER",
+            "canonical_title": "推展机制触发条件中'功能符号'与'空'的定义冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "推展机制的触发条件中'功能符号'与'空'的定义冲突",
+            "current_state": "需求文档称推展触发条件为'中间轴未出现任何功能符号'；数值文档称触发条件为'2列为空（乘数符号为0）'。",
+            "evidence": "钱来了需求文档.docx / 3.4.2 推展模式，段落158；钱来了数值文档.docx / 五、基础游戏・核心机制，段落28-29",
+            "risk": "若中间轴出现x2~x100的乘数符号，算不算'功能符号'？若算，则推展不会触发；若不算，则与数值文档'2列为空才触发'矛盾。定义不清会导致推展概率和触发逻辑错误。",
+            "suggestion": "统一术语定义，明确'功能符号'仅指银行、免费符号，还是包含所有乘数符号。建议直接以数值文档为准，修改需求文档为'中间轴乘数符号为空（ID=0）时触发推展'。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "RESPIN_PROBABILITY_CONFLICT",
+            "canonical_title": "数值文档中存在两份不同的RESPIN发生几率配置表",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "数值文档中存在两份不同的RESPIN发生几率配置表",
+            "current_state": "数值文档中表格5和表格6均命名为'RESPIN发生几率'，但表格5的值为0.1，表格6的值为0.05，未说明哪份为最终生效配置，也未说明两份配置的适用场景（如普通游戏/免费游戏区分）。",
+            "evidence": "钱来了数值文档.docx / 表格5、表格6",
+            "risk": "开发无法确定RESPIN的实际触发概率，可能导致配置表冗余或触发逻辑错误，影响游戏爆率和玩家体验。",
+            "suggestion": "明确两份RESPIN概率表的适用场景（如表格5用于普通游戏、表格6用于免费游戏），或删除冗余表格，确保配置唯一性。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞配置落地"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "购买免费游戏的具体价格计算公式及购买后发放的免费次数规则（固定或随机）。",
+      "大奖（Big Win/Mega Win/Super Win）的具体触发倍数阈值。",
+      "断线重连时，若处于Respin/推展动画中或续杯结算弹窗中的具体恢复策略。",
+      "Respin表演时，客户端第一次盘面生成的防中奖约束规则。",
+      "数值符号'0倍'在盘面上的具体视觉表现（显示0还是留白）。",
+      "两份RESPIN概率表（0.1和0.05）的适用场景或最终生效配置。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证左右轴数值匹配且中间轴为不同乘数时的中奖金额计算是否严格符合统一后的公式。",
+        "验证免费游戏内续杯机制是否正确累加次数，且总赢奖达到封顶值时是否正确截断并结算。",
+        "验证购买免费游戏功能的扣款、发奖、次数继承及OMS开关控制。",
+        "验证Respin和推展机制的触发优先级及互斥逻辑，确保不会同时触发。"
+      ],
+      "异常操作": [
+        "验证在Respin/推展动画播放中断线重连后，盘面状态和次数是否正确恢复。",
+        "验证在免费游戏续杯结算弹窗弹出时断线，重连后是否能正确继续或结算。",
+        "验证弱网环境下重复点击购买免费游戏按钮，是否触发幂等性保护，无重复扣款。"
+      ],
+      "兼容性": [
+        "验证不同投注档位下，盘面数值符号的显示规则（包括XK的边界值显示）是否正确。",
+        "验证免费游戏界面与普通游戏界面的背景颜色、下注区域隐藏等UI切换是否平滑。"
+      ],
+      "安全专项": [
+        "验证服务端对Respin和推展结果的权威性，客户端修改本地盘面数据是否影响最终结算。",
+        "验证免费游戏2000倍封顶与风控100倍规则统一后，是否存在绕过风控刷奖的漏洞。"
+      ],
+      "回归影响": [
+        "验证基础游戏的风控逻辑（超过100倍强制0倍）是否影响普通游戏的正常爆率。",
+        "验证排行榜、记录等通用模块在免费游戏高频率结算下的数据准确性。"
+      ],
+      "性能与稳定性": [
+        "验证免费游戏无限续杯极端情况下，客户端内存与动画资源释放是否稳定，无OOM风险。",
+        "验证大奖弹窗数字快速变动效果在低端机型上的帧率表现。"
+      ],
+      "用户体验": [
+        "验证Respin和推展的动画表现是否流畅，且与最终中奖/不中奖结果在视觉上逻辑自洽。",
+        "验证未中奖时滚动信息的切换节奏及8-10秒的移动耗时是否符合预期。"
+      ]
+    },
+    "quality_notes": [
+      "需求文档3.5.1节存在明显的文本复制粘贴错误（'4个及以上夺宝符号'），需全局排查是否有其他从竞品或其他项目复制过来的未修改文本。",
+      "数值文档中'推展（激励）发生几率'和'RESPIN发生几率'存在两个不同权重的表格（0.15/0.1和0.05），需确认哪个是最终生效配置，避免配置表冗余或冲突。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片33（规则面板）中包含大量其他游戏（如疯狂宝石/奥林匹斯之门）的符号赔付表和Tumble机制，疑似占位图或竞品截图，不能作为本游戏规则的验收依据。",
+      "图片29、31中包含明显的占位符文本（如'额外投注需要额外投注...'、'texttexttext...'），说明相关弹窗UI和文案尚未定稿，需跟进最终资源。",
+      "多张截图（如图片4、5、6、7等）底部状态栏、按钮文字及具体数值因分辨率或遮挡不可读，无法用于验证底部UI布局和功能入口的准确性。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的定性偏差，补充了RESPIN概率表不一致的遗漏问题，结构完整、证据可追踪、lineage清晰，可直接给业务方阅读。"
+  },
+  "review_notes": [
+    "WIN_FORMULA问题已修正定性：从'表述不一致'改为'术语歧义'，明确两份文档在数学上可兼容实现，但'符号值'术语定义不清可能导致实现偏差。保持高严重度是因为歧义可能导致10倍资损风险。",
+    "RESPIN_PROBABILITY_CONFLICT为新增finding，补充了数值文档中两份RESPIN概率表不一致的问题，主模型仅在quality_notes中提及，未作为正式finding输出。",
+    "需求文档3.5.1节'4个及以上夺宝符号'的复制粘贴错误已被主模型吸收到PURCHASE_FREE_MISSING问题中，不再单独列出。",
+    "建议后续进一步排查需求文档中是否还有其他从竞品或其他项目复制过来的未修改文本。"
+  ]
+}
+```

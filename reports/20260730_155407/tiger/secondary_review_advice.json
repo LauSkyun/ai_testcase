@@ -1,0 +1,269 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较好，准确识别了兜底赔付逻辑歧义、时长冲突、机器人影响等高信号核心问题，并正确指出了文档中多处数值与UI展示的冲突。但存在两个主要问题：一是包含了低信号的checklist式提醒（如'服务端权威未强调'）和对游戏设计的无端质疑（如'平局概率合理性'），这些问题缺乏明确的文档证据支持；二是遗漏了几个直接影响结算和策略触发的高信号问题，如奖池抽水触发的时间口径不一致、特殊人群定义中的边界条件不清等。",
+    "strengths": [
+      "准确识别了兜底赔付逻辑的歧义及其可能导致的经济风险",
+      "发现了文档与UI截图之间的多处严重冲突（时长、赔率、术语）",
+      "正确指出了机器人对核心策略的影响口径未定义",
+      "问题结构清晰，证据引用准确"
+    ],
+    "issues": [
+      "包含了低信号的checklist式提醒（'服务端权威未强调'），这类问题在文档未明确要求客户端计算时不应作为高优先级问题",
+      "'平局概率合理性'finding缺乏文档证据支持，属于对游戏设计的无端质疑，经计算该设计的RTP是合理的",
+      "遗漏了奖池抽水触发条件中'今日+昨日'与'本轮'的时间口径不一致问题",
+      "遗漏了特殊人群定义中的边界条件不清问题（如'最近3局'的定义）",
+      "'广播配置模糊'finding混合了两个不同问题（广播配置+断线恢复），应拆分或聚焦"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "候选报告需要移除低信号问题、补充遗漏的高信号问题，并修正对游戏设计的误判后才能直接输出"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选报告需要移除低信号问题、补充遗漏的高信号问题，并修正对游戏设计的误判后才能直接输出"
+  },
+  "review_notes": [
+    "主模型的'平局概率合理性'finding经计算验证，该设计的RTP约为96.6%，属于合理的博彩游戏设计，已在unsupported_findings中说明并移除。",
+    "主模型的'服务端权威未强调'finding属于低信号checklist式提醒，在文档未明确要求客户端参与核心计算的情况下不应作为高优先级问题，已在unsupported_findings中说明并移除。",
+    "主模型的'广播配置模糊'finding混合了两个不同问题（广播配置+断线恢复），建议在current_state中分点说明，无需在candidate中拆分。",
+    "候选报告新增了3个遗漏的中高信号问题：奖池抽水时间口径不一致、亏损大R边界条件不清、Repeat多选项复用逻辑缺失。",
+    "建议后续进一步澄清：1）奖池允许为负数的具体上限；2）特殊人群保护策略的每日触发次数限制是否合理；3）排行榜积分相同时的具体排序规则。"
+  ],
+  "unsupported_findings": [
+    {
+      "issue_id": "平局概率合理性",
+      "reason": "该finding缺乏文档证据支持，属于对游戏设计的无端质疑。经计算，三个选项权重均为100（各33.3%概率）且倍率均为2.9的设计，其RTP约为96.6%（玩家期望损失3.4%），这是合理的博彩游戏设计。文档未表明这是错误配置。"
+    },
+    {
+      "issue_id": "服务端权威未强调",
+      "reason": "该finding属于低信号的checklist式提醒。文档描述的是业务逻辑而非技术实现，未明确要求客户端参与核心计算。在缺乏明确证据表明客户端会篡改结果的情况下，不应作为高优先级问题。"
+    }
+  ],
+  "merge_recommendations": [
+    {
+      "primary_issue_ids": [
+        "广播配置模糊"
+      ],
+      "recommendation": "建议将'广播配置模糊'finding拆分为两个独立问题：1）'可见占比'配置定义模糊；2）断线重连规则缺失。但考虑到primary模型已在missing_information中提及断线重连，且当前finding已包含两个子症状，可在current_state中分点说明，无需在candidate中拆分。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_01",
+      "title": "奖池不抽水触发条件的时间口径不一致",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 3.7.1. 奖池基础规则 段落34-35",
+      "reason": "段落34定义统计口径为'今日+昨日奖池累计净收入'（2天累计值），但段落35的判定条件为'净收入 < 本轮最小选项投入金额 × 3'（单轮值）。将2天累计值与单轮阈值比较，可能导致触发条件过于宽松或严格，影响奖池经济平衡。"
+    },
+    {
+      "issue_id": "MISS_02",
+      "title": "亏损大R的'最近{3}局'定义边界不清",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 3.8.1.2. 亏损大R 段落87",
+      "reason": "段落87定义'今日玩过游戏且最近的{3}局win≤{0}'，但未说明：1）如果用户今日只玩了1-2局，是否仍适用此条件；2）'最近3局'是否包含今日之前的对局。这会导致实现歧义和测试用例无法设计。"
+    },
+    {
+      "issue_id": "MISS_03",
+      "title": "Repeat按钮复用多选项投入的逻辑未定义",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 3.3. 各模块功能说明 表格3 档位模块",
+      "reason": "表格3说明Repeat按钮'记住当前用户上一局的投入信息（每个区域投入多少货币）'，但未说明：1）如果上一局在多个选项都有投入，Repeat时是否按相同比例复用；2）如果当前余额不足以完全复用上一局的总投入，是部分复用还是整体失败。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "兜底逻辑歧义",
+        "primary_issue_ids": [
+          "兜底逻辑歧义"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "时长冲突",
+        "primary_issue_ids": [
+          "时长冲突"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "机器人影响",
+        "primary_issue_ids": [
+          "机器人影响"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "局内累加规则缺失",
+        "primary_issue_ids": [
+          "局内累加规则缺失"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "广播配置模糊",
+        "primary_issue_ids": [
+          "广播配置模糊"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "平局概率合理性",
+        "primary_issue_ids": [
+          "平局概率合理性"
+        ]
+      },
+      {
+        "candidate_issue_id": "服务端权威未强调",
+        "primary_issue_ids": [
+          "服务端权威未强调"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "奖池抽水时间口径不一致",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "该问题直接影响奖池经济平衡和策略触发逻辑，属于高信号问题，primary模型遗漏"
+      },
+      {
+        "candidate_issue_id": "亏损大R边界条件不清",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "该问题影响特殊人群保护策略的准确触发，属于中信号问题，primary模型遗漏"
+      },
+      {
+        "candidate_issue_id": "Repeat多选项复用逻辑缺失",
+        "source_missed_issue_ids": [
+          "MISS_03"
+        ],
+        "reason": "该问题影响核心 gameplay 功能的实现，属于中信号问题，primary模型遗漏"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "候选报告需要移除低信号问题、补充遗漏的高信号问题，并修正对游戏设计的误判后才能直接输出",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

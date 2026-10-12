@@ -1,0 +1,14 @@
+{
+  "game": "小鸡",
+  "variant_id": "A",
+  "repeat": 2,
+  "status": "failed",
+  "output_dir": "blinded/A/小鸡/repeat_02",
+  "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+  "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+  "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+  "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+  "secondary_message_hash": "c5047332ff89fde5e7c245f0eeadfbf30bc8b51dd1bd662abac398d3142eb7cd",
+  "temperature": 0,
+  "error": "secondary_benchmark:A:小鸡:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

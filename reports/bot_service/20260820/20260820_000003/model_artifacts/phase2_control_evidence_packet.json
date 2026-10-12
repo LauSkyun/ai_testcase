@@ -1,0 +1,234 @@
+{
+  "evidence_packet_id": "1e281bc2ac968e811e2798cb54786315a7057fb7bf0d1a974331189c6169c18e",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可same_control；一旦为same_control，status和final必须都是covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_01",
+          "title": "1800宝石余额阈值的判定与计算口径缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "未付费用户单机版游戏.md / [段落8]: [段落8][章节：二、具体方案 > 2.1 3款自研游戏另设单机版] ● 单机版指另设一个游戏分支，在前端所有不变的情况下，重构后端逻辑 ，重构后①联机游戏peacock、fruitmachine，单机游戏yummy，每个用户都是独立的，仅用户本人参与该游戏，钱进钱出不影响主端游戏 ②单机版不采用主端的开奖逻辑，单机版按新的后端逻辑去执行开奖判断，产出自有的开奖结果，单机版fruitmachine没有大奖逻辑",
+        "未付费用户单机版游戏.md / [段落12]: [段落12][章节：二、具体方案 > 2.2单机版逻辑] ● 仅对yummy、peacock、fruitmachine进行改造"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_03",
+          "title": "fishing star局数统计的跨游戏依赖与接口未说明"
+        },
+        {
+          "issue_id": "UX_01",
+          "title": "前15局“最大赔付”与1800硬顶导致体验断崖"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "未付费用户单机版游戏.md / [段落9]: [段落9][章节：二、具体方案 > 2.1 3款自研游戏另设单机版] ● 主端和单机版由链接区分，支持业务仅针对未付费用户，在完成首充前，在游戏大厅、秀场房（指定房间）、语聊房（非新游戏房，指定房间）打开单机版，首充后，若用户不在游戏里，秀场房&语聊房的游戏列表同步所有游戏，游戏大厅同步所有游戏，若用户在游戏内，就主动帮用户刷新游戏，进入主端游戏 ，用户再也无法从任何渠道开启单机版游戏",
+        "未付费用户单机版游戏.md / [段落18]: [段落18][章节：二、具体方案 > 2.2单机版逻辑] ● 当用户在游戏中充值成功，且并未退出单机游戏时，帮用户刷新游戏页面进入主端游戏"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "方案2中Yummy“必不中”机制破坏独立概率模型"
+        },
+        {
+          "issue_id": "TEST_01",
+          "title": "首充强制刷新游戏的时机与异常处理未定义"
+        }
+      ],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_04",
+          "title": "每日局数重置的时间点与跨天边界未定义"
+        },
+        {
+          "issue_id": "LOGIC_02",
+          "title": "方案2中Yummy“必不中”机制破坏独立概率模型"
+        }
+      ],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "SEC_01",
+          "title": "单机版服务端权威性与防篡改边界未明确"
+        },
+        {
+          "issue_id": "TEST_01",
+          "title": "首充强制刷新游戏的时机与异常处理未定义"
+        }
+      ],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_04",
+          "title": "每日局数重置的时间点与跨天边界未定义"
+        },
+        {
+          "issue_id": "LOGIC_03",
+          "title": "累计中奖X倍的单线倍数分配规则不清晰"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [
+        "未付费用户单机版游戏.md / 图片解析: 3. **前15局开奖规则**：Peacock均为\"开最大赔付\"；Fruitmachine均为\"开最大赔付\"；Yummy均为\"累计倍数中X倍\"。",
+        "未付费用户单机版游戏.md / 图片解析: 7. **16局及之后方案2 - Peacock/Fruitmachine共性规则**：50%开最大赔付，50%开最小赔付；若开最大赔付会让余额超1800，则开最小赔付。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_01",
+          "title": "1800宝石余额阈值的判定与计算口径缺失"
+        },
+        {
+          "issue_id": "UX_01",
+          "title": "前15局“最大赔付”与1800硬顶导致体验断崖"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [
+        "未付费用户单机版游戏.md / [段落13]: [段落13][章节：二、具体方案 > 2.2单机版逻辑] ● 在参与三个游戏时，读该用户三个游戏的今日局数，根据局数去按概率判断中奖或不中奖，命中中奖时则走【若开奖】逻辑，命中不中奖时，yummy直接不中奖，peacock和fruitmachine走最小赔付，该表格15局以前的各局数的是否中奖、yummy的中奖倍数支持配置，16局之后方案1和2的各个数值支持配置，支持新增局数判断（如初期是15局，后续想让用户多玩，增加到20局，则需支持新增5局及配置5局的各项配置）",
+        "未付费用户单机版游戏.md / [段落14]: [段落14][章节：二、具体方案 > 2.2单机版逻辑] ● 局数是统计的yummy、peacock、fruitmachine、fishing star的累计局数，当首次玩单机游戏时，非单机游戏的今日局数已超15局，则不再执行本逻辑，若未满15局，则按具体累计局数去做判断，如fishing star玩了5局，进单机游戏时则按第6局去判断"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "主端局数>15时“不再执行本逻辑”存在严重歧义"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [
+        "未付费用户单机版游戏.md / [段落8]: [段落8][章节：二、具体方案 > 2.1 3款自研游戏另设单机版] ● 单机版指另设一个游戏分支，在前端所有不变的情况下，重构后端逻辑 ，重构后①联机游戏peacock、fruitmachine，单机游戏yummy，每个用户都是独立的，仅用户本人参与该游戏，钱进钱出不影响主端游戏 ②单机版不采用主端的开奖逻辑，单机版按新的后端逻辑去执行开奖判断，产出自有的开奖结果，单机版fruitmachine没有大奖逻辑",
+        "未付费用户单机版游戏.md / [段落12]: [段落12][章节：二、具体方案 > 2.2单机版逻辑] ● 仅对yummy、peacock、fruitmachine进行改造"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_03",
+          "title": "fishing star局数统计的跨游戏依赖与接口未说明"
+        },
+        {
+          "issue_id": "UX_01",
+          "title": "前15局“最大赔付”与1800硬顶导致体验断崖"
+        }
+      ],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

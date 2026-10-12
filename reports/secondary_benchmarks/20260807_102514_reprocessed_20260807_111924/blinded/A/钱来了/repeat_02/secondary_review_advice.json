@@ -1,0 +1,520 @@
+{
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "primary_quality_assessment": {
+    "summary": "主模型报告整体质量良好，准确识别了核心机制（RESPIN、推展）的逻辑矛盾、数值配置冲突和关键规则缺失。但对结算公式的判定过于严格，实际上需求文档示例已给出正确的计算方式，公式在兼容解释下是一致的，应降级为术语歧义。此外，遗漏了需求文档内部关于免费续杯触发条件的明显错误（4个及以上夺宝符号）。",
+    "strengths": [
+      "准确识别了RESPIN底层数据与触发条件的矛盾",
+      "准确识别了乘数符号ID=0的表演逻辑表述不清",
+      "准确识别了风控基数与封顶规则的口径冲突",
+      "准确识别了免费续杯概率配置缺失",
+      "准确识别了推展机制方向与盘面结构的冲突"
+    ],
+    "issues": [
+      "将结算公式的术语歧义误判为根本冲突，未充分考虑需求文档示例的兼容解释",
+      "遗漏了需求文档 [段落183] 关于免费续杯触发条件的明显错误（4个及以上夺宝符号）",
+      "部分问题的现状描述可以更清晰地分点展开"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的误判，补充了遗漏的问题，结构完整、证据充分、来源可追踪，可直接给业务方阅读。"
+  },
+  "quality_assessment": {
+    "summary": "Candidate 由 Primary 与已准入增量确定性生成。",
+    "strengths": [
+      "完整保留 Primary 骨架、评分和核心问题。"
+    ],
+    "issues": [],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "review_notes": [
+    "需求文档 [段落183] 描述\"免费旋转期间再次出现4个及以上夺宝符号，可额外追加免费旋转次数\"，但游戏仅有3轴且免费符号仅在中间轴，不可能出现4个及以上。建议修正为与 [段落151] 一致的描述：\"再次出现免费旋转符号且左右轴数值匹配\"。",
+    "CROSS_01 从高风险调整为中风险，原因是需求文档示例（[段落147]）已给出正确的计算方式，公式在兼容解释下是一致的，属于术语歧义而非根本冲突。",
+    "protocol_profile=phase2_v2_1; evidence_packet_id=5704fbea4ae2d6f1376ad53f7d890af5ad31be87609b1db25794644c814951de",
+    "candidate_generation_mode=deterministic_primary_plus_admitted_delta"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_02",
+        "primary_issue_ids": [
+          "CROSS_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_03",
+        "primary_issue_ids": [
+          "CROSS_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "Candidate 由系统确定性生成，不依赖模型自评。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [],
+      "confirmed_control_keys": [],
+      "candidate_to_audit_key": {},
+      "candidate_to_control_key": {},
+      "finding_audit_keys": {},
+      "finding_control_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CROSS_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 1.3 项目特色 [段落15]",
+            "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算 [段落22]",
+            "钱来了需求文档.docx / 3.5.2 触发流程 [段落190]",
+            "钱来了需求文档.docx / 图片解析 图片11"
+          ],
+          "reason": "Primary CROSS_01 已覆盖结算公式的术语歧义问题，虽然严重度调整为中，但控制面已覆盖。；文档提及免费次数结束后展示总收益，但未明确所有场景（如重转、推展）下UI与结算的映射关系。属于一般性提醒，非具体阻塞问题。",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 1.3 项目特色 [段落15]",
+                "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算 [段落22]"
+              ],
+              "reason": "Primary CROSS_01 已覆盖结算公式的术语歧义问题，虽然严重度调整为中，但控制面已覆盖。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.5.2 触发流程 [段落190]",
+                "钱来了需求文档.docx / 图片解析 图片11"
+              ],
+              "reason": "文档提及免费次数结束后展示总收益，但未明确所有场景（如重转、推展）下UI与结算的映射关系。属于一般性提醒，非具体阻塞问题。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.4.1 重转模式 [段落154]",
+            "钱来了需求文档.docx / 3.4.2 推展模式 [段落158]",
+            "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落122]"
+          ],
+          "reason": "Primary LOGIC_02 已覆盖RESPIN触发条件与底层数据的矛盾。需求文档 [段落183] 的续杯触发条件错误属于不同根因，已写入review_notes。；Primary CROSS_02 已覆盖风控基数与封顶规则的口径冲突。",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.4.1 重转模式 [段落154]",
+                "钱来了需求文档.docx / 3.4.2 推展模式 [段落158]"
+              ],
+              "reason": "Primary LOGIC_02 已覆盖RESPIN触发条件与底层数据的矛盾。需求文档 [段落183] 的续杯触发条件错误属于不同根因，已写入review_notes。",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+                "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落122]"
+              ],
+              "reason": "Primary CROSS_02 已覆盖风控基数与封顶规则的口径冲突。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 2.4.7 余额变化 [段落63]",
+            "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落125]",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "文档提及下注扣除货币时直接减少，但未明确具体触发节点（旋转前还是旋转后）。属于一般性提醒，常见于老虎机游戏（旋转前扣款）。；文档提及基础游戏每局结算、免费游戏结束后展示总收益，但未明确免费游戏派奖的具体到账节点。属于一般性提醒。；文档未涉及资金事务失败的回滚、补发、重试与幂等规则。此类能力通常由平台中台统一处理，非本玩法专属规则。",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 2.4.7 余额变化 [段落63]"
+              ],
+              "reason": "文档提及下注扣除货币时直接减少，但未明确具体触发节点（旋转前还是旋转后）。属于一般性提醒，常见于老虎机游戏（旋转前扣款）。",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+                "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落125]"
+              ],
+              "reason": "文档提及基础游戏每局结算、免费游戏结束后展示总收益，但未明确免费游戏派奖的具体到账节点。属于一般性提醒。",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及资金事务失败的回滚、补发、重试与幂等规则。此类能力通常由平台中台统一处理，非本玩法专属规则。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 表格8",
+            "钱来了数值文档.docx / 表格9",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文",
+            "钱来了需求文档.docx / 1.3 项目特色 [段落15]"
+          ],
+          "reason": "Primary CROSS_02 已覆盖100倍风控上限的口径问题。；文档未涉及奖池机制，本游戏为普通老虎机，无奖池透支场景。；文档提及2000倍封顶大奖（相对上限），但未明确绝对金额封顶。此类上限通常由平台统一配置，可补充说明。",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了数值文档.docx / 表格8",
+                "钱来了数值文档.docx / 表格9"
+              ],
+              "reason": "Primary CROSS_02 已覆盖100倍风控上限的口径问题。",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及奖池机制，本游戏为普通老虎机，无奖池透支场景。",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 1.3 项目特色 [段落15]"
+              ],
+              "reason": "文档提及2000倍封顶大奖（相对上限），但未明确绝对金额封顶。此类上限通常由平台统一配置，可补充说明。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析 图片32",
+            "钱来了需求文档.docx / 图片解析 图片1",
+            "钱来了需求文档.docx / 3.3.2 中间轴符号 [段落150]"
+          ],
+          "reason": "记录界面明确显示\"最多显示100条最近记录\"，统计窗口清晰。；UI截图显示免费旋转次数为5、10、20，与需求文档描述一致。",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 图片解析 图片32"
+              ],
+              "reason": "记录界面明确显示\"最多显示100条最近记录\"，统计窗口清晰。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 图片解析 图片1",
+                "钱来了需求文档.docx / 3.3.2 中间轴符号 [段落150]"
+              ],
+              "reason": "UI截图显示免费旋转次数为5、10、20，与需求文档描述一致。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {}
+}

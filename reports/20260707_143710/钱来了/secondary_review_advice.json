@@ -1,0 +1,221 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体抓住了核心矛盾，对数值文档与需求文档之间的关键冲突识别准确，问题结构清晰，且提供了可执行的测试建议。但在部分问题描述上存在混合症状、标题不够精准的情况，且对数值文档内部自相矛盾的描述可进一步精确化。",
+    "strengths": [
+      "准确识别了风控截断与最大赔付上限的根本冲突",
+      "指出了免费符号基础赔付公式缺失这一阻塞点",
+      "跨系统影响中合并了多个关联问题，思路清晰"
+    ],
+    "issues": [
+      "REEL_GENERATION_CONFLICT 问题描述偏向跨文档冲突，实际是数值文档内部自相矛盾，需修正定性",
+      "部分 finding 混合了多个子症状，标题未能完全覆盖，可能导致阅读混淆",
+      "遗漏了数值文档中免费类别替换为 100 倍的歧义规则"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "主模型报告经过小幅修正即可直接交付，核心阻塞项均已被准确识别，仅需对个别问题描述和标题进行微调，并补充一项遗漏的数值规则歧义。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "主模型报告经过小幅修正即可直接交付，核心阻塞项均已被准确识别，仅需对个别问题描述和标题进行微调，并补充一项遗漏的数值规则歧义。"
+  },
+  "review_notes": [
+    "已将 REEL_GENERATION_CONFLICT 问题从跨文档冲突修正为数值文档内部自相矛盾，并调整了标题和描述。",
+    "已将 BUY_BONUS_CONFLICT 和 FREE_SPIN_RETRIGGER_UI 的标题改为覆盖所有子症状，并在现状描述中分点列出，避免遗漏。",
+    "新增了 MISSING_FREE_REPLACE_RULE 问题，以覆盖数值文档中免费替换规则的歧义。",
+    "所有 kept 问题均保留了原 issue_id，仅修改了部分描述和严重度，确保连续性。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSING_FREE_REPLACE_RULE",
+      "canonical_title": "免费游戏中乘数符号替换规则不明确",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "severity": "中",
+      "title": "免费游戏中 '当表演权重随机到了2个免费类别时，随机将其中一个替换为100倍' 的规则存在歧义",
+      "current_state": "数值文档段落15描述：'当表演权重随机到了2个免费类别时，随机将其中一个替换为100倍'。但未明确说明 '免费类别' 具体指代什么（是免费5/10/20符号，还是其他），也未说明该替换是否影响结算公式、是否仅影响表演层，以及该规则是否适用于所有游戏模式。",
+      "evidence": "钱来了数值文档.docx / 三、基础游戏・乘数符号（第二列）段落15",
+      "risk": "若该规则参与实际结算，可能导致免费游戏中的赔付计算出现非预期行为，且开发人员无法准确实现该逻辑。",
+      "suggestion": "澄清 '免费类别' 的含义，并明确该替换规则的应用范围（仅表演层/实际结算层）、触发条件，以及是否影响风控和2000倍封顶。",
+      "planner_role": "数值策划",
+      "confidence": "中",
+      "blocking": "阻塞测试用例设计"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "BIG_WIN_THRESHOLD",
+        "primary_issue_ids": [
+          "BIG_WIN_THRESHOLD"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FREE_SPIN_PAYOUT",
+        "primary_issue_ids": [
+          "FREE_SPIN_PAYOUT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "REEL_GENERATION_CONFLICT",
+        "primary_issue_ids": [
+          "REEL_GENERATION_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modified": "标题和描述已修正为更准确反映数值文档内部矛盾，而非跨文档冲突"
+      },
+      {
+        "candidate_issue_id": "EXPAND_DIRECTION",
+        "primary_issue_ids": [
+          "EXPAND_DIRECTION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RTP_CAP_CONFLICT",
+        "primary_issue_ids": [
+          "RTP_CAP_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "BUY_BONUS_CONFLICT",
+        "primary_issue_ids": [
+          "BUY_BONUS_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modified": "标题更改为覆盖所有子问题，现状描述中分点列出互斥、断线恢复、幂等性"
+      },
+      {
+        "candidate_issue_id": "FREE_SPIN_RETRIGGER_UI",
+        "primary_issue_ids": [
+          "FREE_SPIN_RETRIGGER_UI"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modified": "标题更改为覆盖UI反馈和自动停止条件，现状描述分点列出"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "MISSING_FREE_REPLACE_RULE",
+        "source_missed_issue_ids": [
+          "MISSING_FREE_REPLACE_RULE"
+        ],
+        "reason": "主模型遗漏了数值文档中免费替换100倍的歧义规则，该规则可能影响免费游戏结算"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "主模型报告经过小幅修正即可直接交付，核心阻塞项均已被准确识别，仅需对个别问题描述和标题进行微调，并补充一项遗漏的数值规则歧义。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

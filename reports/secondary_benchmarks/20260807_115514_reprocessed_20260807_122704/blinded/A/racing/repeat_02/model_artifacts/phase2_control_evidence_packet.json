@@ -1,0 +1,258 @@
+{
+  "evidence_packet_id": "82555443c9b3db4c15a3c0868e55e32a8ebd90e2469c48958f1c2d5176d72e5e",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可same_control；一旦为same_control，status和final必须都是covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落9]: [段落9][章节：3.1首页顶栏板块] 统计板块-win rate rank。所有车型按胜率排序，相同胜率时随机排序，展示各车型在最近30天的胜率和赔率，当没数据时，胜率展示33.3%，赔率展示3.3",
+        "musee游戏Racing.docx / [段落36]: [段落36][章节：3.4开奖逻辑] 开奖时间计算公式，3段地形的L均为100m，T是实际消耗的秒数,V是基础速度，v*k就是各车型在各地形的速度，游戏速度等数值"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "T_VARIABLE_CONFLICT",
+          "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值"
+        },
+        {
+          "issue_id": "DATA_ISOLATION",
+          "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落10]: [段落10][章节：3.1首页顶栏板块] 统计板块-车型在各地形速度。这个是固定数据，读后台配置，展示该车型在各地形的基础速度，展示现有按速度高低来，v*k就是各车型在各地形的速度",
+        "musee游戏Racing.docx / 图片解析: 1. **游戏主界面 UI**：包含顶部标题\"R RACER\"，倒计时显示\"02:23:45:28\"，以及三辆可选赛车（橙色车、绿色越野车、摩托车），下方有投注金额选择按钮（100、500、1000、MAX）。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "FAKE_ODDS_MAPPING",
+          "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失"
+        },
+        {
+          "issue_id": "DATA_ISOLATION",
+          "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落8]: [段落8][章节：3.1首页顶栏板块] 音效。默认开启，点击按钮可以开启或关闭音效，下次进入游戏时读取上次游戏的音效开关状态，音效总共4类，",
+        "musee游戏Racing.docx / [段落14]: [段落14][章节：3.2蒙层引导] 单个设备历史只会出现一次，本流程引导用户完成关键动作，仅高亮的地方可以点击并进入下一步，整个过程的音效是生效的"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "PLACEHOLDER_MISSING",
+          "title": "奖池状态阈值与干预触发条件全为占位符，导致干预逻辑无法测试验收"
+        },
+        {
+          "issue_id": "AUDIO_MIXING",
+          "title": "半屏模式下直播间音频与游戏音效的混合规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落18]: [段落18][章节：3.2蒙层引导] 第三步。仅左1超跑选项高亮，YOU板块金币数是0，需要点击超跑选项或倒计时5秒才会进入下一步，点击或倒计时结束时，平台下注宝石变成1000100然后再进入下个页面",
+        "musee游戏Racing.docx / [段落51]: [段落51][章节：3.5新用户和预流失用户体验优化] 优先看本逻辑 其次进入奖池状态判断"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落25]: [段落25][章节：3.3下注部分] 下注余额，点击前往按钮唤起收银台"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "DATA_ISOLATION",
+          "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失"
+        },
+        {
+          "issue_id": "TUTORIAL_ISOLATION",
+          "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+        }
+      ],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落20]: [段落20][章节：3.2蒙层引导] 第五步。结果弹窗展示supercar赢，下注是100，返奖是330，TOP3用户板块，TOP1使用用户本人头像和昵称，返奖金币数是330，其他两个头像为空",
+        "musee游戏Racing.docx / [段落34]: [段落34][章节：3.3下注部分] 下注结果弹窗。分中奖结果展示不同的结果的图，如图所示，分别展示结果图，展示用户本人的下注和返奖，展示本轮返奖TOP3，假设本轮不够3人甚至0人下注，则对应排名展示默认头像，返奖金币展示0，名称显示虚位以待，昵称过长需要限制"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "TUTORIAL_ISOLATION",
+          "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+        },
+        {
+          "issue_id": "FAKE_ODDS_MAPPING",
+          "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落28]: [段落28][章节：3.3下注部分] 实时赔率。各个选项没人下注时，初始赔率展示右侧的最近30天的平均赔率，有人下注时，每个车型的实时赔率=三个选项的合计下注/本选项下注*[001]%，保留两位小数，向下取整，实际赔率时也按这个赔率去赔付，赔付金额也要向下取整"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "T_VARIABLE_CONFLICT",
+          "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值"
+        },
+        {
+          "issue_id": "MAX_PAYOUT_RISK",
+          "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险"
+        }
+      ],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落37]: [段落37][章节：3.4开奖逻辑] 奖池。本游戏仅一个奖池，下注宝石数注入奖池，赔付的金额从奖池扣，奖池可以接受是负数",
+        "musee游戏Racing.docx / [段落39]: [段落39][章节：3.4开奖逻辑] 奖池状态定义：取（（今日+昨日奖池累计收入)-（今日+昨日奖池累计支出)）/（今日+昨日奖池累计收入)的值，≤[001]%是奖池待补充，[001]%＜x＜[002]%是奖池正常，≥[002]%是奖池充裕"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "MAX_PAYOUT_RISK",
+          "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险"
+        },
+        {
+          "issue_id": "TUTORIAL_ISOLATION",
+          "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落59]: [段落59][章节：3.6接入自动化和白名单干预逻辑] 判断逻辑跟所有自研游戏保持一致，补贴则侧重开最大赔付的选项，制裁则侧重开最小赔付的选项"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "MAX_PAYOUT_RISK",
+          "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落28]: [段落28][章节：3.3下注部分] 实时赔率。各个选项没人下注时，初始赔率展示右侧的最近30天的平均赔率，有人下注时，每个车型的实时赔率=三个选项的合计下注/本选项下注*[001]%，保留两位小数，向下取整，实际赔率时也按这个赔率去赔付，赔付金额也要向下取整",
+        "musee游戏Racing.docx / [段落29]: [段落29][章节：3.3下注部分] 平均赔率。展示这个车型最近30天所有轮次里面的平均赔率，当刚上线没有结论时，所有车型默认展示3.3"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "TUTORIAL_ISOLATION",
+          "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [
+        "musee游戏Racing.docx / [段落9]: [段落9][章节：3.1首页顶栏板块] 统计板块-win rate rank。所有车型按胜率排序，相同胜率时随机排序，展示各车型在最近30天的胜率和赔率，当没数据时，胜率展示33.3%，赔率展示3.3",
+        "musee游戏Racing.docx / [段落28]: [段落28][章节：3.3下注部分] 实时赔率。各个选项没人下注时，初始赔率展示右侧的最近30天的平均赔率，有人下注时，每个车型的实时赔率=三个选项的合计下注/本选项下注*[001]%，保留两位小数，向下取整，实际赔率时也按这个赔率去赔付，赔付金额也要向下取整"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "DATA_ISOLATION",
+          "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失"
+        },
+        {
+          "issue_id": "FAKE_ODDS_MAPPING",
+          "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

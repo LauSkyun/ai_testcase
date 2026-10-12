@@ -1,0 +1,246 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了碰撞机制与难度映射的关键问题，但定性过重，将可兼容的表述歧义判定为根本冲突，导致评分过严。部分问题重复，需合并。整体覆盖较全，但严重度与证据链不匹配。",
+    "strengths": [
+      "识别了需求文档与数值文档在失败判定、难度映射上的核心矛盾",
+      "覆盖了清晰度、一致性、可测试性、安全性等多数维度",
+      "给出了可测试点和缺失信息，有助于后续补全"
+    ],
+    "issues": [
+      "将可兼容实现的碰撞机制描述定性为“根本冲突”，导致D评分，实际应为表述歧义，可兼容",
+      "难度映射问题存在两个重复finding（CORE_DIFFICULTY_CONFIG_MISMATCH 与 CLARITY-002）",
+      "对扣款时机、本金处理等规则缺失虽已提及，但未在问题中明确分点，导致建议混杂",
+      "遗漏了历史局数据存储等低风险提醒，但未影响主结论"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "review_notes": [
+    "将主模型报告中的碰撞机制冲突降级为表述不一致，因为服务端随机决定失败格子、客户端表现碰撞的可兼容实现是可行的，原判为根本冲突过于严厉。",
+    "合并了CORE_DIFFICULTY_CONFIG_MISMATCH到CLARITY-002，避免重复。",
+    "CLARITY-001的现状分点列出了碰撞机制、扣款时机、示例不一致三个子问题，保持单问题追踪。",
+    "建议后续补充超级大奖、RTP等数值设计，但当前报告已可交付作为开发前评审输入。",
+    "dual_pass trace 提示：candidate_lineage 不为空，但未完整覆盖 primary/candidate 的问题血缘；当前候选稿暂不建议默认直出。",
+    "dual_pass trace 提示：candidate 存在未被 lineage 覆盖的问题映射，需补齐 kept/added/merged/dropped 后再考虑默认直出。",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。",
+    "dual_pass 一致性提示：candidate 与 primary 存在较大结论漂移，但副评审未给出足够改判依据。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY-001",
+        "primary_issue_ids": [
+          "CLARITY-001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY-002",
+        "primary_issue_ids": [
+          "CLARITY-002",
+          "CORE_DIFFICULTY_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CONSIS-001",
+        "primary_issue_ids": [
+          "CONSIS-001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CONSIS-002",
+        "primary_issue_ids": [
+          "CONSIS-002"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST-001",
+        "primary_issue_ids": [
+          "TEST-001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST-003",
+        "primary_issue_ids": [
+          "TEST-003"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "COMPAT-001",
+        "primary_issue_ids": [
+          "COMPAT-001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC-001",
+        "primary_issue_ids": [
+          "SEC-001"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [
+      {
+        "candidate_issue_id": "CLARITY-002",
+        "primary_issue_ids": [
+          "CORE_DIFFICULTY_CONFIG_MISMATCH"
+        ],
+        "reason": "与CLARITY-002为同一难度映射问题，合并"
+      }
+    ],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 0,
+    "merged": 1,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 0,
+    "merged": 1,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 0,
+    "merged": 1,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "partial",
+  "candidate_structure_drift": true,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [
+    "CORE_DIFFICULTY_CONFIG_MISMATCH"
+  ],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [
+    "CORE_DIFFICULTY_CONFIG_MISMATCH"
+  ],
+  "duplicate_candidate_lineage_ids": [
+    "CLARITY-002"
+  ],
+  "primary_issue_id_repair_count": 2,
+  "candidate_issue_id_repair_count": 2,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "complete",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": true,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_major_judgment_drift",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 2,
+    "candidate_issue_id_repair_count": 2,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": false,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": false
+  },
+  "candidate_block_reason_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_candidate_findings",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "candidate_major_judgment_drift"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

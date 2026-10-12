@@ -1,0 +1,226 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 已覆盖核心符号命名冲突、奖池击穿修正、服务费公式歧义与下注扣款时机等关键阻断项，但对中奖金额钱包入账节点（payout_timing）未形成独立控制面覆盖，且结算公式的服务端口径仅以示例隐含，未显式定义。",
+    "strengths": [
+      "准确识别需求文档与数值文档在符号命名（李子/番茄）、额外奖励概率（55%/29%）、开奖模型（固定概率/奖池控奖）上的根本性冲突",
+      "识别水位线服务费公式在输赢场景下的逻辑歧义",
+      "识别下注扣款时机与断线重连恢复规则缺失"
+    ],
+    "issues": [
+      "未独立覆盖中奖金额计入玩家钱包的产品节点（payout_timing），REQ-TEST-01 仅涉及发奖口径而非入账时机",
+      "结算公式仅以示例隐含，未显式定义服务端结算变量与计算顺序"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "Primary 存在 payout_timing 控制面遗漏，需由系统基于 missed_findings 补全 Candidate"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明、段落76",
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 基础转盘配置、表格2",
+            "LUCKY77 转盘投注游戏设计方案.md / 4. 结算示例、表格3-6"
+          ],
+          "reason": "source_state=partial; counterevidence=有(表格3-6示例展示收回金额=投注金额×赔率、净收益=收回金额-投注金额); primary_coverage=not_covered; final=advice_only"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["CROSS-01"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明、段落65、段落70",
+            "LUCKT 77 数值文档.md / 二、赔付规则、表格3"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 2.1 触发条件、段落27-28"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 通用投注逻辑、段落13",
+            "LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程、表格7"
+          ],
+          "reason": "source_state=partial; counterevidence=有(表格7展示8阶段顺序流程与时长); primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["REQ-TEST-01"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程",
+            "LUCKY77 转盘投注游戏设计方案.md / 6. 投注系统"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": ["REQ-FUNDS-01"],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明、段落76"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 全文",
+            "LUCKT 77 数值文档.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、赔付规则、表格3"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["NUM-CTRL-01"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、水位线规则、段落18-19",
+            "LUCKT 77 数值文档.md / 三、开奖逻辑"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、赔付规则、表格3",
+            "LUCKY77 转盘投注游戏设计方案.md / 6.1 投注参数、表格8"
+          ],
+          "reason": "source_state=missing; counterevidence=有(相对倍率上限x8与最高投注额10,000,000形成隐含封顶); primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明、段落71"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明、段落71",
+            "LUCKY77 转盘投注游戏设计方案.md / 图片解析、图片1"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "REQ-FUNDS-01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额计入玩家钱包的产品节点未定义",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "需求文档段落76仅描述开奖结果弹窗展示赢钱金额与TOP3中奖用户，未定义中奖金额何时实际计入玩家钱包或可用余额；游戏流程表格7中SETTLING阶段仅写'派发奖励，更新余额'，未明确是服务端事务完成节点还是前端展示节点。",
+      "evidence": "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明、段落76；LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程、表格7",
+      "risk": "开发无法确定钱包入账的服务端事务节点，可能导致结算过程中玩家余额显示不一致、重复发奖或漏发奖等资金事故，测试无法设计资金流转验收用例。",
+      "suggestion": "明确中奖金额计入玩家钱包的产品节点：建议定义为'服务端在SETTLING阶段完成赔付计算后，通过钱包接口将中奖金额入账至玩家可用余额，入账成功后再推送结算弹窗与余额更新给客户端'，并提供资金流转时序图。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "中奖金额计入玩家钱包的产品节点未定义",
+      "root_causes": ["中奖金额计入玩家钱包的产品节点未定义"],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "REQ-TEST-01",
+        "overlap": false,
+        "reason": "REQ-TEST-01关注的是结算发奖口径（净收益vs总收回金额）与断线重连恢复，未涉及中奖金额实际计入钱包的服务端事务节点"
+      },
+      "severity_basis": "high/block_dev：中奖金额入账钱包是结算链路的核心资金事务节点，缺失将导致开发无法实现正确的资金流转逻辑，测试无法设计资金验收用例",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "需求文档仅描述弹窗展示赢钱金额与SETTLING阶段派发奖励，未定义钱包入账的服务端事务节点；全文无兼容解释",
+        "searched_locations": [
+          "LUCKY77 转盘投注游戏设计方案.md / 全文",
+          "LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程",
+          "LUCKY77 转盘投注游戏设计方案.md / 6. 投注系统",
+          "LUCKY77 转盘投注游戏设计方案.md / 7. 前端交互设计"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "settlement_formula 控制面：表格3-6示例已隐含收回金额=投注金额×赔率的计算逻辑，但服务端结算公式、变量与计算顺序未显式定义，建议补充结算接口字段说明。",
+    "termination_priority 控制面：表格7已定义8阶段顺序流程，但各阶段提前终止、冲突分支优先级未显式说明，建议补充状态机异常分支处理。",
+    "funds_failure_compensation 控制面：两份文档均未提及资金事务失败后的回滚、补发、重试与幂等规则，假设由平台/中台统一承接，建议补充玩法侧与中台的对接说明。",
+    "single_round_payout_cap 控制面：相对倍率上限x8与最高投注额10,000,000已形成隐含封顶（80,000,000），但未显式定义单局绝对赔付金额封顶，建议补充配置项。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=f9f1fc8f8b12491799a4deb117996911f3ee11f7083c51d5261b2160ff2d4558"
+  ]
+}

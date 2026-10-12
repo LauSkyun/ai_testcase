@@ -1,0 +1,19 @@
+{
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 1,
+  "status": "failed",
+  "output_dir": "blinded/A/tiger/repeat_01",
+  "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+  "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+  "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+  "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+  "secondary_message_hash": "597827d131da853d7b9efb6850258c365bbaecb35eb5ca902fed2f94f59aed0b",
+  "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+  "protocol_profile": "phase2",
+  "processing_profile": "phase2",
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6",
+  "temperature": 0,
+  "error": "secondary_benchmark:A:tiger:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

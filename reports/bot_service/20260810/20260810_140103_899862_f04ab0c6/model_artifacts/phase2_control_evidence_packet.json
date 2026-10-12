@@ -1,0 +1,238 @@
+{
+  "evidence_packet_id": "67152f7f8372bb98d8a75c5578198d31358b85fa94f36edb924d40279edbc883",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可same_control；一旦为same_control，status和final必须都是covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [
+        "LUCKY77 转盘投注游戏设计方案.md / [段落76]: [段落76][章节：7. 前端交互设计 > 7.2 功能界面说明] ● 开奖结果弹窗：中奖动画播放完毕后弹出本轮结果结算弹窗，持续3秒，展示本轮开奖结果，用户自己本轮游戏的赢钱金额（不管用户是否投注，没中奖结果均显示+0），还有对应本轮前3中奖金额的用户头像和中奖金额数量。3秒后自动关闭弹窗",
+        "LUCKY77 转盘投注游戏设计方案.md / 表格2（章节：1. 基础玩法 > 1.2 基础转盘配置）: | 符号 | 格数 | 概率 | 赔率 | 基础 RTP |"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "未投注符号在额外奖励中的结算规则缺失"
+        },
+        {
+          "issue_id": "SEC_01",
+          "title": "重复点击投注的幂等性控制未明确"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "LUCKY77 转盘投注游戏设计方案.md / [段落65]: [段落65][章节：7. 前端交互设计 > 7.2 功能界面说明] ● 用户当前货币展示区：通用组件化游戏功能，展示用户当前投注货币的数值信息，点击对应充值按钮跳转业务自己的充值界面",
+        "LUCKY77 转盘投注游戏设计方案.md / [段落70]: [段落70][章节：7. 前端交互设计 > 7.2 功能界面说明] ● 开奖结果展示区：游戏开奖结果展示区域"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_01",
+          "title": "核心符号名称跨文档及图文严重不一致"
+        },
+        {
+          "issue_id": "CROSS_03",
+          "title": "筹码挡位与投注上限配置严重冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "LUCKY77 转盘投注游戏设计方案.md / [段落27]: [段落27][章节：2. 额外奖励模式 > 2.1 触发条件] 2.1 触发条件",
+        "LUCKY77 转盘投注游戏设计方案.md / [段落28]: [段落28][章节：2. 额外奖励模式 > 2.1 触发条件] ● 仅当 77 中奖时 才有几率触发"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "未投注符号在额外奖励中的结算规则缺失"
+        },
+        {
+          "issue_id": "CROSS_01",
+          "title": "核心符号名称跨文档及图文严重不一致"
+        }
+      ],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [
+        "LUCKY77 转盘投注游戏设计方案.md / [段落13]: [段落13][章节：1. 基础玩法 > 1.2 通用投注逻辑] ● 可投注时间:可配置，用于配置每轮游戏用户的投注时间，用户仅可在对应的阶段进行投注操作，非该时间段内进行投注操作，弹出TOAST提示用户：当前非可投注时间，请等待本轮游戏结束",
+        "LUCKY77 转盘投注游戏设计方案.md / 表格7（章节：5. 游戏流程）: | 3. 转盘旋转 | 3 秒 | 转盘加速旋转后减速停止 | SPINNING |"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_04",
+          "title": "纯概率模型与水位线控池模型未融合"
+        },
+        {
+          "issue_id": "TEST_02",
+          "title": "百人场投注扣款时机与断线重连规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [
+        "LUCKT 77 数值文档.md / [段落14]: [段落14][章节：二、水位线规则] 扣除的值=赔付值+服务费",
+        "LUCKT 77 数值文档.md / [段落15]: [段落15][章节：二、水位线规则] 扣除的服务费的值=|赔付值-投入值| *服务费比例"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "TEST_02",
+          "title": "百人场投注扣款时机与断线重连规则缺失"
+        },
+        {
+          "issue_id": "SEC_01",
+          "title": "重复点击投注的幂等性控制未明确"
+        }
+      ],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [
+        "LUCKY77 转盘投注游戏设计方案.md / [段落76]: [段落76][章节：7. 前端交互设计 > 7.2 功能界面说明] ● 开奖结果弹窗：中奖动画播放完毕后弹出本轮结果结算弹窗，持续3秒，展示本轮开奖结果，用户自己本轮游戏的赢钱金额（不管用户是否投注，没中奖结果均显示+0），还有对应本轮前3中奖金额的用户头像和中奖金额数量。3秒后自动关闭弹窗"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "SEC_01",
+          "title": "重复点击投注的幂等性控制未明确"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "TEST_02",
+          "title": "百人场投注扣款时机与断线重连规则缺失"
+        },
+        {
+          "issue_id": "CROSS_03",
+          "title": "筹码挡位与投注上限配置严重冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [
+        "LUCKT 77 数值文档.md / 表格3（章节：二、赔付规则）: | ID | 赔付类型描述 | 金币赔率倍数 | 出现权重 |"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [
+        "LUCKT 77 数值文档.md / [段落18]: [段落18][章节：二、水位线规则] 修正几率填0-10000的数值，当触发进项修正时，根据玩家动态的钻石投入分布，来计算各项的结算值。得到使得奖池有正数进项的项，从高到低按照权重进行选择开奖。",
+        "LUCKT 77 数值文档.md / [段落19]: [段落19][章节：二、水位线规则] *举例 如从第五项开始进项为负数，则5，6，7则权重均视为0"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [
+        "LUCKY77 转盘投注游戏设计方案.md / [段落71]: [段落71][章节：7. 前端交互设计 > 7.2 功能界面说明] ● 历史开奖记录展示区域：展示最近30场的开奖结果，用户可以左右滑动查看最近30场开奖结果数据，若结果为77+任意水果，则开奖结果图标展示位77&水果"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_01",
+          "title": "核心符号名称跨文档及图文严重不一致"
+        },
+        {
+          "issue_id": "CROSS_03",
+          "title": "筹码挡位与投注上限配置严重冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

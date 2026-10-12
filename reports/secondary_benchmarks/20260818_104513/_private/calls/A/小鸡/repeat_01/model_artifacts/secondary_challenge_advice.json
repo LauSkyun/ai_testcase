@@ -1,0 +1,253 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_2",
+    "expected_primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "expected_echo": "protocol_profile=phase3_v1_2; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "primary_report_hash_after": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "protected_fields_hash_before": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "protected_fields_hash_after": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-CORE_BET_CONFIG_MISMATCH",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "challenge_type": "overstated",
+      "challenged_claim": "需求、数值、UI三端筹码配置不一致，导致前后端无法对齐，阻塞下注系统开发与数值配置。",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1",
+      "counterevidence": "小鸡数值文档.docx 段落6明确声明‘可以配置游戏的下注列表。以下仅为示例’，表明100/1000仅为占位符，并非最终配置。",
+      "rationale": "数值文档已对下注列表的示例性质进行免责说明，该问题本质是数值配置表未填入最终业务数值，而非三端规则逻辑冲突。原定性‘严重冲突’与‘阻塞开发’属于过度推断。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "下注筹码数值配置冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "target_coverage_ledger": {
+    "schema_version": 1,
+    "expected_count": 10,
+    "actual_count": 10,
+    "completeness": 1.0,
+    "valid": true,
+    "errors": [],
+    "inventory": [
+      {
+        "target_order": 1,
+        "target_issue_id": "CLARITY_01",
+        "title": "核心角色与题材包装严重冲突（小鸡 vs 骆驼）",
+        "dimension": "清晰度与完整性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析"
+      },
+      {
+        "target_order": 2,
+        "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "title": "下注筹码数值配置冲突",
+        "dimension": "清晰度与完整性",
+        "severity": "高",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，表格1（下注值100、1000）；图片1-7解析（UI显示3$、5$、10$、20$）。"
+      },
+      {
+        "target_order": 3,
+        "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "title": "难度系统概率计算逻辑冲突",
+        "dimension": "清晰度与完整性",
+        "severity": "高",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "小鸡.docx / 3.1 下注系统，表格2（简单难度固定概率20%、35%、50%、65%）；小鸡数值文档.docx / 4. 撞击概率计算，段落11-17（采用Crash算法，首次必撞3%，非首次1%）。"
+      },
+      {
+        "target_order": 4,
+        "target_issue_id": "LOGIC_01",
+        "title": "Crash算法与离散格子结算的映射逻辑缺失",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13"
+      },
+      {
+        "target_order": 5,
+        "target_issue_id": "LOGIC_02",
+        "title": "数值表数据与‘倍盘’定义严重不符",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "小鸡数值文档.docx / 3. 难度选择，表格2"
+      },
+      {
+        "target_order": 6,
+        "target_issue_id": "LOGIC_03",
+        "title": "通关‘超级大奖’与第30格结算的边界歧义",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "小鸡.docx / 2.1 完整游戏流程，段落31；小鸡数值文档.docx / 3. 难度选择，段落9"
+      },
+      {
+        "target_order": 7,
+        "target_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "title": "倍率计算公式与数值表口径严重冲突",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "小鸡.docx / 3.3 奖金计算系统，段落44（总奖金 = 下注金额 × Π(已通过马路倍率)）；小鸡数值文档.docx / 3. 难度选择，表格2（30个关卡数值，如难度1第30关为23.9）。"
+      },
+      {
+        "target_order": 8,
+        "target_issue_id": "TEST_01",
+        "title": "UI‘被击中概率’展示口径与验收标准缺失",
+        "dimension": "可测试性与验收标准",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "小鸡.docx / 图片1-7解析；小鸡数值文档.docx / 4. 撞击概率计算"
+      },
+      {
+        "target_order": 9,
+        "target_issue_id": "SEC_01",
+        "title": "提现与结算的幂等/防重复点击边界缺失",
+        "dimension": "安全性与反作弊",
+        "severity": "中",
+        "blocking": "阻塞开发",
+        "evidence": "小鸡.docx / 3.4 提现与结算系统，段落48-49"
+      },
+      {
+        "target_order": 10,
+        "target_issue_id": "UX_01",
+        "title": "失败反馈与风险感知脱节",
+        "dimension": "用户体验与游戏性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "小鸡.docx / 3.2 移动与碰撞系统，段落41；图片1-8解析"
+      }
+    ],
+    "entries": [
+      {
+        "target_issue_id": "CLARITY_01",
+        "target_order": 1,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析",
+        "rationale": "文档段落55提及先用小鸡，段落56定义骆驼，且UI截图均为小鸡，证据支持原finding关于角色与题材包装冲突的判断。"
+      },
+      {
+        "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "target_order": 2,
+        "decision": "challenge",
+        "challenge_type": "overstated",
+        "recommended_action": "clarify",
+        "evidence_checked": "小鸡.docx / 2.2 详细规则，表格1；小鸡数值文档.docx / 2. 下注规则，段落6及表格1；图片1-7解析",
+        "rationale": "数值文档段落6明确声明下注列表‘以下仅为示例’，100/1000为占位符而非最终配置，不存在三端逻辑冲突，原定性‘严重冲突’属于过度推断。"
+      },
+      {
+        "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "target_order": 3,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 3.1 下注系统，表格2；小鸡数值文档.docx / 4. 撞击概率计算，段落11-17",
+        "rationale": "需求文档描述固定概率，数值文档采用Crash算法，两者概率计算逻辑确实存在实质性冲突，证据支持原finding。"
+      },
+      {
+        "target_issue_id": "LOGIC_01",
+        "target_order": 4,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13；小鸡数值文档.docx / 3. 难度选择，段落9",
+        "rationale": "数值文档仅给出Crash算法的连续爆炸倍数公式，未说明如何映射到离散的30个格子，证据支持原finding关于映射逻辑缺失的判断。"
+      },
+      {
+        "target_issue_id": "LOGIC_02",
+        "target_order": 5,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡数值文档.docx / 3. 难度选择，表格2",
+        "rationale": "表格2中难度3和难度4的第30关数值（624.86和66278475.57）与表头定义的‘103倍盘’和‘176倍盘’存在巨大数量级差异，证据支持原finding。"
+      },
+      {
+        "target_issue_id": "LOGIC_03",
+        "target_order": 6,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 2.1 完整游戏流程，段落31；小鸡数值文档.docx / 3. 难度选择，段落9及表格2",
+        "rationale": "需求文档提及触发‘超级大奖’获得额外奖励，数值文档明确为30个格子且第30格已有累计倍率，两者叠加或替代关系未说明，证据支持原finding。"
+      },
+      {
+        "target_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "target_order": 7,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 3.3 奖金计算系统，段落44；小鸡数值文档.docx / 3. 难度选择，表格2",
+        "rationale": "需求文档公式要求单格倍率连乘，而数值表提供的是累计倍率，两者口径确实存在严重冲突，证据支持原finding。"
+      },
+      {
+        "target_issue_id": "TEST_01",
+        "target_order": 8,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 图片1-7解析；小鸡数值文档.docx / 4. 撞击概率计算",
+        "rationale": "UI截图显示‘被击中的概率’标签，但文档未说明该概率的计算公式与验收标准，证据支持原finding。"
+      },
+      {
+        "target_issue_id": "SEC_01",
+        "target_order": 9,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 3.4 提现与结算系统，段落48-49",
+        "rationale": "需求文档描述了提现流程，但未说明弱网、断线或重复点击时的幂等处理与防刷机制，证据支持原finding。"
+      },
+      {
+        "target_issue_id": "UX_01",
+        "target_order": 10,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "小鸡.docx / 3.2 移动与碰撞系统，段落41；图片1-8解析",
+        "rationale": "文档描述了失败动画，但未说明在Crash算法下如何直观感知极限风险，证据支持原finding关于体验缺失的判断。"
+      }
+    ],
+    "decision_keys": [
+      "CLARITY_01:pass",
+      "CORE_BET_CONFIG_MISMATCH:challenge",
+      "CORE_DIFFICULTY_CONFIG_MISMATCH:pass",
+      "LOGIC_01:pass",
+      "LOGIC_02:pass",
+      "LOGIC_03:pass",
+      "LOGIC_PAYOUT_FORMULA_CONFLICT:pass",
+      "SEC_01:pass",
+      "TEST_01:pass",
+      "UX_01:pass"
+    ]
+  },
+  "review_notes": []
+}

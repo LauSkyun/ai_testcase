@@ -1,0 +1,230 @@
+{
+  "candidate_generation_mode": "model_authored",
+  "primary_quality_assessment": {},
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了倍率公式、筹码配置、概率算法等核心冲突，但部分 finding 存在症状堆砌（如将美术冲突与概率冲突混为一谈），且遗漏了资金链路中关键的扣款时机问题。",
+    "strengths": [
+      "准确抓住了连乘公式与累计倍率表的根本冲突",
+      "识别了固定概率与Crash算法的互斥问题",
+      "发现了筹码配置在三端的不一致"
+    ],
+    "issues": [
+      "CORE_DIFFICULTY_CONFIG_MISMATCH 混合了概率、UI、美术三个不同维度的症状，焦点模糊",
+      "遗漏了开局扣款时机这一高信号资金安全问题",
+      "可测试性、跨系统等维度直接判空，未对断线恢复等博弈游戏核心验收点做最低限度提醒"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的结构臃肿问题，补充了资金链路的高信号缺口，证据充分，维度归属合理，可直接输出给业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的结构臃肿问题，补充了资金链路的高信号缺口，证据充分，维度归属合理，可直接输出给业务方阅读。"
+  },
+  "review_notes": [
+    "建议后续将 CORE_DIFFICULTY_CONFIG_MISMATCH 中的“美术包装冲突（小鸡 vs 骆驼）”拆分为独立的资源制作阻塞问题，以便美术团队单独跟进。",
+    "难度4（176倍盘）第30关数值高达6627万倍，疑似配置错误或公式推导溢出，需数值策划重点核查。",
+    "弱网、断线重连、历史局处理等通用中台能力，若已有平台规范，本文档无需赘述，但需确保核心结算链路不依赖客户端状态。",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "BET_DEDUCTION_TIMING",
+      "title": "下注扣款与结算发奖的时机及口径缺失",
+      "primary_dimension": "安全性与反作弊",
+      "severity": "高",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程，段落22-23；小鸡.docx / 3.4 提现与结算系统，段落48-49",
+      "reason": "需求文档描述了点击开始与提现到账，但未明确本金预扣时机，涉及真实资金博弈，缺失该边界可能导致资损。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_DIFFICULTY_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_BET_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "primary_issue_ids": [
+          "LOGIC_PAYOUT_FORMULA_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "BET_DEDUCTION_TIMING",
+        "source_missed_issue_ids": [
+          "BET_DEDUCTION_TIMING"
+        ],
+        "reason": "补充资金链路中开局扣款时机的高信号缺口，防止余额校验与结算发奖脱节。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 3,
+  "candidate_issue_id_repair_count": 3,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的结构臃肿问题，补充了资金链路的高信号缺口，证据充分，维度归属合理，可直接输出给业务方阅读。",
+  "phase2_admission": {
+    "enabled": false,
+    "claimed_count": 1,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "errors": []
+    },
+    "protocol_gate": {}
+  },
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 3,
+    "candidate_issue_id_repair_count": 3,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": false,
+    "phase2_candidate_inputs_sanitized": false,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {},
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {}
+}

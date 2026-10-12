@@ -1,0 +1,221 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了需求文档与数值文档之间的核心逻辑冲突和表述歧义，包括RESPIN累加公式与风控规则的潜在冲突、基础盘面组合符号判定优先级模糊、推展机制作用对象不清等问题。但报告在严重度评估上存在部分过度解读，如将RESPIN公式与风控规则的关系判定为“高”严重度，而实际上两者属于同一规则在不同场景下的应用，可通过明确豁免规则解决。此外，报告将多个相关子症状（如RESPIN的自动旋转、快捷旋转表现、断线重连）混合在同一问题中，导致问题边界模糊。",
+    "strengths": [
+      "准确识别了RESPIN累加公式与风控规则之间的潜在冲突",
+      "正确指出了基础盘面组合符号判定优先级模糊的问题",
+      "对推展机制作用对象不清的发现具有实际价值",
+      "对“空白”符号的术语歧义分析到位"
+    ],
+    "issues": [
+      "RESPIN公式与风控规则冲突的严重度评估偏高，实际是可兼容实现下的表述歧义",
+      "同一问题中混合了多个子症状，如RESPIN问题中包含了自动旋转、快捷旋转、断线重连等不同性质的问题",
+      "金额缩位展示问题的置信度评估偏低，证据充分但未给予足够重视",
+      "部分问题的建议不够具体，缺少可执行的实现方案"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "主模型报告准确识别了核心问题，但严重度评估需要调整，多个子症状需要分点整理，建议经本次复核修正后再输出最终报告。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "主模型报告准确识别了核心问题，但严重度评估需要调整，多个子症状需要分点整理，建议经本次复核修正后再输出最终报告。"
+  },
+  "review_notes": [
+    "RESPIN_FORMULA_RISK的严重度从'高'调整为'中'：原因为RESPIN与风控规则的冲突并非根本矛盾，而是同一规则在不同场景下的适用问题，可通过明确豁免规则解决。公式表述歧义属于可兼容实现下的解释口径问题，不构成致命阻塞。",
+    "RESPIN_FORMULA_AMBIGUITY被吸收到RESPIN_FORMULA_RISK中，作为子症状之一，不再单独列出。",
+    "RESPIN_FORMULA_RISK的current_state、risk、suggestion已按子症状编号分点整理，便于追踪和验收。",
+    "BLANK_DEF的current_state已补充了更完整的描述，明确了两份文档对'空白'术语的不同指代。",
+    "top_blockers已同步更新，反映调整后的严重度评估。",
+    "建议在下一轮评审中重点关注：(1)风控规则对RESPIN玩法的适用性；(2)RESPIN断线重连的具体实现方案；(3)推展机制的服务端协议设计。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "primary_issue_ids": [
+        "RESPIN_FORMULA_RISK"
+      ],
+      "target_issue_id": "RESPIN_FORMULA_RISK",
+      "reason": "RESPIN_FORMULA_RISK中混合了RESPIN风控冲突、自动旋转停止时机、快捷旋转表现矛盾、断线重连等多个子问题。建议在保持issue_id不变的情况下，将现状、风险、建议分为编号子点，不要拆分成多个独立问题。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "issue_id": "RESPIN_FORMULA_AMBIGUITY",
+      "canonical_title": "RESPIN累加公式的表述歧义与示例错误",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "中",
+      "title": "RESPIN累加公式的表述歧义与示例错误",
+      "current_state": "需求文档举例RESPIN累加公式为'10*10*(1+2+1+5)=900'，但数值文档明确'累计乘数值默认=1，而不是从0开始'，且'触发respin时默认初始累计乘数符号倍数=1'。需求文档的示例公式中(1+2+1+5)将初始值1与累加值混写，导致公式歧义。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落35, 43-45",
+      "risk": "开发人员可能误解累加公式，将初始值1重复计算或遗漏，导致实际结算金额与设计意图不符。",
+      "suggestion": "统一RESPIN累加公式表述，明确区分'初始底数1'与'每次重转增量'。建议需求文档示例修改为：'基础投注=10，基础赔率=10，初始乘数=1，重转4次结果2,1,5,空，则最终乘数=1+2+1+5=9，总奖金=10*10*9=900'。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "SYM_DEF",
+        "primary_issue_ids": [
+          "SYM_DEF"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PUSH_MECH",
+        "primary_issue_ids": [
+          "PUSH_MECH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "BLANK_DEF",
+        "primary_issue_ids": [
+          "BLANK_DEF"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RESPIN_FORMULA_RISK",
+        "primary_issue_ids": [
+          "RESPIN_FORMULA_RISK"
+        ],
+        "absorbed_missed_issue_ids": [
+          "RESPIN_FORMULA_AMBIGUITY"
+        ]
+      },
+      {
+        "candidate_issue_id": "NUM_FORMAT",
+        "primary_issue_ids": [
+          "NUM_FORMAT"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "RESPIN_FORMULA_AMBIGUITY"
+  ],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "主模型报告准确识别了核心问题，但严重度评估需要调整，多个子症状需要分点整理，建议经本次复核修正后再输出最终报告。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

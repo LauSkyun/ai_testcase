@@ -1,0 +1,361 @@
+{
+  "report": {
+    "overall_evaluation": "文档主流程基本可理解，但存在大量核心数值口径冲突（名称混乱、赔率/时间/UI与文档不符）、奖池风控逻辑死锁（透支与80%兜底冲突）以及人群保护与风控的机制矛盾。需大幅补充和修正后才能进入开发。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但存在较多高风险缺口（奖池逻辑死锁、名称严重混乱、UI与文档多处冲突），关键边界缺失，需补充后再完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "奖池“透支赔付”与“80%兜底阈值”存在逻辑死锁",
+        "owner": "系统策划",
+        "why_now": "兜底逻辑在奖池透支时完全失效，所有选项均被判定为“不够赔付”，最终只能开出赔付最少的选项，风控逻辑形同虚设。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "游戏主题与选项名称严重混乱（Tiger/Lion/Dragon）",
+        "owner": "系统策划",
+        "why_now": "开发、美术、测试及本地化将因名称不一致产生严重歧义，导致资源做错或验收标准分裂。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "人群保护策略与奖池风控的机制冲突",
+        "owner": "数值策划",
+        "why_now": "直接违背“保护”初衷，导致高价值/流失用户触发保护后反而全输，引发严重客诉。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "NAME_CONFLICT",
+            "canonical_title": "游戏主题与选项名称严重混乱",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "image",
+            "severity": "高",
+            "title": "游戏主题与选项名称严重混乱（Tiger/Lion/Dragon）",
+            "current_state": "文档标题和正文多处写Tiger，表格4写Tiger，但UI截图和说明中大量出现Lion，游戏记录截图甚至出现Dragon。",
+            "evidence": "tiger需求文档.docx / 段落1、表格4、图片1/3/5/7/9/18",
+            "risk": "开发、美术、测试及本地化将因名称不一致产生严重歧义，导致资源做错或验收标准分裂。",
+            "suggestion": "全局统一游戏名称及三个选项的英文标识（如统一为Peacock/Draw/Tiger），并同步修正所有UI截图和文案。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "NO_TAX_BOUNDARY_BUG",
+            "canonical_title": "“不抽水”规则中“最小选项投入金额”的边界漏洞",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "“不抽水”规则中“最小选项投入金额”的边界漏洞",
+            "current_state": "规则要求“净收入 < 最小选项投入金额 × 3”，而最小投入额定义为min(A,B,C实际投入额)。若某选项无人投入，min=0，导致条件永远不成立。",
+            "evidence": "tiger需求文档.docx / 段落35、40",
+            "risk": "不抽水规则在存在空选项时完全失效，无法触发预期的运营策略。",
+            "suggestion": "明确“最小选项投入金额”是指“玩家实际投入额”还是“配置的最低档位金额”。若为前者，需增加“无人投入选项按最低档位计算”的补充规则。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "FALLBACK_DEFINITION_AMBIGUITY",
+            "canonical_title": "兜底逻辑中“足够赔付”的定义歧义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "兜底逻辑中“足够赔付”的定义歧义",
+            "current_state": "当首选选项赔付>80%时，兜底“随机选择一项足够赔付的开”。未明确“足够”是指<=80%还是<=100%。",
+            "evidence": "tiger需求文档.docx / 段落57、68、108",
+            "risk": "1、若指<=80%，则与前置条件重复；2、若指<=100%，则突破了80%的风控线，导致实际赔付不可控。",
+            "suggestion": "明确“足够赔付”的具体阈值（如：<=实时总奖池的100%），并补充若所有选项均>100%时的最终兜底策略。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "PROTECTION_VS_RISK_CONTROL",
+            "canonical_title": "人群保护策略与奖池风控的机制冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "人群保护策略与奖池风控的机制冲突",
+            "current_state": "人群保护优先执行，强制开特殊人群赢的选项。但若该选项赔付>80%触发兜底，可能开出特殊人群全输的选项。",
+            "evidence": "tiger需求文档.docx / 段落78、108",
+            "risk": "直接违背“保护”初衷，导致高价值/流失用户触发保护后反而全输，引发严重客诉。",
+            "suggestion": "明确人群保护触发兜底时的优先级：是优先保证特殊人群赢（突破80%风控），还是优先保证奖池安全（牺牲特殊人群）？需给出明确的分支规则。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "POOL_OVERDRAFT_DEADLOCK",
+            "canonical_title": "奖池透支与80%兜底阈值的逻辑死锁",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "奖池“透支赔付”与“80%兜底阈值”存在逻辑死锁",
+            "current_state": "文档允许奖池余额为负数（透支赔付），但兜底判断依赖“实时总奖池的80%”。负数的80%仍为负数，任何正数赔付都会大于它。",
+            "evidence": "tiger需求文档.docx / 段落29、段落57/68/108",
+            "risk": "兜底逻辑在奖池透支时完全失效，所有选项均被判定为“不够赔付”，最终只能开出赔付最少的选项，风控逻辑形同虚设。",
+            "suggestion": "明确“实时总奖池”在透支状态下的兜底基准（如：取初始奖池、历史总注入额，或设定透支时的绝对值兜底阈值）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "NUMERIC_VALUE_CONFLICT",
+            "canonical_title": "正文与后台配置表关键数值冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "正文与后台配置表关键数值冲突（正常偏移概率与亏损大R累计亏损阈值）",
+            "current_state": "1、正文中“亏损大R”的累计亏损阈值≥50000000（段落85），但后台配置表（表格5）初始值为5000000，相差10倍；2、正文中“奖池状态-正常”的偏移概率为60%（段落66），但后台配置表初始值为20%。",
+            "evidence": "tiger需求文档.docx / 段落85、段落66、表格5",
+            "risk": "开发人员可能参照任一值实现，导致系统行为与设计预期严重不符，影响经济平衡与人群体感。",
+            "suggestion": "尽快确认并统一配置值，确保正文与配置表一致，并建立配置表与需求文档的同步更新机制。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "description": "正文中“亏损大R”的累计亏损阈值≥50000000（段落85），但后台配置表（表格5）初始值为5000000，相差10倍；正文中“奖池状态-正常”的偏移概率为60%（段落66），但后台配置表初始值为20%。这两个数值冲突直接影响特殊人群保护触发条件和开奖逻辑。",
+            "source_missed_issue_id": "NUMERIC_VALUE_CONFLICT",
+            "source_issue_id": "NUMERIC_VALUE_CONFLICT",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          },
+          {
+            "issue_id": "BROADCAST_RANGE_OVERLAP",
+            "canonical_title": "后台广播区间配置边界重叠",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "image",
+            "severity": "中",
+            "title": "后台广播区间配置边界重叠",
+            "current_state": "中奖区间20000-49999与50000-79999、70000-99999存在边界重叠（如70000同时属于第二和第三区间）。",
+            "evidence": "tiger需求文档.docx / 图片25",
+            "risk": "会导致匹配歧义，广播触发异常或重复触发。",
+            "suggestion": "修正区间配置为左闭右开（如[20000, 50000)）或明确边界值归属规则。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "DRAW_WEIGHT_ANOMALY",
+            "canonical_title": "基础概率中Draw（平局）权重与赔率异常",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "基础概率中Draw（平局）权重与赔率异常",
+            "current_state": "三个选项权重均为100，意味着平局概率高达33.3%，且赔率同为2.9。",
+            "evidence": "tiger需求文档.docx / 表格4",
+            "risk": "不符合常规竞猜模型，且期望赔付率(96.6%)加上2%抽水后，平台利润空间极小，存在数值崩盘风险。",
+            "suggestion": "重新评估Draw的真实权重（通常应远低于胜负选项），并验证整体RTP和平台抽水比例是否达标。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UI_DOC_MISMATCH",
+            "canonical_title": "UI截图与文档在赔率、时间口径上的多处冲突",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "image",
+            "severity": "高",
+            "title": "UI截图与文档在赔率、时间口径上的多处冲突",
+            "current_state": "赔率（文档2.9 vs UI 3X）、记录时间（文档近3日 vs UI近30日）、统计时间（文档近7天 vs UI近30天）均不一致。",
+            "evidence": "tiger需求文档.docx / 表格3、表格4、图片1/3/9/13",
+            "risk": "测试验收标准分裂，开发无所适从，极易产生Bug。",
+            "suggestion": "以文档为准全面修正UI截图，或更新文档条款，确保所有数值、时间范围在文档与UI间严格对齐。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "BET_CUTOFF_AND_IDEMPOTENCY",
+            "canonical_title": "下注截止时间（封盘）与弱网重复点击的幂等性缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "下注截止时间（封盘）与弱网重复点击的幂等性缺失",
+            "current_state": "20秒下注期未说明最后几秒是否封盘，弱网下重复点击下注的幂等处理及超时回滚机制未定义。",
+            "evidence": "tiger需求文档.docx / 段落16、表格3",
+            "risk": "可能导致超时下注成功、重复扣款或结算时才发现下注失败，引发资金异常。",
+            "suggestion": "补充封盘规则（如最后2秒禁止下注），并明确下注接口的幂等性设计及弱网下的客户端表现。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "REALTIME_CALC_PERFORMANCE",
+            "canonical_title": "开奖阶段（5秒）实时计算全服历史数据的性能风险",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "开奖阶段（5秒）实时计算全服历史数据的性能风险",
+            "current_state": "人群保护需实时判定全服用户的7日/30日亏损及流失状态。开奖动画阶段仅有5秒。",
+            "evidence": "tiger需求文档.docx / 段落16、85-87",
+            "risk": "若为实时查询DB，5秒内无法完成全服结算，导致开奖延迟、超时或服务器雪崩。",
+            "suggestion": "明确特殊人群标签的预计算机制（如每日凌晨离线打标，或定时任务更新），开奖时仅读取标签，禁止实时全表扫描。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "OVERDRAFT_NO_LIMIT",
+            "canonical_title": "奖池透支缺乏最大额度/熔断机制",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "奖池透支缺乏最大额度/熔断机制",
+            "current_state": "允许奖池为负数且无上限说明。",
+            "evidence": "tiger需求文档.docx / 段落29",
+            "risk": "若遭遇极端连续大奖或恶意刷奖，奖池可能无限透支，造成平台重大资金损失。",
+            "suggestion": "设定奖池最大透支额度或熔断阈值，触发后强制进入“回收”状态或暂停游戏，并补充报警机制。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TOP3_CONCEPT_CONFUSION",
+            "canonical_title": "结算弹窗Top3展示概念混淆（Win与Rebate）",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "image",
+            "severity": "中",
+            "title": "结算弹窗Top3展示概念混淆（Win与Rebate）",
+            "current_state": "文档描述为“赢最多top3”，UI截图显示为“Top 3 users with rebate”。",
+            "evidence": "tiger需求文档.docx / 表格3、图片19",
+            "risk": "Win（单局盈利）与Rebate（流水返佣）是完全不同的业务概念，会导致结算展示错误，引发玩家误解。",
+            "suggestion": "统一业务概念，明确Top3是基于单局Win金额还是历史Rebate金额，并同步修正文档与UI。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "下注阶段最后几秒的封盘规则及弱网下的幂等性设计",
+      "奖池透支状态下的兜底基准及最大熔断额度",
+      "特殊人群标签的离线预计算机制或实时查询的性能兜底方案",
+      "“足够赔付”在兜底逻辑中的具体阈值定义"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证三个选项（Peacock/Draw/Tiger）的基础概率与赔率结算是否正确",
+        "验证奖池抽水、注入、透支赔付及状态切换（充裕/正常/回收）的流转",
+        "验证人群保护策略的触发条件及开奖偏移逻辑",
+        "验证排行榜、游戏记录、开奖分析的时间口径与数据准确性"
+      ],
+      "异常操作": [
+        "弱网环境下重复点击下注、Repeat按钮的幂等性测试",
+        "下注阶段最后2秒断网或延迟提交的处理",
+        "奖池为负数时触发兜底逻辑的结算验证",
+        "某选项无人投入时，不抽水规则的边界验证"
+      ],
+      "兼容性": [
+        "半屏与全屏入口的UI适配及状态保持",
+        "不同分辨率下的跑马灯、广播及结算弹窗层级遮挡测试"
+      ],
+      "安全专项": [
+        "奖池透支额度是否触发熔断或报警",
+        "广播区间配置重叠时的匹配逻辑验证",
+        "客户端篡改下注金额或选项的服务端校验"
+      ],
+      "回归影响": [
+        "充值页拉起及余额更新的准确性",
+        "音乐音效状态在刷新/重进后的保持"
+      ],
+      "性能与稳定性": [
+        "开奖阶段（5秒）全服特殊人群标签判定的耗时监控",
+        "高并发下注时的奖池计算与结算延迟测试"
+      ],
+      "用户体验": [
+        "结算弹窗Top3展示概念（Win/Rebate）与文档的一致性",
+        "新手引导流程的连贯性及文案准确性"
+      ]
+    },
+    "quality_notes": [
+      "文档中存在大量占位符（如{2}、{3000000}），虽在后台配置表中给出了初始值，但正文公式中直接使用占位符易导致阅读歧义，建议统一替换为具体数值或明确引用配置表字段。",
+      "图片解析中存在部分UI文案拼写错误（如Personaj、fast、Peabate），需在正式开发前由UI/UX全面校对。",
+      "dual_pass 复核备注：主模型报告遗漏了正文与后台配置表的关键数值冲突，已补充为NUMERIC_VALUE_CONFLICT。",
+      "dual_pass 复核备注：候选报告保持了主模型的问题骨架，并补全了遗漏的高优先级问题，达到可交付标准。",
+      "dual_pass 复核备注：建议后续进一步细化人群保护与风控的冲突解决规则，并在数值文档中明确所有配置项的最终值。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片9中个人记录Result显示为'Dragon'，但选项为Peacock/Draw/Lion，存在不可读或识别错误风险，需人工核对原图。",
+      "图片21中STEP 5的Bet和Rebate具体数值因分辨率模糊不可读，无法验证结算面板的数值展示规则。",
+      "图片22流程图中部分判断条件及百分比阈值因分辨率较低难以辨认，需补充高清流程图或文字版状态机说明。",
+      "图片24中表单字段被红色遮挡框覆盖，无法确认后台配置项的完整字段及校验规则。"
+    ],
+    "review_mode": "dual_pass",
+    "primary_model": "gpt-5.4",
+    "secondary_model": "deepseek-v4-pro"
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 1,
+      "numeric": 0,
+      "mixed": 0,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": false,
+    "missing_companion_docs": [
+      "数值文档"
+    ],
+    "total_paragraphs": 121,
+    "total_tables": 7,
+    "total_images": 27
+  },
+  "documents": [
+    {
+      "name": "tiger需求文档.docx",
+      "kind": "requirement",
+      "paragraph_count": 121,
+      "table_count": 7,
+      "image_count": 27,
+      "errors": []
+    }
+  ]
+}

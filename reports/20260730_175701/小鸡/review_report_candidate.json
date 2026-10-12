@@ -1,0 +1,249 @@
+{
+  "report": {
+    "overall_evaluation": "文档主流程可理解，但仍存在缺乏最大赔付(MAX_WIN)与防刷兜底机制、基础经济参数与概率模型跨文档冲突、倍率公式口径与数值表映射冲突及溢出等高风险问题，建议补充对齐后再推进开发与测试。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但仍存在高风险缺口或关键边界缺失，需要补充后再完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "缺乏最大赔付(MAX_WIN)与防刷兜底机制",
+        "owner": "数值策划",
+        "why_now": "一旦触发高倍率结算，将导致平台出现灾难性资损事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "基础经济参数与概率模型跨文档冲突",
+        "owner": "系统策划",
+        "why_now": "1、基础经济参数不一致导致下注与结算模块无法对齐；2、两套概率模型无法兼容，程序无法选择底层随机模型，测试无法编写概率验收用例。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "倍率公式口径与数值表映射冲突及溢出",
+        "owner": "数值策划",
+        "why_now": "1、结算公式无法落地；2、千万倍级溢出将导致严重资损事故；3、通关结算逻辑缺失，程序无法实现超级大奖派发。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CROSS_FORMULA",
+            "title": "倍率公式口径与数值表映射冲突及溢出",
+            "description": "需求公式定义为单格倍率连乘，数值表给出的却是累计总倍率；且数值表存在千万倍级溢出，与MAX_MUL配置严重矛盾。",
+            "evidence": "小鸡.docx / 3.3 奖金计算系统、2.1 完整游戏流程；小鸡数值文档.docx / 表格2、表格3",
+            "impact": "结算公式无法落地，存在重大资损风险",
+            "suggestion": "1. 明确数值表口径，若是累计值需反推单格倍率表；\n2. 澄清MAX_MUL在Crash算法中的真实物理意义，修正难度4溢出错误；\n3. 明确“超级大奖”是固定金额、额外倍率乘区，还是指代通过第30关的累计倍率奖励，并补充配置。",
+            "canonical_title": "倍率公式口径与数值表映射冲突及溢出",
+            "risk": "1、结算公式无法落地；2、千万倍级溢出将导致严重资损事故；3、通关结算逻辑缺失，程序无法实现超级大奖派发。",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "planner_role": "数值策划",
+            "current_state": "1. 公式口径歧义：需求公式为单格倍率连乘（Π(已通过马路倍率)），数值表给出的30关数值（如难度1第30关23.9）语义不明（单格还是累计）。\n2. 数值表溢出与MAX_MUL矛盾：数值文档MAX_MUL=176，但难度4第30关累计倍率高达6627万倍，概念严重混淆且存在计算溢出。\n3. 超级大奖缺失：需求文档提及通关触发“超级大奖”获得额外高额奖励，但数值文档无此配置，且未说明与第30关倍率的关系。"
+          },
+          {
+            "issue_id": "CROSS_BET",
+            "title": "基础经济参数与概率模型跨文档冲突",
+            "description": "需求文档及UI下注档位为3/5/10/20，数值文档示例为100/1000。",
+            "evidence": "小鸡.docx / 表格1、表格2、图片1-4；小鸡数值文档.docx / 表格1、4. 撞击概率计算",
+            "impact": "阻塞下注与结算模块开发",
+            "suggestion": "1. 统一全局下注筹码配置表，明确最终上线的筹码档位及步长；\n2. 召开策划与数值对齐会，统一底层随机算法模型（废弃冲突配置）；\n3. 明确UI展示的是“当前格概率”还是“整局存活概率”，并给出与底层Crash算法的换算公式。",
+            "canonical_title": "基础经济参数与概率模型跨文档冲突",
+            "risk": "1、基础经济参数不一致导致下注与结算模块无法对齐；2、两套概率模型无法兼容，程序无法选择底层随机模型，测试无法编写概率验收用例。",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "planner_role": "系统策划",
+            "current_state": "1. 下注筹码不一致：需求文档及UI为3/5/10/20，数值文档示例为100/1000。\n2. 概率模型冲突：需求文档定义为固定概率（如简单20%-65%），数值文档采用Crash算法（MAX_MUL+必爆概率），两者底层逻辑互斥。\n3. UI概率展示歧义：UI展示固定的“被击中概率”，但底层若为Crash算法，每格概率是动态变化的，无法直接映射。"
+          },
+          {
+            "issue_id": "ART_CONFLICT",
+            "canonical_title": "核心角色包装设定矛盾（小鸡 vs 骆驼）",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "image",
+            "severity": "低",
+            "title": "核心角色包装设定矛盾（小鸡 vs 骆驼）",
+            "current_state": "1. 文档段落55说明“先用小鸡形象”，但4.1节又详细规定了“卡通骆驼设计”，且UI截图均为小鸡。",
+            "evidence": "小鸡.docx / 4.1 核心形象、段落55、图片1-3",
+            "risk": "美术资产验收标准模糊，可能导致首版资源返工。",
+            "suggestion": "明确首版上线验收标准（小鸡），并说明骆驼资产的替换触发条件与排期，避免执行歧义。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "EXCEPTION_STATE",
+            "canonical_title": "涉及资金结算的异常状态幂等性规则缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "涉及资金结算的异常状态（断线/重复点击）幂等性规则缺失",
+            "current_state": "1. 涉及筹码扣除与奖金发放，未明确重复点击“开始/提现”、断线重连时的幂等性校验与局中状态恢复规则。（注：按平台规范，弱网/断线重连默认由中台处理，此处仅作为玩法专属边界提醒）",
+            "evidence": "小鸡.docx / 全文",
+            "risk": "可能导致重复扣款、奖金丢失或状态错乱，引发客诉。",
+            "suggestion": "补充服务端幂等性校验规则（如基于局ID的防重放），明确断线重连后的状态恢复表现及结算中退出的处理逻辑。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "MAX_WIN_LIMIT",
+            "canonical_title": "缺乏最大赔付(MAX_WIN)与防刷兜底机制",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "table",
+            "severity": "高",
+            "title": "缺乏最大赔付(MAX_WIN)与防刷兜底机制",
+            "current_state": "1. 数值文档难度4第30关累计倍率高达6627万倍，文档中未配置任何最大赔付（MAX_WIN）限制或单局奖金上限。",
+            "evidence": "小鸡数值文档.docx / 表格2",
+            "risk": "一旦触发高倍率结算，将导致平台出现灾难性资损事故。",
+            "suggestion": "必须增加MAX_WIN（最大赔付）配置项，明确单局最高奖金上限，并在结算链路中增加硬截断逻辑。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "RTP_CLARITY",
+            "canonical_title": "RTP目标值及验证方式缺失",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "RTP目标值及验证方式缺失",
+            "current_state": "1. 数值文档提到“不同RTP设置不同的必被撞击的几率”，但未给出具体的RTP目标值（如96%、98%）及验证方式。",
+            "evidence": "小鸡数值文档.docx / 4. 撞击概率计算",
+            "risk": "无法验证数值模型的经济平衡性，可能导致游戏赔率失控。",
+            "suggestion": "补充各难度档位的RTP目标值，并提供蒙特卡洛模拟验证报告或验收标准。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "单格倍率的具体配置表（若数值文档表格2为累计值，需补充单格倍率配置）。",
+      "MAX_WIN（最大赔付/单局奖金上限）的具体数值配置。",
+      "“超级大奖”的具体数值或触发逻辑配置。",
+      "各难度档位的具体RTP目标值及验证报告。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证下注、前进、碰撞、提现、通关结算的主流程闭环。",
+        "验证UI展示的倍率、概率与服务端真实结算数据是否一致。",
+        "验证不同难度档位下的碰撞概率分布是否符合数值预期。"
+      ],
+      "异常操作": [
+        "连续快速点击“开始”和“提现”按钮，验证幂等性。",
+        "在局内前进过程中断网/杀进程，重连后验证状态恢复与奖金结算。",
+        "余额不足时尝试下注，验证拦截逻辑。"
+      ],
+      "兼容性": [
+        "不同分辨率/刘海屏下的UI适配，特别是底部操作面板与倍率展示。"
+      ],
+      "安全专项": [
+        "构造极高倍率结算请求，验证MAX_WIN截断逻辑是否生效。",
+        "使用抓包工具篡改客户端倍率/概率参数，验证服务端权威校验。",
+        "重放提现/结算接口请求，验证防重放机制。"
+      ],
+      "回归影响": [
+        "验证下注模块修改是否影响主钱包余额扣减与增加逻辑。"
+      ],
+      "性能与稳定性": [
+        "30格动画连续播放及大量车辆同屏渲染时的帧率与内存表现。",
+        "长时间挂机或连续进行多局游戏后的内存泄漏检查。"
+      ],
+      "用户体验": [
+        "验证“被击中概率”UI展示的准确性与玩家理解度。",
+        "验证倍率跳动动画与音效反馈的流畅度与节奏感。"
+      ]
+    },
+    "quality_notes": [
+      "数值文档中提到的“棕色底”配置标记在纯文本中丢失，需确认是否有遗漏的隐藏配置项。",
+      "部分UI截图中“被击中的概率”右侧的具体百分比数值不可见，需补充高清截图或明确数值以验证UI与算法的映射。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片1-4中“被击中的概率”右侧的具体百分比数值不可见，无法验证UI展示与数值文档的对应关系。",
+      "图片4（流程图）中“标准爆炸倍数”的具体数值配置未显示，无法确认流程节点的判断阈值。"
+    ],
+    "review_mode": "dual_pass_candidate",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 1,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 97,
+    "total_tables": 5,
+    "total_images": 13
+  },
+  "documents": [
+    {
+      "name": "小鸡.docx",
+      "kind": "mixed",
+      "paragraph_count": 79,
+      "table_count": 2,
+      "image_count": 9,
+      "errors": []
+    },
+    {
+      "name": "小鸡数值文档.docx",
+      "kind": "numeric",
+      "paragraph_count": 18,
+      "table_count": 3,
+      "image_count": 4,
+      "errors": []
+    }
+  ]
+}

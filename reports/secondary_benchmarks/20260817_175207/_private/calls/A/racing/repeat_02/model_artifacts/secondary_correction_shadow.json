@@ -1,0 +1,101 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "primary_report_hash_after": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "protected_fields_hash_before": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "protected_fields_hash_after": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 1,
+  "abstained_count": 0,
+  "accepted_corrections": [],
+  "rejected_corrections": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "MAX_PAYOUT_RISK",
+      "correction_disposition": "downgrade",
+      "source_provenance": "mixed",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；Racing数值文档.docx / 段落2-3；musee游戏Racing.docx / 3.4开奖逻辑 段落48-49",
+      "rationale": "基于单选项下注上限、最低赔率限制及控盘干预逻辑，单局最大赔付在数学上可控，原“极端赔付风险”定性过高，需降级并重写风险描述以反映已有的兜底机制。",
+      "residual_issue": "虽存在下注上限与最低赔率兜底，但102万的绝对赔付上限是否满足平台资金风控要求，以及控盘干预在极端并发下的失效概率仍未明确，需数值与风控确认。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": true
+      },
+      "proposed_changes": {
+        "title": "奖池负数时的赔付上限与风控确认",
+        "current_state": "需求文档明确奖池可以接受负数，但单选项下注上限为100万（段落32），且数值文档设定最低赔率为1.02（段落2-3），同时奖池待补充时会侧重开投注人数最少的选项（段落48-49）。",
+        "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；Racing数值文档.docx / 段落2-3；musee游戏Racing.docx / 3.4开奖逻辑 段落48-49",
+        "risk": "在100万下注上限与1.02最低赔率的双重限制下，单局理论最大赔付被限制在102万以内，且可通过控盘避开大R。但若102万超出平台单次风控阈值，或控盘干预在极端情况下失效，仍存在资金风险。",
+        "suggestion": "需数值策划与风控确认102万的理论最大赔付是否在平台可承受范围内，并补充控盘干预失效时的最终兜底策略。",
+        "planner_role": "数值策划",
+        "confidence": "中"
+      },
+      "replacement_findings": [],
+      "correction_type": "downgrade",
+      "before": {
+        "issue_id": "MAX_PAYOUT_RISK",
+        "canonical_title": "奖池负数无最大赔付兜底",
+        "primary_dimension": "安全性与反作弊",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+        "current_state": "需求文档明确奖池可以接受负数，但未说明当奖池严重亏损时，若用户下注MAX并中奖，平台是否有单局最大赔付限制或兜底策略。",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+        "risk": "极端情况下（如奖池负数且大R下注MAX），可能导致平台单次赔付超出承受范围，造成资金事故。",
+        "suggestion": "补充单局最大赔付上限（MAX_MUL）或奖池负数时的赔付折扣/兜底规则。",
+        "planner_role": "数值策划",
+        "confidence": "中",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "downgrade",
+        "editable_finding_preview": {
+          "issue_id": "MAX_PAYOUT_RISK",
+          "canonical_title": "奖池负数无最大赔付兜底",
+          "primary_dimension": "安全性与反作弊",
+          "evidence_scope": "document",
+          "title": "奖池负数时的赔付上限与风控确认",
+          "current_state": "需求文档明确奖池可以接受负数，但单选项下注上限为100万（段落32），且数值文档设定最低赔率为1.02（段落2-3），同时奖池待补充时会侧重开投注人数最少的选项（段落48-49）。",
+          "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；Racing数值文档.docx / 段落2-3；musee游戏Racing.docx / 3.4开奖逻辑 段落48-49",
+          "risk": "在100万下注上限与1.02最低赔率的双重限制下，单局理论最大赔付被限制在102万以内，且可通过控盘避开大R。但若102万超出平台单次风控阈值，或控盘干预在极端情况下失效，仍存在资金风险。",
+          "suggestion": "需数值策划与风控确认102万的理论最大赔付是否在平台可承受范围内，并补充控盘干预失效时的最终兜底策略。",
+          "planner_role": "数值策划",
+          "confidence": "中"
+        },
+        "protected_fields_locked": true,
+        "protected_fields_note": "severity/blocking remain unchanged until separate human approval"
+      },
+      "applied_to_report": false,
+      "validation_status": "rejected",
+      "validation_reasons": [
+        "downgrade_requires_original_claim_still_valid"
+      ]
+    }
+  ],
+  "abstained_corrections": []
+}

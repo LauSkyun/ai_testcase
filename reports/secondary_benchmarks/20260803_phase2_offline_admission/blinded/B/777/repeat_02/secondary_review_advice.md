@@ -1,0 +1,50 @@
+# Dual Pass 副评审建议
+
+## 总体判断
+主模型报告准确识别了核心高风险问题（风控与RESPIN冲突、累加算法歧义、盘面生成规则混乱），证据引用准确，严重度判定合理。但部分问题描述可更精确（如推展机制实为表现激励而非结果干预），且遗漏了RESPIN状态恢复、示例数值与赔付表不一致等中低信号问题。整体报告结构完整、可直接交付业务方阅读。
+
+- 建议等级：low
+- 是否建议候选稿直出：是
+- 原因：候选报告已修正主模型描述精度问题，补充了关键边界说明，结构完整、证据可追踪、lineage清晰，可直接交付业务方阅读。文档中仍存在待策划确认的问题（如累加算法最终口径、风控介入时机），但这属于需求待澄清范畴，不阻断报告直出。
+- 可追踪性：complete
+- readiness 是否冲突：否
+- candidate 是否有结构漂移：否
+- primary issue_id 修复数：0
+- candidate issue_id 修复数：0
+- lineage 是否自动补齐：否
+- suggestion_level 是否与 readiness 冲突：否
+- 是否已对 suggestion_level 冲突做 override：否
+- advice 与 candidate 落盘是否一致：是
+- lineage 原始统计：kept=9, added=0, merged=0, dropped=0
+- lineage 实际落盘统计：kept=9, added=0, merged=0, dropped=0
+- added 落盘状态：none
+- merged 落盘状态：none
+- phase2 新增准入：声称 1，通过 0，拒绝 1
+  - 拒绝《RESPIN过程中断线恢复的状态保存逻辑未明确》：missing_fields:candidate_issue_id,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, primary_duplicate_root
+- 当前不建议默认切 candidate 的原因：phase2_added_admission_rejected
+- 阻断分类：quality_blockers=phase2_added_admission_rejected
+
+## 优点
+- 准确识别风控强制0倍与RESPIN触发条件的致命冲突，证据充分
+- 正确指出RESPIN累加算法在需求示例（加法）与数值术语（累加乘数）之间的歧义
+- 基础符号盘面生成规则的混乱描述定位准确，引用了具体段落
+- 问题分组合理，严重度判定符合实际阻塞程度
+- 证据索引清晰，每个finding都指向具体文档段落或表格
+
+## 问题
+- LOGIC_03推展机制描述可更精确：文档示例明确显示这是表现激励（先显空再显X10，最终结果不变），而非结果干预
+- 遗漏RESPIN过程中断线恢复的具体状态保存与恢复逻辑（文档仅说'复用中台'但未说明respin累计状态如何保存）
+- 需求文档示例中'7*3图案基础倍率为10'与赔付表'777=77倍'数值不一致，虽可能是假设示例但易引发混淆
+- 部分finding的suggestion可更具体，如CLARITY_01建议提供伪代码或状态表，但未给出示例格式
+
+## 复核备注
+- TEST_01已吸收MISSED_01（RESPIN断线恢复状态保存逻辑），在suggestion中补充了状态保存时机与恢复逻辑的明确要求。
+- 需求文档示例中'7*3图案基础倍率为10'与赔付表'777=77倍'数值不一致，可能是假设示例，但易引发混淆，已在quality_notes中提示。
+- 主模型LOGIC_03推展机制描述已优化，明确这是表现激励而非结果干预，但保留了高严重度因为术语和定义仍不清晰。
+- 建议后续补充：最大赔付封顶机制、RTP目标值、扣款时机明确说明（虽为通用能力，但对本玩法经济安全有影响）。
+
+## 不支持的问题
+- 暂无
+
+## 合并建议
+- 暂无

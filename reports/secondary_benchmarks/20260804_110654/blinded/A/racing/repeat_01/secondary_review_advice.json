@@ -1,0 +1,457 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心赔率公式冲突、T变量定义歧义、假数据隔离缺失、真假赔率映射缺失等高信号阻塞项，问题定位精准、证据引用完整、严重度判定合理。但在结算时机、统计时间窗口一致性方面存在漏项，且部分finding的current_state存在重复表述可进一步精炼。",
+    "strengths": [
+      "准确识别T变量在需求文档（耗时）与数值文档（赔率分子）之间的根本性定义冲突",
+      "正确指出假人数/假金额可能参与实时赔率计算的数据源隔离风险",
+      "清晰区分'实际赔率'与'假赔率'在展示与结算之间的映射缺失",
+      "干预逻辑到速度公式的映射缺口定位准确",
+      "占位符问题按评审原则正确降级为低风险"
+    ],
+    "issues": [
+      "T_VARIABLE_CONFLICT的current_state存在5处重复表述，未做分点整理",
+      "遗漏结算时机（扣款/发奖时间点）的明确性缺口",
+      "遗漏统计时间窗口（30天 vs 今日/本周）在不同模块间的不一致",
+      "FAKE_ODDS_MAPPING与DATA_ISOLATION存在部分根因重叠但未做合并说明"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正主模型重复表述问题，补充了结算时机与统计时间窗口两个高信号漏项，lineage追踪完整，可直接输出给业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正主模型重复表述问题，补充了结算时机与统计时间窗口两个高信号漏项，lineage追踪完整，可直接输出给业务方阅读。"
+  },
+  "review_notes": [
+    "T_VARIABLE_CONFLICT的current_state已做分点整理，消除主模型报告中的5处重复表述",
+    "新增LOGIC_FUNDS_01覆盖结算链路中扣款与派奖时间节点的明确性缺口",
+    "新增DATA_STATS_01覆盖不同统计模块时间窗口不一致的问题",
+    "DATA_ISOLATION与FAKE_ODDS_MAPPING虽存在部分根因重叠（均涉及假数据处理），但前者关注计算数据源隔离，后者关注展示与结算映射，属于不同环节，保持独立",
+    "protocol_profile=phase2"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "LOGIC_FUNDS_01",
+      "audit_key": "funds_deduction_payout",
+      "title": "下注扣款时机与派奖时机未明确定义，结算链路存在缺口",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "1. 需求文档描述了下注流程（选择档位→点击下注→倒计时结束→开奖），但未明确扣款发生在哪个节点。\n2. 派奖时机同样未说明：是在开奖动画播放前预发、动画结束后结算、还是结果弹窗展示时到账。\n3. 若扣款时机不清，可能导致重复点击下注时多次扣款或下注失败但已扣款的资损风险。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落21-34；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+      "risk": "扣款时机不明确可能导致并发下注时重复扣款或下注失败但余额已扣的资损事故；派奖时机不清可能导致用户看到中奖但余额未及时更新的客诉。",
+      "suggestion": "明确定义：1) 扣款时机为'用户点击下注按钮且服务端校验通过后立即扣除'；2) 派奖时机为'开奖结果确定后、结果弹窗展示前由服务端统一发放'；3) 补充扣款失败、派奖失败的回滚与补偿机制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "结算链路中扣款与派奖的时间节点未在需求文档中显式定义",
+      "root_causes": [
+        "结算链路中扣款与派奖的时间节点未在需求文档中显式定义"
+      ],
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是奖池负数时的赔付上限兜底，而本问题关注的是扣款/派奖的时间节点定义，两者属于结算链路的不同环节，根因独立"
+      },
+      "severity_basis": "扣款时机不明确直接导致并发下注时可能重复扣款，属于资损风险；派奖时机不清会导致用户余额展示与实际不一致，引发客诉",
+      "root_cause_count": 1,
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "在3.3下注部分和3.4开奖逻辑中均未找到扣款时机和派奖时机的明确定义，不存在兼容解释",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分",
+          "musee游戏Racing.docx / 3.4开奖逻辑"
+        ]
+      }
+    },
+    {
+      "candidate_issue_id": "DATA_STATS_01",
+      "audit_key": "statistics_time_window",
+      "title": "统计模块时间窗口不一致：胜率/赔率使用30天，榜单使用今日/本周",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "1. 胜率排行(win rate rank)展示'最近30天'的胜率和赔率（段落9）。\n2. 平均赔率展示'最近30天所有轮次'的平均值（段落29）。\n3. 今日榜单和周榜展示'下注金额'（段落12），时间窗口为今日/本周。\n4. 不同模块使用不同时间窗口，用户可能混淆'30天胜率33.3%'与'今日榜单第1名'之间的关联性。",
+      "evidence": "musee游戏Racing.docx / 3.1首页顶栏板块 段落9；musee游戏Racing.docx / 3.1首页顶栏板块 段落12；musee游戏Racing.docx / 3.3下注部分 段落29",
+      "risk": "时间窗口不一致可能导致用户对数据产生误解，例如认为'今日榜单第1名'的车辆在'30天胜率'中也最高，实际可能并非如此，影响下注决策。",
+      "suggestion": "1) 在统计模块UI上明确标注各数据的时间窗口（如'近30天胜率'、'今日下注榜'）；2) 在规则说明中解释不同时间窗口的统计口径；3) 考虑统一核心统计指标的时间窗口，或提供时间窗口切换功能。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "independent_root_cause": "不同统计模块使用了不同的时间窗口定义，且未在UI或规则中明确区分",
+      "root_causes": [
+        "不同统计模块使用了不同的时间窗口定义，且未在UI或规则中明确区分"
+      ],
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "DATA_ISOLATION",
+        "overlap": false,
+        "reason": "DATA_ISOLATION关注的是假数据是否参与真实计算，而本问题关注的是不同统计模块的时间窗口定义不一致，两者属于数据展示的不同维度，根因独立"
+      },
+      "severity_basis": "时间窗口不一致会导致用户对数据产生误解，影响下注决策，属于用户体验与信息透明度问题",
+      "root_cause_count": 1,
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落9、段落12、段落29分别定义了30天、今日/本周、30天的时间窗口，三者属于同一游戏内的不同统计模块，存在明确的口径不一致",
+        "same_subject_and_scope": true
+      }
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DATA_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FAKE_ODDS_MAPPING",
+        "primary_issue_ids": [
+          "FAKE_ODDS_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC_FUNDS_01",
+        "source_missed_issue_ids": [
+          "LOGIC_FUNDS_01"
+        ],
+        "reason": "Primary遗漏了结算链路中扣款与派奖时间节点的明确定义，该缺口直接影响并发下注的幂等性和用户余额展示一致性"
+      },
+      {
+        "candidate_issue_id": "DATA_STATS_01",
+        "source_missed_issue_ids": [
+          "DATA_STATS_01"
+        ],
+        "reason": "Primary遗漏了不同统计模块时间窗口不一致的问题，该缺口影响用户对数据的理解和下注决策"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已修正主模型重复表述问题，补充了结算时机与统计时间窗口两个高信号漏项，lineage追踪完整，可直接输出给业务方阅读。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 2,
+    "admitted_count": 2,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [
+      {
+        "candidate_issue_id": "LOGIC_FUNDS_01",
+        "title": "下注扣款时机与派奖时机未明确定义，结算链路存在缺口",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "TUTORIAL_ISOLATION",
+            "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "musee游戏Racing.docx / 3.3下注部分 段落21-34；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+        "coverage_audit_key": "funds_deduction_payout"
+      },
+      {
+        "candidate_issue_id": "DATA_STATS_01",
+        "title": "统计模块时间窗口不一致：胜率/赔率使用30天，榜单使用今日/本周",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "T_VARIABLE_CONFLICT",
+            "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "musee游戏Racing.docx / 3.1首页顶栏板块 段落9；musee游戏Racing.docx / 3.1首页顶栏板块 段落12；musee游戏Racing.docx / 3.3下注部分 段落29",
+        "coverage_audit_key": "statistics_time_window"
+      }
+    ],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [
+        "funds_deduction_payout",
+        "statistics_time_window"
+      ],
+      "candidate_to_audit_key": {
+        "LOGIC_FUNDS_01": "funds_deduction_payout",
+        "DATA_STATS_01": "statistics_time_window"
+      },
+      "finding_audit_keys": {
+        "LOGIC_FUNDS_01": "funds_deduction_payout",
+        "DATA_STATS_01": "statistics_time_window"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "T_VARIABLE_CONFLICT",
+            "FAKE_ODDS_MAPPING"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 段落28",
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+            "Racing数值文档.docx / 图片1",
+            "Racing数值文档.docx / 段落5"
+          ],
+          "reason": "Primary已覆盖赔率公式冲突、T变量歧义、真假赔率映射缺失，无需新增",
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "INTERVENTION_MAPPING"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落40-49"
+          ],
+          "reason": "Primary已覆盖干预逻辑到速度公式的映射缺口，无需新增",
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "LOGIC_FUNDS_01"
+          ],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 段落21-34",
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+          ],
+          "reason": "文档未明确下注扣款时机（点击下注时/倒计时结束时/开奖前）及派奖时机（开奖动画前/后），存在结算链路缺口",
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "MAX_PAYOUT_RISK"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+          ],
+          "reason": "Primary已覆盖奖池负数无最大赔付兜底的风险，无需新增",
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "DATA_STATS_01"
+          ],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.1首页顶栏板块 段落9",
+            "musee游戏Racing.docx / 3.1首页顶栏板块 段落12",
+            "musee游戏Racing.docx / 3.3下注部分 段落29"
+          ],
+          "reason": "胜率排行和平均赔率使用30天窗口，而榜单使用今日/本周窗口，时间口径不一致可能导致用户理解混淆",
+          "errors": []
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 2,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {}
+}

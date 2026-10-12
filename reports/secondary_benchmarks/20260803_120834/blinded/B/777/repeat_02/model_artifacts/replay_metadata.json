@@ -1,0 +1,14 @@
+{
+  "game": "777",
+  "variant_id": "B",
+  "repeat": 2,
+  "status": "failed",
+  "output_dir": "blinded/B/777/repeat_02",
+  "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+  "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+  "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+  "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+  "secondary_message_hash": "e28ea0719ff9cd79bdb2b06cc3ab3b8a7b830ed0b2c73fea4db2271e49225b72",
+  "temperature": 0,
+  "error": "secondary_benchmark:B:777:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

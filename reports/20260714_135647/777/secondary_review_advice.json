@@ -1,0 +1,198 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心玩法循环中的关键问题，但RESPIN结算公式严重度评估偏高，且遗漏了推展机制需求缺失问题。候选报告修正了严重度并补充了缺失项，可直接输出。",
+    "strengths": [
+      "成功定位了基础盘面空符号随机池逻辑冲突、RESPIN结算公式术语模糊、推展机制边界不清等核心问题。",
+      "提供了详尽的测试建议和验收标准。",
+      "跨文档一致性分析结构清晰。"
+    ],
+    "issues": [
+      "RESPIN结算公式问题严重度被高估为'高'，实际可通过澄清统一，应降为'中'。",
+      "遗漏了需求文档缺失推展机制功能描述的安全隐患。",
+      "缺少对RESPIN次数配置含义的明确澄清。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正严重度偏差并补充了推展机制需求缺失问题，结构完整，证据可追溯，可直接交付业务方。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正严重度偏差并补充了推展机制需求缺失问题，结构完整，证据可追溯，可直接交付业务方。"
+  },
+  "review_notes": [
+    "主模型对RESPIN结算公式问题的严重度评估偏高，实际上两份文档的公式可兼容，主要风险为术语歧义，已降为中。",
+    "建议后续在需求文档中明确推展机制的功能描述，并与数值文档对齐。",
+    "基础盘面随机池逻辑冲突属于高阻塞项，需尽快由数值策划澄清。",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_PUSH_MECHANISM_REQ",
+      "title": "需求文档缺失推展机制功能描述",
+      "primary_dimension": "清晰度与完整性",
+      "severity": "中",
+      "description": "数值文档定义了推展机制（当结算倍数>5倍时有概率触发推展动画），但需求文档仅在第44段描述了“特殊倍率回推/下拉效果”，未明确触发条件、概率配置、动画流程及与结算的关系。导致前端开发无法完整实现推展动画，且可能造成服务端下发的推展指令与客户端预期不一致。",
+      "evidence": "crazy777数值文档修改后.docx / 段落38-40；疯狂777需求文档修改后.docx / 段落44",
+      "suggestion": "在需求文档中补充推展机制的完整功能描述：触发条件（结算倍数>N且随机概率M）、动画流程（先停在空再推展到实际乘数）、服务端与客户端协议。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "AMOUNT_FORMAT",
+        "primary_issue_ids": [
+          "AMOUNT_FORMAT"
+        ],
+        "modifications": "无修改"
+      },
+      {
+        "candidate_issue_id": "CROSS_GEN_A15B3C09",
+        "primary_issue_ids": [
+          "CROSS_GEN_A15B3C09"
+        ],
+        "modifications": "严重度从高降为中，标题改为'RESPIN结算公式与举例的术语映射需统一'，描述中明确公式可兼容，风险降低为表述歧义。"
+      },
+      {
+        "candidate_issue_id": "BASE_SYMBOL_POOL",
+        "primary_issue_ids": [
+          "BASE_SYMBOL_POOL"
+        ],
+        "modifications": "无修改"
+      },
+      {
+        "candidate_issue_id": "PUSH_MECHANISM_AUTH",
+        "primary_issue_ids": [
+          "PUSH_MECHANISM_AUTH"
+        ],
+        "modifications": "无修改"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "MISS_PUSH_MECHANISM_REQ",
+        "source_missed_issue_ids": [
+          "MISS_PUSH_MECHANISM_REQ"
+        ],
+        "reason": "需求文档缺失推展机制功能描述，可能导致前后端实现不一致，属于主模型遗漏。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 1,
+  "candidate_issue_id_repair_count": 1,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正严重度偏差并补充了推展机制需求缺失问题，结构完整，证据可追溯，可直接交付业务方。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 1,
+    "candidate_issue_id_repair_count": 1,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

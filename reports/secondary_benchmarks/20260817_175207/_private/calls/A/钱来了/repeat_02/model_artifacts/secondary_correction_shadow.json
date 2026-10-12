@@ -1,0 +1,208 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "primary_report_hash_after": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "protected_fields_hash_before": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "protected_fields_hash_after": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 4,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_01",
+      "correction_disposition": "drop",
+      "source_provenance": "requirement_text",
+      "evidence": "钱来了需求文档.docx / 3.2.1 卷轴结构",
+      "rationale": "文档已明确盘面存在上下符号，推展机制的上下方向与盘面结构兼容，原判断不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "CLARITY_01",
+        "canonical_title": "推展机制方向与盘面结构冲突",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "中",
+        "title": "推展机制的“上下”方向与1x3盘面结构冲突",
+        "current_state": "需求文档定义盘面为“1行3列”，但推展机制描述为“中间轴将有机会向上或向下推展一次”。数值文档举例称“上方或下方的一个乘数为X3”，未说明1行盘面如何表现上下推展。",
+        "evidence": "需求文档 / 3.2.1 卷轴结构、3.4.2 推展模式；数值文档 / 五、基础游戏・核心机制",
+        "risk": "视觉表现与底层逻辑脱节，程序无法确定推展动画的源数据位置及中奖线判定规则。",
+        "suggestion": "明确推展的视觉表现（如：是否指代卷轴上下相邻的隐藏符号行），并补充推展后符号落定中奖线的判定规则。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "CLARITY_01",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "correction_id": "CR-02",
+      "challenge_id": "CH-02",
+      "target_issue_id": "LOGIC_02",
+      "correction_disposition": "drop",
+      "source_provenance": "numeric_config",
+      "evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制",
+      "rationale": "文档已说明RESPIN触发条件属于表演阶段的倒推逻辑，与底层数据生成规则不矛盾，原判断不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "LOGIC_02",
+        "canonical_title": "底层数据与RESPIN触发条件矛盾",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "底层数据生成规则与RESPIN触发条件矛盾",
+        "current_state": "数值文档称“不会生成1,3均不为空的局面”，但又规定“当1,3列金币符号不同且有值时...必定发生RESPIN”。若底层不生成1,3均不为空，则RESPIN的触发条件在底层数据中无法成立。",
+        "evidence": "数值文档 / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+        "risk": "底层逻辑与表演逻辑无法闭环，程序无法实现RESPIN的触发判定。",
+        "suggestion": "澄清RESPIN是纯表演机制还是底层结果机制。若是表演机制，需明确底层数据如何映射到表演阶段的“1,3列不同且有值”的中间态。",
+        "planner_role": "数值策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "LOGIC_02",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "correction_id": "CR-03",
+      "challenge_id": "CH-03",
+      "target_issue_id": "CROSS_01",
+      "correction_disposition": "drop",
+      "source_provenance": "mixed",
+      "evidence": "钱来了需求文档.docx / 3.3.2 中间轴符号；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算",
+      "rationale": "需求文档示例已明确结算公式，与数值文档逻辑一致，原判断不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "CROSS_01",
+        "canonical_title": "结算公式与符号定义口径分裂",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "中奖金额计算公式与符号定义口径分裂",
+        "current_state": "需求文档将左右轴符号定义为“0.1倍、0.5倍...投注金额”，而数值文档定义为“金币赔率倍数”，且公式表述为“中奖金额 = 乘数符号 × 符号值（即基础投注 × 符号赔率）”，存在术语不一致与公式歧义。",
+        "evidence": "需求文档 / 3.3.1 符号分类总览、3.3.2 中间轴符号；数值文档 / 四、基础游戏・投注与中奖计算",
+        "risk": "程序在实现结算公式时可能因术语歧义导致乘区错误，引发严重的资金结算事故。",
+        "suggestion": "统一术语，将“金币赔率倍数”明确为“投注额乘数”，并给出无歧义的最终结算公式示例（如：中奖金额 = 基础投注 × 左/右轴乘数 × 中间轴乘数）。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "CROSS_01",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "correction_id": "CR-04",
+      "challenge_id": "CH-04",
+      "target_issue_id": "CROSS_02",
+      "correction_disposition": "drop",
+      "source_provenance": "mixed",
+      "evidence": "钱来了需求文档.docx / 3.4.3 免费旋转模式；钱来了数值文档.docx / 表格8、表格9",
+      "rationale": "风控针对单局赔付，封顶针对累计总赢奖，两者维度不同且不互斥，原判断不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "CROSS_02",
+        "canonical_title": "风控基数与封顶规则冲突",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "风控倍数基数与免费游戏封顶规则冲突",
+        "current_state": "数值文档规定“超过100倍 → 直接强制0倍”，而需求文档规定“免费模式中总赢奖达到投注额的2000倍时，自动结束”。两份文档均未明确“倍数”的基数是“单局投注额”还是“免费游戏累计投注额”。",
+        "evidence": "需求文档 / 3.4.3 免费旋转模式；数值文档 / 六、基础游戏・体验控制 & 风控",
+        "risk": "若风控基数为单局，则免费游戏可正常累计至2000倍；若为累计，则免费游戏永远无法触发2000倍封顶。口径不清将导致风控逻辑与封顶逻辑互斥。",
+        "suggestion": "明确风控“100倍”的基数为“单局赔付/单局投注”，并补充说明免费游戏2000倍封顶的统计口径（如：单次免费游戏周期内的累计总赢奖）。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "CROSS_02",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

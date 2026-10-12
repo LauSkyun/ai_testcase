@@ -1,0 +1,202 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_2",
+    "expected_primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "expected_echo": "protocol_profile=phase3_v1_2; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "primary_report_hash_after": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "protected_fields_hash_before": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "protected_fields_hash_after": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 0,
+  "accepted_challenges": [],
+  "rejected_challenges": [],
+  "target_coverage_ledger": {
+    "schema_version": 1,
+    "expected_count": 8,
+    "actual_count": 8,
+    "completeness": 1.0,
+    "valid": true,
+    "errors": [],
+    "inventory": [
+      {
+        "target_order": 1,
+        "target_issue_id": "DATA_ISOLATION",
+        "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失",
+        "dimension": "清晰度与完整性",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "musee游戏Racing.docx / 3.3下注部分 段落22-23、段落28"
+      },
+      {
+        "target_order": 2,
+        "target_issue_id": "TUTORIAL_ISOLATION",
+        "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计",
+        "dimension": "清晰度与完整性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "musee游戏Racing.docx / 3.2蒙层引导 段落15-20"
+      },
+      {
+        "target_order": 3,
+        "target_issue_id": "INTERVENTION_MAPPING",
+        "title": "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，干预逻辑无法落地",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13"
+      },
+      {
+        "target_order": 4,
+        "target_issue_id": "T_VARIABLE_CONFLICT",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落2；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 图片1；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 图片1']；['musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13', 'Racing数值文档.docx / 图片1']"
+      },
+      {
+        "target_order": 5,
+        "target_issue_id": "PLACEHOLDER_MISSING",
+        "title": "奖池状态阈值与干预触发条件全为占位符，导致干预逻辑无法测试验收",
+        "dimension": "可测试性与验收标准",
+        "severity": "低",
+        "blocking": "建议优化",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49"
+      },
+      {
+        "target_order": 6,
+        "target_issue_id": "AUDIO_MIXING",
+        "title": "半屏模式下直播间音频与游戏音效的混合规则缺失",
+        "dimension": "跨系统影响与兼容性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "musee游戏Racing.docx / 3.1首页顶栏板块 段落6、段落8"
+      },
+      {
+        "target_order": 7,
+        "target_issue_id": "MAX_PAYOUT_RISK",
+        "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+        "dimension": "安全性与反作弊",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+      },
+      {
+        "target_order": 8,
+        "target_issue_id": "FAKE_ODDS_MAPPING",
+        "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失",
+        "dimension": "安全性与反作弊",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落5；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 段落5']"
+      }
+    ],
+    "entries": [
+      {
+        "target_issue_id": "DATA_ISOLATION",
+        "target_order": 1,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.3下注部分 段落22-23、段落28",
+        "rationale": "文档明确说明下注人数和金额包含假数据（乘系数），但在实时赔率计算公式中未明确分子分母是否剔除假数据，原finding证据充分，定性准确。"
+      },
+      {
+        "target_issue_id": "TUTORIAL_ISOLATION",
+        "target_order": 2,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.2蒙层引导 段落15-20",
+        "rationale": "文档描述了新手引导的固定假数据和流程，但未声明该流程是纯客户端演示还是走真实服务端链路，存在污染真实统计的风险，原finding成立。"
+      },
+      {
+        "target_issue_id": "INTERVENTION_MAPPING",
+        "target_order": 3,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13",
+        "rationale": "文档提出了干扰指数和隐藏地形概率的干预手段，但未说明干扰指数如何映射到速度公式 T = L / (V * K * Luck) 中的具体变量，原finding准确指出落地缺失。"
+      },
+      {
+        "target_issue_id": "T_VARIABLE_CONFLICT",
+        "target_order": 4,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1、段落2",
+        "rationale": "需求文档中T定义为完成时间（秒数），而数值文档赔率公式中T作为分子参与计算（结合上下文T应为总下注额Total bet），两者物理意义冲突，原finding定性准确。"
+      },
+      {
+        "target_issue_id": "PLACEHOLDER_MISSING",
+        "target_order": 5,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49",
+        "rationale": "文档中奖池状态判断和干预触发条件均使用[001]%等占位符，缺乏具体数值或可配范围，导致无法进行数值平衡测试，原finding成立。"
+      },
+      {
+        "target_issue_id": "AUDIO_MIXING",
+        "target_order": 6,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.1首页顶栏板块 段落6、段落8",
+        "rationale": "文档要求半屏保留直播间音频且游戏音效默认开启，但未说明双音频同时播放时的混合策略（如音量衰减或互斥），原finding合理。"
+      },
+      {
+        "target_issue_id": "MAX_PAYOUT_RISK",
+        "target_order": 7,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+        "rationale": "文档明确奖池可接受负数，且允许单选项下注至100万上限，但未定义极端情况下的单局最大赔付兜底机制，存在资金风险，原finding成立。"
+      },
+      {
+        "target_issue_id": "FAKE_ODDS_MAPPING",
+        "target_order": 8,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落5",
+        "rationale": "数值文档提出分实际赔率和假赔率，需求文档提及实际赔率用于赔付，但未明确客户端UI展示的是哪种赔率以及服务端结算的严格映射，原finding准确。"
+      }
+    ],
+    "decision_keys": [
+      "AUDIO_MIXING:pass",
+      "DATA_ISOLATION:pass",
+      "FAKE_ODDS_MAPPING:pass",
+      "INTERVENTION_MAPPING:pass",
+      "MAX_PAYOUT_RISK:pass",
+      "PLACEHOLDER_MISSING:pass",
+      "TUTORIAL_ISOLATION:pass",
+      "T_VARIABLE_CONFLICT:pass"
+    ]
+  },
+  "review_notes": [
+    "所有8个固定目标均通过证据核验，Primary报告中的finding证据充分、定性准确，未发现需要challenge或correction的项。"
+  ]
+}

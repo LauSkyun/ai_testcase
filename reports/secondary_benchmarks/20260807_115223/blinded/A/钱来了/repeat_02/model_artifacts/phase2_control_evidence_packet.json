@@ -1,0 +1,231 @@
+{
+  "evidence_packet_id": "fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / [段落15]: [段落15][章节：1、游戏概述 > 1.3 项目特色] 高倍数上限：x100 奖金翻倍 + 2000 倍封顶大奖，低投注也可冲击高额奖金",
+        "钱来了数值文档.docx / [段落22]: [段落22] 中奖金额 =乘数符号× 符号值（即基础投注 × 符号赔率）"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_01",
+          "title": "中奖金额计算公式与符号定义口径分裂"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / [段落190]: [段落190][章节：3 轴（左、中、右）×1 行，共 3 个符号位，固定 1 条水平中奖线 > 3.5 免费次数 > 3.5.2 触发流程] 所有免费次数转完后，计算总的收益，并在结束界面展示给玩家",
+        "钱来了需求文档.docx / 图片解析: 8. **界面类型**：这是一个游戏内的**获胜结算/奖励展示界面**，没有可见的按钮或交互元素（或当前截图未显示）。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "底层数据生成规则与RESPIN触发条件矛盾"
+        },
+        {
+          "issue_id": "CLARITY_01",
+          "title": "推展机制的“上下”方向与1x3盘面结构冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / [段落154]: [段落154][章节：3 轴（左、中、右）×1 行，共 3 个符号位，固定 1 条水平中奖线 > 3.4 特色机制 > 3.4.1 重转模式（Re-spin）] 触发条件：中间轴出现任意符号，且最左边和最右边的轴出现不匹配的数值符号，有几率触发",
+        "钱来了需求文档.docx / [段落158]: [段落158][章节：3 轴（左、中、右）×1 行，共 3 个符号位，固定 1 条水平中奖线 > 3.4 特色机制 > 3.4.2 推展模式（Expand）] 触发条件：中间轴未出现任何功能符号，且最左边和最右边的轴出现匹配的数值符号"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "底层数据生成规则与RESPIN触发条件矛盾"
+        },
+        {
+          "issue_id": "CROSS_03",
+          "title": "免费游戏续杯概率配置缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / [段落35]: [段落35][章节：2、游戏界面说明 > 2.3 免费次数界面] 免费次数3次全部结束后，弹出下图界面，计算所有免费次数获得的总奖励金额",
+        "钱来了需求文档.docx / [段落122]: [段落122][章节：3 轴（左、中、右）×1 行，共 3 个符号位，固定 1 条水平中奖线 > 3.2.2 投注显示 > 3.2.4 基础游戏流程] 卷轴停止，系统按优先级判定："
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_02",
+          "title": "风控倍数基数与免费游戏封顶规则冲突"
+        },
+        {
+          "issue_id": "CROSS_03",
+          "title": "免费游戏续杯概率配置缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / [段落63]: [段落63][章节：2、游戏界面说明 > 2.4 关键显示效果 > 2.4.7 余额变化] 中奖结束后，玩家剩余货币有一个快速数字变化的效果（下注扣除货币时候不需要做效果，直接减少）"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_01",
+          "title": "中奖金额计算公式与符号定义口径分裂"
+        },
+        {
+          "issue_id": "CROSS_02",
+          "title": "风控倍数基数与免费游戏封顶规则冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / [段落35]: [段落35][章节：2、游戏界面说明 > 2.3 免费次数界面] 免费次数3次全部结束后，弹出下图界面，计算所有免费次数获得的总奖励金额",
+        "钱来了需求文档.docx / [段落125]: [段落125][章节：3 轴（左、中、右）×1 行，共 3 个符号位，固定 1 条水平中奖线 > 3.2.2 投注显示 > 3.2.4 基础游戏流程] 结算当前中奖金额，更新玩家货币余额"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_01",
+          "title": "中奖金额计算公式与符号定义口径分裂"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [
+        "钱来了数值文档.docx / 表格8（章节：未识别章节）: | 100 ≤ 倍数 < 无限 | 100% |",
+        "钱来了数值文档.docx / 表格9（章节：未识别章节）: | 100 ≤ 倍数 < 无限 | 100% |"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_02",
+          "title": "风控倍数基数与免费游戏封顶规则冲突"
+        },
+        {
+          "issue_id": "CROSS_01",
+          "title": "中奖金额计算公式与符号定义口径分裂"
+        }
+      ],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CROSS_02",
+          "title": "风控倍数基数与免费游戏封顶规则冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / 图片解析: 5. **底部提示文字**：\"Display up to 100 recent records.\"（最多显示100条最近记录），旁边有一个蓝色钻石小图标。"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [
+        "钱来了需求文档.docx / 图片解析: 1. **UI 元素**：画面左侧有三个绿色圆形图标，呈横向排列，每个图标内都有黄色数字和\"免费旋转\"文字。",
+        "钱来了需求文档.docx / 图片解析: **说明**：该图片为局部截图，无法看到完整的UI边界、关闭按钮、领取按钮或其他交互元素；无可见的数值公式、配置参数或流程提示文字。图片内容疑似游戏内奖励提示弹窗，显示\"10次免费旋转\"奖励信息。"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

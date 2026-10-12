@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "source": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856",
+  "games": [
+    "777",
+    "racing",
+    "tiger",
+    "小鸡",
+    "钱来了"
+  ],
+  "variants": [
+    "A"
+  ],
+  "repeats": 2,
+  "expected_secondary_calls": 10,
+  "primary_calls": 0,
+  "vision_calls": 0,
+  "summary": "secondary_benchmark_summary.json",
+  "annotation_template": "human_annotation_template.json",
+  "internal_manifest": "_private/benchmark_manifest_internal.json",
+  "provider_mapping": "_private/provider_mapping.json"
+}

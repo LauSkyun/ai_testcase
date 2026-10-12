@@ -1,0 +1,280 @@
+model: gpt-5.4
+wire_api: responses
+stage: secondary
+```json
+{
+  "quality_assessment": {
+    "summary": "主模型准确识别了RESPIN核心结算公式与触发条件的跨文档冲突，以及风控规则与特殊玩法的优先级缺失等高信号阻塞项。但主问题respin_formula_conflict将5个子症状揉成一段混写，导致阅读困难；同时遗漏了推展机制在需求文档中完全缺失的跨文档缺口；部分低信号问题（如缩位展示）严重度偏高。",
+    "strengths": [
+      "准确定位RESPIN触发条件（需求要求中奖连线 vs 数值要求123列非空）的根本冲突",
+      "识别出100倍风控线与RESPIN累加期望值的数学矛盾",
+      "证据索引完整，每个子症状都能追溯到具体段落/表格",
+      "top_blockers聚焦核心阻塞项，未泛化扩散"
+    ],
+    "issues": [
+      "respin_formula_conflict将触发条件、公式、风控、自动旋转、数值验证5个子症状揉成一段，违反分点展开原则",
+      "遗漏推展机制（数值文档段落38-40、表5）在需求文档中完全缺失的跨文档缺口",
+      "amount_truncation严重度标为中，但实际为低信号术语冗余问题",
+      "respin_formula_conflict在findings中标为中，但在top_blockers中标为高，严重度不一致"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已按分点原则重构核心问题、补充推展机制缺口、修正严重度不一致，结构完整、证据可追踪，可直接交付业务方阅读。"
+  },
+  "missed_findings": [
+    {
+      "title": "推展机制在需求文档中完全缺失",
+      "evidence": "crazy777数值文档修改后.docx / 段落38-40、表5；疯狂777需求文档修改后.docx 全文未提及",
+      "impact": "数值文档定义了推展机制（结算倍数>5倍时20%概率先展示低倍再推展到高倍），但需求文档无任何描述，前端无法设计专属UI动效和交互引导，测试无法验收推展表现。",
+      "severity": "中",
+      "suggested_dimension": "清晰度与完整性"
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "amount_truncation",
+        "primary_issue_ids": ["amount_truncation"],
+        "adjustments": "严重度从中下调为低，因正数场景下向下取整与直接截断结果一致，属术语冗余而非实现歧义"
+      },
+      {
+        "candidate_issue_id": "record_rank_fields",
+        "primary_issue_ids": ["record_rank_fields"],
+        "adjustments": "无实质修改，沿用原骨架"
+      },
+      {
+        "candidate_issue_id": "respin_formula_conflict",
+        "primary_issue_ids": ["respin_formula_conflict"],
+        "adjustments": "严重度从中上调为高以匹配top_blockers；current_state/risk/suggestion按5个子症状分点展开；evidence字段清理为结构化列表"
+      },
+      {
+        "candidate_issue_id": "spin_idempotency",
+        "primary_issue_ids": ["spin_idempotency"],
+        "adjustments": "无实质修改，沿用原骨架"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "push_mechanism_missing",
+        "source_missed_issue_ids": ["推展机制在需求文档中完全缺失"],
+        "reason": "数值文档定义了推展机制但需求文档完全未提及，属于跨文档缺口，影响前端动效设计与测试验收"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档整体描述了疯狂777的基础单线连线与RESPIN特殊玩法，主流程框架可理解。但核心玩法的RESPIN触发条件与结算公式在需求与数值文档间存在根本冲突，推展机制在需求文档中完全缺失，风控规则与RESPIN的优先级未定义，数值模型未闭环，存在极高的结算事故风险。",
+    "document_quality_score": "C",
+    "score_reason": "RESPIN触发条件与结算公式跨文档冲突，推展机制需求文档缺失，风控与RESPIN互斥关系未定义，数值概率配置未验证易导致大量对局被风控清零，需全面补充澄清后方可开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "RESPIN触发条件、结算公式、风控优先级、自动旋转、数值验证五重冲突",
+        "owner": "数值策划",
+        "why_now": "1. 触发条件冲突：需求要求'中奖连线中与RESPIN图案连成一线'（必须基础局中奖），数值要求'123列均不为空时触发'（不要求中奖），服务端判定与客户端表现将脱节。2. 结算公式歧义：需求举例为加法累加10*10*(1+2+1+5)=900，数值公式为'基础赔率×累加乘数值'，未明确RESPIN时是加法还是乘法。3. 风控冲突：数值定义>100倍强制0倍，但RESPIN累加期望值极高（表4/6/7），大量对局会被风控清零，与'高RTP低波动'目标冲突。4. 自动旋转规则缺失：需求仅说'RESPIN结算完成后停止'，未说明玩家能否在RESPIN过程中手动中断。5. 数值模型未验证：表4/6/7权重未跑蒙特卡洛模拟，无法确认RTP和爆率分布。",
+        "finding_source": "疯狂777需求文档修改后.docx / 段落19、35；crazy777数值文档修改后.docx / 段落30、42-46、55、表4/6/7/9",
+        "finding_source_label": "跨文档冲突",
+        "source_model": "primary"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "amount_truncation",
+            "canonical_title": "缩位展示的'向下取整'与'直接截断'表述冗余",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "缩位展示的'向下取整'与'直接截断'表述冗余",
+            "current_state": "需求文档段落30对金额缩位同时使用'向下取整'和'直接截断'，虽在正数下结果一致，但缺乏对边界值的明确示例。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落30",
+            "risk": "术语冗余可能导致不同端实现时采用不同的舍入策略，产生微小差异。",
+            "suggestion": "统一术语为'直接截断（Floor）'，并补充极大值（如999.99M）和刚好整除（如15000显示15K）的示例。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "建议优化"
+          },
+          {
+            "issue_id": "record_rank_fields",
+            "canonical_title": "排行榜与中奖记录的统计口径与字段缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "排行榜与中奖记录的统计口径与字段缺失",
+            "current_state": "需求文档段落26、28提及排行榜和中奖记录，但未定义排行榜的排序指标（如积分获取规则），中奖记录也未说明具体展示字段。图片11仅显示'获得积'占位符。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落26、28；图片11",
+            "risk": "前端无法确定数据拉取接口与排序逻辑，测试无法验证排行榜数据的正确性。",
+            "suggestion": "补充排行榜的积分计算公式（如按流水或净赢分），并列出中奖记录需展示的具体字段（时间、注码、结果图案、盈亏金额）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          },
+          {
+            "issue_id": "push_mechanism_missing",
+            "canonical_title": "推展机制在需求文档中完全缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "推展机制在需求文档中完全缺失",
+            "current_state": "数值文档段落38-40和表5定义了推展机制：当最终结算倍数>5倍时，有20%概率先展示低倍结果（如5倍+空），再推展到高倍结果（5倍+X10）。但需求文档全文未提及推展机制，无任何UI动效、交互引导或触发规则描述。",
+            "evidence": "crazy777数值文档修改后.docx / 段落38-40、表5；疯狂777需求文档修改后.docx 全文未提及",
+            "risk": "前端无法设计推展机制的专属UI动效（如低倍结果出现后如何提示'推展中'、图案如何上推/下拉），测试无法验收推展表现，玩家可能误以为第一次展示的低倍就是最终结果。",
+            "suggestion": "在需求文档中补充推展机制的完整描述：1. 触发条件（结算倍数>N，概率M）；2. UI动效说明（低倍结果出现后屏幕闪烁提示'推展中'，随后图案上推/下拉替换为高倍结果）；3. 与RESPIN的优先级关系（推展是在RESPIN前还是后判定）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞前端动效设计与测试验收"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "respin_formula_conflict",
+            "canonical_title": "RESPIN触发条件、结算公式、风控优先级、自动旋转、数值验证五重冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "RESPIN触发条件、结算公式、风控优先级、自动旋转、数值验证五重冲突",
+            "current_state": "1. 触发条件冲突：需求段落19要求'中奖连线中与RESPIN图案连成一线'（必须基础局中奖），数值段落42要求'123列均不为空时触发'（不要求中奖），两份文档定义互斥。2. 结算公式歧义：需求段落19举例为加法累加10*10*(1+2+1+5)=900，数值段落30、43公式为'基础投注×赔率×乘数符号值'和'基础赔率×累加乘数值'，未明确RESPIN时是加法还是乘法，也未体现基础投注在RESPIN公式中的位置。3. 风控冲突：数值段落55和表9定义>100倍强制0倍，但表4（respin概率1/6）、表6（期望5.5次）、表7（乘数期望4.2）组合后RESPIN累加期望值极高，大量对局会被风控清零，与需求段落3'高RTP低波动'目标冲突。4. 自动旋转规则缺失：需求段落35仅说'RESPIN结算完成后停止'，未说明玩家能否在RESPIN多步重转过程中手动中断，若允许中断需明确中断后的结算与扣款逻辑。5. 数值模型未验证：表4/6/7权重未跑蒙特卡洛模拟，无法确认RTP、爆率分布及触发100倍风控的概率。",
+            "evidence": [
+              "疯狂777需求文档修改后.docx / 段落19",
+              "crazy777数值文档修改后.docx / 段落42",
+              "疯狂777需求文档修改后.docx / 段落19",
+              "crazy777数值文档修改后.docx / 段落30、43",
+              "crazy777数值文档修改后.docx / 段落55、表9",
+              "crazy777数值文档修改后.docx / 表4、表6、表7",
+              "疯狂777需求文档修改后.docx / 段落35"
+            ],
+            "risk": "1. 触发条件不一致导致服务端判定与客户端表现脱节，玩家未中奖却触发特殊玩法，或中奖却未触发。2. 结算公式不明确导致开发和测试无法确定最终实现，若按乘法实现则与需求举例严重不符，结算金额错误。3. 风控与RESPIN冲突导致玩家触发特殊玩法反而被清零输钱，体验极差，与'高RTP低波动'目标冲突。4. 自动旋转规则缺失导致玩家预期在RESPIN过程中可随时停止，若强制等待结束可能引发客诉。5. 数值模型未验证导致RTP无法控制，实际返奖率远低于预期，引发玩家投诉。",
+            "suggestion": "1. 统一RESPIN触发条件：明确是必须基础局中奖且第4列对应位置为RESPIN，还是只要123列不为空且第4列为RESPIN即可，并修正两份文档使其一致。2. 统一RESPIN结算公式：明确是'基础投注×基础赔率×(1+Σ抽到的乘数)'还是其他逻辑，并修正数值文档中的公式表述。3. 明确结算链路顺序：基础结算→风控检查→RESPIN累加→推展判定，并重新评估100倍风控线是否适用于RESPIN后的总倍数。4. 明确自动旋转在RESPIN过程中的干预规则：是锁定按钮直到RESPIN结束，还是允许中断并按当前累加值结算。5. 数值策划基于当前权重表跑蒙特卡洛模拟，验证RTP、爆率分布及触发100倍风控的概率，并调整表4/6/7的权重。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞核心结算代码实现与测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "spin_idempotency",
+            "canonical_title": "重复点击旋转按钮的幂等性校验未明确",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "重复点击旋转按钮的幂等性校验未明确",
+            "current_state": "需求文档段落39说明转轴过程中按钮无响应，但未明确在弱网或卡顿情况下，玩家连续快速点击旋转按钮，服务端是否具备幂等性校验防止重复扣款。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落39",
+            "risk": "若仅依赖客户端防抖，弱网下仍可能发出多次请求，导致重复扣款或多次开奖。",
+            "suggestion": "补充服务端幂等性要求：同一局内重复的旋转请求应被拦截或返回相同结果，确保不重复扣款。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      {
+        "title": "RTP目标值与MAX_MUL（最大赔付）定义",
+        "description": "需求文档提及'RTP较高'，但未给出具体目标值（如96%）；数值文档未定义单局或单注的最大赔付上限（MAX_MUL），仅定义了100倍风控线。",
+        "impact": "无法验证数值模型是否达标，无法进行极限赔付压测。"
+      },
+      {
+        "title": "排行榜积分获取规则",
+        "description": "需求文档提及排行榜，图片11显示'获得积'，但未说明积分的具体计算公式（如按流水、净赢分或特定符号触发）。",
+        "impact": "前端无法确定数据拉取逻辑，测试无法验证排名正确性。"
+      },
+      {
+        "title": "中奖记录展示字段",
+        "description": "需求文档提及中奖记录，但未列出具体展示字段（如时间、注码、结果图案、盈亏金额）。",
+        "impact": "前端无法设计列表UI，测试无法验证数据完整性。"
+      }
+    ],
+    "test_points": {
+      "功能验证": [
+        "基础单线中奖判定与赔率计算",
+        "RESPIN触发条件验证（基础中奖+第4列RESPIN vs 123列不为空）",
+        "RESPIN累加结算公式验证（加法累加 vs 乘法累加）",
+        "推展机制触发与视觉表现",
+        "自动旋转与快捷旋转的启停逻辑",
+        "注码切换与金额缩位展示（K/M截断）"
+      ],
+      "异常操作": [
+        "RESPIN多步重转过程中断线重连",
+        "余额不足时点击旋转的充值弹窗拉起",
+        "弱网下快速连续点击旋转按钮（幂等性）",
+        "RESPIN过程中点击自动旋转停止"
+      ],
+      "兼容性": [
+        "不同分辨率下缩位金额与UI布局适配",
+        "排行榜/规则弹窗翻页与层级遮挡"
+      ],
+      "安全专项": [
+        "客户端篡改下注金额/注码请求",
+        "重复提交旋转请求的幂等性校验",
+        "结算结果与服务端权威数据对齐"
+      ],
+      "回归影响": [
+        "中台通用风控/断线恢复流程对本玩法的兼容性",
+        "公共大盘/排行榜模块的配置隔离"
+      ],
+      "性能与稳定性": [
+        "RESPIN多次重转动效的内存与帧率",
+        "快捷旋转下的资源加载与跳帧流畅度"
+      ],
+      "用户体验": [
+        "RESPIN累加动画的节奏感与清晰度",
+        "推展机制的视觉引导与玩家预期管理",
+        "新手对单线中奖与特殊轴关系的理解"
+      ]
+    },
+    "quality_notes": [
+      "数值文档中的乘数轴概率配置（表4、6、7）未经验证，期望值过高，极易触发100倍风控清零，建议数值策划补充蒙特卡洛模拟报告。",
+      "推展机制仅在数值文档中提及，需求文档完全缺失，需补充推展机制的前端表现与触发规则。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片8、9的规则弹窗内容不可读或为占位符，无法确认最终规则文案。",
+      "图片10、11的排行榜界面存在截断和水印遮挡，无法确认具体字段和排序指标。",
+      "图片12、13的音效/记录按钮仅为文字占位，无法确认实际交互状态和UI样式。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已按分点原则重构核心问题、补充推展机制缺口、修正严重度不一致，结构完整、证据可追踪，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "主模型respin_formula_conflict将5个子症状揉成一段混写，候选稿已按分点原则重构为current_state/risk/suggestion各5点，提升可读性。",
+    "主模型遗漏推展机制在需求文档中完全缺失的跨文档缺口，候选稿已补充为push_mechanism_missing finding。",
+    "主模型amount_truncation严重度标为中，但实际为低信号术语冗余问题，候选稿已下调为低。",
+    "主模型respin_formula_conflict在findings中标为中但在top_blockers中标为高，严重度不一致，候选稿已统一为高。",
+    "建议后续进一步拆分respin_formula_conflict为5个独立finding（触发条件、结算公式、风控优先级、自动旋转、数值验证），但本轮为保持与primary骨架一致，仍保留为单一finding内分点展开。"
+  ]
+}
+```

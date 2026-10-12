@@ -1,0 +1,220 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心命名与数值冲突、开奖兜底逻辑模糊及人群统计口径矛盾等高风险问题，整体结构清晰，但存在合并问题不当、描述不准确（如'结算死锁'）和遗漏可测试性验收标准等缺陷。",
+    "strengths": [
+      "精准定位了Tiger/Lion命名冲突、2.9/3X赔率矛盾这两个高阻塞问题",
+      "对人群保护策略的统计口径冲突和奖池兜底逻辑的边界条件进行了深入分析",
+      "提供了详尽的测试点覆盖和缺失信息列表"
+    ],
+    "issues": [
+      "命名冲突finding中混入了档位配置、白名单、断线重连等多个不同根因，导致问题焦点模糊",
+      "开奖兜底逻辑被描述为'结算死锁'，但文档允许透支，实际风险为无限透支，描述不准确",
+      "可测试性维度完全空白，未提及断线重连、弱网、幂等性等关键验收标准缺失"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型报告中的描述不准确、合并不当及遗漏问题，结构完整，证据充分，可直接交付业务方使用。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型报告中的描述不准确、合并不当及遗漏问题，结构完整，证据充分，可直接交付业务方使用。"
+  },
+  "review_notes": [
+    "主模型报告的'命名冲突'finding合并了多个独立根因，本次候选稿通过分点描述保持可读性，但建议产品侧在后续迭代中拆分为独立问题以便追踪。",
+    "开奖兜底逻辑的'结算死锁'描述已修正为'奖池透支风险'，并补充了透支上限或强制规则的缺失。",
+    "补充了可测试性维度的关键验收标准缺失，确保测试设计能覆盖异常场景。",
+    "整体上，候选报告已修复主模型报告的主要缺陷，可直接作为需求评审输出给业务方。",
+    "dual_pass 结构提示：candidate 仍保留多根因混合问题，建议继续拆清根因或改为分点展示。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "titles": [],
+      "merged_title": "",
+      "reason": "建议将主模型'命名冲突'finding中的多个子问题（档位不一致、白名单缺失、断线重连）在后续迭代中拆分为独立问题，以便更精准地追踪和验收"
+    }
+  ],
+  "missed_findings": [
+    {
+      "missed_id": "MISSED_TESTABILITY",
+      "title": "缺少断线重连、弱网、幂等性等关键验收标准",
+      "primary_dimension": "可测试性与验收标准",
+      "evidence": "tiger需求文档.docx / 3.6. 开奖部分（流程图）及全文，未提及任何异常流程、弱网、重连、重复点击等处理方案",
+      "risk": "测试设计无法覆盖核心异常场景，生产环境可能出现资产丢失、重复扣款或结算不一致等严重问题",
+      "suggestion": "补充以下验收规则：1）投入阶段断线重连后是否保留下注资格；2）开奖/结算阶段断线重连后结果展示与奖励补发机制；3）弱网下连续点击下注的幂等性处理；4）结算中途退出应用的重进恢复逻辑。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "数值冲突",
+        "primary_issue_ids": [
+          "数值冲突"
+        ],
+        "notes": "证据和描述基本沿用，仅微调措辞"
+      },
+      {
+        "candidate_issue_id": "命名冲突",
+        "primary_issue_ids": [
+          "命名冲突"
+        ],
+        "notes": "标题修改为'核心选项命名、档位配置、白名单及断线重连等多项规则缺失或不一致'，内容分点展开，以覆盖原finding中混入的多个子问题，但保持同一issue_id"
+      },
+      {
+        "candidate_issue_id": "口径冲突",
+        "primary_issue_ids": [
+          "口径冲突"
+        ],
+        "notes": "保持不变"
+      },
+      {
+        "candidate_issue_id": "结算死锁",
+        "primary_issue_ids": [
+          "结算死锁"
+        ],
+        "notes": "标题改为'开奖兜底逻辑在极端情况下存在奖池透支风险及边界不明确'，风险描述由'死锁'修正为'无限透支'，建议补充透支上限或强制规则"
+      },
+      {
+        "candidate_issue_id": "边界缺失",
+        "primary_issue_ids": [
+          "边界缺失"
+        ],
+        "notes": "保持不变"
+      },
+      {
+        "candidate_issue_id": "UI适配",
+        "primary_issue_ids": [
+          "UI适配"
+        ],
+        "notes": "保持不变"
+      },
+      {
+        "candidate_issue_id": "交互体验",
+        "primary_issue_ids": [
+          "交互体验"
+        ],
+        "notes": "保持不变"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "可测缺失",
+        "source_missed_issue_ids": [
+          "MISSED_TESTABILITY"
+        ],
+        "reason": "主模型报告完全遗漏了可测试性维度的验收标准缺失，补充为独立问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "核心选项命名与视觉资产严重不一致（Tiger vs Lion）"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型报告中的描述不准确、合并不当及遗漏问题，结构完整，证据充分，可直接交付业务方使用。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

@@ -1,0 +1,309 @@
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了核心赔率冲突、开奖兜底逻辑缺陷以及人群保护阈值缺乏机器人支撑等关键问题，覆盖了大部分高优阻塞项。但在经济边界的负值熔断机制、以及多处统计/展示时间窗口在正文与UI截图间的直接冲突上存在遗漏。",
+    "strengths": [
+      "准确识别了开奖兜底逻辑中可能开出0赔付选项的致命缺陷（LOGIC_01）。",
+      "敏锐发现人群保护策略强依赖投入人数但缺失机器人机制的闭环问题（CLARITY_02）。",
+      "全面梳理了核心赔率在正文、配置表与UI间的多处冲突（CLARITY_01）。"
+    ],
+    "issues": [
+      "遗漏了奖池允许透支为负时，缺乏负值下限与熔断条件的经济边界问题。",
+      "遗漏了开奖分析模块（7天 vs 30天）和游戏记录模块（3天 vs 30天）在正文与UI截图中的时间窗口直接冲突。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "存在3个证据确凿且未被Primary覆盖的独立根因问题（1个经济边界缺失，2个统计口径冲突），需补充后方可输出最终报告。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "CLARITY_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.5. 奖池状态-回收（开奖逻辑） / 段落72"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control(CLARITY_01); final=no_issue"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "CLARITY_01",
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 4. 后台配置 / 表格5",
+            "tiger需求文档.docx / 图片解析 / 图片1、图片5、图片7"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control(CLARITY_01,LOGIC_02); final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "CLARITY_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.8.2. 触发条件 / 段落97-100"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control(CLARITY_02); final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "SEC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.1. 奖池基础规则 / 段落24、32",
+            "tiger需求文档.docx / 3.8. 开奖部分（人群保护策略） / 段落78"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control(SEC_01); final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（图案区、档位模块）"
+          ],
+          "reason": "source_state=partial; counterevidence=通用平台下注即扣款或冻结; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（用户余额）"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 图片解析 / 图片24"
+          ],
+          "reason": "source_state=partial; counterevidence=图片24引用中台游戏crazygems统一处理; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.5. 奖池状态-回收（开奖逻辑） / 段落72",
+            "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（图案区）"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "BOUNDARY_01"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.1. 奖池基础规则 / 段落29"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.3. 奖池状态-充裕（开奖逻辑） / 段落57",
+            "tiger需求文档.docx / 3.7.4. 奖池状态-正常（开奖逻辑） / 段落68"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "METRIC_01"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（开奖分析）",
+            "tiger需求文档.docx / 图片解析 / 图片13"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "METRIC_02"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（游戏记录）",
+            "tiger需求文档.docx / 图片解析 / 图片9"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "BOUNDARY_01",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "title": "奖池允许透支为负，但未定义透支下限与熔断条件",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "段落29明确‘奖池余额允许为负数（即允许透支赔付，后续抽水回填）’，但未定义奖池负值的最低下限（如-1000万）以及触发熔断或强制干预的条件。",
+      "evidence": "tiger需求文档.docx / 3.7.1. 奖池基础规则 / 段落29",
+      "risk": "若遭遇极端大额赔付或抽水比例过低，奖池可能无限透支，导致平台承担不可控的资损风险，且缺乏系统级熔断机制。",
+      "suggestion": "补充奖池负值下限配置（如允许透支至-X），并定义触达下限时的熔断策略（如暂停开奖、强制注入初始资金或调整赔率）。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "奖池透支边界与熔断机制缺失",
+      "root_causes": [
+        "奖池透支边界与熔断机制缺失"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "Primary LOGIC_01 关注的是兜底逻辑开出0赔付的缺陷，未涉及奖池负值透支的下限与熔断边界。"
+      },
+      "severity_basis": "high/block_dev：涉及平台资损风险与系统熔断机制，属于核心经济边界缺失，阻塞开发。",
+      "fact_check": {
+        "claim_type": "boundary_gap",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "原文仅说明允许为负和后续回填，全文未找到任何关于负值下限或熔断条件的描述或兼容解释。",
+        "searched_locations": [
+          "tiger需求文档.docx / 3.7. 开奖部分（基础概率） / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "METRIC_01",
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "title": "开奖分析模块的胜率统计时间窗口在正文与UI截图中冲突",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "表格3‘开奖分析’模块说明中，胜率计算范围定义为‘最近1小时、今日、最近7天’；但图片13的UI截图中，统计表格展示的时间维度为‘Last 1 hour、Today、Last 30 day’。",
+      "evidence": "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（开奖分析） / 图片13",
+      "risk": "开发无法确定最终生效的统计时间窗口（7天还是30天），导致前后端统计逻辑不一致，玩家看到的胜率数据与预期不符。",
+      "suggestion": "统一开奖分析的时间窗口口径。若以7天为准，需修改UI设计稿；若以30天为准，需修改表格3的正文描述。",
+      "severity": "medium",
+      "blocking": "block_test",
+      "confidence": "high",
+      "independent_root_cause": "开奖分析统计时间窗口口径冲突",
+      "root_causes": [
+        "开奖分析统计时间窗口口径冲突"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_01",
+        "overlap": false,
+        "reason": "Primary CLARITY_01 关注的是核心赔率/倍数的冲突，未覆盖开奖分析统计时间窗口的冲突。"
+      },
+      "severity_basis": "medium/block_test：统计口径冲突导致测试无法确定验收标准，阻塞测试用例设计。",
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "正文写7天，UI截图写30天，同对象同指标，不存在兼容解释。",
+        "searched_locations": [
+          "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3",
+          "tiger需求文档.docx / 图片解析 / 图片13"
+        ],
+        "same_subject_and_scope": true
+      }
+    },
+    {
+      "candidate_issue_id": "METRIC_02",
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "title": "游戏记录模块的展示时间范围在正文与UI截图中冲突",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "表格3‘游戏记录’模块说明中，个人记录定义为‘最多展示近3日的游戏记录’；但图片9的UI截图中，个人记录固定文案显示为‘Show your betting records in the last 30 days’。",
+      "evidence": "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3（游戏记录） / 图片9",
+      "risk": "开发按3天实现，但UI按30天展示，导致前端展示与后端数据范围不匹配，引发玩家对记录缺失的客诉。",
+      "suggestion": "统一游戏记录的展示时间范围。若以3天为准，需修改图片9的UI文案；若以30天为准，需修改表格3的正文描述。",
+      "severity": "medium",
+      "blocking": "block_test",
+      "confidence": "high",
+      "independent_root_cause": "游戏记录展示时间范围口径冲突",
+      "root_causes": [
+        "游戏记录展示时间范围口径冲突"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_01",
+        "overlap": false,
+        "reason": "Primary CLARITY_01 关注的是赔率冲突，未覆盖游戏记录展示时间范围的冲突。"
+      },
+      "severity_basis": "medium/block_test：展示范围冲突导致测试无法确定验收标准，阻塞测试用例设计。",
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "正文写3天，UI截图写30天，同对象同指标，不存在兼容解释。",
+        "searched_locations": [
+          "tiger需求文档.docx / 3.3. 各模块功能说明 / 表格3",
+          "tiger需求文档.docx / 图片解析 / 图片9"
+        ],
+        "same_subject_and_scope": true
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "Primary 报告整体质量较高，对核心玩法循环和经济模型的主要风险点抓取准确。",
+    "新增的3个 finding 均基于正文与UI截图的直接比对或经济边界的完整性审查，证据链闭环且独立于 Primary 已有问题。",
+    "建议后续评审中加强对UI截图与正文描述的一致性交叉验证，避免图文不符导致的开发歧义。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6"
+  ]
+}

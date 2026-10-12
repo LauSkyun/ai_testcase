@@ -1,0 +1,39 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_02",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "图22中存在详细的机器人匹配与投放流程图，但正文需求中完全未提及机器人机制",
+      "evidence": "tiger需求文档.docx / 图22",
+      "counterevidence": "图22解析显示流程包含‘场次中位次’、‘单局进入人数占当期总投入人数比例’、‘开始(开服当天)’等特征，这与本文档定义的20s轮次公共竞猜玩法（无凑桌概念、无场次位次、全服统一奖池）严重不符。图22极大概率是混入的其他系统（如活动/赛事/其他游戏）的流程图，不能作为本游戏存在机器人机制的证据。",
+      "rationale": "Primary 错误地将疑似其他系统的流程图（图22）作为本游戏机器人机制的证据。虽然正文确实缺失人数阈值未达标时的降级策略，但证据引用存在张冠李戴的 mismatch。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_02",
+      "correction_type": "clarify",
+      "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2",
+      "rationale": "移除对图22的错误引用。正文确实依赖人数阈值（>=20/30/50），但未定义冷启动或低活跃时人数不足时的降级策略（如是否引入机器人、是否降低阈值、是否直接按基础概率开奖）。",
+      "proposed_changes": {
+        "title": "开奖阈值强依赖‘投入人数’，但正文缺失人数不足时的降级策略或机器人机制",
+        "current_state": "开奖逻辑中大量依赖‘投入人数’阈值（如>=20、>=30、>=50）。正文需求中完全未提及机器人机制、假人逻辑，也未定义当真实人数无法达到阈值时的降级策略（如直接按基础概率开奖或动态调整阈值）。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2",
+        "risk": "在冷启动或低活跃房间，真实人数无法达到阈值，导致奖池状态判断和人群保护策略永远无法触发，核心玩法策略失效。",
+        "suggestion": "在正文中补充机器人/假人投放机制说明，或明确当人数不足阈值时的降级开奖策略（如直接按基础概率开奖），并明确‘投入人数’统计口径是否包含机器人。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "acceptance_criteria": "正文补充人数不足时的降级策略或机器人机制，并明确统计口径。"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "protocol_profile=phase3_v1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581"
+  ]
+}

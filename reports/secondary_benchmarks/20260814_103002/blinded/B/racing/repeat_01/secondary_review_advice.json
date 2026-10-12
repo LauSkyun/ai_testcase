@@ -1,0 +1,252 @@
+{
+  "candidate_generation_mode": "model_authored",
+  "primary_quality_assessment": {},
+  "quality_assessment": {
+    "summary": "主模型首版报告准确识别了核心结算链路中的致命冲突（T变量定义、真假赔率映射、假数据隔离、干预逻辑映射、奖池兜底），问题定位精准，证据引用详实。但在下注扣款时机与并发幂等边界上存在遗漏，且部分高阻塞问题的现状描述存在重复啰嗦现象，需进行结构化精简与补漏。",
+    "strengths": [
+      "准确抓住了跨文档的T变量定义冲突及赔率公式无法求值的根本阻塞点。",
+      "敏锐识别出假数据参与赔率计算、真假赔率映射缺失等可能导致严重客诉和资金风险的核心问题。",
+      "严格遵循了评审原则，将占位符缺失、新手引导、音频混合等通用或低信号问题合理降级为中低风险，未盲目拔高。"
+    ],
+    "issues": [
+      "T_VARIABLE_CONFLICT 的现状描述存在大量重复表述，未将‘向下取整与最低赔率1.02的精度冲突’这一子症状清晰分点展开。",
+      "遗漏了‘下注扣款时机与并发幂等边界’这一涉及单选项100万上限资金安全的高信号问题。",
+      "部分 finding 的 evidence 字段存在数组嵌套或重复拼接的格式瑕疵。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的描述冗余，补全了资金安全边界的高信号遗漏项，结构完整、证据充分、来源可追踪，可直接输出给业务方阅读并推动策划澄清。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的描述冗余，补全了资金安全边界的高信号遗漏项，结构完整、证据充分、来源可追踪，可直接输出给业务方阅读并推动策划澄清。"
+  },
+  "review_notes": [
+    "T_VARIABLE_CONFLICT 中已整合‘向下取整与最低赔率1.02的精度冲突’这一子症状，采用分点描述，未拆分为独立 issue_id。",
+    "新增 BET_DEDUCTION_AND_IDEMPOTENCY 问题，因需求段落32明确了100万上限，但未说明并发防重放机制，属于高信号资金安全边界。",
+    "占位符缺失、音频混合、新手引导等按规则保持中/低风险，未盲目拔高。",
+    "建议后续进一步梳理新用户/预流失用户干预逻辑与奖池状态干预逻辑的优先级叠加规则（需求段落51提及优先看新用户逻辑，但具体参数是覆盖还是叠加未说明），可作为后续迭代补充。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "BET_DEDUCTION_AND_IDEMPOTENCY",
+      "title": "下注扣款时机与并发幂等边界缺失，存在突破100万上限风险",
+      "primary_dimension": "清晰度与完整性",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32",
+      "severity": "高",
+      "confidence": "高",
+      "reason": "需求明确单选项下注上限为100万宝石，但未说明下注扣款是实时扣除还是延迟扣除，也未说明连续点击或弱网重发时的幂等性校验。若缺乏服务端并发拦截，可能导致用户突破100万上限或余额透支。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DATA_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FAKE_ODDS_MAPPING",
+        "primary_issue_ids": [
+          "FAKE_ODDS_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "BET_DEDUCTION_AND_IDEMPOTENCY",
+        "source_missed_issue_ids": [
+          "BET_DEDUCTION_AND_IDEMPOTENCY"
+        ],
+        "reason": "补充涉及单选项100万上限资金安全的高信号边界问题，防止并发突破。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的描述冗余，补全了资金安全边界的高信号遗漏项，结构完整、证据充分、来源可追踪，可直接输出给业务方阅读并推动策划澄清。",
+  "phase2_admission": {
+    "enabled": false,
+    "claimed_count": 1,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "errors": []
+    },
+    "protocol_gate": {}
+  },
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": false,
+    "phase2_candidate_inputs_sanitized": false,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {},
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {}
+}

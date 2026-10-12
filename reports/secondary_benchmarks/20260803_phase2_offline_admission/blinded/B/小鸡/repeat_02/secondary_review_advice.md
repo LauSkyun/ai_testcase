@@ -1,0 +1,54 @@
+# Dual Pass 副评审建议
+
+## 总体判断
+主模型报告准确识别了核心数值冲突和配置不一致问题，结构清晰、证据追踪完整。但在根因解释深度、数据异常识别和公式冲突的本质说明上仍有提升空间。
+
+- 建议等级：medium
+- 是否建议候选稿直出：是
+- 原因：候选报告已补充根因解释、数据异常识别和映射规则缺失说明，结构完整、证据充分、来源可追踪，可直接给业务方阅读
+- 可追踪性：complete
+- readiness 是否冲突：否
+- candidate 是否有结构漂移：否
+- primary issue_id 修复数：3
+- candidate issue_id 修复数：3
+- lineage 是否自动补齐：否
+- suggestion_level 是否与 readiness 冲突：否
+- 是否已对 suggestion_level 冲突做 override：否
+- advice 与 candidate 落盘是否一致：是
+- lineage 原始统计：kept=5, added=0, merged=0, dropped=0
+- lineage 实际落盘统计：kept=5, added=0, merged=0, dropped=0
+- added 落盘状态：none
+- merged 落盘状态：none
+- phase2 新增准入：声称 3，通过 0，拒绝 3
+  - 拒绝《Crash算法爆炸倍数到离散格子的映射规则完全缺失》：missing_fields:candidate_issue_id,current_state,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, severity_basis_missing, primary_duplicate_root
+  - 拒绝《难度3和难度4的赔率数据与命名存在数量级错误》：missing_fields:candidate_issue_id,current_state,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, severity_basis_missing
+  - 拒绝《'超级大奖'与第30格结算的关系未明确》：missing_fields:candidate_issue_id,current_state,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, primary_duplicate_root
+- 当前不建议默认切 candidate 的原因：phase2_added_admission_rejected, candidate_primary_top3_retention_below_two_thirds
+- 阻断分类：quality_blockers=phase2_added_admission_rejected,candidate_primary_top3_retention_below_two_thirds
+
+## 优点
+- 准确识别了倍率公式与数值表的根本冲突
+- 正确发现了难度系统概率计算逻辑的矛盾
+- 问题结构清晰，证据来源可追踪
+- top_blockers 聚焦核心阻塞项
+
+## 问题
+- 未清晰说明数值表实际是累计倍率而非单格倍率，导致公式冲突的根因解释不够透彻
+- 未发现难度3和难度4表格数据与命名存在明显数量级错误（103倍盘实际624倍，176倍盘实际6600万倍）
+- 未明确说明Crash算法的爆炸倍数如何映射到离散格子的具体规则缺失
+- 下注筹码冲突严重度可下调，因UI与需求文档一致，仅数值文档示例不同
+- 缺少对'超级大奖'与第30格结算关系的明确澄清建议
+
+## 复核备注
+- 主模型报告整体质量良好，准确识别了核心冲突，但在根因解释深度上可进一步提升
+- 建议数值策划优先解决倍率公式与数值表的口径冲突，这是最核心的阻塞项
+- 建议补充Crash算法到离散格子的映射规则示例，这是实现碰撞判定的前提
+- 建议重新校验难度3和难度4的赔率数据，避免上线后出现严重资损
+- 下注筹码冲突严重度从中调整为中，因UI与需求文档一致，仅数值文档示例不同，实际影响相对可控
+- dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。
+
+## 不支持的问题
+- 暂无
+
+## 合并建议
+- 暂无

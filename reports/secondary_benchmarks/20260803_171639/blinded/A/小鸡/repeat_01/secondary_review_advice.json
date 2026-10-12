@@ -1,0 +1,188 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心公式与配置冲突，抓住了倍率、筹码、概率三大阻塞点，整体方向正确。但部分问题描述混杂（如将包装问题与概率冲突混合），对MAX_MUL与赔率表严重不匹配的强调不足，且未将概率模型冲突列为最高层阻塞项。",
+    "strengths": [
+      "精准定位了需求公式与数值表口径的致命冲突",
+      "发现了下注筹码三端不一致的阻点",
+      "指出了Crash算法与固定概率模型的根本矛盾",
+      "提出了通关结算边界歧义与提现幂等缺失，测试点覆盖较全面"
+    ],
+    "issues": [
+      "CORE_DIFFICULTY_CONFIG_MISMATCH 混合了概率冲突、美术包装、UI概率展示三个不同性质的问题，导致风险描述不够聚焦",
+      "未将难度概率模型冲突列入 top_blockers，可能让开发团队低估其阻塞程度",
+      "对MAX_MUL与赔率表严重不匹配（难度3、4数量级错误）的警示不够突出，易被忽略",
+      "缺失 RTP、最大赔付等关键数值验收口径的明确提醒"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型描述混杂的问题，将高信号阻塞项清晰分点，并补充了MAX_MUL与赔率表不匹配的严重性说明及RTP缺口提醒，结构完整、证据充分、来源可追踪，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型描述混杂的问题，将高信号阻塞项清晰分点，并补充了MAX_MUL与赔率表不匹配的严重性说明及RTP缺口提醒，结构完整、证据充分、来源可追踪，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "已将主模型CORE_DIFFICULTY_CONFIG_MISMATCH问题中的包装与概率冲突分点描述，并分别给出风险等级，保留原issue_id。",
+    "强化了LOGIC_PAYOUT_FORMULA_CONFLICT中的MAX_MUL与赔率表不匹配描述，使其成为该问题的独立子症状。",
+    "将概率模型冲突提升为top_blocker，以准确反映其阻塞程度。",
+    "在missing_information中补充了RTP、最大赔付等缺失项，但未新增独立finding。",
+    "所有kept finding均复用原issue_id，未做无依据的拆分或合并。",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_DIFFICULTY_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_BET_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "primary_issue_ids": [
+          "LOGIC_PAYOUT_FORMULA_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 3,
+  "candidate_issue_id_repair_count": 3,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型描述混杂的问题，将高信号阻塞项清晰分点，并补充了MAX_MUL与赔率表不匹配的严重性说明及RTP缺口提醒，结构完整、证据充分、来源可追踪，可直接交付业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 3,
+    "candidate_issue_id_repair_count": 3,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {}
+}

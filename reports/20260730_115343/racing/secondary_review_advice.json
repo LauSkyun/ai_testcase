@@ -1,0 +1,262 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告发现了赔率公式冲突、干扰指数映射缺失等核心阻塞问题，结构清晰，但遗漏了总时间计算机制、假数据参与赔率等关键信息，且部分可测试性问题的严重度偏高。",
+    "strengths": [
+      "准确识别了赔率公式的根本冲突",
+      "对奖池状态、用户特征货币不一致等边界问题有较好覆盖",
+      "报告结构完整，维度划分清晰"
+    ],
+    "issues": [
+      "遗漏了总时间计算与胜负判定规则，导致开奖算法无法实现",
+      "未指出假人数/假金额数据是否参与赔率计算，影响展示与赔付一致性",
+      "将通用重连/幂等性问题列为中风险，与基准评审原则不符"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型遗漏，补充了关键问题和证据，结构完整，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型遗漏，补充了关键问题和证据，结构完整，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "主模型对可测试性问题的严重度评估偏高，已按基准评审原则下调为低风险。",
+    "CONSIST-001 已吸收假数据参与赔率计算的歧义，未单独新增问题。",
+    "新增 CLARITY-005 补充总时间计算与胜负判定规则，这是主模型明显遗漏的高阻塞项。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED-001",
+      "title": "总时间计算机制与胜负判定规则缺失",
+      "severity": "高",
+      "canonical_dimension": "清晰度与完整性",
+      "description": "文档仅给出单段地形的时间公式 T = L/(V*K*Luck)，但比赛使用三段地形，未说明如何由三段地形的单段计算总时间，以及如何根据总时间判定胜负（如总时间最短者获胜）。",
+      "evidence": "musee游戏Racing.docx / 段落26、36，图片13；Racing数值文档.docx / 图片3",
+      "suggestion": "补充总时间计算公式（如 T_total = Σ(L_i/(V_i * K_i * Luck_i))），并明确胜负判定规则（总时间最小的车型获胜）。"
+    },
+    {
+      "issue_id": "MISSED-002",
+      "title": "假人数/假金额是否参与赔率计算未明确",
+      "severity": "中",
+      "canonical_dimension": "逻辑一致性与数值平衡",
+      "description": "需求文档定义了假人数和假金额（段落22-23），但实时赔率公式（段落28）中的“三个选项的合计下注”与“本选项下注”未指明是真实数据还是包含假数据。若包含假数据，将导致展示赔率失真，且与真实赔付计算不一致。",
+      "evidence": "musee游戏Racing.docx / 段落22-23、28",
+      "suggestion": "明确赔率计算和展示仅使用真实下注数据，假数据仅用于氛围展示，不参与任何结算逻辑。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY-001",
+        "primary_issue_ids": [
+          "CLARITY-001"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题，微调描述以强化证据"
+      },
+      {
+        "candidate_issue_id": "CLARITY-004",
+        "primary_issue_ids": [
+          "CLARITY-004"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY-003",
+        "primary_issue_ids": [
+          "CLARITY-003"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题"
+      },
+      {
+        "candidate_issue_id": "CONSIST-003",
+        "primary_issue_ids": [
+          "CONSIST-003"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题"
+      },
+      {
+        "candidate_issue_id": "CONSIST-005",
+        "primary_issue_ids": [
+          "CONSIST-005"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题"
+      },
+      {
+        "candidate_issue_id": "CONSIST-001",
+        "primary_issue_ids": [
+          "CONSIST-001"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSED-002"
+        ],
+        "changes": "扩充现状描述，增加假数据参与赔率计算的歧义，标题改为‘赔率计算、展示与赔付存在多重冲突’"
+      },
+      {
+        "candidate_issue_id": "TEST-002",
+        "primary_issue_ids": [
+          "TEST-002"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "严重度由中降为低，符合基准评审原则"
+      },
+      {
+        "candidate_issue_id": "TEST-001",
+        "primary_issue_ids": [
+          "TEST-001"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "严重度由中降为低，符合基准评审原则"
+      },
+      {
+        "candidate_issue_id": "SEC-001",
+        "primary_issue_ids": [
+          "SEC-001"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题"
+      },
+      {
+        "candidate_issue_id": "UX-001",
+        "primary_issue_ids": [
+          "UX-001"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "维持原问题"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY-005",
+        "source_missed_issue_ids": [
+          "MISSED-001"
+        ],
+        "reason": "主模型遗漏了总时间计算与胜负判定规则，新增为清晰度维度的高严重度问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MISSED-002"
+  ],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型遗漏，补充了关键问题和证据，结构完整，可直接交付业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

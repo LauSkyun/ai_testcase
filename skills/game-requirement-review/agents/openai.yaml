@@ -1,0 +1,3 @@
+display_name: Game Requirement Review
+short_description: Review game requirement and numeric design docs for test-facing risks.
+default_prompt: Use this skill to analyze game requirement and numeric design documents before review or test-case design. Identify ambiguity, contradictions, missing rules, testability gaps, economy risks, cross-system impact, anti-cheat risks, compatibility issues, and UX problems with evidence and actionable suggestions.

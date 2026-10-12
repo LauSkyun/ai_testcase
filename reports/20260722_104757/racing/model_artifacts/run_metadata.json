@@ -1,0 +1,17 @@
+{
+  "review_mode": "dual_pass",
+  "document_hash": "c38f613525939df6cd98e411a456717f3930c34e5e0f2e443b1f4640cfc1286b",
+  "text_model": "gpt-5.4",
+  "vision_model": "kimi-k2.6",
+  "wire_api": "responses",
+  "vision_wire_api": "chat_completions",
+  "temperature": 0,
+  "seed": null,
+  "document_count": 2,
+  "primary_text_model": "gpt-5.4",
+  "secondary_text_model": "deepseek-v4-pro",
+  "primary_wire_api": "responses",
+  "secondary_wire_api": "responses",
+  "primary_seed": null,
+  "secondary_seed": null
+}

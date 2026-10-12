@@ -1,0 +1,38 @@
+{
+  "name": "chicken_manual_review_baseline",
+  "source": "quality_baselines/chicken_manual_review.md",
+  "expected_score": "C",
+  "purpose": "机器回归只校准评分尺度、问题类别和误报边界，不做逐字答案匹配。",
+  "required_issue_categories": [
+    {
+      "id": "core_terminology_unit_count",
+      "keywords": ["术语", "步数", "格子", "关卡"]
+    },
+    {
+      "id": "bet_difficulty_config_mapping",
+      "keywords": ["筹码", "难度", "倍率", "配置"]
+    },
+    {
+      "id": "settlement_timing",
+      "keywords": ["扣款", "结算", "发奖", "提现"]
+    },
+    {
+      "id": "reenter_recovery",
+      "keywords": ["重进", "断线", "恢复", "状态"]
+    },
+    {
+      "id": "max_payout",
+      "keywords": ["最大赔付", "上限", "风控", "MAX_MUL"]
+    }
+  ],
+  "forbidden_false_positive_patterns": [
+    "仅因通用钱包能力未写而判高危",
+    "仅因通用埋点日志未写而判高危",
+    "仅因主题或临时美术命名不一致而判高危",
+    "单文档输入生成跨文档结论"
+  ],
+  "score_guidance": {
+    "C": "主流程可理解，但存在多个高风险且可通过补文档修复的缺口。",
+    "D": "只用于核心玩法、数值模型或结算链路根本矛盾到无法形成一致实现方案。"
+  }
+}

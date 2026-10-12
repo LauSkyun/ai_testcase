@@ -1,0 +1,14 @@
+{
+  "game": "钱来了",
+  "variant_id": "B",
+  "repeat": 1,
+  "status": "failed",
+  "output_dir": "blinded/B/钱来了/repeat_01",
+  "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+  "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+  "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+  "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+  "secondary_message_hash": "b41ee3c482024d47fee10207209036a8a9f3e3a43d5847ff407a7e638a57ed30",
+  "temperature": 0,
+  "error": "secondary_benchmark:B:钱来了:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

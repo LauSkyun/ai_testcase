@@ -1,0 +1,49 @@
+# Dual Pass 副评审建议
+
+## 总体判断
+主模型报告准确识别了核心数值模型、结算公式与配置表之间的严重冲突，以及下注筹码的口径不一致问题。但在问题归类上存在将不同根因（如概率冲突与美术包装冲突）混合的情况，且对通用中台能力（如幂等）的严重度判定偏高。候选稿已对混合问题进行分点拆解，并修正了严重度评级。
+
+- 建议等级：low
+- 是否建议候选稿直出：是
+- 原因：候选稿已修正主模型中混合根因的问题，采用分点描述清晰化子症状，并合理降级了通用中台能力的严重度，结构完整、证据充分、来源可追踪，可直接给业务方阅读。
+- 可追踪性：complete
+- readiness 是否冲突：否
+- candidate 是否有结构漂移：否
+- primary issue_id 修复数：3
+- candidate issue_id 修复数：3
+- lineage 是否自动补齐：否
+- suggestion_level 是否与 readiness 冲突：否
+- 是否已对 suggestion_level 冲突做 override：否
+- advice 与 candidate 落盘是否一致：是
+- lineage 原始统计：kept=5, added=0, merged=0, dropped=0
+- lineage 实际落盘统计：kept=5, added=0, merged=0, dropped=0
+- added 落盘状态：none
+- merged 落盘状态：none
+- phase2 新增准入：声称 0，通过 0，拒绝 0
+- coverage ledger：未通过，完整率 0%
+- coverage ledger 错误：coverage_entry_count_invalid:0, coverage_audit_key_order_invalid
+- 当前不建议默认切 candidate 的原因：phase2_coverage_ledger_invalid
+- 阻断分类：protocol_blockers=phase2_coverage_ledger_invalid
+
+## 优点
+- 准确抓住了倍率公式（连乘vs累计）与数值表的根本冲突。
+- 识别出Crash算法与离散格子映射的边界缺失。
+- 发现了下注筹码在需求、数值、UI三端的配置不一致。
+
+## 问题
+- 将概率计算冲突与美术包装冲突（小鸡vs骆驼）混合在同一个finding中，导致根因不纯粹。
+- 将提现/开始的幂等防重入判定为中风险，但根据评审原则，通用中台能力在无玩法专属边界时应默认低风险。
+- 部分finding的现状描述未采用分点结构，导致多个子症状揉杂在一起，不够清晰。
+
+## 复核备注
+- 角色包装（小鸡vs骆驼）属于美术/术语冲突，不影响核心结算，建议统一为‘小鸡’以匹配UI和标题，不作为高阻塞项。
+- 开局扣款时机、最大赔付封顶、弱网/断线重连的通用恢复机制，属于常规中台能力或基础结算常识，若平台已有规范，本文档无需重复赘述，建议开发时遵循平台规范。
+- 提现与开始的幂等防重入属于通用中台能力，当前文档未提供玩法专属边界，按评审原则默认低风险处理，已从SEC_01降级。
+- protocol_profile=phase2
+- dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。
+
+## 不支持的问题
+- 暂无
+
+## 合并建议
+- 暂无

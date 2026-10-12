@@ -1,0 +1,47 @@
+# Dual Pass 副评审建议
+
+## 总体判断
+主模型报告准确识别了风控与RESPIN触发条件冲突、累加算法歧义、盘面生成规则混乱等核心高信号问题，整体结构清晰。但遗漏了UI赔付表与数值配置表严重不一致、缺乏最大赔付限制等高阻塞问题，且在自动旋转状态的证据引用上存在疏漏。
+
+- 建议等级：medium
+- 是否建议候选稿直出：是
+- 原因：候选稿已修正主模型的证据疏漏，并补充了UI与数值表不一致、缺乏最大赔付限制等高信号核心问题，结构完整、证据充分、来源可追踪，可直接给业务方阅读并推动文档修订。
+- 可追踪性：complete
+- readiness 是否冲突：否
+- candidate 是否有结构漂移：否
+- primary issue_id 修复数：0
+- candidate issue_id 修复数：0
+- lineage 是否自动补齐：否
+- suggestion_level 是否与 readiness 冲突：否
+- 是否已对 suggestion_level 冲突做 override：否
+- advice 与 candidate 落盘是否一致：是
+- lineage 原始统计：kept=9, added=2, merged=0, dropped=0
+- lineage 实际落盘统计：kept=9, added=2, merged=0, dropped=0
+- added 落盘状态：complete
+- merged 落盘状态：none
+- phase2 新增准入：声称 2，通过 0，拒绝 2
+  - 拒绝《UI赔付表与数值配置表赔率严重不一致》：missing_fields:candidate_issue_id,current_state,risk,suggestion,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, severity_basis_missing
+  - 拒绝《缺乏单局最大赔付/封顶限制》：missing_fields:candidate_issue_id,current_state,risk,suggestion,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, severity_basis_missing
+- 当前不建议默认切 candidate 的原因：phase2_added_admission_rejected
+- 阻断分类：quality_blockers=phase2_added_admission_rejected
+
+## 优点
+- 准确抓住了风控强制0倍与RESPIN触发条件的致命逻辑冲突
+- 敏锐识别出RESPIN累加算法中加法与乘法的表述歧义
+- 正确指出基础符号盘面生成规则描述混乱无法直接实现
+
+## 问题
+- 遗漏了UI赔付表截图与数值配置表赔率严重不一致的高信号问题
+- 遗漏了缺乏单局最大赔付/封顶限制（MAX_WIN）的经济安全风险
+- 在TEST_01中忽略了需求文档段落35已明确自动旋转停止时机的说明，导致证据引用不准确
+
+## 复核备注
+- 主模型在 TEST_01 中忽略了需求文档段落35已明确“RESPIN结算完成后停止”的说明，候选稿已修正该问题的证据和描述，聚焦于快捷旋转下表现逻辑的矛盾。
+- 补充了 UI 赔付表（图片14/18/21）与数值配置表（表格2）赔率严重不一致的高信号问题，需明确多档位赔付表的配置规则。
+- 补充了缺乏单局最大赔付/封顶限制（MAX_WIN）的问题，防止 RESPIN 极端情况下的超赔风险。
+
+## 不支持的问题
+- 暂无
+
+## 合并建议
+- 暂无

@@ -1,0 +1,385 @@
+{
+  "report": {
+    "overall_evaluation": "文档描述了完整的Teenpatti PVE核心流程与干预机制，但存在多处关键数值配置冲突（如Pair Plus赔率表在不同UI中不一致）、结算扣款基数歧义以及干预逻辑的极端边界死锁风险。主流程可理解，但需修复数值与规则冲突后方可进入开发。",
+    "document_quality_score": "C",
+    "score_reason": "存在Pair Plus赔率表多处冲突、Call扣款基数未明确导致筹码置灰规则歧义、以及干预逻辑在极端牌型下存在死锁风险等高风险问题，需补充明确后方可开发。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "Pair Plus 赔率表在多处UI与规则描述中严重冲突",
+        "owner": "数值策划",
+        "why_now": "赔率表是结算的核心依据。多处冲突将导致程序无法确定最终配置，测试无法编写正确的结算验收用例，极易引发严重的资金结算事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "PP_PAYOUT_CONFLICT",
+        "canonical_title": "Pair Plus赔率表多处冲突",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "Call 扣款基数未明确，导致筹码置灰的预留规则存在逻辑歧义",
+        "owner": "系统策划",
+        "why_now": "若Call只扣ANTE，则预留‘筹码*2’的逻辑在玩家同时下注PP时会失效（导致余额不足时仍能下注）；若Call扣总额，则预留逻辑正确。歧义将导致下注模块和筹码置灰逻辑无法正确实现。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "CALL_DEDUCT_BASE",
+        "canonical_title": "Call扣款基数与筹码置灰预留规则歧义",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "干预逻辑中‘庄家100%小于闲家’在极端牌型下存在无解/死锁风险",
+        "owner": "系统策划",
+        "why_now": "当闲家为AAA时，程序若严格执行‘100%小于’且限定牌型，将导致发牌死锁、报错或发出非法牌（如重复的A），造成对局异常。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "INTERVENTION_DEADLOCK",
+        "canonical_title": "干预逻辑极端牌型死锁",
+        "blocking": "阻塞开发"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CALL_DEDUCT_BASE",
+            "canonical_title": "Call扣款基数与筹码置灰预留规则歧义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "Call 扣款基数未明确，导致筹码置灰的预留规则存在逻辑歧义",
+            "current_state": "段落8规定‘余额需要≥筹码*2才叫余额充足...要给跟注玩法留钱’，段落10规定‘点击CALL将扣款下注金额’。但未明确‘下注金额’是指ANTE下注额，还是ANTE+Pair Plus的总下注额。",
+            "evidence": "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页，段落8、段落10",
+            "risk": "1、若Call只扣ANTE，则预留‘筹码*2’的逻辑在玩家同时下注PP时会失效（导致余额不足时仍能下注）；2、若Call扣总额，则预留逻辑正确。歧义将导致下注模块和筹码置灰逻辑无法正确实现。",
+            "suggestion": "明确Call的扣款基数（建议明确为：Call仅扣除ANTE下注额，Pair Plus在Deal时已扣除或独立结算）。并据此修正筹码置灰的‘余额>=筹码*2’公式，确保预留金额与实际Call扣款严格匹配。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "FOLD_PP_SETTLEMENT",
+            "canonical_title": "Fold时Pair Plus的结算规则缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "Fold 时 Pair Plus 的结算规则缺失",
+            "current_state": "段落10说明‘点击fold也直接开庄家牌’，段落27说明Pair Plus是赌自己有没有对子及以上。但未说明当玩家选择Fold时，Pair Plus下注是跟随ANTE一起输掉，还是独立结算（只要手牌是对子及以上就赔付）。",
+            "evidence": "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落10，3.3teenpatti玩法规则 段落27",
+            "risk": "1、Pair Plus的独立结算属性是此类游戏的核心体验之一。若Fold时PP也输，会严重影响玩家下注PP的意愿；2、若独立结算，则需明确资金流转。规则缺失将导致结算逻辑无法闭环。",
+            "suggestion": "明确补充Fold时的结算规则。建议采用行业通用规则：Fold时ANTE输掉，但Pair Plus独立结算（若玩家手牌满足PP赔率表则正常赔付，否则输掉）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "PAYOUT_TIMING_MISSING",
+            "title": "中奖金额计入玩家钱包的时机未明确",
+            "canonical_title": "中奖金额计入玩家钱包的时机未明确",
+            "primary_dimension": "清晰度与完整性",
+            "current_state": "段落12说明'对局结束后。会展示ANTE和pairplus板块赢了多少宝石'，但未明确中奖金额是在对局结束动画播放前、播放中还是播放后计入玩家钱包。",
+            "evidence": "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落12",
+            "risk": "1、若中奖金额在动画播放前已计入钱包，玩家可能在动画未结束时即可使用 winnings 进行下注，导致状态不一致；2、若在动画播放后计入，断线重连时可能出现余额显示与实际不符的问题。",
+            "suggestion": "明确中奖金额计入玩家钱包的时机。建议规定：中奖金额在结算动画播放完毕后统一计入玩家钱包，并在UI上明确展示余额更新的时机。",
+            "severity": "低",
+            "confidence": "中",
+            "blocking": "建议优化",
+            "source_missed_issue_id": "PAYOUT_TIMING_MISSING",
+            "source_issue_id": "PAYOUT_TIMING_MISSING",
+            "evidence_scope": "document",
+            "planner_role": "待定",
+            "audit_key": "funds_deduction_payout",
+            "control_key": "payout_timing",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "gpt-5.6-sol"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "PP_PAYOUT_CONFLICT",
+            "canonical_title": "Pair Plus赔率表多处冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "image",
+            "severity": "高",
+            "title": "Pair Plus 赔率表在多处UI与规则描述中严重冲突",
+            "current_state": "1、图片1中Pair Plus赔率为：Straight 6 for 1, Pair 1 for 1；2、图片9中为：Straight 6 for 1, Pair 2 for 1；3、图片10中为：Straight 80 for 1, Flush 6 for 1, Pair 2 for 1。三处赔率表数值完全不同。",
+            "evidence": "Teenpatti PVE版本.md / 图片1、图片9、图片10",
+            "risk": "赔率表是结算的核心依据。多处冲突将导致程序无法确定最终配置，测试无法编写正确的结算验收用例，极易引发严重的资金结算事故。",
+            "suggestion": "数值策划需立即核对并统一所有UI界面、规则页及配置表中的Pair Plus赔率表，确保全局唯一且符合数学模型。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "INTERVENTION_DEADLOCK",
+            "canonical_title": "干预逻辑极端牌型死锁",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "干预逻辑中‘庄家100%小于闲家’在极端牌型下存在无解/死锁风险",
+            "current_state": "段落47和53规定，在‘故意输’逻辑下，‘庄家的牌要100%小于闲家的牌’。但未考虑极端牌型，例如闲家发出AAA豹子时，一副牌中不存在比AAA更小的豹子。",
+            "evidence": "Teenpatti PVE版本.md / 3.7.3普通用户发牌逻辑 段落47，3.7.4预流失用户和新用户发牌逻辑 段落53",
+            "risk": "当闲家为AAA时，程序若严格执行‘100%小于’且限定牌型，将导致发牌死锁、报错或发出非法牌（如重复的A），造成对局异常。",
+            "suggestion": "1、补充极端牌型下的干预降级策略。例如：当闲家为AAA豹子时，庄家强制发散牌（高牌）；2、或当无法发出严格小于的牌型时，允许庄家发出同牌型但点数较小的牌（若存在），或降级为‘按概率出牌’。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "PROBABILITY_MATH_AMBIGUITY",
+            "canonical_title": "概率均摊数学描述不严谨",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "概率均摊的数学描述不严谨，程序无法直接实现",
+            "current_state": "段落47描述‘同花顺和豹子出现的概率均摊到同花、顺子、对子、高牌...各获得（0.22%+0.24%）/4=0.115%的概率’。未说明这0.115%是‘在原有概率基础上增加’还是‘直接替换为’。",
+            "evidence": "Teenpatti PVE版本.md / 3.7.3普通用户发牌逻辑 段落47",
+            "risk": "1、若是增加，总概率将超过100%导致报错；2、若是替换，则改变了原有牌型的概率分布，且未说明原概率如何处理。描述不严谨将导致程序实现与数值预期不符。",
+            "suggestion": "明确概率均摊的数学公式。建议表述为：‘将不可出现牌型的概率总和，按比例分配给可出现的牌型’，并提供完整的概率重分配公式或伪代码，确保所有牌型概率之和严格等于100%。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "POOL_FORMULA_DIV_ZERO",
+            "canonical_title": "奖池状态计算公式除零风险",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "奖池状态计算公式分母为0时的异常处理缺失",
+            "current_state": "段落37-39定义奖池状态公式为‘（今日累计收入-今日累计支出）/今日累计收入’。未说明当‘今日累计收入’为0时（如刚开服或无人下注）的处理逻辑。",
+            "evidence": "Teenpatti PVE版本.md / 3.7.1奖池基础概念 段落37-39",
+            "risk": "分母为0将导致除零异常，程序崩溃或状态机卡死，影响全局发牌逻辑。",
+            "suggestion": "补充分母为0时的默认状态。建议规定：当今日累计收入为0时，默认视为‘奖池待补充’状态，或按正常概率出牌。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "POOL_NEGATIVE_FLOOR_MISSING",
+            "title": "奖池负值透支下限与熔断条件未定义",
+            "canonical_title": "奖池负值透支下限与熔断条件未定义",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "current_state": "段落37-39定义奖池状态为'充裕'、'正常'、'待补充'三种，但未说明当奖池持续亏损、比值深度为负时的透支下限、回填边界与熔断条件。",
+            "evidence": "Teenpatti PVE版本.md / 3.7.1奖池基础概念 段落37-39",
+            "risk": "1、若奖池持续深度为负且无熔断机制，平台可能面临无限透支风险；2、若仅依赖'故意赢'逻辑回填，在极端情况下可能无法有效恢复，导致经济系统失衡。",
+            "suggestion": "1、补充奖池负值透支下限与熔断条件。建议规定：当奖池比值低于某一阈值（如-50%）时触发熔断，暂停干预逻辑并人工介入；2、或设定最大透支额度，超出后强制按正常概率出牌。",
+            "severity": "中",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "source_missed_issue_id": "POOL_NEGATIVE_FLOOR_MISSING",
+            "source_issue_id": "POOL_NEGATIVE_FLOOR_MISSING",
+            "evidence_scope": "document",
+            "planner_role": "待定",
+            "audit_key": "max_payout_economic_boundary",
+            "control_key": "pool_negative_floor",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "gpt-5.6-sol"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CHURN_USER_CONCURRENCY",
+            "canonical_title": "预流失用户统计并发与时间窗口",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "预流失用户统计的时间窗口及并发计数幂等性未说明",
+            "current_state": "段落60-62定义预流失用户条件，包括‘近1-15天/16-30天下注金额’及‘今日已被判为预流失的次数<3次/天，每轮结算后+1’。未说明时间窗口是自然日还是滚动24小时，也未说明并发结算时的计数防重。",
+            "evidence": "Teenpatti PVE版本.md / 3.7.4预流失用户和新用户发牌逻辑 段落60-62",
+            "risk": "1、时间窗口定义不清会导致数据统计偏差；2、并发结算时若未加锁，可能导致同一局多次计数，使玩家提前耗尽当日预流失次数。",
+            "suggestion": "1、明确时间窗口为自然日（0点重置）还是滚动24小时；2、要求服务端在结算计数时增加分布式锁或幂等校验，防止并发重复计数。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "WINNING_RATE_ALIGNMENT",
+            "canonical_title": "胜率展示口径与防客诉",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "胜率/牌型排名计算口径未说明，存在客诉风险",
+            "current_state": "段落13和图片7要求展示‘牌型排名比例’和‘winning rate:99%’。未说明该数据是客户端本地计算还是服务端下发，也未说明该胜率是否受奖池干预逻辑影响。",
+            "evidence": "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落13，图片7",
+            "risk": "1、若胜率是客户端基于纯随机计算，而实际结果受干预逻辑影响，会导致展示胜率与实际结果严重不符，引发‘假胜率’客诉；2、若客户端计算，存在被内存修改器篡改辅助决策的风险。",
+            "suggestion": "明确胜率数据必须由服务端计算并下发，或明确声明‘展示胜率仅供参考，基于纯随机模型，实际结果以服务端干预后的结算为准’。建议在UI上增加免责提示，防止客诉。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TUTORIAL_FUND_ISOLATION",
+            "canonical_title": "引导局资金属性与跳过状态",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "引导蒙层局的资金属性及跳过后的牌型随机性未说明",
+            "current_state": "段落19描述引导步骤2中强制发特定牌（用户ACE，庄家235）并展示赢钱动画。未说明引导局是否扣除真实余额，以及玩家点击SKIP后，下一局是继续发特定牌还是恢复纯随机。",
+            "evidence": "Teenpatti PVE版本.md / 三、具体方案 > 3.2引导蒙层 段落19；Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落12",
+            "risk": "1、若引导局扣真钱，强制赢的体验虽好但可能引发后续落差；2、若不扣钱，需做资金隔离。跳过后的状态不明确会导致玩家体验断层。",
+            "suggestion": "明确引导局为‘教学局’，不扣除真实余额， winnings 也不计入真实余额（或计入但标记为体验金）。明确点击SKIP后，立即退出引导，下一局恢复正常的随机发牌逻辑。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "Call 操作的具体扣款基数（仅 ANTE 还是 ANTE + Pair Plus）。",
+      "Fold 操作时，Pair Plus 下注的结算规则（跟随输掉还是独立结算）。",
+      "极端牌型（如闲家 AAA 豹子）下，庄家‘100%小于’干预逻辑的降级/兜底策略。",
+      "胜率/牌型排名比例（winning rate）的计算数据源及是否受干预逻辑影响。",
+      "引导蒙层局的资金属性（是否扣除真实余额）及跳过后的状态恢复逻辑。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证不同下注组合（仅ANTE、ANTE+PP）下，筹码置灰逻辑与余额扣减是否严格匹配。",
+        "验证 Call 和 Fold 操作后，ANTE 和 Pair Plus 的结算金额是否符合统一后的赔率表。",
+        "验证庄家成局规则：庄家散牌且最大牌小于 Q 时，是否强制判输并触发 Toast 提示。",
+        "验证预流失/新用户标签的判断逻辑，构造满足近两月/近1-15天下注条件的数据进行命中测试。"
+      ],
+      "异常操作": [
+        "在 Call/Fold 倒计时最后一秒点击，验证是否会出现重复扣款或状态异常。",
+        "在发牌动画、结算动画进行中强制杀进程或断网，重连后验证状态机恢复是否正确。",
+        "余额刚好等于筹码*2时，下注后验证筹码置灰状态及后续操作限制。"
+      ],
+      "兼容性": [
+        "验证不同分辨率下，牌型展示、胜率弹窗、引导蒙层高亮区域的UI适配与点击热区。",
+        "验证在低端机型上，发牌动画与筹码飞向动画的帧率及内存占用。"
+      ],
+      "安全专项": [
+        "验证奖池状态计算公式在‘今日累计收入’为0时，是否触发除零异常或默认降级逻辑。",
+        "验证并发请求下，预流失用户‘今日判定次数+1’的计数是否具备幂等性，无重复扣减。",
+        "验证客户端展示的胜率/牌型数据是否可被内存修改器篡改，以及篡改后是否影响服务端结算。"
+      ],
+      "回归影响": [
+        "验证 Pair Plus 赔率表统一后，历史下注记录中的返奖金额展示是否与新规则兼容。",
+        "验证干预逻辑调整后，普通用户在‘奖池正常’状态下的发牌概率是否符合预期数学模型。"
+      ],
+      "性能与稳定性": [
+        "验证在‘故意输/故意赢’干预逻辑下，发牌算法（尤其是概率均摊与重分配）的执行耗时，确保不阻塞主线程。",
+        "验证长时间运行下，今日累计奖池收支数据的内存/缓存占用及定时清理机制。"
+      ],
+      "用户体验": [
+        "验证引导蒙层流程中，点击 SKIP 后是否能立即平滑退出并恢复常规游戏状态。",
+        "验证牌型相同时，‘抽出最大点数牌展示’的动画流畅度及信息传达的清晰度。"
+      ]
+    },
+    "quality_notes": [
+      "图片1、图片9、图片10中的 Pair Plus 赔率表存在明显冲突，需数值策划立即介入统一。",
+      "文档未提供具体的配置表结构或接口字段蓝图，建议在开发前补充，以确保前后端数据对齐。",
+      "dual_pass 复核备注：Primary 已覆盖 Pair Plus 赔率表冲突、Call 扣款基数歧义、干预逻辑死锁等核心问题，覆盖质量较高。",
+      "dual_pass 复核备注：新增 payout_timing 和 pool_negative_floor 两个 control 的缺失问题，需补充明确。",
+      "dual_pass 复核备注：funds_failure_compensation 和 single_round_payout_cap 标记为 advice_only，建议后续版本补充。",
+      "dual_pass 复核备注：protocol_profile=phase2_v2_2; evidence_packet_id=305aba5fc9cd5f85130cc2ff2255956e10599c3cd0b36d5206fa892666fe41fa",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片11中下注记录详情页的货币符号（☒）模糊不可读，需确认实际UI中的货币图标规范。"
+    ],
+    "atomicity_transform_diagnostics": {
+      "split_source_count": 0,
+      "split_finding_count": 0,
+      "suppressed_fully_covered_umbrella_count": 0,
+      "quarantined_count": 0,
+      "actions": []
+    },
+    "dedupe_diagnostics": {
+      "auto_merge_count": 0,
+      "auto_merge_rejected_count": 3,
+      "possible_duplicate_pair_count": 3,
+      "distinct_issue_id_merge_blocked_count": 3,
+      "decisions": [
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "CALL_DEDUCT_BASE",
+          "right_issue_id": "FOLD_PP_SETTLEMENT",
+          "left_title": "Call 扣款基数未明确，导致筹码置灰的预留规则存在逻辑歧义",
+          "right_title": "Fold 时 Pair Plus 的结算规则缺失"
+        },
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "CALL_DEDUCT_BASE",
+          "right_issue_id": "PP_PAYOUT_CONFLICT",
+          "left_title": "Call 扣款基数未明确，导致筹码置灰的预留规则存在逻辑歧义",
+          "right_title": "Pair Plus 赔率表在多处UI与规则描述中严重冲突"
+        },
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "FOLD_PP_SETTLEMENT",
+          "right_issue_id": "PP_PAYOUT_CONFLICT",
+          "left_title": "Fold 时 Pair Plus 的结算规则缺失",
+          "right_title": "Pair Plus 赔率表在多处UI与规则描述中严重冲突"
+        }
+      ]
+    },
+    "finding_atomicity_status": "pass",
+    "finding_atomicity_suspect_count": 0,
+    "finding_atomicity_suspects": [],
+    "review_mode": "dual_pass_candidate",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 0,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 62,
+    "total_tables": 0,
+    "total_images": 12
+  },
+  "documents": [
+    {
+      "name": "Teenpatti PVE版本.md",
+      "kind": "mixed",
+      "paragraph_count": 62,
+      "table_count": 0,
+      "image_count": 12,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "evidence_packet_id": "206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 正文段落: 计算公式：",
+        "tiger需求文档.docx / [段落72]: [段落72][章节：1 - {60}% 概率：按基础概率正常开奖 > 3.7.5. 奖池状态-回收（开奖逻辑）] 说明：赔付金额计算基于本轮各选项已投入金额 × 对应赔率；"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / [段落110]: [段落110][章节：4. 后台配置] 4. 后台配置",
+        "tiger需求文档.docx / 图片解析: *注：图片中未显示具体的UI按钮、流程界面、数值配置或文字提示等内容，仅为游戏标题/Logo展示图。*"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        },
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 正文段落: 仅当 3.8 不触发时，才进入 3.7 奖池状态判断 流程。 > 3.8.2. 触发条件] 3.8.2. 触发条件",
+        "tiger需求文档.docx / 正文段落: 仅当 3.8 不触发时，才进入 3.7 奖池状态判断 流程。 > 3.8.2. 触发条件] 同时满足以下 2 个条件，本轮开奖结果将被 3.8 规则影响："
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_02",
+          "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制"
+        },
+        {
+          "issue_id": "CROSS_01",
+          "title": "半屏入口下的UI层级与弹窗适配规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / [段落24]: [段落24][章节：3. 需求详情 > 3.7. 开奖部分（基础概率） > 3.7.1. 奖池基础规则] 每轮投入结束后，先执行前置抽水。",
+        "tiger需求文档.docx / [段落32]: [段落32][章节：3. 需求详情 > 3.7. 开奖部分（基础概率） > 3.7.1. 奖池基础规则] 判定时机：投入结束后、抽水前"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_03",
+          "title": "排行榜同分排序规则与UI展示信息不匹配"
+        },
+        {
+          "issue_id": "SEC_01",
+          "title": "开奖兜底中‘实时计算’的判定快照时机未定义"
+        }
+      ],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 表格1（章节：未识别章节）: | 3/3 | 删除“开奖分析”功能的可见配置，默认全开 / 补充限制跑马灯每局最多传输20条信息（后端） / 补充后台档位配置化 / 补充投入时余额不足交互效果 | +- |",
+        "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）: | 档位模块 / （优化） | | 【档位-交互&逻辑】 / 档位默认最多支持4个，显示具体配置内容（初始值10/100/1k/10k） / 交互：初次进入游戏，默认选中第一个档位；选中的档位高亮放大；下次进入默认选中最后一次选中的档位； / 更改了档位数值后，下次进入游戏取最新 / / 【Repeat-交互&逻辑】 / 记住当前用户上一局的投入信息（每个区域投入多少货币） / 自动判断若当前余额足够，则高亮，点击则按上一局用户投入信息投入，然后按钮置灰，每局仅可点击一次 / 若当前余额不足，则置灰 / 每次进入游戏默认置灰 |"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "TEST_02",
+          "title": "Repeat按钮在余额不足时的边界行为未定义"
+        },
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）: | 用户余额 / （优化） | | 【元素&逻辑】 / 显示当前用户货币余额 / 【交互】 / 点击整个余额区拉起半屏充值页 / 若当前局赢的钻石≥1，则在结束弹窗消失回到投入阶段时，余额增加对应数值同时底部冒一下win的具体数值 |",
+        "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）: | 结算弹窗 / （优化） | | 【拉起】 / 每局游戏结束后自动拉起结算弹窗 / / 【元素&逻辑】 / 标题：展示当局最后结果的名称 / 图案：展示对应结果的图案动画 / 当前用户结果：标题（Your Result）、投入的金额（Spend）、win的金额（Win）；若用户win的金额≥1，则有钻石跌落动画，win的具体金额放大并有背景光旋转 / 赢最多top3用户信息：展示当局win最多的top3的用户头像，用户昵称，win的具体数值，货币icon / 【交互】 / 结算弹窗展示5s后自动收起 |"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        },
+        {
+          "issue_id": "UX_01",
+          "title": "结算弹窗强制5s自动收起可能打断用户查看收益体验"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 图片解析: - 下拉选择框显示\"中台游戏crazygems\""
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / [段落72]: [段落72][章节：1 - {60}% 概率：按基础概率正常开奖 > 3.7.5. 奖池状态-回收（开奖逻辑）] 说明：赔付金额计算基于本轮各选项已投入金额 × 对应赔率；",
+        "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）: | 图案区 / （优化） | | 【元素&逻辑】 / 对应图案：三个图案 / 每个图案对应的返奖倍数：实际返还的倍数，最多1位小数 / 说明文案：{Peacock/Draw/Lion} wins ({2.9X}) / 当前用户投入情况：具体数字+icon / 【交互】 / 当前用户投入：点击对应区域，钻石从档位飞入到对应区域图案，并高亮框选该图案区域 / 当前用户Repeat：点击Repeat按钮，钻石从该按钮飞入上一局投入信息 / 其他用户投入：从左上角用户icon处频繁随机向不同图案飞入钻石（若无其他实际用户投入则无飞入动画） / 若用户余额不..."
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / [段落20]: [段落20][章节：3. 需求详情 > 3.7. 开奖部分（基础概率）] 开奖部分（奖池机制）",
+        "tiger需求文档.docx / [段落29]: [段落29][章节：3. 需求详情 > 3.7. 开奖部分（基础概率） > 3.7.1. 奖池基础规则] 奖池余额允许为负数（即允许“透支赔付”，后续抽水回填）。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_02",
+          "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制"
+        },
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / [段落57]: [段落57][章节：1 - [60]% 概率：按基础概率正常开奖] 兜底：如果开「投入人数最多」的选项，实时计算该选项佩服的总金额是否≤实时总奖池的80%，符合则开出该项，不符合则随机选择一项足够赔付的开，若都不够赔付，选择赔付最少的开",
+        "tiger需求文档.docx / [段落68]: [段落68][章节：1 - {60}% 概率：按基础概率正常开奖] 兜底：如果开「投入人数最多」的选项，实时计算该选项佩服的总金额是否≤实时总奖池的80%，符合则开出该项，不符合则随机选择一项足够赔付的开，若都不够赔付，选择赔付最少的开"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "LOGIC_01",
+          "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷"
+        },
+        {
+          "issue_id": "SEC_01",
+          "title": "开奖兜底中‘实时计算’的判定快照时机未定义"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）: | 开奖分析 | | 【拉起】 / 点击顶部开奖分析icon，从底部拉起对应页面 / / 【元素&逻辑】 / 标题：Statistics / 固定文案：Winning rate of each spend option / 胜率计算：对应图案出现次数/范围内的游戏局数（结果为百分比，保留2位小数） / 胜率计算范围：最近1小时（Last 1 hour），今日（Today），最近7天（Last 7 days） / 【交互】 / 点击x或其他空白位置关闭页面 / 【特别说明】 / 该模块上线时默认白名单可见，以实际开放时为准取消屏蔽 |",
+        "tiger需求文档.docx / 图片解析: 7. 统计表格包含三列时间维度：Last 1 hour（最近1小时）、Today（今日）、Last 30 day（最近30天）。"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [
+        "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）: | 开奖分析 | | 【拉起】 / 点击顶部开奖分析icon，从底部拉起对应页面 / / 【元素&逻辑】 / 标题：Statistics / 固定文案：Winning rate of each spend option / 胜率计算：对应图案出现次数/范围内的游戏局数（结果为百分比，保留2位小数） / 胜率计算范围：最近1小时（Last 1 hour），今日（Today），最近7天（Last 7 days） / 【交互】 / 点击x或其他空白位置关闭页面 / 【特别说明】 / 该模块上线时默认白名单可见，以实际开放时为准取消屏蔽 |",
+        "tiger需求文档.docx / 图片解析: 5. **个人记录内容**：显示 \"Show your betting records in the last 30 days\"（显示最近30天投注记录），包含回合号如 \"Round 112333334\"，结果 \"Result:Dragon\"（结果：龙），以及投注详情——三个选项各投 \"×3\"，投注额和返利均为 \"45156\"（钻石图标）。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CLARITY_03",
+          "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾"
+        },
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

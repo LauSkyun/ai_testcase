@@ -1,0 +1,238 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告成功识别了奖池透支、实时总奖池定义缺失、术语冲突等核心高风险问题，结构清晰，主结论正确。但遗漏了档位配置数值冲突、亏损大R金额篡改、特殊人群次数重置矛盾等关键数值不一致和逻辑冲突，且个别finding描述中混入了无关内容。",
+    "strengths": [
+      "准确指出了奖池透支无上限的高风险资损问题",
+      "识别了实时总奖池定义缺失对结算兜底逻辑的阻塞",
+      "抓住了UI与正文术语、赔率、统计时间维度的冲突，避免开发方向错误",
+      "对特殊人群边界条件的缺失判断合理",
+      "评分C与主流程可理解、需补充后开工的结论一致"
+    ],
+    "issues": [
+      "遗漏了档位配置数值在三个来源中的严重冲突",
+      "未发现亏损大R累计亏损金额的正文与表格数量级差异",
+      "未指出特殊人群判定次数重置规则的矛盾",
+      "结算净赢金额定义不清，影响排行榜和玩家收益展示",
+      "实时总奖池定义缺失的finding描述中混入了半屏UI内容，表述不纯"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型报告的少量描述错误，并补充了4个关键遗漏项，整体结构完整、证据明确、建议可执行，可直接交给业务方。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型报告的少量描述错误，并补充了4个关键遗漏项，整体结构完整、证据明确、建议可执行，可直接交给业务方。"
+  },
+  "review_notes": [
+    "主模型报告在“实时总奖池定义缺失”中误混入了半屏UI的内容，已修正并聚焦奖池定义。",
+    "新增了档位配置数值冲突、亏损大R金额冲突、特殊人群次数重置矛盾、结算净赢定义不清四个遗漏项，补充了主模型的不足。",
+    "UI冲突finding已扩展，纳入了倒计时不一致，使冲突点更全面。",
+    "特殊人群边界缺失finding扩展了重叠去重和局数不足的说明，增强了验收标准。",
+    "所有kept finding均保持原issue_id，确保追踪性。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS-01",
+      "title": "档位配置数值在文档多处严重冲突",
+      "severity": "高",
+      "evidence": "tiger需求文档.docx / 表格3、表格5、图片18",
+      "rationale": "投入档位是核心经济参数，正文、配置表、UI截图中的数值分别为10/100/1k/10k、10/100/1000/5000、100/1000/10000/100000，互相矛盾，直接阻塞开发实施。"
+    },
+    {
+      "issue_id": "MISS-02",
+      "title": "亏损大R累计亏损金额正文与配置表冲突",
+      "severity": "高",
+      "evidence": "tiger需求文档.docx / 段落85、表格5",
+      "rationale": "段落85要求累计亏损≥50000000，表格5对应行却是5000000，相差10倍，导致判定逻辑完全错误，影响经济策略。"
+    },
+    {
+      "issue_id": "MISS-03",
+      "title": "特殊人群判定次数重置规则存在矛盾",
+      "severity": "高",
+      "evidence": "tiger需求文档.docx / 段落82、83、表格5",
+      "rationale": "新进用户“历史被判断次数≤20次”与“防止同一用户一天内被反复判定”说明冲突，无法确定是全局累计还是每日重置，导致实现错误。"
+    },
+    {
+      "issue_id": "MISS-04",
+      "title": "结算净赢金额定义不清，影响排行榜与展示",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（结算弹窗、排行榜）",
+      "rationale": "Win金额未明确是净赢还是总赔付，导致排行榜积分、游戏记录、结算弹窗展示口径不一致，可能误导玩家。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "UI与正文术语冲突",
+        "primary_issue_ids": [
+          "UI与正文术语冲突"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "note": "扩展了标题和证据，新增倒计时冲突，调整了严重度维持高"
+      },
+      {
+        "candidate_issue_id": "占位符未清理",
+        "primary_issue_ids": [
+          "占位符未清理"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "实时总奖池定义缺失",
+        "primary_issue_ids": [
+          "实时总奖池定义缺失"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "note": "修正了描述中误混入的半屏UI内容，聚焦奖池定义"
+      },
+      {
+        "candidate_issue_id": "特殊人群边界缺失",
+        "primary_issue_ids": [
+          "特殊人群边界缺失"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "note": "扩展了重叠去重和局数不足的边界说明"
+      },
+      {
+        "candidate_issue_id": "异常流程恢复规则缺失",
+        "primary_issue_ids": [
+          "异常流程恢复规则缺失"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "奖池透支无风控",
+        "primary_issue_ids": [
+          "奖池透支无风控"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "结算弹窗交互缺陷",
+        "primary_issue_ids": [
+          "结算弹窗交互缺陷"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "档位配置数值冲突",
+        "source_missed_issue_ids": [
+          "MISS-01"
+        ],
+        "reason": "主模型遗漏，档位数值直接阻塞经济配置"
+      },
+      {
+        "candidate_issue_id": "亏损大R金额冲突",
+        "source_missed_issue_ids": [
+          "MISS-02"
+        ],
+        "reason": "数值差一个数量级，高风险遗漏"
+      },
+      {
+        "candidate_issue_id": "特殊人群次数重置矛盾",
+        "source_missed_issue_ids": [
+          "MISS-03"
+        ],
+        "reason": "逻辑矛盾，影响保护策略实现"
+      },
+      {
+        "candidate_issue_id": "结算净赢定义不清",
+        "source_missed_issue_ids": [
+          "MISS-04"
+        ],
+        "reason": "影响排行榜和展示准确性，中风险遗漏"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型报告的少量描述错误，并补充了4个关键遗漏项，整体结构完整、证据明确、建议可执行，可直接交给业务方。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

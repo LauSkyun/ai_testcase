@@ -1,0 +1,16 @@
+{
+  "source_game_dir": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856\\钱来了",
+  "primary_model": "gpt-5.6-sol",
+  "document_names": [
+    "钱来了需求文档.docx",
+    "钱来了数值文档.docx"
+  ],
+  "hashes": {
+    "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+    "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+    "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+    "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df"
+  },
+  "primary_calls_during_freeze": 0,
+  "vision_calls_during_freeze": 0
+}

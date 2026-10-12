@@ -1,0 +1,40 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-001",
+      "target_issue_id": "CROSS_01",
+      "challenge_type": "duplicate",
+      "challenged_claim": "CROSS_01 作为一个独立的跨文档冲突问题存在，与 LOGIC_01 区分。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "counterevidence": "",
+      "rationale": "CROSS_01 与 LOGIC_01 指向完全相同的决策对象（RESPIN累加算法公式）、相同的证据来源、相同的根因（需求举例与数值术语不一致）以及相同的修复动作（统一公式与术语）。根据原子性与去重规则，相同决策对象、根因、修复动作和验收闭环的重复表述应合并证据，不应拆分为两个独立的 finding。",
+      "recommended_action": "merge_evidence",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "CROSS_01",
+      "correction_type": "clarify",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "rationale": "CROSS_01 本质上是 LOGIC_01 的证据补充，两者描述的是同一个核心逻辑歧义问题。应将其合并至 LOGIC_01，避免报告冗余和修复动作重复。",
+      "proposed_changes": {
+        "title": "RESPIN累加算法存在加法与乘法的严重歧义（合并CROSS_01证据）",
+        "current_state": "需求举例使用加法(1+2+1+5)，但数值文档通篇使用“乘数符号值”、“累加乘数值”，未明确是加法累加还是乘法累加。",
+        "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+        "risk": "极易导致程序实现为乘法，造成赔付指数级爆炸或RTP严重偏离，引发重大经济事故。",
+        "suggestion": "统一两份文档中的公式与术语。若为加法，改为“累加倍数”，公式为：最终乘数 = 初始乘数 + Σ(每次重转乘数值)；若为乘法，改为“累乘倍数”，并重新评估RTP与最大赔付。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "acceptance_criteria": "两份文档中关于RESPIN累加算法的公式与术语完全一致，且明确为加法或乘法。"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "CROSS_01 与 LOGIC_01 存在高度语义重复，建议将 CROSS_01 的证据与描述合并至 LOGIC_01，并废弃 CROSS_01 以保持报告原子性。",
+    "protocol_profile=phase3_v1; primary_report_hash=411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369"
+  ]
+}

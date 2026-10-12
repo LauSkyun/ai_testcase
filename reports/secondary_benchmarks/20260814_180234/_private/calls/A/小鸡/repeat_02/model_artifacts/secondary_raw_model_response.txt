@@ -1,0 +1,94 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "核心角色与题材包装严重冲突（小鸡 vs 骆驼），美术资源制作方向错误，UI表现与世界观设定割裂。",
+      "evidence": "小鸡.docx / 4、题材包装（中东主题），段落55：‘※ 一开始美术可以先用默认的小鸡形象，等到时候业务有需求了再替换’；段落56：‘4.1 核心形象：卡通骆驼设计’。",
+      "counterevidence": "段落55已明确说明小鸡为初期默认/占位形象，骆驼为最终题材包装目标，属于明确的过渡策略而非文档冲突。",
+      "rationale": "需求文档已主动声明了形象替换的过渡计划，并非‘严重冲突’或‘割裂’，而是分阶段的美术资源制作策略。定性为‘严重冲突’属于过度解读。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "challenge_type": "overstated",
+      "challenged_claim": "需求文档描述的‘固定概率’与数值文档的‘Crash动态概率算法’完全冲突，缺失中等、困难、极限难度的具体概率配置。",
+      "evidence": "小鸡.docx / 3.1 下注系统，表格2 下方段落37：‘具体数值配置由数值策划确定’；表格2 标题为‘难度数值参考’。",
+      "counterevidence": "需求文档已明确该表格仅为‘参考’，且将具体数值的决定权移交给了数值策划（即数值文档）。",
+      "rationale": "需求文档中的固定概率表已自我声明为‘参考’并指向数值策划，并非与数值文档‘完全冲突’，而是需求与数值分工的正常体现。将其列为高风险阻塞项属于定性 overstated。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-03",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "需求、数值、UI三端筹码配置不一致，导致前后端无法对齐，阻塞下注系统开发与数值配置。",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6：‘可以配置游戏的下注列表。以下仅为示例’；表格1（下注值100, 1000）。小鸡.docx / 2.2 详细规则，表格1（3, 5, 10, 20）。",
+      "counterevidence": "数值文档明确标注下注列表‘仅为示例’，且数值100/1000可能为内部最小精度单位（如分），而需求与UI的3/5/10/20为展示单位（如元）。",
+      "rationale": "数值文档已声明其筹码表为示例，且存在内部精度单位与前端展示单位换算的合理兼容解释。直接定性为‘三端配置不一致导致阻塞’缺乏对数值配置示例性质及单位换算的考量。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_01",
+      "correction_type": "clarify",
+      "evidence": "小鸡.docx / 4、题材包装（中东主题），段落55-56",
+      "rationale": "将‘严重冲突’修正为‘过渡期形象占位与最终包装方案的说明’，降低风险定性，明确美术分阶段交付的策略。",
+      "proposed_changes": {
+        "title": "核心角色过渡期占位与最终包装方案说明",
+        "current_state": "需求文档段落55说明初期使用小鸡作为默认形象，段落56定义最终核心形象为卡通骆驼，世界观为中东沙漠商队。当前UI截图（图片1-8）及游戏标题均为‘CHICKEN ROAD’及小鸡形象。",
+        "risk": "若美术团队未注意到段落55的过渡说明，可能直接按最终骆驼形象制作全套UI资源，导致初期版本资源浪费或返工。",
+        "suggestion": "在美术需求单中明确分期交付策略：V1版本使用小鸡形象及对应UI资源，V2版本替换为骆驼形象及中东主题UI。需补充小鸡到骆驼替换时的资源兼容或替换清单。",
+        "planner_role": "美术/系统策划",
+        "confidence": "高"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-02",
+      "challenge_id": "CH-02",
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "correction_type": "clarify",
+      "evidence": "小鸡.docx / 3.1 下注系统，表格2及段落37；小鸡数值文档.docx / 4. 撞击概率计算",
+      "rationale": "修正‘完全冲突’的定性，明确需求文档中的概率表为占位参考，实际以数值文档的Crash算法为准，但需补充UI概率展示的映射说明。",
+      "proposed_changes": {
+        "title": "难度概率配置分工与UI展示映射缺失",
+        "current_state": "小鸡.docx 表格2提供了固定概率参考，但段落37声明‘具体数值配置由数值策划确定’。实际数值采用小鸡数值文档的Crash算法（首次3%，非首次1%）。",
+        "risk": "需求与数值的分工已明确，但UI上‘被击中的概率’如何基于Crash算法实时计算并展示给玩家缺乏说明，可能导致前端展示与后端实际概率脱节。",
+        "suggestion": "废弃需求文档中的固定概率参考表，统一采用数值文档的Crash算法。补充说明UI上‘被击中概率’的实时计算公式（如基于当前格与下一格的期望爆炸倍数推算），确保前后端对齐。",
+        "planner_role": "系统策划/数值策划",
+        "confidence": "高"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-03",
+      "challenge_id": "CH-03",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "correction_type": "clarify",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1；小鸡.docx / 2.2 详细规则，表格1",
+      "rationale": "修正‘三端配置不一致’的定性，明确数值文档为示例及内部单位，需补充单位换算与配置表结构说明。",
+      "proposed_changes": {
+        "title": "下注筹码配置示例与单位换算说明缺失",
+        "current_state": "小鸡.docx 表格1定义展示筹码为3、5、10、20；小鸡数值文档表格1示例下注值为100、1000，并声明‘以下仅为示例’。",
+        "risk": "若未明确数值文档中的100/1000是内部最小精度单位（如分）还是纯示例，可能导致前后端下注金额校验逻辑错误。",
+        "suggestion": "明确数值文档中的下注值仅为配置结构示例。补充说明筹码的内部精度单位（如1元=100分）与前端展示单位的换算规则，并定义动态筹码配置表的完整字段结构。",
+        "planner_role": "系统策划/数值策划",
+        "confidence": "高"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "对 CLARITY_01、CORE_DIFFICULTY_CONFIG_MISMATCH、CORE_BET_CONFIG_MISMATCH 的定性提出 overstated/compatible_interpretation 质疑，因需求文档已包含过渡说明、参考声明及示例标注。",
+    "protocol_profile=phase3_v1; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9"
+  ]
+}

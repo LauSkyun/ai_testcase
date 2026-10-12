@@ -1,0 +1,582 @@
+{
+  "schema_version": 1,
+  "benchmark_type": "frozen_primary_secondary_ab",
+  "created_at": "2026-08-07T11:54:44+08:00",
+  "source": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856",
+  "blinding": {
+    "public_outputs_use_variant_ids_only": true,
+    "provider_mapping_path": "_private/provider_mapping.json",
+    "annotation_status": "pending_human_review"
+  },
+  "design": {
+    "game_count": 5,
+    "secondary_variant_count": 1,
+    "repeats_per_variant_per_game": 2,
+    "expected_secondary_calls": 10,
+    "primary_calls": 0,
+    "vision_calls": 0,
+    "temperature": 0,
+    "comparison_axis": "single_profile"
+  },
+  "completion": {
+    "completed_secondary_calls": 0,
+    "failed_secondary_calls": 10,
+    "all_calls_paired": false
+  },
+  "fairness_invariants": {
+    "passed": true,
+    "comparison_axis": "single_profile",
+    "only_secondary_provider_varies": false,
+    "only_protocol_profile_varies": false,
+    "only_intended_variable_varies": true,
+    "primary_calls_observed": 0,
+    "vision_calls_observed": 0,
+    "per_game": [
+      {
+        "game": "777",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+          "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+          "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+          "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c"
+        }
+      },
+      {
+        "game": "racing",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+          "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+          "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+          "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5"
+        }
+      },
+      {
+        "game": "tiger",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+          "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+          "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+          "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8"
+        }
+      },
+      {
+        "game": "小鸡",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+          "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+          "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+          "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11"
+        }
+      },
+      {
+        "game": "钱来了",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "temperature_identical": true,
+          "provider_config_identical": true,
+          "message_hash_stable_within_variant": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+          "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+          "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+          "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794"
+        }
+      }
+    ]
+  },
+  "variant_metrics": [
+    {
+      "variant_id": "A",
+      "expected_calls": 10,
+      "completed_calls": 0,
+      "candidate_gate_pass_rate": null,
+      "candidate_default_adoption_rate": null,
+      "average_claimed_added_count": null,
+      "average_admitted_added_count": null,
+      "total_rejected_added_count": 0,
+      "added_rejection_reason_counts": {},
+      "average_materialized_added_count": null,
+      "average_primary_top_blocker_retention": null,
+      "minimum_primary_top_blocker_retention": null,
+      "primary_top3_gate_pass_rate": null,
+      "average_field_completeness": null,
+      "average_admitted_field_completeness": null,
+      "average_coverage_ledger_completeness": null,
+      "coverage_ledger_valid_rate": null,
+      "coverage_schema_v2_rate": null,
+      "coverage_evidence_packet_echo_rate": null,
+      "phase2_protocol_gate_pass_rate": null,
+      "phase2_delta_only_compliance_rate": null,
+      "deterministic_candidate_generation_rate": null,
+      "phase2_admission_all_pass_rate": null,
+      "candidate_score_lock_rate": null,
+      "multiroot_finding_count": 0,
+      "preserved_primary_multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch_count": 0,
+      "materialization_mismatch_count": 0,
+      "major_judgment_drift_count": 0
+    }
+  ],
+  "stability_comparison": [],
+  "human_metrics": {
+    "status": "pending_human_annotation",
+    "valid_added_finding_count": null,
+    "added_finding_precision": null,
+    "high_value_added_count": null,
+    "duplicate_add_rate": null
+  },
+  "calls": [
+    {
+      "game": "777",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/777/repeat_01",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "4c995d24e8f1c660d29fb151981139d635c985f9b38fa7aa02eb608778380395",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:777:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "777",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/777/repeat_02",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "4c995d24e8f1c660d29fb151981139d635c985f9b38fa7aa02eb608778380395",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:777:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "racing",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/racing/repeat_01",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "cc8b99899664feea67800fbec6bf6a71221a47048661f261c192847953c72f77",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "0b38b9b8cda38b98a2bba023238509e609abc98c83f73391cee623706bc74b87",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:racing:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "racing",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/racing/repeat_02",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "cc8b99899664feea67800fbec6bf6a71221a47048661f261c192847953c72f77",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "0b38b9b8cda38b98a2bba023238509e609abc98c83f73391cee623706bc74b87",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:racing:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "tiger",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/tiger/repeat_01",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "597827d131da853d7b9efb6850258c365bbaecb35eb5ca902fed2f94f59aed0b",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:tiger:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "tiger",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/tiger/repeat_02",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "597827d131da853d7b9efb6850258c365bbaecb35eb5ca902fed2f94f59aed0b",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "206c20f9c116f42bc7925ee56c425c54ce20bb9077440bcfe8b6d51cc5c690b6",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:tiger:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/小鸡/repeat_01",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "bdc9aafdd2b799820220c2a73a98ec6afe6dc29e95f6a53b1eac3b6a5380c165",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "9ee0325cf08bc103b70db298098b54a5381342957c9674b07b3e6d1b3801c36b",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:小鸡:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/小鸡/repeat_02",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "bdc9aafdd2b799820220c2a73a98ec6afe6dc29e95f6a53b1eac3b6a5380c165",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "9ee0325cf08bc103b70db298098b54a5381342957c9674b07b3e6d1b3801c36b",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:小鸡:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/钱来了/repeat_01",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b94519c3b8f9aa0bf46ac19f43e5fb8819cf5f58e499bc232e60e02f9d6fd99a",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:钱来了:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/钱来了/repeat_02",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b94519c3b8f9aa0bf46ac19f43e5fb8819cf5f58e499bc232e60e02f9d6fd99a",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+      "protocol_profile": "phase2",
+      "processing_profile": "phase2",
+      "coverage_protocol_revision": "phase2_v2_2",
+      "coverage_evidence_packet_id": "fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:钱来了:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    }
+  ],
+  "phase2_acceptance": {
+    "applicable": true,
+    "status": "failed",
+    "eligible_for_next_stage": false,
+    "phase2_variant_ids": [
+      "A"
+    ],
+    "thresholds": {
+      "raw_field_completeness_min": 0.9,
+      "admitted_field_completeness_min": 1.0,
+      "ledger_completeness_min": 1.0,
+      "ledger_valid_rate_min": 1.0,
+      "coverage_schema_v2_rate_min": 1.0,
+      "coverage_evidence_packet_echo_rate_min": 1.0,
+      "phase2_protocol_gate_pass_rate_min": 1.0,
+      "phase2_delta_only_compliance_rate_min": 1.0,
+      "deterministic_candidate_generation_rate_min": 1.0,
+      "candidate_gate_pass_rate_min": 0.9,
+      "primary_top3_retention_min": 0.6667,
+      "admitted_precision_min": 0.8,
+      "valid_added_count_min": 10,
+      "high_value_added_count_min": 5,
+      "duplicate_rate_max": 0.15,
+      "high_added_root_overlap_min": 0.25
+    },
+    "checks": {
+      "phase2_calls_complete": {
+        "ready": true,
+        "passed": false,
+        "observed": "0/10",
+        "target": "100%"
+      },
+      "fairness_invariants": {
+        "ready": true,
+        "passed": true,
+        "observed": true,
+        "target": "true"
+      },
+      "raw_field_completeness": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=0.9"
+      },
+      "admitted_field_completeness": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "coverage_ledger_completeness": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "coverage_ledger_valid_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "coverage_schema_v2_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "coverage_evidence_packet_echo_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "phase2_protocol_gate_pass_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "phase2_delta_only_compliance_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "deterministic_candidate_generation_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=1.0"
+      },
+      "candidate_gate_pass_rate": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=0.9"
+      },
+      "primary_top3_retention": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=2/3"
+      },
+      "machine_multiroot": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "unsupported_severity_change": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "unsupported_blocking_change": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "lineage_mismatch": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "materialization_mismatch": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "major_judgment_drift": {
+        "ready": true,
+        "passed": true,
+        "observed": 0,
+        "target": "0"
+      },
+      "high_added_root_overlap": {
+        "ready": true,
+        "passed": false,
+        "observed": null,
+        "target": ">=0.25"
+      },
+      "human_admitted_precision": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": ">=0.8"
+      },
+      "human_valid_added_count": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": ">=10"
+      },
+      "human_high_value_added_count": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": ">=5"
+      },
+      "human_duplicate_rate": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "<=0.15"
+      },
+      "human_unsupported": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "0"
+      },
+      "human_overstated": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "0"
+      },
+      "human_multiroot": {
+        "ready": false,
+        "passed": null,
+        "observed": null,
+        "target": "0"
+      }
+    },
+    "blocking_reasons": [
+      "phase2_calls_complete",
+      "raw_field_completeness",
+      "admitted_field_completeness",
+      "coverage_ledger_completeness",
+      "coverage_ledger_valid_rate",
+      "coverage_schema_v2_rate",
+      "coverage_evidence_packet_echo_rate",
+      "phase2_protocol_gate_pass_rate",
+      "phase2_delta_only_compliance_rate",
+      "deterministic_candidate_generation_rate",
+      "candidate_gate_pass_rate",
+      "primary_top3_retention",
+      "high_added_root_overlap"
+    ],
+    "pending_reasons": [
+      "human_admitted_precision",
+      "human_valid_added_count",
+      "human_high_value_added_count",
+      "human_duplicate_rate",
+      "human_unsupported",
+      "human_overstated",
+      "human_multiroot"
+    ],
+    "high_added_root_overlap_evaluable_games": 0
+  }
+}

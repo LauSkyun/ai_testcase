@@ -1,0 +1,1020 @@
+{
+  "status": "completed",
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 2,
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_2",
+      "evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+      "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+      "echo_required": true,
+      "echo_matched": true,
+      "delta_only_required": true,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [],
+      "unexpected_fields_present": [],
+      "passed": true,
+      "errors": []
+    },
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_control_invalid:max_payout_economic_boundary:single_round_payout_cap:primary_control_mismatch:LOGIC_01"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 4,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 0,
+    "materially_changed_titles": [],
+    "materially_changed_examples": []
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 4,
+      "admitted_count": 0,
+      "rejected_count": 4,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "FUND_01",
+          "title": "玩家本金扣除或冻结的事务动作节点未明确定义",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3（档位模块、图案区交互）",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "debit_timing"
+        },
+        {
+          "candidate_issue_id": "FUND_02",
+          "title": "奖池透支赔付缺失负值下限与熔断条件",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落29）",
+          "coverage_audit_key": "max_payout_economic_boundary",
+          "coverage_control_key": "pool_negative_floor"
+        },
+        {
+          "candidate_issue_id": "STAT_01",
+          "title": "开奖分析统计时间窗口在正文与UI截图中冲突",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "CLARITY_03",
+              "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾"
+            },
+            {
+              "issue_id": "LOGIC_02",
+              "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3（开奖分析）、图片13（统计弹窗UI）",
+          "coverage_audit_key": "statistics_time_window",
+          "coverage_control_key": "same_metric_window"
+        },
+        {
+          "candidate_issue_id": "STAT_02",
+          "title": "游戏记录展示时间窗口在正文与UI截图中冲突",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3（游戏记录）、图片9（记录弹窗UI）",
+          "coverage_audit_key": "statistics_time_window",
+          "coverage_control_key": "ui_text_window_alignment"
+        }
+      ],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": false,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "confirmed_control_keys": [
+          "debit_timing",
+          "pool_negative_floor",
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ],
+        "candidate_to_audit_key": {
+          "FUND_01": "funds_deduction_payout",
+          "FUND_02": "max_payout_economic_boundary",
+          "STAT_01": "statistics_time_window",
+          "STAT_02": "statistics_time_window"
+        },
+        "candidate_to_control_key": {
+          "FUND_01": "debit_timing",
+          "FUND_02": "pool_negative_floor",
+          "STAT_01": "same_metric_window",
+          "STAT_02": "ui_text_window_alignment"
+        },
+        "finding_audit_keys": {
+          "FUND_01": "funds_deduction_payout",
+          "FUND_02": "max_payout_economic_boundary",
+          "STAT_01": "statistics_time_window",
+          "STAT_02": "statistics_time_window"
+        },
+        "finding_control_keys": {
+          "FUND_01": "debit_timing",
+          "FUND_02": "pool_negative_floor",
+          "STAT_01": "same_metric_window",
+          "STAT_02": "ui_text_window_alignment"
+        },
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [],
+        "errors": [
+          "coverage_control_invalid:max_payout_economic_boundary:single_round_payout_cap:primary_control_mismatch:LOGIC_01"
+        ],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CLARITY_01",
+              "LOGIC_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 3.7.5. 奖池状态-回收（段落72）",
+              "tiger需求文档.docx / 4. 后台配置（段落110）",
+              "tiger需求文档.docx / 图片解析"
+            ],
+            "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CLARITY_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 3.7.5. 奖池状态-回收（段落72）"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CLARITY_01",
+                  "LOGIC_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 4. 后台配置（段落110）",
+                  "tiger需求文档.docx / 图片解析"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CLARITY_02",
+              "SEC_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 3.8.2. 触发条件",
+              "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落24、32）",
+              "tiger需求文档.docx / 3.8 用户保护开奖逻辑（段落78）"
+            ],
+            "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CLARITY_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 3.8.2. 触发条件"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "SEC_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落24、32）",
+                  "tiger需求文档.docx / 3.8 用户保护开奖逻辑（段落78）"
+                ],
+                "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "confirmed_add",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [
+              "FUND_01"
+            ],
+            "evidence_checked": [
+              "tiger需求文档.docx / 表格3（档位模块、图案区交互）",
+              "tiger需求文档.docx / 表格3（用户余额模块）",
+              "tiger需求文档.docx / 图片24（中台游戏配置）"
+            ],
+            "reason": "source_state=missing; counterevidence=无明确事务动作; primary_coverage=not_covered; final=confirmed_add；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=图片24提及中台游戏; primary_coverage=not_covered; final=advice_only",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "FUND_01"
+                ],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 表格3（档位模块、图案区交互）"
+                ],
+                "reason": "source_state=missing; counterevidence=无明确事务动作; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 表格3（用户余额模块）"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 图片24（中台游戏配置）"
+                ],
+                "reason": "source_state=missing; counterevidence=图片24提及中台游戏; primary_coverage=not_covered; final=advice_only",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "confirmed_add",
+            "primary_issue_ids": [
+              "LOGIC_01"
+            ],
+            "candidate_issue_ids": [
+              "FUND_02"
+            ],
+            "evidence_checked": [
+              "tiger需求文档.docx / 3.7.5（段落72）",
+              "tiger需求文档.docx / 表格3（图案区）",
+              "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落29）",
+              "tiger需求文档.docx / 3.7.3、3.7.4（段落57、68）"
+            ],
+            "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=partial; counterevidence=无; primary_coverage=not_covered; final=confirmed_add；source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 3.7.5（段落72）",
+                  "tiger需求文档.docx / 表格3（图案区）"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "FUND_02"
+                ],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落29）"
+                ],
+                "reason": "source_state=partial; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 3.7.3、3.7.4（段落57、68）"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": [
+                  "primary_control_mismatch:LOGIC_01"
+                ]
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "confirmed_add",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [
+              "STAT_01",
+              "STAT_02"
+            ],
+            "evidence_checked": [
+              "tiger需求文档.docx / 表格3（开奖分析）",
+              "tiger需求文档.docx / 图片13（统计弹窗UI）",
+              "tiger需求文档.docx / 表格3（游戏记录）",
+              "tiger需求文档.docx / 图片9（记录弹窗UI）"
+            ],
+            "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add；source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "STAT_01"
+                ],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 表格3（开奖分析）",
+                  "tiger需求文档.docx / 图片13（统计弹窗UI）"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "STAT_02"
+                ],
+                "evidence_checked": [
+                  "tiger需求文档.docx / 表格3（游戏记录）",
+                  "tiger需求文档.docx / 图片9（记录弹窗UI）"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": false,
+        "protocol_gate": {
+          "required": true,
+          "protocol_revision": "phase2_v2_2",
+          "evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+          "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+          "echo_required": true,
+          "echo_matched": true,
+          "delta_only_required": true,
+          "delta_only_compliant": true,
+          "forbidden_fields_present": [],
+          "unexpected_fields_present": [],
+          "passed": true,
+          "errors": []
+        }
+      },
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_2",
+        "evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+        "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+        "echo_required": true,
+        "echo_matched": true,
+        "delta_only_required": true,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [],
+        "unexpected_fields_present": [],
+        "passed": true,
+        "errors": []
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 4,
+    "admitted_count": 0,
+    "rejected_count": 4,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "FUND_01",
+        "title": "玩家本金扣除或冻结的事务动作节点未明确定义",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3（档位模块、图案区交互）",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "debit_timing"
+      },
+      {
+        "candidate_issue_id": "FUND_02",
+        "title": "奖池透支赔付缺失负值下限与熔断条件",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落29）",
+        "coverage_audit_key": "max_payout_economic_boundary",
+        "coverage_control_key": "pool_negative_floor"
+      },
+      {
+        "candidate_issue_id": "STAT_01",
+        "title": "开奖分析统计时间窗口在正文与UI截图中冲突",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_03",
+            "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾"
+          },
+          {
+            "issue_id": "LOGIC_02",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3（开奖分析）、图片13（统计弹窗UI）",
+        "coverage_audit_key": "statistics_time_window",
+        "coverage_control_key": "same_metric_window"
+      },
+      {
+        "candidate_issue_id": "STAT_02",
+        "title": "游戏记录展示时间窗口在正文与UI截图中冲突",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3（游戏记录）、图片9（记录弹窗UI）",
+        "coverage_audit_key": "statistics_time_window",
+        "coverage_control_key": "ui_text_window_alignment"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_control_keys": [
+        "debit_timing",
+        "pool_negative_floor",
+        "same_metric_window",
+        "ui_text_window_alignment"
+      ],
+      "candidate_to_audit_key": {
+        "FUND_01": "funds_deduction_payout",
+        "FUND_02": "max_payout_economic_boundary",
+        "STAT_01": "statistics_time_window",
+        "STAT_02": "statistics_time_window"
+      },
+      "candidate_to_control_key": {
+        "FUND_01": "debit_timing",
+        "FUND_02": "pool_negative_floor",
+        "STAT_01": "same_metric_window",
+        "STAT_02": "ui_text_window_alignment"
+      },
+      "finding_audit_keys": {
+        "FUND_01": "funds_deduction_payout",
+        "FUND_02": "max_payout_economic_boundary",
+        "STAT_01": "statistics_time_window",
+        "STAT_02": "statistics_time_window"
+      },
+      "finding_control_keys": {
+        "FUND_01": "debit_timing",
+        "FUND_02": "pool_negative_floor",
+        "STAT_01": "same_metric_window",
+        "STAT_02": "ui_text_window_alignment"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [],
+      "errors": [
+        "coverage_control_invalid:max_payout_economic_boundary:single_round_payout_cap:primary_control_mismatch:LOGIC_01"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_01",
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.5. 奖池状态-回收（段落72）",
+            "tiger需求文档.docx / 4. 后台配置（段落110）",
+            "tiger需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 3.7.5. 奖池状态-回收（段落72）"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_01",
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 4. 后台配置（段落110）",
+                "tiger需求文档.docx / 图片解析"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_02",
+            "SEC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.8.2. 触发条件",
+            "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落24、32）",
+            "tiger需求文档.docx / 3.8 用户保护开奖逻辑（段落78）"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 3.8.2. 触发条件"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "SEC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落24、32）",
+                "tiger需求文档.docx / 3.8 用户保护开奖逻辑（段落78）"
+              ],
+              "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUND_01"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3（档位模块、图案区交互）",
+            "tiger需求文档.docx / 表格3（用户余额模块）",
+            "tiger需求文档.docx / 图片24（中台游戏配置）"
+          ],
+          "reason": "source_state=missing; counterevidence=无明确事务动作; primary_coverage=not_covered; final=confirmed_add；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=图片24提及中台游戏; primary_coverage=not_covered; final=advice_only",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUND_01"
+              ],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3（档位模块、图案区交互）"
+              ],
+              "reason": "source_state=missing; counterevidence=无明确事务动作; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3（用户余额模块）"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 图片24（中台游戏配置）"
+              ],
+              "reason": "source_state=missing; counterevidence=图片24提及中台游戏; primary_coverage=not_covered; final=advice_only",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "confirmed_add",
+          "primary_issue_ids": [
+            "LOGIC_01"
+          ],
+          "candidate_issue_ids": [
+            "FUND_02"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.5（段落72）",
+            "tiger需求文档.docx / 表格3（图案区）",
+            "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落29）",
+            "tiger需求文档.docx / 3.7.3、3.7.4（段落57、68）"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=partial; counterevidence=无; primary_coverage=not_covered; final=confirmed_add；source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 3.7.5（段落72）",
+                "tiger需求文档.docx / 表格3（图案区）"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUND_02"
+              ],
+              "evidence_checked": [
+                "tiger需求文档.docx / 3.7.1. 奖池基础规则（段落29）"
+              ],
+              "reason": "source_state=partial; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 3.7.3、3.7.4（段落57、68）"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": [
+                "primary_control_mismatch:LOGIC_01"
+              ]
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "STAT_01",
+            "STAT_02"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3（开奖分析）",
+            "tiger需求文档.docx / 图片13（统计弹窗UI）",
+            "tiger需求文档.docx / 表格3（游戏记录）",
+            "tiger需求文档.docx / 图片9（记录弹窗UI）"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add；source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "STAT_01"
+              ],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3（开奖分析）",
+                "tiger需求文档.docx / 图片13（统计弹窗UI）"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "STAT_02"
+              ],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3（游戏记录）",
+                "tiger需求文档.docx / 图片9（记录弹窗UI）"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": false,
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_2",
+        "evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+        "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+        "echo_required": true,
+        "echo_matched": true,
+        "delta_only_required": true,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [],
+        "unexpected_fields_present": [],
+        "passed": true,
+        "errors": []
+      }
+    },
+    "protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_2",
+      "evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+      "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+      "echo_required": true,
+      "echo_matched": true,
+      "delta_only_required": true,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [],
+      "unexpected_fields_present": [],
+      "passed": true,
+      "errors": []
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+  "coverage_evidence_packet_echoed": true,
+  "phase2_delta_only_compliant": true,
+  "phase2_protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase2_v2_2",
+    "evidence_packet_id": "5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+    "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=5b4875357c5e26540036d41b154e1bf91e82f823e52fbfec2e28715cc5f58ca3",
+    "echo_required": true,
+    "echo_matched": true,
+    "delta_only_required": true,
+    "delta_only_compliant": true,
+    "forbidden_fields_present": [],
+    "unexpected_fields_present": [],
+    "passed": true,
+    "errors": []
+  }
+}

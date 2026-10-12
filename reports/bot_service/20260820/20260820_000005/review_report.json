@@ -1,0 +1,373 @@
+{
+  "report": {
+    "overall_evaluation": "文档描述了未付费用户单机版游戏的核心改造思路，通过局数和余额控制来平衡体验与防刷。但核心状态流转（如局数统计口径、超15局后的行为）存在明显矛盾，方案2的补偿逻辑与余额硬顶存在冲突，且缺乏关键异常场景的验收标准，需补充完善后方可开发。",
+    "document_quality_score": "C",
+    "score_reason": "主流程中局数统计口径与'不计入累计'存在逻辑矛盾，'不再执行本逻辑'的后续行为未定义，且方案2的补偿机制与余额硬顶存在冲突，需澄清后方可落地。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "局数统计口径与'不计入累计'存在逻辑矛盾",
+        "owner": "系统策划",
+        "why_now": "如果'累计数据'指总累计，不计入后下次进入仍判定为第5局，导致玩家永远卡在第5局；如果指单机虚拟局数，则与段落14读取总累计的规则冲突，开发无法实现。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "CLARITY_01",
+        "canonical_title": "局数统计口径与不计入累计矛盾",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "'不再执行本逻辑'的后续行为未定义",
+        "owner": "系统策划",
+        "why_now": "未定义'不执行本逻辑'后的兜底方案。是回退到主端真实开奖逻辑（可能导致羊毛党继续薅羊毛）？还是直接强制不中奖？还是禁止进入单机版？",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "CLARITY_02",
+        "canonical_title": "不再执行本逻辑的后续行为缺失",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "中",
+        "title": "方案2 Yummy补偿逻辑与余额截断的优先级冲突",
+        "owner": "数值策划",
+        "why_now": "若玩家开2倍后，因余额接近1800被截断为'不中奖'，此时'下一局必不中'的标记是否生效？若生效，玩家相当于白嫖了局数；若不生效，玩家下一局按正常概率走，可能再次中奖导致余额失控。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "LOGIC_01",
+        "canonical_title": "方案2 Yummy补偿逻辑与余额截断冲突",
+        "blocking": "阻塞开发"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CLARITY_02",
+            "canonical_title": "不再执行本逻辑的后续行为缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "'不再执行本逻辑'的后续行为未定义",
+            "current_state": "段落14说明：当首次玩单机游戏时，非单机游戏的今日局数已超15局，则不再执行本逻辑。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落14",
+            "risk": "未定义'不执行本逻辑'后的兜底方案。是回退到主端真实开奖逻辑（可能导致羊毛党继续薅羊毛）？还是直接强制不中奖？还是禁止进入单机版？",
+            "suggestion": "补充明确：当总累计局数>15时，单机版的具体开奖策略（如：直接走主端真实逻辑，或强制走最小赔付/不中奖），并说明是否允许继续进入单机版。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_01",
+            "canonical_title": "局数统计口径与不计入累计矛盾",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "局数统计口径与'不计入累计'存在逻辑矛盾",
+            "current_state": "1、段落14定义局数为yummy/peacock/fruitmachine/fishing star的今日总累计局数；2、段落16规定若余额超1800则走不中奖，且'此局不计入累计数据'，但紧接着说'下局则按第六局走'。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落14、段落16",
+            "risk": "1、如果'累计数据'指总累计，不计入后下次进入仍判定为第5局，导致玩家永远卡在第5局；2、如果指单机虚拟局数，则与段落14读取总累计的规则冲突，开发无法实现。",
+            "suggestion": "明确'累计数据'的具体指代。建议将'单机版内局数'与'主端总累计局数'拆分为两个独立变量：主端总累计用于判断是否>15局，单机虚拟局数用于1-15局内的概率递减和'不计入'逻辑。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_03",
+            "canonical_title": "X局的具体值未明确映射",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "X局的具体值未明确映射",
+            "current_state": "段落16提到'在1~X局（即非X局之后）期间'，结合上下文X应为15，但文档未明确写出X=15，且段落13提到'15局以前...16局之后'。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落13、段落16",
+            "risk": "术语不统一可能导致配置表字段命名混乱或开发理解偏差。",
+            "suggestion": "统一术语，将段落16中的'X局'直接明确为'15局'，或在配置说明中明确'X=15'。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "STAT_01",
+            "title": "局数统计对象在段落13与段落14之间存在冲突",
+            "canonical_title": "局数统计对象在段落13与段落14之间存在冲突",
+            "primary_dimension": "清晰度与完整性",
+            "current_state": "段落13说明读取‘三个游戏’的今日局数，而段落14明确局数统计包含‘yummy、peacock、fruitmachine、fishing star’四个游戏的累计局数。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落13、段落14",
+            "risk": "统计对象不一致会导致开发在实现局数读取时产生歧义，若漏读fishing star局数，将导致概率判断错误，破坏防刷和转化控制逻辑。",
+            "suggestion": "统一局数统计的游戏范围，明确是否包含fishing star，并同步修改段落13和段落14的描述。",
+            "severity": "中",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "source_missed_issue_id": "STAT_01",
+            "source_issue_id": "STAT_01",
+            "evidence_scope": "document",
+            "planner_role": "待定",
+            "audit_key": "statistics_time_window",
+            "control_key": "same_metric_window",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "gpt-5.6-sol"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "LOGIC_01",
+            "canonical_title": "方案2 Yummy补偿逻辑与余额截断冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "image",
+            "severity": "中",
+            "title": "方案2 Yummy补偿逻辑与余额截断的优先级冲突",
+            "current_state": "1、图片1解析显示，方案2 Yummy开2倍/3倍后，有'下一局/接下来2局必不中'的补偿机制；2、同时存在'若开X倍会让余额超1800，则不中奖'的截断逻辑。",
+            "evidence": "未付费用户单机版游戏.md / 图片1（fd059b3a-08cc-41b3-b1b5-f4d06400b3de.png）",
+            "risk": "1、若玩家开2倍后，因余额接近1800被截断为'不中奖'，此时'下一局必不中'的标记是否生效？若生效，玩家相当于白嫖了局数；2、若不生效，玩家下一局按正常概率走，可能再次中奖导致余额失控。",
+            "suggestion": "明确状态机优先级：建议'超1800截断'优先级最高，触发截断时，同时清除'必不中'的补偿计数器，避免逻辑嵌套导致的数值漏洞。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "LOGIC_02",
+            "canonical_title": "5线中奖倍数分配算法未定义",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "5线中奖倍数分配算法与图案倍率池未定义",
+            "current_state": "段落15说明：5线的中奖倍数随机总和是2倍（或5倍）即可，中奖内容按具体倍数去随机，如某线中奖2倍，则随机一个2倍图案。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落15",
+            "risk": "1、未说明倍数如何分配到5条线。如果总和是2，只能是一条线2倍其他0；2、如果总和是5，可以是2+3或5。且未说明图案的倍率池是否支持小数，若只支持整数，分配算法将受限。",
+            "suggestion": "补充5线倍数的分配算法（如：随机选择1-N条线中奖，剩余倍数随机分配），并明确图案倍率池的具体数值（如：仅支持1x, 2x, 3x, 5x等整数）。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TEST_01",
+            "canonical_title": "方案切换机制与生效时机缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "方案1和方案2的切换机制及生效时机未定义",
+            "current_state": "段落17说明：X局及之后，有两个方案，可支持切换。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落17",
+            "risk": "未说明切换方式（后台配置/A/B测试）和生效时机。若运营在玩家游戏过程中切换方案，会导致当前局结算异常或玩家体验割裂。",
+            "suggestion": "明确切换方式（如：后台全局配置开关），并规定生效时机（如：仅在玩家每日首次进入单机版时读取配置，局内切换不生效）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "TEST_02",
+            "canonical_title": "首充强制刷新异常场景验收缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "首充后强制刷新游戏的异常场景验收缺失",
+            "current_state": "段落9和18说明：首充后若用户在游戏内，主动帮用户刷新游戏页面进入主端游戏。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落9；2.2单机版逻辑，段落18",
+            "risk": "未定义玩家处于结算动画中、正在下注、或弱网状态下的强制刷新行为。可能导致当前局扣款但未发奖，或主端与单机版状态不同步。",
+            "suggestion": "补充异常场景验收标准：明确在'结算中'、'下注中'、'弱网'状态下，是等待当前局结束后再刷新，还是直接中断并回滚当前局数据。",
+            "planner_role": "测试",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CROSS_01",
+            "canonical_title": "新游戏房peacock不受影响与局数统计冲突",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "新游戏房peacock'不受影响'与全局局数统计的边界冲突",
+            "current_state": "段落10说明：新游戏房的peacock保持原来的配置，不受本需求影响。但段落14要求统计peacock的今日累计局数。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落10；2.2单机版逻辑，段落14",
+            "risk": "若新游戏房peacock是主端，其局数会增加全局累计，进而影响玩家进入单机版peacock时的局数判断。'不受影响'是指开奖逻辑不受影响，还是局数也不计入统计？",
+            "suggestion": "明确'不受影响'的边界：建议明确新游戏房peacock的局数是否计入段落14的'今日累计局数'中，避免跨系统数据污染。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "SEC_01",
+            "canonical_title": "单机与主端数据隔离及局数读取的防刷风险",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "单机版读取主端局数可能引发的防刷漏洞",
+            "current_state": "1、段落8说明单机版钱进钱出不影响主端；2、段落14要求读取主端（含fishing star）的今日累计局数来控制单机版概率。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落8；2.2单机版逻辑，段落14",
+            "risk": "羊毛党可能通过在主端疯狂刷低价局（如fishing star）来快速消耗15局，从而在单机版中直接跳过前期的高概率中奖阶段，或触发'不再执行本逻辑'的兜底策略，破坏防刷初衷。",
+            "suggestion": "评估局数统计的防刷策略：建议增加'有效局数'判定（如：主端单局下注需大于X宝石才计入），或限制单机版局数判断仅依赖单机版内的虚拟局数，与主端物理隔离。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UX_01",
+            "canonical_title": "1800余额硬顶导致的体验断层",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "1800宝石余额硬顶及'不计入局数'导致的体验断层",
+            "current_state": "段落16说明：若余额超1800则重置走不中奖，且此局不计入累计数据。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落16",
+            "risk": "玩家接近1800时，可能连续多局被强制不中奖且局数不推进，产生'卡关'或'被针对'的负面体验，且无法感知原因。",
+            "suggestion": "优化硬顶体验：建议在接近1800时，通过UI提示（如'今日收益已达上限'）或平滑过渡（如逐渐降低赔率而非直接不中奖）来缓解体验断层。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "方案1和方案2的具体切换方式（后台配置/A/B测试）及生效时机。",
+      "首充后强制刷新游戏时，玩家处于结算中、下注中、弱网状态下的具体处理策略。",
+      "5线中奖倍数的具体分配算法及图案倍率池的数值范围。",
+      "新游戏房peacock的局数是否计入全局今日累计局数。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证单机版与主端的数据隔离，确保单机版输赢不影响主端余额。",
+        "验证1-15局内，概率递减逻辑及余额超1800时的截断逻辑。",
+        "验证方案1和方案2在16局及之后的开奖结果是否符合配置概率。",
+        "验证首充后，游戏内自动刷新并切换至主端游戏的流程。"
+      ],
+      "异常操作": [
+        "验证首充时玩家处于结算动画中、正在下注、弱网状态下的强制刷新行为。",
+        "验证每日0点局数统计重置后，单机版概率逻辑是否正确恢复。",
+        "验证余额恰好等于1800、1799、1801时的边界开奖逻辑。"
+      ],
+      "兼容性": [
+        "验证新游戏房peacock的开奖逻辑及局数统计是否按预期隔离。",
+        "验证不同入口（游戏大厅、秀场房、语聊房）进入单机版的权限控制。"
+      ],
+      "安全专项": [
+        "验证通过修改客户端时间或内存数据，是否能绕过局数统计或余额截断逻辑。",
+        "验证羊毛党通过主端刷低价局消耗15局后，单机版的防刷策略是否生效。"
+      ],
+      "回归影响": [
+        "验证主端原有3款游戏的开奖逻辑、局数统计、余额计算未受单机版改造影响。",
+        "验证首充用户从单机版切换至主端后，主端游戏状态和余额的正确性。"
+      ],
+      "性能与稳定性": [
+        "验证单机版后端逻辑重构后，高并发下的开奖接口响应时间及稳定性。",
+        "验证每日0点局数重置时，数据库查询及缓存更新的性能表现。"
+      ],
+      "用户体验": [
+        "验证接近1800余额硬顶时，玩家的连续不中奖体验及UI反馈。",
+        "验证方案2中Yummy'必不中'补偿逻辑触发时，玩家的感知与体验。"
+      ]
+    },
+    "quality_notes": [
+      "段落15中'5线的中奖倍数随机总和是5倍即可'与前文'累计中奖2倍'举例可能存在笔误，建议核对具体数值。",
+      "dual_pass 复核备注：段落15中‘5线的中奖倍数随机总和是5倍即可’与前文‘累计中奖2倍’举例可能存在笔误，建议核对具体数值。",
+      "dual_pass 复核备注：debit_timing 和 payout_timing 在免费宝石单机版场景下通常复用主端或下注即扣，文档未明确事务节点，建议补充说明以消除歧义。",
+      "dual_pass 复核备注：protocol_profile=phase2_v2_2; evidence_packet_id=493df0a12967b7b2ace1608dd940687eb6eaa9e12aaa517a7da57b9716c37702",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [],
+    "atomicity_transform_diagnostics": {
+      "split_source_count": 0,
+      "split_finding_count": 0,
+      "suppressed_fully_covered_umbrella_count": 0,
+      "quarantined_count": 0,
+      "actions": []
+    },
+    "dedupe_diagnostics": {
+      "auto_merge_count": 0,
+      "auto_merge_rejected_count": 3,
+      "possible_duplicate_pair_count": 3,
+      "distinct_issue_id_merge_blocked_count": 3,
+      "decisions": [
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "CLARITY_01",
+          "right_issue_id": "CROSS_01",
+          "left_title": "局数统计口径与'不计入累计'存在逻辑矛盾",
+          "right_title": "新游戏房peacock'不受影响'与全局局数统计的边界冲突"
+        },
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "CLARITY_01",
+          "right_issue_id": "SEC_01",
+          "left_title": "局数统计口径与'不计入累计'存在逻辑矛盾",
+          "right_title": "单机版读取主端局数可能引发的防刷漏洞"
+        },
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "CLARITY_01",
+          "right_issue_id": "UX_01",
+          "left_title": "局数统计口径与'不计入累计'存在逻辑矛盾",
+          "right_title": "1800宝石余额硬顶及'不计入局数'导致的体验断层"
+        }
+      ]
+    },
+    "finding_atomicity_status": "pass",
+    "finding_atomicity_suspect_count": 0,
+    "finding_atomicity_suspects": [],
+    "review_mode": "dual_pass_candidate",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 0,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 19,
+    "total_tables": 0,
+    "total_images": 1
+  },
+  "documents": [
+    {
+      "name": "未付费用户单机版游戏.md",
+      "kind": "mixed",
+      "paragraph_count": 19,
+      "table_count": 0,
+      "image_count": 1,
+      "errors": []
+    }
+  ]
+}

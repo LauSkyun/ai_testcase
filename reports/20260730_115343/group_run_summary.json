@@ -1,0 +1,42 @@
+{
+  "run_dir": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343",
+  "review_mode": "dual_pass",
+  "model_retries": 3,
+  "groups": [
+    {
+      "game": "777",
+      "status": "completed",
+      "error": "",
+      "log_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\777\\run.log",
+      "report_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\777\\review_report.json"
+    },
+    {
+      "game": "racing",
+      "status": "completed",
+      "error": "",
+      "log_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\racing\\run.log",
+      "report_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\racing\\review_report.json"
+    },
+    {
+      "game": "tiger",
+      "status": "completed",
+      "error": "",
+      "log_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\tiger\\run.log",
+      "report_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\tiger\\review_report.json"
+    },
+    {
+      "game": "小鸡",
+      "status": "completed",
+      "error": "",
+      "log_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\小鸡\\run.log",
+      "report_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\小鸡\\review_report.json"
+    },
+    {
+      "game": "钱来了",
+      "status": "completed",
+      "error": "",
+      "log_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\钱来了\\run.log",
+      "report_path": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260730_115343\\钱来了\\review_report.json"
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+{
+  "status": "completed",
+  "game": "777",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 1,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 5,
+    "materially_changed_titles": [
+      "RESPIN累加算法术语存在加法与乘法的歧义风险",
+      "推展机制（激励）的触发条件与表现逻辑自相矛盾",
+      "风控强制0倍逻辑与RESPIN触发条件存在致命冲突",
+      "RESPIN次数与每次乘数值的抽取逻辑缺失",
+      "自动旋转/快捷旋转与RESPIN状态的交互规则缺失"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:LOGIC_01",
+        "issue_id": "LOGIC_01",
+        "title": "RESPIN累加算法术语存在加法与乘法的歧义风险",
+        "change_kinds": [
+          "title_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_03",
+        "issue_id": "LOGIC_03",
+        "title": "推展机制（激励）的触发条件与表现逻辑自相矛盾",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_04",
+        "issue_id": "LOGIC_04",
+        "title": "RESPIN次数与每次乘数值的抽取逻辑缺失",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:TEST_01",
+        "issue_id": "TEST_01",
+        "title": "自动旋转/快捷旋转与RESPIN状态的交互规则缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 1,
+      "admitted_count": 0,
+      "rejected_count": 1,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "ECONOMIC_01",
+          "title": "未明确最大赔付金额上限",
+          "status": "rejected",
+          "reasons": [
+            "existing_multiplier_boundary_requires_advice_only"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55-56",
+          "coverage_audit_key": "max_payout_economic_boundary"
+        }
+      ],
+      "coverage_ledger": {
+        "passed": true,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "confirmed_audit_keys": [
+          "max_payout_economic_boundary"
+        ],
+        "candidate_to_audit_key": {
+          "ECONOMIC_01": "max_payout_economic_boundary"
+        },
+        "finding_audit_keys": {
+          "ECONOMIC_01": "max_payout_economic_boundary"
+        },
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "filled_not_applicable_evidence:statistics_time_window"
+        ],
+        "errors": [],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_01",
+              "CLARITY_03"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 段落19、30",
+              "crazy777数值文档修改后.docx / 段落23、30、43"
+            ],
+            "reason": "Primary已通过LOGIC_01覆盖RESPIN累加公式歧义，通过CLARITY_03覆盖UI金额缩位展示精度问题",
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_02",
+              "TEST_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "crazy777数值文档修改后.docx / 段落42、55-56、59",
+              "疯狂777需求文档修改后.docx / 段落35-36"
+            ],
+            "reason": "Primary已通过LOGIC_02覆盖风控与RESPIN触发条件冲突，通过TEST_01覆盖自动旋转/快捷旋转与RESPIN状态交互",
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 段落37-38、19"
+            ],
+            "reason": "文档已明确点击投注按钮后扣款（段落37），余额不足弹充值窗（段落38），RESPIN无额外扣款（段落19'用户默认获得1倍中奖奖金'）",
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "confirmed_add",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [
+              "ECONOMIC_01"
+            ],
+            "evidence_checked": [
+              "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55-56"
+            ],
+            "reason": "风控仅限制倍率上限100倍，未明确绝对最大赔付金额上限；若基础投注10000×777赔率77×100倍乘数=77,000,000，缺乏经济安全兜底",
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "not_applicable",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "疯狂777需求文档修改后.docx / 全文",
+              "crazy777数值文档修改后.docx / 全文"
+            ],
+            "reason": "本玩法为单局SLOTS，无时间窗口统计或每日重置类需求",
+            "errors": []
+          }
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 1,
+    "admitted_count": 0,
+    "rejected_count": 1,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "ECONOMIC_01",
+        "title": "未明确最大赔付金额上限",
+        "status": "rejected",
+        "reasons": [
+          "existing_multiplier_boundary_requires_advice_only"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55-56",
+        "coverage_audit_key": "max_payout_economic_boundary"
+      }
+    ],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [
+        "max_payout_economic_boundary"
+      ],
+      "candidate_to_audit_key": {
+        "ECONOMIC_01": "max_payout_economic_boundary"
+      },
+      "finding_audit_keys": {
+        "ECONOMIC_01": "max_payout_economic_boundary"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "filled_not_applicable_evidence:statistics_time_window"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01",
+            "CLARITY_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 段落19、30",
+            "crazy777数值文档修改后.docx / 段落23、30、43"
+          ],
+          "reason": "Primary已通过LOGIC_01覆盖RESPIN累加公式歧义，通过CLARITY_03覆盖UI金额缩位展示精度问题",
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "TEST_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 段落42、55-56、59",
+            "疯狂777需求文档修改后.docx / 段落35-36"
+          ],
+          "reason": "Primary已通过LOGIC_02覆盖风控与RESPIN触发条件冲突，通过TEST_01覆盖自动旋转/快捷旋转与RESPIN状态交互",
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 段落37-38、19"
+          ],
+          "reason": "文档已明确点击投注按钮后扣款（段落37），余额不足弹充值窗（段落38），RESPIN无额外扣款（段落19'用户默认获得1倍中奖奖金'）",
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "ECONOMIC_01"
+          ],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55-56"
+          ],
+          "reason": "风控仅限制倍率上限100倍，未明确绝对最大赔付金额上限；若基础投注10000×777赔率77×100倍乘数=77,000,000，缺乏经济安全兜底",
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "本玩法为单局SLOTS，无时间窗口统计或每日重置类需求",
+          "errors": []
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

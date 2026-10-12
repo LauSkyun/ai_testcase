@@ -1,0 +1,201 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告对核心控奖逻辑、状态机冲突、统计口径及资金边界进行了全面且深入的审查，准确识别了1800余额硬顶判定、局数累计矛盾、跨游戏依赖及首充刷新时机等关键阻塞点，覆盖了所有12个固定 control 的核心风险。",
+    "strengths": [
+      "准确识别1800余额硬顶的判定口径与预期赔付公式缺失",
+      "清晰指出局数累计与不计入的逻辑矛盾及状态机冲突",
+      "全面覆盖首充刷新时机与结算保护期的异常处理",
+      "有效识别跨游戏局数统计的依赖风险与重置边界"
+    ],
+    "issues": [
+      "部分 finding 的维度归类可进一步优化，如 fishing star 跨游戏依赖更偏向统计口径一致性而非单纯的清晰度"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "Primary 已完整覆盖所有12个固定 control 的核心风险点，无遗漏的结构化增量，无需补充 missed_findings。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01",
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落15",
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落16",
+            "未付费用户单机版游戏.md / 图片1"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落8",
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落12"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "TEST_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落9",
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落18"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_02",
+            "CLARITY_04",
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落16",
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落19",
+            "未付费用户单机版游戏.md / 图片1"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落15"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落15",
+            "未付费用户单机版游戏.md / 图片1"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=单机版游戏不涉及公共奖池; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01",
+            "UX_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落16",
+            "未付费用户单机版游戏.md / 图片1"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_01",
+            "CLARITY_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落13",
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落14"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落8",
+            "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落12"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "文档中提到的“方案1”和“方案2”需明确最终上线使用哪一个，或明确运营后台的切换配置字段。",
+    "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=1e281bc2ac968e811e2798cb54786315a7057fb7bf0d1a974331189c6169c18e"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "protocol_gate_passed": true,
+  "baseline_lock_passed": true,
+  "primary_report_hash": "411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369",
+  "challenge_claimed_count": 5,
+  "challenge_accepted_count": 5,
+  "challenge_rejected_count": 0,
+  "correction_claimed_count": 5,
+  "correction_accepted_count": 5,
+  "correction_rejected_count": 0,
+  "correction_abstained_count": 0,
+  "correction_disposition_counts": {
+    "drop": 5
+  },
+  "challenge_keys": [
+    "CROSS_01:compatible_interpretation:drop",
+    "LOGIC_01:compatible_interpretation:drop",
+    "LOGIC_03:compatible_interpretation:drop",
+    "LOGIC_04:compatible_interpretation:drop",
+    "TEST_01:compatible_interpretation:drop"
+  ],
+  "correction_keys": [
+    "CROSS_01:drop",
+    "LOGIC_01:drop",
+    "LOGIC_03:drop",
+    "LOGIC_04:drop",
+    "TEST_01:drop"
+  ],
+  "target_coverage_ledger_complete": true,
+  "target_coverage_ledger_completeness": 1.0,
+  "target_coverage_ledger_valid": true,
+  "target_coverage_ledger_errors": [],
+  "target_decision_keys": [
+    "CLARITY_01:pass",
+    "CLARITY_02:pass",
+    "CLARITY_03:pass",
+    "CROSS_01:challenge",
+    "LOGIC_01:challenge",
+    "LOGIC_02:pass",
+    "LOGIC_03:challenge",
+    "LOGIC_04:challenge",
+    "TEST_01:challenge",
+    "UX_01:pass"
+  ]
+}

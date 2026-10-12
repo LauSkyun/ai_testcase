@@ -1,0 +1,16 @@
+{
+  "source_game_dir": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856\\777",
+  "primary_model": "gpt-5.6-sol",
+  "document_names": [
+    "疯狂777需求文档修改后.docx",
+    "crazy777数值文档修改后.docx"
+  ],
+  "hashes": {
+    "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+    "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+    "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+    "primary_report_hash": "411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369"
+  },
+  "primary_calls_during_freeze": 0,
+  "vision_calls_during_freeze": 0
+}

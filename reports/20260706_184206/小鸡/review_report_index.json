@@ -1,0 +1,271 @@
+{
+  "mode": "dual_pass",
+  "status": "complete",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "deepseek-v4-pro",
+  "selected_report_owner": "pipeline",
+  "selected_report_path": "review_report.md",
+  "selected_source_report_path": "review_report_pipeline.md",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": false,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": false,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_gate_failure_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "advice_candidate_structure_mismatch",
+    "candidate_added_not_materialized",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_failure_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch",
+      "candidate_added_not_materialized"
+    ],
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "pipeline_report_path": "review_report_pipeline.md",
+  "candidate_report_path": "review_report_candidate.md",
+  "advice_path": "secondary_review_advice.md",
+  "primary_score": "C",
+  "pipeline_score": "C",
+  "candidate_score": "C",
+  "selected_score": "C",
+  "pipeline_finding_count": 9,
+  "candidate_finding_count": 9,
+  "selected_finding_count": 9,
+  "candidate_ready_for_direct_output": false,
+  "candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "lineage_counts": {
+    "kept": 6,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "partial",
+  "readiness_conflict": false,
+  "candidate_structure_drift": true,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "partial",
+  "candidate_added_materialization_missing_ids": [
+    "CLARITY_05",
+    "LOGIC_04"
+  ],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "advice_candidate_structure_mismatch": true,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [
+    "CLARITY_05",
+    "LOGIC_04"
+  ],
+  "materialized_missed_without_added": [],
+  "candidate_block_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "advice_candidate_structure_mismatch",
+    "candidate_added_not_materialized",
+    "candidate_traceability_partial"
+  ],
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch",
+      "candidate_added_not_materialized"
+    ],
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "cross_document_section_disabled": true,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 8,
+    "materially_changed_titles": [
+      "下注筹码配置跨文档严重冲突",
+      "通关“超级大奖”结算规则与具体数值缺失",
+      "提现结算与真实支付/钱包对接边界未明确",
+      "RTP值与难度、MAX_MUL、必撞击概率的具体映射未给出",
+      "下注扣款时机与规则未明确",
+      "缺少最大赔付额或封顶规则",
+      "数值文档赔率表未明确是“单关倍率”还是“累计总倍率”",
+      "断线重连、重复点击与结算中退出等异常流程验收标准缺失"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CROSS_01",
+        "issue_id": "CROSS_01",
+        "title": "下注筹码配置跨文档严重冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CLARITY_01",
+        "issue_id": "CLARITY_01",
+        "title": "通关“超级大奖”结算规则与具体数值缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CLARITY_03",
+        "issue_id": "CLARITY_03",
+        "title": "提现结算与真实支付/钱包对接边界未明确",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:missed_03",
+        "issue_id": "LOGIC_03",
+        "title": "RTP值与难度、MAX_MUL、必撞击概率的具体映射未给出",
+        "change_kinds": [
+          "title_changed",
+          "dimension_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:missed_01",
+        "issue_id": "CLARITY_04",
+        "title": "下注扣款时机与规则未明确",
+        "change_kinds": [
+          "title_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:missed_02",
+        "issue_id": "LOGIC_02",
+        "title": "缺少最大赔付额或封顶规则",
+        "change_kinds": [
+          "title_changed",
+          "dimension_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_01",
+        "issue_id": "LOGIC_01",
+        "title": "数值文档赔率表未明确是“单关倍率”还是“累计总倍率”",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:TEST_01",
+        "issue_id": "TEST_01",
+        "title": "断线重连、重复点击与结算中退出等异常流程验收标准缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "warning": ""
+}

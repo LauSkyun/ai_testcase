@@ -1,0 +1,191 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了风控与RESPIN冲突、第4列盘面结构未定义等高信号核心问题，结构清晰。但将多个子症状合并为一个LOGIC_01问题，且在表述公式歧义时稍有过度，且未充分分解子症状，但整体仍可接受。",
+    "strengths": [
+      "准确识别了>=100倍强制0倍与RESPIN累加机制之间的致命冲突",
+      "点出了第4列盘面结构定义模糊导致连线判定无法实现",
+      "覆盖了推展边界、UI缩位截断等高价值问题"
+    ],
+    "issues": [
+      "LOGIC_01问题中混合了风控冲突、自动旋转、公式歧义、重连状态、权重占位等多个子症状，但未分点阐述，可能导致阅读时重点不突出",
+      "对需求文档与数值文档的公式表述差异判断为“根本冲突”稍显过度，实际可兼容实现",
+      "未将RESPIN中间状态保存、自动旋转行为等子症状单独分点说明"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "review_notes": [
+    "将原LOGIC_01混合问题拆分为5个子症状并分点描述，未改变主问题ID，仅优化表述。",
+    "下调了原问题中关于公式“根本冲突”的判断，改为“表述歧义需统一”，因为两份文档在数学上可由同一实现满足。",
+    "保留了风控冲突作为核心高阻塞，未因优化表述而降低其严重度。",
+    "建议后续在数值文档中补充RTP目标与真实权重，并明确第4列结构图示。",
+    "dual_pass 协议提示：quality_assessment.ready_for_direct_output 与 candidate_readiness.ready_for_direct_output 不一致，已统一降为 false。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "补全证据索引，优化现状描述，建议更加具体"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "补充推展与RESPIN互斥关系的缺失，优化标题和描述"
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "将主模型的混合描述拆分为5个子症状并分点阐述，澄清公式并未根本冲突，调整相关描述，降低公式歧义部分的严重程度，但整体仍保持高严重度"
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "微调现状描述，强调截断规则与结算金额可能产生视觉偏差"
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 4,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 4,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 4,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": true,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": false,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": true,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": true,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": false,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

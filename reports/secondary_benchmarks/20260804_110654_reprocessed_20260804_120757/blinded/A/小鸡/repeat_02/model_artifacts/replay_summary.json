@@ -1,0 +1,353 @@
+{
+  "status": "completed",
+  "game": "小鸡",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 3,
+    "candidate_issue_id_repair_count": 3,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "难度系统概率计算逻辑冲突"
+  ],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 4,
+    "materially_changed_titles": [
+      "难度系统概率计算逻辑冲突",
+      "下注筹码数值配置冲突",
+      "倍率计算公式与数值表口径严重冲突",
+      "通关‘超级大奖’与第30格结算的边界歧义"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "title": "难度系统概率计算逻辑冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CORE_BET_CONFIG_MISMATCH",
+        "issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "title": "下注筹码数值配置冲突",
+        "change_kinds": [
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "title": "倍率计算公式与数值表口径严重冲突",
+        "change_kinds": [
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_03",
+        "issue_id": "LOGIC_03",
+        "title": "通关‘超级大奖’与第30格结算的边界歧义",
+        "change_kinds": [
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": true,
+      "results": [],
+      "coverage_ledger": {
+        "schema_version": 1,
+        "passed": true,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {},
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "filled_not_applicable_evidence:statistics_time_window"
+        ],
+        "errors": [],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_PAYOUT_FORMULA_CONFLICT"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡.docx / 3.3 奖金计算系统，段落44",
+              "小鸡数值文档.docx / 3. 难度选择，表格2"
+            ],
+            "reason": "主模型已指出需求公式（单格连乘）与数值表（累计倍率）的口径冲突，以及数值表难度3/4数据与命名数量级差异，已充分覆盖。",
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_03"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡.docx / 2.1 完整游戏流程，段落31",
+              "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13"
+            ],
+            "reason": "主模型已指出Crash算法映射到离散格子的规则缺失，以及第30格通关结算的边界歧义，已充分覆盖。",
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CORE_BET_CONFIG_MISMATCH"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡.docx / 2.2 详细规则，表格1",
+              "小鸡数值文档.docx / 2. 下注规则，表格1"
+            ],
+            "reason": "主模型已指出下注筹码在需求、数值、UI三端的配置冲突。扣款时机虽未显式说明，但属于博弈游戏基础常识，不构成高阻塞。",
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_PAYOUT_FORMULA_CONFLICT",
+              "LOGIC_03"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡数值文档.docx / 3. 难度选择，表格2",
+              "小鸡.docx / 2.1 完整游戏流程，段落31"
+            ],
+            "reason": "主模型已指出数值表配置错误导致最高赔付失控，以及超级大奖金额未定义的经济边界问题，已充分覆盖。",
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "not_applicable",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡.docx / 全文",
+              "小鸡数值文档.docx / 全文"
+            ],
+            "reason": "当前文档为单局博弈玩法，未涉及排行榜、RTP统计等需要时间窗口的功能。",
+            "errors": []
+          }
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 1,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "filled_not_applicable_evidence:statistics_time_window"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_PAYOUT_FORMULA_CONFLICT"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 3.3 奖金计算系统，段落44",
+            "小鸡数值文档.docx / 3. 难度选择，表格2"
+          ],
+          "reason": "主模型已指出需求公式（单格连乘）与数值表（累计倍率）的口径冲突，以及数值表难度3/4数据与命名数量级差异，已充分覆盖。",
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 2.1 完整游戏流程，段落31",
+            "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13"
+          ],
+          "reason": "主模型已指出Crash算法映射到离散格子的规则缺失，以及第30格通关结算的边界歧义，已充分覆盖。",
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CORE_BET_CONFIG_MISMATCH"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 2.2 详细规则，表格1",
+            "小鸡数值文档.docx / 2. 下注规则，表格1"
+          ],
+          "reason": "主模型已指出下注筹码在需求、数值、UI三端的配置冲突。扣款时机虽未显式说明，但属于博弈游戏基础常识，不构成高阻塞。",
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_PAYOUT_FORMULA_CONFLICT",
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 3. 难度选择，表格2",
+            "小鸡.docx / 2.1 完整游戏流程，段落31"
+          ],
+          "reason": "主模型已指出数值表配置错误导致最高赔付失控，以及超级大奖金额未定义的经济边界问题，已充分覆盖。",
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文"
+          ],
+          "reason": "当前文档为单局博弈玩法，未涉及排行榜、RTP统计等需要时间窗口的功能。",
+          "errors": []
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

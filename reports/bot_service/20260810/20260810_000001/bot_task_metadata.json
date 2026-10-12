@@ -1,0 +1,29 @@
+{
+  "task_id": "20260810_000001",
+  "game_name": "lucky 77",
+  "source": "bot_service",
+  "snapshot_dir": "D:\\project\\script\\mid_prototest\\bot_service\\.runtime\\yuque_snapshots\\20260810\\20260810_000001",
+  "review_mode": "dual_pass",
+  "extract_only": false,
+  "analyze_images": true,
+  "documents": [
+    {
+      "name": "LUCKY77 转盘投注游戏设计方案.md",
+      "kind": "requirement",
+      "paragraph_count": 76,
+      "table_count": 9,
+      "image_count": 2,
+      "unresolved_image_count": 0,
+      "errors": []
+    },
+    {
+      "name": "LUCKT 77 数值文档.md",
+      "kind": "numeric",
+      "paragraph_count": 32,
+      "table_count": 9,
+      "image_count": 0,
+      "unresolved_image_count": 0,
+      "errors": []
+    }
+  ]
+}

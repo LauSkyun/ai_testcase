@@ -1,0 +1,284 @@
+{
+  "report": {
+    "overall_evaluation": "文档整体描述了Racing玩法的核心循环、干预逻辑与UI交互，但核心结算链路存在严重的公式冲突与变量定义歧义，且关键控盘参数缺失具体数值。主流程在概念上可理解，但直接用于开发会导致结算逻辑无法实现或产生资金风险。",
+    "document_quality_score": "C",
+    "score_reason": "核心赔率公式在需求与数值文档中存在根本性冲突，T变量定义矛盾，且干预逻辑缺乏到速度公式的具体映射，导致结算链路无法落地，需补充对齐后再开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "owner": "数值策划",
+        "why_now": "变量定义歧义导致赔率公式无法正确编码，结算结果不可预期。；结算精度规则不清，可能导致平台抽水失效或用户赔付金额计算错误。；两套公式逻辑完全不同，开发无法确定使用哪套进行结算，直接阻塞核心结算链路。；该问题可能导致开发、配置或测试对“赔率计算模型在需求与数值文档中存在根本性冲突”采用不一致口径。；该问题可能导致开发、配置或测试对“开奖时间T与赔率公式中的T变量定义跨文档冲突”采用不一致口径。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失",
+        "owner": "系统策划",
+        "why_now": "若假数据参与赔率计算，会导致真实用户的赔率被虚假繁荣稀释或扭曲，引发严重客诉。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失",
+        "owner": "系统策划",
+        "why_now": "若展示假赔率而结算用实际赔率，会导致用户看到的预期收益与实际到账不符，引发严重客诉。；该问题可能导致开发、配置或测试对““实际赔率”与“假赔率”的展示与结算映射跨文档缺失”采用不一致口径。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "DATA_ISOLATION",
+            "canonical_title": "假数据与真实数据隔离规则缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失",
+            "current_state": "需求文档说明下注人数和金额包含假数据（乘系数），但未明确实时赔率计算时，分子分母使用的是真实下注还是包含假数据的下注。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落22-23、段落28",
+            "risk": "若假数据参与赔率计算，会导致真实用户的赔率被虚假繁荣稀释或扭曲，引发严重客诉。",
+            "suggestion": "明确实时赔率计算必须且只能使用真实下注数据，假数据仅用于UI展示氛围。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "TUTORIAL_ISOLATION",
+            "canonical_title": "新手引导数据隔离未说明",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计",
+            "current_state": "需求文档蒙层引导中，赔率固定3.3，下注100返奖330，平台下注宝石变成1000100。未说明这是纯客户端演示还是走真实服务端。",
+            "evidence": "musee游戏Racing.docx / 3.2蒙层引导 段落15-20",
+            "risk": "若走真实服务端，假数据可能污染真实奖池、统计榜单和胜率排行。",
+            "suggestion": "明确新手引导为纯客户端单机演示，不注入真实奖池，不写入历史下注记录和统计榜单。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "T_VARIABLE_CONFLICT",
+            "canonical_title": "T变量定义冲突导致公式无法求值",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+            "current_state": "1、需求文档中T定义为“实际消耗的秒数（完成时间）”，而数值文档赔率公式中T作为分子参与计算，若T为耗时，则耗时越长赔率越高，违背常理；2、若T为总下注额，则与需求文档定义冲突。；3、需求文档要求实时赔率“保留两位小数，向下取整”，表述存在逻辑矛盾。同时数值文档规定最低赔率1.02，若按整数向下取整则变为1.00。；4、需求文档定义实时赔率为“合计下注/本选项下注*系数”，而数值文档定义为“Odds_X = (T*(1-r)/W_X)*γ”。；5、需求文档定义实时赔率为基于资金池比例的公式（合计下注/本选项下注），而数值文档定义为基于权重与膨胀系数的公式（Odds_X = (T*(1-r)/W_X)*γ）。两者逻辑完全不同，导致开发无法确定最终结算链路。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落2；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 图片1；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 图片1']；['musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13', 'Racing数值文档.docx / 图片1']",
+            "risk": "1、变量定义歧义导致赔率公式无法正确编码，结算结果不可预期。；2、结算精度规则不清，可能导致平台抽水失效或用户赔付金额计算错误。；3、两套公式逻辑完全不同，开发无法确定使用哪套进行结算，直接阻塞核心结算链路。；4、该问题可能导致开发、配置或测试对“赔率计算模型在需求与数值文档中存在根本性冲突”采用不一致口径。；5、该问题可能导致开发、配置或测试对“开奖时间T与赔率公式中的T变量定义跨文档冲突”采用不一致口径。",
+            "suggestion": "1、重新定义赔率公式中的变量，明确T的物理意义（如总下注额、总权重等），并与开奖时间公式中的T区分命名。；2、明确取整规则，如“保留两位小数，第三位四舍五入”或“赔付金额向下取整到整数”。明确最低赔率1.02是否参与取整逻辑。；3、明确统一赔率计算公式。若为资金池模式，需补充r、W_X、γ的定义；4、若为数值文档公式，需修改需求文档中的赔率描述。；5、数值策划与系统策划需对齐并统一赔率计算模型，明确最终采用的公式及所有变量的物理意义。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "INTERVENTION_MAPPING",
+            "canonical_title": "干预逻辑缺乏到速度公式的具体映射",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，干预逻辑无法落地",
+            "current_state": "需求文档提到通过调整“干扰指数”和“隐藏地形概率”来干预开奖，但未说明干扰指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13",
+            "risk": "干预逻辑是核心控盘手段，缺乏映射导致程序无法实现“侧重开某车”的逻辑。",
+            "suggestion": "补充干扰指数的作用机制，例如明确干扰指数是直接乘算在Luck上，还是作为地形概率的权重系数。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "PLACEHOLDER_MISSING",
+            "canonical_title": "干预触发条件占位符缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "奖池状态阈值与干预触发条件全为占位符，导致干预逻辑无法测试验收",
+            "current_state": "需求文档中奖池状态判断、干预触发条件均使用[001]%、[002]等占位符，无具体数值。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49",
+            "risk": "虽不直接阻断主流程编译，但导致测试无法设计干预逻辑的验收用例，数值平衡无法验证。",
+            "suggestion": "补充所有占位符的具体数值或可配范围，并提供配置表示例。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "AUDIO_MIXING",
+            "canonical_title": "半屏音频混合规则缺失",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "半屏模式下直播间音频与游戏音效的混合规则缺失",
+            "current_state": "需求文档要求半屏在语聊房需保留直播间音频，同时游戏内音效默认开启。未说明两路音频的混合策略。",
+            "evidence": "musee游戏Racing.docx / 3.1首页顶栏板块 段落6、段落8",
+            "risk": "双音频同时播放可能导致声音嘈杂，影响用户体验，或触发系统音频焦点冲突。",
+            "suggestion": "补充音频混合规则，如“游戏音效播放时，直播间音频音量降低至20%”或“互斥播放”。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "FAKE_ODDS_MAPPING",
+            "canonical_title": "真假赔率展示与结算映射缺失",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失",
+            "current_state": "1、数值文档提到“分实际赔率和假赔率”，需求文档提到“实时赔率”和“实际赔率”，但未明确客户端UI展示的是哪个，服务端结算用的是哪个。；2、数值文档提到“分实际赔率和假赔率”，需求文档提到“实时赔率”和“实际赔率”，但未明确客户端UI展示的是哪个，服务端结算用的是哪个，存在严重的客诉风险。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落5；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 段落5']",
+            "risk": "1、若展示假赔率而结算用实际赔率，会导致用户看到的预期收益与实际到账不符，引发严重客诉。；2、该问题可能导致开发、配置或测试对““实际赔率”与“假赔率”的展示与结算映射跨文档缺失”采用不一致口径。",
+            "suggestion": "1、明确客户端UI展示的赔率类型（如展示假赔率用于氛围），并强制规定服务端结算必须使用实际赔率，且需在规则说明中向用户披露。；2、明确客户端UI展示的赔率类型，并强制规定服务端结算必须使用实际赔率，且在规则说明中向用户披露。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "MAX_PAYOUT_RISK",
+            "canonical_title": "奖池负数无最大赔付兜底",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+            "current_state": "需求文档明确奖池可以接受负数，但未说明当奖池严重亏损时，若用户下注MAX并中奖，平台是否有单局最大赔付限制或兜底策略。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+            "risk": "极端情况下（如奖池负数且大R下注MAX），可能导致平台单次赔付超出承受范围，造成资金事故。",
+            "suggestion": "补充单局最大赔付上限（MAX_MUL）或奖池负数时的赔付折扣/兜底规则。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "干扰指数如何具体影响速度公式 T = L / (V * K * Luck) 中Luck或V/K的映射规则。",
+      "实际赔率与假赔率在客户端UI的具体展示规则及切换时机。",
+      "奖池为负数时的平台兜底策略或单局最大赔付上限（MAX_MUL）。",
+      "所有干预逻辑触发条件中的占位符（如[001]%、[002]）的具体数值或可配范围。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "真实下注与假下注的数据隔离验证，确保假数据不参与赔率计算。",
+        "奖池状态流转（待补充、正常、充裕）及对应干预逻辑的触发验证。",
+        "新手引导流程的单机演示隔离验证，确保不污染真实奖池与统计榜单。"
+      ],
+      "异常操作": [
+        "断线重连后的下注与开奖恢复，确保状态与服务端一致。",
+        "极端下注（单选项100万MAX）时的赔率计算与赔付金额验证。",
+        "下注倒计时结束瞬间的并发下注请求处理（幂等性）。"
+      ],
+      "兼容性": [
+        "半屏/全屏切换时的UI布局与按钮功能验证。",
+        "半屏模式下直播间音频与游戏音效的混合播放体验。"
+      ],
+      "安全专项": [
+        "客户端篡改下注金额/选项的拦截与服务端权威校验。",
+        "奖池负数状态下的极端赔付测试，验证最大赔付兜底机制。",
+        "假赔率展示与实际赔率结算的防篡改与一致性校验。"
+      ],
+      "回归影响": [],
+      "性能与稳定性": [
+        "高并发下注时的赔率实时刷新性能与服务器压力测试。",
+        "开奖动画播放期间的内存与CPU占用监控。"
+      ],
+      "用户体验": [
+        "新手引导流程的流畅度与文案清晰度。",
+        "新手/预流失用户的特殊开奖体验与氛围反馈。"
+      ]
+    },
+    "quality_notes": [
+      "根据评审原则，占位符缺失（如奖池状态阈值）若不直接阻断主流程编译，已降级为低风险；新手引导与音频混合问题已降级为低/中风险。",
+      "核心赔率公式冲突与T变量定义冲突为致命阻塞项，必须优先解决。",
+      "dual_pass phase2 准入拒绝：《下注扣款时机与派奖时机未明确定义，结算链路存在缺口》未进入最终报告，原因：multiroot_funds_debit_and_payout_combined, coverage_ledger_invalid",
+      "dual_pass phase2 准入拒绝：《统计模块时间窗口不一致：胜率/赔率使用30天，榜单使用今日/本周》未进入最终报告，原因：statistics_subject_or_metric_mismatch, coverage_ledger_invalid",
+      "dual_pass 复核备注：T_VARIABLE_CONFLICT的current_state已做分点整理，消除主模型报告中的5处重复表述",
+      "dual_pass 复核备注：新增LOGIC_FUNDS_01覆盖结算链路中扣款与派奖时间节点的明确性缺口",
+      "dual_pass 复核备注：新增DATA_STATS_01覆盖不同统计模块时间窗口不一致的问题",
+      "dual_pass 复核备注：DATA_ISOLATION与FAKE_ODDS_MAPPING虽存在部分根因重叠（均涉及假数据处理），但前者关注计算数据源隔离，后者关注展示与结算映射，属于不同环节，保持独立",
+      "dual_pass 复核备注：protocol_profile=phase2",
+      "dual_pass 收敛提示：问题《开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值》的现状描述原有 6 条分点，最终报告先保留前 5 条，其余 1 条保留在原始调试工件中。",
+      "dual_pass 收敛提示：问题《开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值》的修改建议原有 6 条分点，最终报告先保留前 5 条，其余 1 条保留在原始调试工件中。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片13（需求）和图片3（数值）中的T公式结构一致，但T的物理意义在两份文档中未明确统一，存在解析歧义。",
+      "图片1（数值）中的gamma公式（γ = 1 + α × (P_max / P_low)^β），参数α、β的具体配置范围与默认值缺失，无法验证极端资金比例下的膨胀效果。"
+    ],
+    "review_mode": "dual_pass",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "variant_A"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 1,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 64,
+    "total_tables": 1,
+    "total_images": 16
+  },
+  "documents": [
+    {
+      "name": "musee游戏Racing.docx",
+      "kind": "mixed",
+      "paragraph_count": 59,
+      "table_count": 0,
+      "image_count": 13,
+      "errors": []
+    },
+    {
+      "name": "Racing数值文档.docx",
+      "kind": "numeric",
+      "paragraph_count": 5,
+      "table_count": 1,
+      "image_count": 3,
+      "errors": []
+    }
+  ]
+}

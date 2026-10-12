@@ -1,0 +1,307 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较高，准确识别了核心赔率冲突、开奖兜底0赔付缺陷、奖池正常状态概率口径分裂、机器人机制缺失等高信号阻塞问题，证据定位清晰，维度划分合理。但在开奖分析胜率公式口径、奖池收益率公式分母定义、人群保护策略触发失败后的流转路径等细节上存在少量漏项，且部分低信号提醒（如半屏UI、结算弹窗5s）可降级为review_notes以聚焦核心阻塞。",
+    "strengths": [
+      "准确抓住开奖兜底可能开出0赔付选项的机制缺陷，证据链完整（段落57/68/108+段落73）",
+      "识别出奖池正常状态偏移概率正文60%与配置表20%的口径分裂",
+      "识别出图22机器人流程图与正文脱节的关键缺口",
+      "赔率冲突覆盖正文、配置表、UI截图、规则文本、引导文案多个证据源",
+      "lineage结构完整，每个primary finding都有明确去向"
+    ],
+    "issues": [
+      "遗漏开奖分析模块胜率公式分母'范围内的游戏局数'口径未定义的问题",
+      "将半屏UI适配、结算弹窗5s自动收起等中低风险问题与核心阻塞问题并列，信号密度略低",
+      "LOGIC_02中混入了断线重连描述，与概率口径冲突根因不一致，建议拆分到review_notes",
+      "未核验奖池收益率公式分母使用'累计收入'而非'净收入'可能带来的边界歧义"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已保留全部高信号核心阻塞项，补全了开奖分析胜率公式口径这一独立根因，并将低信号提醒下沉到review_notes，结构完整、证据可追踪、lineage清晰，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已保留全部高信号核心阻塞项，补全了开奖分析胜率公式口径这一独立根因，并将低信号提醒下沉到review_notes，结构完整、证据可追踪、lineage清晰，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "建议产品侧优先修复3个高阻塞根因：开奖兜底0赔付缺陷、机器人机制缺失、奖池正常状态概率口径分裂，再推进其他中低风险优化。",
+    "LOGIC_02中主模型混入的断线重连描述已剥离，断线重连规则作为独立补充项列入missing_information，建议后续由程序+策划联合补充专属规则。",
+    "半屏UI适配（CROSS_01）、结算弹窗5s自动收起（UX_01）等中低风险问题已保留在对应维度，但建议产品侧优先解决核心赔率冲突和兜底逻辑缺陷后再推进体验优化。",
+    "开奖分析胜率公式分母口径（CLARITY_FORMULA_01）为本次补漏新增，建议策划在下一版文档中明确定义'范围内的游戏局数' = 该时间窗口内已完成结算的总开奖局数。",
+    "图24后台配置截图中关键表单区域被红色遮挡框覆盖，建议补充高清原图或文字版配置字段说明，避免后续配置开发遗漏。",
+    "protocol_profile=phase2",
+    "phase2 准入已从 candidate 移除 rejected addition：CLARITY_FORMULA_01"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": false,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已保留全部高信号核心阻塞项，补全了开奖分析胜率公式口径这一独立根因，并将低信号提醒下沉到review_notes，结构完整、证据可追踪、lineage清晰，可直接交付业务方阅读。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 1,
+    "admitted_count": 0,
+    "rejected_count": 1,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "CLARITY_FORMULA_01",
+        "title": "开奖分析模块胜率公式分母'范围内的游戏局数'口径未定义",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_03",
+            "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3（开奖分析模块说明）",
+        "coverage_audit_key": ""
+      }
+    ],
+    "coverage_ledger": {
+      "passed": false,
+      "completeness": 0.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "CLARITY_FORMULA_01": ""
+      },
+      "unmapped_missed_issue_ids": [
+        "CLARITY_FORMULA_01"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [
+        "coverage_entry_count_invalid:0",
+        "coverage_audit_key_order_invalid",
+        "missed_finding_not_in_confirmed_add:CLARITY_FORMULA_01"
+      ],
+      "entries": []
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 0.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_count_invalid:0",
+      "coverage_audit_key_order_invalid",
+      "missed_finding_not_in_confirmed_add:CLARITY_FORMULA_01"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 1,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "phase2_coverage_ledger_invalid"
+    ]
+  }
+}

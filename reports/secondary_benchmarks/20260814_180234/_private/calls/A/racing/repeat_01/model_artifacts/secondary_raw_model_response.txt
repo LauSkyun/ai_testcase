@@ -1,0 +1,47 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-001",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+      "evidence": "Racing数值文档.docx / 段落2-3、图片1；musee游戏Racing.docx / 3.4开奖逻辑 段落36、图片13",
+      "counterevidence": "Racing数值文档.docx / 段落2“当有极端下注时，有最低赔率 odds=max(T*(1-x)/W,1.02)”及图片1公式 Odds_X = ( ( T × (1 - r) ) / W_X ) × γ 中，T与W_X（本选项下注额）相除，符合彩池赔率中 T=Total bet（总下注额）的物理意义；而需求文档图片13中 T=L/(V*K*Luck) 的 T 明确标注为“完成时间”。",
+      "rationale": "两份文档中的 T 分别属于“赔率计算公式”和“开奖时间计算公式”两个独立系统。赔率公式中的 T 结合上下文“极端下注”和分母 W_X，其物理意义应为总下注额（Total bet），而非完成时间。两者仅为变量命名重名，并非同一公式内的定义冲突，公式均可正常求值。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-002",
+      "target_issue_id": "MAX_PAYOUT_RISK",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+      "evidence": "Racing数值文档.docx / 段落2-3、图片1",
+      "counterevidence": "Racing数值文档.docx / 段落2明确给出“当有极端下注时，有最低赔率 odds=max(T*(1-x)/W,1.02)”。",
+      "rationale": "数值文档已通过最低赔率公式（如保底1.02）对极端下注情况下的赔率进行了限制。最低赔率机制本身即限制了单局的最大赔付倍数（即赔付金额 = 下注额 * 最低赔率），从而构成了对奖池负数时极端赔付风险的兜底，并非“未定义兜底机制”。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "correction_type": "narrow_claim",
+      "evidence": "Racing数值文档.docx / 段落2-3、图片1；musee游戏Racing.docx / 3.4开奖逻辑 段落36、图片13",
+      "rationale": "将“公式无法求值的冲突”修正为“跨公式变量命名重名导致的阅读歧义”，问题本质从逻辑冲突降级为文档规范性问题，需澄清变量命名以避免开发误解，但不应作为阻塞开发的致命冲突。",
+      "proposed_changes": {
+        "title": "跨公式变量T命名重名易引发开发误解",
+        "current_state": "需求文档开奖时间公式中的T代表完成时间（Time），而数值文档赔率公式中的T结合上下文（Total bet/W_X）代表总下注额。两者属于不同公式的独立变量，仅因命名相同易被误判为冲突。",
+        "risk": "开发人员在阅读两份文档时，可能误以为存在逻辑冲突或错误地将完成时间代入赔率公式，导致编码错误。",
+        "suggestion": "在数值文档中明确标注赔率公式的T代表Total bet（总下注额），或在需求文档中补充变量命名规范，避免跨文档同名变量歧义。",
+        "confidence": "高"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "protocol_profile=phase3_v1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b"
+  ]
+}

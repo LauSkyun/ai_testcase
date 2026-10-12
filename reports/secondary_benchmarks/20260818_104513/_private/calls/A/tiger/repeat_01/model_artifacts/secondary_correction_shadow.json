@@ -1,0 +1,35 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_2",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1_2; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

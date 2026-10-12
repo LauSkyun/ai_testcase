@@ -1,0 +1,196 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确抓住了核心数值冲突和映射缺失，但遗漏了部分边界规则和UI交互细节。候选报告补充了扣款时机、提现取消逻辑和UI展示规则，使之更完整。",
+    "strengths": [
+      "精确识别了Crash模型与离散格子的映射缺失这一核心阻塞点",
+      "指出了下注筹码跨文档冲突",
+      "服务端权威边界和热更规则等安全兼容性问题均被覆盖"
+    ],
+    "issues": [
+      "遗漏了开局扣款时机和提现取消逻辑",
+      "30个格子的UI展示方式未定义",
+      "可测试性维度缺少提现确认框退出等场景"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充关键遗漏，整体结构清晰，证据充分，可直接交付业务方。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充关键遗漏，整体结构清晰，证据充分，可直接交付业务方。"
+  },
+  "review_notes": [
+    "主模型报告将多个子问题合并到CROSS_DOC_02中，保持这种合并，未拆分。",
+    "新增的CLARITY_01和TEST_02补充了主模型遗漏的低风险但会影响测试设计的细节。",
+    "建议后续与业务方确认30个格子的UI展示方式，并统一形象冲突。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_01",
+      "title": "开局扣款时机与提现取消逻辑缺失",
+      "primary_dimension": "可测试性与验收标准",
+      "evidence": "全文未提及扣款时机及提现确认框取消逻辑。",
+      "severity": "低",
+      "suggestion": "明确点击“开始”时立即扣款；提现确认框弹出后若取消则继续游戏；若已扣款且提现成功则发放奖金。"
+    },
+    {
+      "issue_id": "MISSED_02",
+      "title": "UI展示30个格子的方式及IN/OUT进度条含义未定义",
+      "primary_dimension": "清晰度与完整性",
+      "evidence": "小鸡.docx / 图片2-6显示部分节点，需求文档未说明30个格子的UI展示方式。",
+      "severity": "低",
+      "suggestion": "明确30个格子的展示方式（如横向滚动列表、分段显示等），并解释IN/OUT进度条的含义。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_DOC_02",
+        "primary_issue_ids": [
+          "CROSS_DOC_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_DOC_03",
+        "primary_issue_ids": [
+          "CROSS_DOC_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "source_missed_issue_ids": [
+          "MISSED_02"
+        ],
+        "reason": "补充主模型遗漏的UI展示规则缺失问题"
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "补充主模型遗漏的扣款时机与提现取消逻辑"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充关键遗漏，整体结构清晰，证据充分，可直接交付业务方。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

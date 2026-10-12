@@ -1,0 +1,245 @@
+{
+  "evidence_packet_id": "305aba5fc9cd5f85130cc2ff2255956e10599c3cd0b36d5206fa892666fe41fa",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可same_control；一旦为same_control，status和final必须都是covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / 图片解析: 2. **首页下注区域 UI**：包含\"ANTE\"（菱形按钮，显示100）和\"PAIR PLUS\"（圆形按钮，显示100）两个下注区；底部有筹码选择按钮\"100、1K、10K、100K\"和蓝色的\"Deal\"按钮；右侧显示倒计时\"30S\"沙漏图标；左上角有\"PAIR PLUS PAYS\"赔率表（3 of a kind 40 for 1、Straight Flush 30 for 1、Straight 6 for 1、Flush 3 for 1、Pair 1 for 1，部分数值不可读）。",
+        "Teenpatti PVE版本.md / 图片解析: 6. **游戏规则内容**：英文规则说明\"Use three cards to play against the dealer\"；游戏流程5步（选择筹码并点击Ante下注区、可选Pair plus下注、点击deal发牌、根据胜率选择Play/Fold、与Dealer比较结算）；\"对子及以上下注\"赔率表（3 of a kind 40 for 1、Straight Flush 30 for 1等）；牌型大小图示（1.Trial/Three of a Kind、2.SF/Straight Flush、3.Flush、4.Straight、5.Pair）。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "POOL_FORMULA_DIV_ZERO",
+          "title": "奖池状态计算公式分母为0时的异常处理缺失"
+        },
+        {
+          "issue_id": "FOLD_PP_SETTLEMENT",
+          "title": "Fold 时 Pair Plus 的结算规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落19]: [段落19][章节：三、具体方案 > 3.2引导蒙层] 步骤二，①仅高亮100宝石筹码，用户点击后选中100宝石筹码 ②仅高亮ante板块，点击一下ante板块后，给ante板块发100筹码 ③仅高亮pairplus板块，点击一下airplus板块后，发100筹码 ④仅高亮Deal按钮，点击后直接发牌，给用户发三张ACE，需要同步牌型和胜率 ⑤仅高亮Play按钮 点击后，展示开牌动画 ，庄家的牌是235 5是方块，需要同步牌型，需要同步用户当前牌型所在排名（在截图的基础上加上High Card） ⑥展示赢钱动画，不出rebet和clear按钮，动画...",
+        "Teenpatti PVE版本.md / 图片解析: 8. **整体场景**：推测为扑克类游戏的手牌展示界面，当前正在提示\"同花顺\"牌型判定结果"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "PP_PAYOUT_CONFLICT",
+          "title": "Pair Plus 赔率表在多处UI与规则描述中严重冲突"
+        },
+        {
+          "issue_id": "WINNING_RATE_ALIGNMENT",
+          "title": "胜率/牌型排名计算口径未说明，存在客诉风险"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落7]: [段落7][章节：三、具体方案 > 3.1首页] ● 顶栏各功能入口。左一是游戏记录页入口，左二是规则页，左三是统计，左四是音效开关，音效默认开，下次开启游戏后默认保存上次退出时的配置，右侧展示余额，可以点击唤起收银台",
+        "Teenpatti PVE版本.md / 图片解析: 3. **STEP 2 开始下注**：包含3个引导气泡——\"1.请选择筹码\"、\"2.请在底注下注\"（指向ANTE区域）、\"3.可以在pairplus下注，下注后会在你自己的牌出现指定牌型后获得多倍金额的奖赏\"；另有气泡说明\"4.在底注下注后就可以点击开始牌局，注意用户不会就一定要下，下注筹码后2次才可以开始牌局\"；底部同样有筹码选择(100、1K、10K、100K、\"Deal\")和\"下一步\"按钮。"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落9]: [段落9][章节：三、具体方案 > 3.1首页] ● 在没有任何下注的时候，Deal按钮置灰，当有下注时Deal按钮高亮，点击后开启对局，当有成功下注后，倒计时X秒（支持可配），倒计时结束后，直接开启对局",
+        "Teenpatti PVE版本.md / [段落10]: [段落10][章节：三、具体方案 > 3.1首页] ● 对局开始后，Call 和 Fold按钮出来，并倒计时X秒，X秒结束后，默认FOLD，点击CALL将扣款下注金额并开庄家牌，点击fold也直接开庄家牌"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CHURN_USER_CONCURRENCY",
+          "title": "预流失用户统计的时间窗口及并发计数幂等性未说明"
+        }
+      ],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落8]: [段落8][章节：三、具体方案 > 3.1首页] ● ①在下注阶段，ante和pair plus板块频繁高亮，先选择筹码，后续点击两个板块，点击一次即下注一次，ante和pair plus板块下方实时展示下注宝石数，没下注时不展示 ②筹码选择，在没游戏记录前默认选中100宝石筹码，有游戏记录后新进游戏默认选中上次成功下注的筹码，下注手指默认指ANTE板块，有下注后消失，当余额不足时，避开同样置灰的筹码，从高到低选择，最终默认只选1个10宝石筹码，点击ante和pairplus板块，提示“余额不足，请留足跟注所需金额”， 点击置灰筹码也同意提示次文案...",
+        "Teenpatti PVE版本.md / [段落10]: [段落10][章节：三、具体方案 > 3.1首页] ● 对局开始后，Call 和 Fold按钮出来，并倒计时X秒，X秒结束后，默认FOLD，点击CALL将扣款下注金额并开庄家牌，点击fold也直接开庄家牌"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CALL_DEDUCT_BASE",
+          "title": "Call 扣款基数未明确，导致筹码置灰的预留规则存在逻辑歧义"
+        },
+        {
+          "issue_id": "FOLD_PP_SETTLEMENT",
+          "title": "Fold 时 Pair Plus 的结算规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落2]: [段落2][章节：一、背景] Teenpatti这个纸牌游戏在印度的受众特别广，基本上80%以上的人都懂规则，有点像国内的斗地主、掼蛋，国民热度高，我们端内的teenpatti是三方做的，返奖率卡死在96.5%无法上调，过度倾斜头部用户，中小R体验及其差，且三选一模式的arppu值有提升空间，能提升用户的决策空间",
+        "Teenpatti PVE版本.md / [段落30]: [段落30][章节：三、具体方案 > 3.4下注记录] ● 明细会展示牌型名称，ante和pairplus板块的下注和返奖，如果没下注和没返奖就展示0宝石"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "INTERVENTION_DEADLOCK",
+          "title": "干预逻辑中‘庄家100%小于闲家’在极端牌型下存在无解/死锁风险"
+        },
+        {
+          "issue_id": "POOL_FORMULA_DIV_ZERO",
+          "title": "奖池状态计算公式分母为0时的异常处理缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / 图片解析: 7. 整体布局为左列显示牌型名称，右列显示对应赔率，采用左对齐的简洁文本排版。"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落36]: [段落36][章节：三、具体方案 > 3.7开奖规则 > 3.7.1奖池基础概念] 3.7.1奖池基础概念",
+        "Teenpatti PVE版本.md / [段落37]: [段落37][章节：三、具体方案 > 3.7开奖规则 > 3.7.1奖池基础概念] ● 奖池充裕，指：（今日累计奖池收入-今日累计奖池支出）/今日累计奖池收入≥[001]%"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "POOL_FORMULA_DIV_ZERO",
+          "title": "奖池状态计算公式分母为0时的异常处理缺失"
+        },
+        {
+          "issue_id": "WINNING_RATE_ALIGNMENT",
+          "title": "胜率/牌型排名计算口径未说明，存在客诉风险"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落2]: [段落2][章节：一、背景] Teenpatti这个纸牌游戏在印度的受众特别广，基本上80%以上的人都懂规则，有点像国内的斗地主、掼蛋，国民热度高，我们端内的teenpatti是三方做的，返奖率卡死在96.5%无法上调，过度倾斜头部用户，中小R体验及其差，且三选一模式的arppu值有提升空间，能提升用户的决策空间"
+      ],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落19]: [段落19][章节：三、具体方案 > 3.2引导蒙层] 步骤二，①仅高亮100宝石筹码，用户点击后选中100宝石筹码 ②仅高亮ante板块，点击一下ante板块后，给ante板块发100筹码 ③仅高亮pairplus板块，点击一下airplus板块后，发100筹码 ④仅高亮Deal按钮，点击后直接发牌，给用户发三张ACE，需要同步牌型和胜率 ⑤仅高亮Play按钮 点击后，展示开牌动画 ，庄家的牌是235 5是方块，需要同步牌型，需要同步用户当前牌型所在排名（在截图的基础上加上High Card） ⑥展示赢钱动画，不出rebet和clear按钮，动画...",
+        "Teenpatti PVE版本.md / [段落37]: [段落37][章节：三、具体方案 > 3.7开奖规则 > 3.7.1奖池基础概念] ● 奖池充裕，指：（今日累计奖池收入-今日累计奖池支出）/今日累计奖池收入≥[001]%"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "CHURN_USER_CONCURRENCY",
+          "title": "预流失用户统计的时间窗口及并发计数幂等性未说明"
+        },
+        {
+          "issue_id": "POOL_FORMULA_DIV_ZERO",
+          "title": "奖池状态计算公式分母为0时的异常处理缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [
+        "Teenpatti PVE版本.md / [段落7]: [段落7][章节：三、具体方案 > 3.1首页] ● 顶栏各功能入口。左一是游戏记录页入口，左二是规则页，左三是统计，左四是音效开关，音效默认开，下次开启游戏后默认保存上次退出时的配置，右侧展示余额，可以点击唤起收银台",
+        "Teenpatti PVE版本.md / [段落8]: [段落8][章节：三、具体方案 > 3.1首页] ● ①在下注阶段，ante和pair plus板块频繁高亮，先选择筹码，后续点击两个板块，点击一次即下注一次，ante和pair plus板块下方实时展示下注宝石数，没下注时不展示 ②筹码选择，在没游戏记录前默认选中100宝石筹码，有游戏记录后新进游戏默认选中上次成功下注的筹码，下注手指默认指ANTE板块，有下注后消失，当余额不足时，避开同样置灰的筹码，从高到低选择，最终默认只选1个10宝石筹码，点击ante和pairplus板块，提示“余额不足，请留足跟注所需金额”， 点击置灰筹码也同意提示次文案..."
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "PP_PAYOUT_CONFLICT",
+          "title": "Pair Plus 赔率表在多处UI与规则描述中严重冲突"
+        },
+        {
+          "issue_id": "WINNING_RATE_ALIGNMENT",
+          "title": "胜率/牌型排名计算口径未说明，存在客诉风险"
+        }
+      ],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "source": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856",
+  "games": [
+    "777",
+    "racing",
+    "tiger",
+    "小鸡",
+    "钱来了"
+  ],
+  "variants": [
+    "A"
+  ],
+  "comparison_axis": "single_profile",
+  "protocol_profiles": [
+    "phase3_v1"
+  ],
+  "provider_config_hashes": [
+    "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52"
+  ],
+  "prompt_hashes_by_variant": {
+    "A": [
+      "51dba718330ea9050618dfa0f6e24588b6f6ba0025b6e283f1a2dba610487cb4",
+      "6c0ddc9235a05fe6657b2765cb8bf9aa64cf0640a27defbe8cbd6b2203084cf3",
+      "7f97280143e5ccee01e53c67678c4b3b5b90461d0e6dfec4f060c36d95fbed0e",
+      "d283bc3cc5d06292012f54f1d9c8000aafac462ab2203eb4b69abe7f8936c21f",
+      "fadcb440fe10664c5be7520bfb88a6a8e6c1bc3839b481c6240a72d363bacede"
+    ]
+  },
+  "repeats": 2,
+  "expected_secondary_calls": 10,
+  "primary_calls": 0,
+  "vision_calls": 0,
+  "summary": "secondary_benchmark_summary.json",
+  "annotation_template": "human_annotation_template.json",
+  "provider_mapping": "_private/provider_mapping.json"
+}

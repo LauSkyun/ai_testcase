@@ -1,0 +1,288 @@
+{
+  "report": {
+    "overall_evaluation": "文档当前仍存在核心赔率公式在需求与数值文档中存在根本性冲突、单局地形段数与车型数量规则存在严重矛盾、干预逻辑中的“干扰指数”与公式中的“Luck”未建立映射等关键阻塞问题，规则尚不足以支撑开发与测试形成一致方案，建议先补充对齐后再推进。",
+    "document_quality_score": "D",
+    "score_reason": "核心赔率公式在需求与数值文档中存在根本性冲突，当前文档不足以让开发和测试形成一致方案。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "核心赔率公式在需求与数值文档中存在根本性冲突",
+        "owner": "数值策划",
+        "why_now": "开发无法确定唯一结算公式，两套逻辑打架会导致主流程无法编译或结算错误。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "单局地形段数与车型数量规则存在严重矛盾",
+        "owner": "系统策划",
+        "why_now": "核心开奖逻辑的随机池、碰撞范围和UI展示数量无法确定，导致底层数据结构设计错误。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "干预逻辑中的“干扰指数”与公式中的“Luck”未建立映射",
+        "owner": "数值策划",
+        "why_now": "数值策划的干预手段无法落地到代码公式，导致奖池状态干预逻辑无法实现。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "F2",
+            "canonical_title": "地形与车型数量矛盾",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "单局地形段数与车型数量规则存在严重矛盾",
+            "current_state": "1. 需求文档说明道路分3段、每轮随机出现3个车型；2. 数值表格列出了5种地形和9种车型的全局池；3. UI原型图片5中提及4条赛道12辆车；4. 未明确“单局展示”与“全局配置池”的映射与抽取规则。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 / 段落26-27；Racing数值文档.docx / 表格1；图片5",
+            "risk": "核心开奖逻辑的随机池、碰撞范围和UI展示数量无法确定，导致底层数据结构设计错误。",
+            "suggestion": "明确单局比赛实际展示的地形段数和车型数量，并说明与全局配置池的抽取规则。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "F1",
+            "canonical_title": "核心赔率公式冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "核心赔率公式在需求与数值文档中存在根本性冲突",
+            "current_state": "1. 需求文档定义实时赔率为资金池比例（合计下注/本选项下注）；2. 数值文档定义赔率为基于时间T、权重W和gamma系数的独立公式；3. 两套模型在数学逻辑上互斥，无法由同一套实现兼容。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 / 段落28；Racing数值文档.docx / 段落2-5 / 图片1",
+            "risk": "开发无法确定唯一结算公式，两套逻辑打架会导致主流程无法编译或结算错误。",
+            "suggestion": "组织数值与系统策划对齐，明确采用资金池模型还是权重模型，或给出两者的融合/替代方案，输出最终可执行的伪代码。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "F8",
+            "canonical_title": "赔率精度与占位符歧义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "实时赔率公式中的精度处理与占位符歧义",
+            "current_state": "1. “保留两位小数，向下取整”表述存在数学矛盾（向下取整通常针对整数，若指小数应为“截断”）；2. “[001]%”占位符未说明是代表抽水比例还是其他系数。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 / 段落28",
+            "risk": "导致客户端展示赔率与服务端结算赔率因精度处理不一致而产生客诉，或公式无法编译。",
+            "suggestion": "明确小数精度处理规则（如截断至两位小数），并补充占位符的具体含义与配置范围。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "source_missed_issue_id": "M2",
+            "source_issue_id": "M2",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "gpt-5.6-sol"
+          },
+          {
+            "issue_id": "F3",
+            "canonical_title": "术语混用与关键交互边界缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "货币术语混用与半屏/赔率更新边界缺失",
+            "current_state": "1. 货币术语“宝石”、“金币”、“钻石”交替使用，未统一；2. 半屏模式需浓缩交互，但未定义UI层级、安全区及遮挡处理；3. 实时赔率随资金池变化，但未说明更新频率及下注瞬间赔率突变的处理。",
+            "evidence": "musee游戏Racing.docx / 3.2蒙层引导 / 段落15-18；图片6 / 图片11；musee游戏Racing.docx / 3.1首页顶栏板块 / 段落6；musee游戏Racing.docx / 3.3下注部分 / 段落28",
+            "risk": "1、导致扣款和发奖接口字段定义混乱；2、半屏下关键按钮可能被遮挡；3、用户下注瞬间赔率突变导致实际赔付与预期不符。",
+            "suggestion": "1、全局统一货币名称及中台资产ID；2、补充半屏UI布局规范；3、明确赔率推送频率及下注时的容差/确认机制。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "F5",
+            "canonical_title": "抽水与最大赔付缺失",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "奖池抽水机制与单局最大赔付上限（MAX_MUL）缺失",
+            "current_state": "1. 文档提到在赔率算法上抽水，但未定义抽水比例或公式；2. 未定义单局或单人的最大赔付上限（MAX_MUL）；3. 未说明触发上限时的截断或拒单逻辑。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 / 段落37-38",
+            "risk": "无法验收RTP，且极端下注可能击穿奖池，造成严重经济事故。",
+            "suggestion": "补充RTP目标值及抽水公式，定义最大赔付上限，并说明触发上限时的处理逻辑。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "F7",
+            "canonical_title": "奖池状态闭环缺失",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "奖池状态计算的滚动窗口与干预概率闭环缺失",
+            "current_state": "1. 奖池状态基于“今日+昨日”收支计算，未说明在开奖瞬间如何锁定该状态；2. 干预概率（如侧重开与正常开的概率）未明确两者之和是否为100%，以及条件不满足时的兜底逻辑。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 / 段落39-42",
+            "risk": "导致干预逻辑无法配置或出现概率溢出/真空，影响奖池风控。",
+            "suggestion": "明确奖池状态锁定的时间窗口，补充干预概率的闭环校验及兜底逻辑。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "source_missed_issue_id": "M1",
+            "source_issue_id": "M1",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "gpt-5.6-sol"
+          },
+          {
+            "issue_id": "F4",
+            "canonical_title": "干扰指数与Luck映射缺失",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "干预逻辑中的“干扰指数”与公式中的“Luck”未建立映射",
+            "current_state": "1. 需求文档提到通过调整“干扰指数”干预开奖；2. 时间计算公式中使用的变量是“Luck(随机扰动)”；3. 未明确干扰指数在公式中的具体代入位置。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 / 段落40-43；图片13",
+            "risk": "数值策划的干预手段无法落地到代码公式，导致奖池状态干预逻辑无法实现。",
+            "suggestion": "明确干扰指数在 T=L/(V*K*Luck) 公式中的具体代入位置，并给出配置表示例。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "F6",
+            "canonical_title": "假数据隔离与异常流程缺失",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "假数据隔离、引导局结算与异常流程规则缺失",
+            "current_state": "1. 假数据（假人数/金额/赔率）的生成规则及与真实结算的隔离策略缺失；2. 引导局写死赔率3.3、下注100、返奖330，未说明是否走真实服务端结算；3. 断线重连、开奖阶段退出、重复点击下注的幂等性等异常流程未说明。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 / 段落22-23；Racing数值文档.docx / 段落5；musee游戏Racing.docx / 3.2蒙层引导 / 段落15-20",
+            "risk": "1、客户端展示假赔率可能导致穿帮；2、引导局若走真实结算可能与真实概率冲突；3、异常流程缺失可能导致资产丢失或状态机卡死。",
+            "suggestion": "1、明确假数据的生成与隔离规则；2、明确引导局的结算链路归属；3、补充断线重连、幂等性及状态恢复规则。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "单局/单人最大赔付上限（MAX_MUL）及触发上限时的截断逻辑",
+      "全局统一的货币名称（宝石/金币/钻石）及对应的中台资产ID",
+      "干扰指数在 T=L/(V*K*Luck) 公式中的具体代入位置",
+      "RTP目标值及抽水公式的具体参数",
+      "奖池状态锁定的时间窗口及干预概率闭环校验逻辑",
+      "实时赔率公式中小数精度处理规则及占位符具体含义"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证单局比赛的地形段数、车型数量是否与最终确认的规则一致",
+        "验证赔率计算公式（资金池比例或时间/权重公式）的结算准确性",
+        "验证奖池状态（待补充/正常/充裕）对干扰指数和地形概率的干预逻辑",
+        "验证新用户/预流失用户的特征判定及开奖干预逻辑",
+        "验证假人数/假金额/假赔率的展示与真实结算的隔离"
+      ],
+      "异常操作": [
+        "验证下注后断线重进的状态恢复及资产一致性",
+        "验证开奖阶段退出游戏后的结算处理",
+        "验证重复点击下注按钮的幂等性",
+        "验证余额不足或达到单选项上限（100万）时的下注拦截"
+      ],
+      "兼容性": [
+        "验证全屏与半屏模式下的UI布局及按钮可点击性",
+        "验证直播间音频在游戏内的播放与静音控制"
+      ],
+      "安全专项": [
+        "验证客户端篡改假数据是否影响服务端真实结算",
+        "验证极端下注情况下的最低赔率（1.02）及最大赔付截断逻辑"
+      ],
+      "回归影响": [
+        "验证音效开关状态的持久化及跨局继承",
+        "验证下注档位默认选择的记忆逻辑"
+      ],
+      "性能与稳定性": [
+        "验证实时赔率高频更新时的客户端渲染性能",
+        "验证开奖动画播放期间的内存占用及帧率"
+      ],
+      "用户体验": [
+        "验证新手引导5个步骤的流畅度及固定数值表现",
+        "验证实时赔率突变时的用户提示或确认机制"
+      ]
+    },
+    "quality_notes": [
+      "图片解析中部分关键数值和文字因分辨率或截断不可读，需补充清晰配置表或高清原型图。",
+      "文档中存在大量占位符（如[001]、[002]%），需在开发前替换为具体数值或明确配置后台的字段映射。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片5、6、8、9、10中部分关键数值、车辆属性及文字因分辨率过低或截断不可读，无法确认完整的UI细节和数值配置。"
+    ],
+    "review_mode": "dual_pass_candidate",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 1,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 64,
+    "total_tables": 1,
+    "total_images": 16
+  },
+  "documents": [
+    {
+      "name": "musee游戏Racing.docx",
+      "kind": "mixed",
+      "paragraph_count": 59,
+      "table_count": 0,
+      "image_count": 13,
+      "errors": []
+    },
+    {
+      "name": "Racing数值文档.docx",
+      "kind": "numeric",
+      "paragraph_count": 5,
+      "table_count": 1,
+      "image_count": 3,
+      "errors": []
+    }
+  ]
+}

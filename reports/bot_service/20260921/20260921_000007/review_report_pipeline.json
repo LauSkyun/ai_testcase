@@ -1,0 +1,323 @@
+{
+  "report": {
+    "overall_evaluation": "文档覆盖了UNO的核心玩法、UI交互和结算流程，主循环基本清晰。但存在部分核心规则（如抢牌、转嫁）描述存疑或违背常规且缺乏结算细节，奖金分配公式存在遗漏，计分规则表述存在歧义，需补充完善后方可进入开发。",
+    "document_quality_score": "C",
+    "score_reason": "核心规则（抢牌、转嫁）存在逻辑冲突或标记存疑，奖金分配公式遗漏名次，计分正负号表述易引发结算事故，需补充明确。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "转嫁规则中跳过/转向转嫁逻辑混乱且违背常规",
+        "owner": "系统策划",
+        "why_now": "1. 严重违背标准UNO规则（通常仅+2/+4可叠加，跳过/转向不可转嫁+牌）。2. “跳过自己惩罚下家”在代码逻辑上无法映射：当前受罚者是谁？惩罚如何传递？这会导致状态机设计崩溃。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "3/4人局奖金分配公式缺失第3/4名说明",
+        "owner": "数值策划",
+        "why_now": "若第3/4名默认为0，需明确写出以防歧义；若不为0，则当前公式总和小于总奖池，会导致资金沉淀或超发，引发经济系统事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "RULE_UNO_LAST_CARD",
+            "canonical_title": "最后一张牌功能牌限制缺乏异常流转说明",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "“最后一张牌不能是功能牌”规则缺乏异常流转说明",
+            "current_state": "文档规定点击UNO后最后一张牌不能是+2/跳过/转向，持有此牌视为无牌可出。但未说明当玩家手里仅剩一张此类功能牌且桌面可出时的具体处理逻辑。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落40",
+            "risk": "若玩家打出该牌，是系统拦截并强制摸牌，还是直接判负？若强制摸牌，摸到的仍是功能牌是否会导致死循环？缺乏边界条件说明会导致实现歧义。",
+            "suggestion": "1、明确该限制的具体结算表现。建议补充：若手中仅剩此类功能牌，系统禁止打出并提示，玩家只能执行摸牌操作；2、或明确打出后直接判定本局失败。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "RULE_UNO_GRAB",
+            "canonical_title": "抢牌规则存疑且缺乏实现细节",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "抢牌规则标记存疑且缺乏实现与交互细节",
+            "current_state": "文档在抢牌规则处明确标注“（规则存疑）”，仅描述了同色同字可抢牌的概念，未说明抢牌的触发时机、客户端与服务端的判定边界、抢牌成功/失败的动画表现及被抢牌者的反馈。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落29",
+            "risk": "开发无法进行状态机设计和接口定义，测试无法编写验收用例，直接阻塞该功能的开发。若由客户端判定抢牌，将导致严重的作弊风险。",
+            "suggestion": "1. 明确抢牌是否为最终保留规则，若保留需去除“存疑”标记。2. 明确抢牌必须由服务端权威判定。3. 补充抢牌触发时机（如：上家出牌后，下家出牌前）、抢牌成功/失败的UI表现及音效、被抢牌者的状态流转。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "NUM_REWARD_FORMULA",
+            "canonical_title": "奖金分配公式遗漏名次",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "3/4人局奖金分配公式缺失第3/4名说明",
+            "current_state": "3人局仅定义了第1、2名奖金，4人局仅定义了第1、2名奖金。未说明第3、4名的奖金分配。",
+            "evidence": "UNO 游戏.md / 3.3 游戏入场费及奖金规则 段落54-59",
+            "risk": "1、若第3/4名默认为0，需明确写出以防歧义；2、若不为0，则当前公式总和小于总奖池，会导致资金沉淀或超发，引发经济系统事故。",
+            "suggestion": "补充所有名次的奖金公式。确保：所有名次奖金之和 = 总入场费 * (1 - 抽水率)。例如4人局需明确第3、4名是0星币还是其他比例。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "RULE_STACKING_LOGIC",
+            "canonical_title": "转嫁规则逻辑混乱",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "转嫁规则中跳过/转向转嫁逻辑混乱且违背常规",
+            "current_state": "文档描述打出+2/+4时，可用跳过/转向/同类型+牌转嫁惩罚。并说明“跳过”为跳过自己惩罚下家，“转向”为调整惩罚自己上家。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落31-36",
+            "risk": "1. 严重违背标准UNO规则（通常仅+2/+4可叠加，跳过/转向不可转嫁+牌）。2. “跳过自己惩罚下家”在代码逻辑上无法映射：当前受罚者是谁？惩罚如何传递？这会导致状态机设计崩溃。",
+            "suggestion": "1. 确认是否有意引入非标准UNO规则。2. 若仅允许+2/+4叠加，需删除跳过/转向转嫁+牌的描述。3. 若保留该规则，必须重新定义状态机，明确“转嫁”时惩罚数值的累加公式和最终受罚目标的计算逻辑。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "NUM_SCORE_SIGN",
+            "canonical_title": "计分规则正负号表述冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "计分规则中“负数表示”与“点数最少者获胜”存在语义冲突",
+            "current_state": "规则说明中计分均为正数（20分、50分），但UI交互中说明“分数用负数表示”，说明界面写“-20分”。同时获胜规则为“最终点数最少者获胜”。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落44-48，4.5.6.2 积分显示 段落165，4.5.7 说明界面 段落185",
+            "risk": "在负数体系下，“最少”是指代数值最小（如-50比-20少，即输得最多）还是绝对值最小？表述歧义极易导致结算排名逻辑写反，造成严重的结算事故。",
+            "suggestion": "统一计分口径。建议明确：结算时展示的是“剩余手牌总分”（正数，越少越好）还是“本局盈亏分”（赢家正数，输家负数）。若用负数表示输家扣分，获胜条件应改为“剩余手牌点数最少”或“积分最高”。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TEST_DRAW_KEEP_TIMER",
+            "canonical_title": "摸牌弹框与出牌倒计时冲突",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "摸牌后的Keep/Play弹框与15秒出牌倒计时的时间交互未定义",
+            "current_state": "规定15秒未出牌进入AI托管。同时规定摸牌后若可出，弹出Keep/Play弹框。未说明弹框出现时倒计时的状态。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落22，4.5.3.2 自己回合摸牌 段落97-99",
+            "risk": "1、若弹框出现时已接近15秒，玩家无法思考；2、若弹框期间倒计时继续，可能导致玩家被迫超时托管。",
+            "suggestion": "明确摸牌弹框出现时，15秒倒计时是暂停、重置还是继续。建议：摸牌动作完成后，重置15秒倒计时，或弹框存在期间暂停倒计时。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "TEST_CHALLENGE_TIMEOUT",
+            "canonical_title": "质疑+4弹框缺乏超时处理",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "质疑+4弹框缺乏超时处理机制及游戏流转说明",
+            "current_state": "上家打出+4时，下家弹出质疑弹框（接受或挑战）。文档未说明如果玩家不操作，弹框的超时时间是多少，以及超时后的默认行为。",
+            "evidence": "UNO 游戏.md / 4.5.4.5.2 质疑弹框 段落127-131",
+            "risk": "若玩家挂机或断线，游戏将停留在质疑弹框死锁，无法继续流转。",
+            "suggestion": "增加质疑倒计时（如5秒），并明确超时默认行为（建议默认“接受摸牌”即放弃质疑）。同时明确质疑期间游戏全局倒计时是否暂停。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "COMP_RECONNECT",
+            "canonical_title": "断线重连与AI托管状态同步规则缺失",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "断线重连与AI托管状态同步规则缺失",
+            "current_state": "文档未说明玩家在AI托管期间断线重连，或在托管即将结束时重连的界面表现与状态恢复逻辑。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落22-23",
+            "risk": "重连后可能出现客户端状态与服务端不一致，如倒计时显示错误、手牌数量不匹配。",
+            "suggestion": "补充断线重连的专属规则：重连后直接恢复当前服务端最新状态，若处于托管中，显示托管标识及剩余时间。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "SEC_GRAB_AUTHORITY",
+            "canonical_title": "抢牌规则需明确服务端权威判定",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "抢牌规则需明确服务端权威判定以防作弊",
+            "current_state": "抢牌规则涉及手牌比对和出牌顺序打断，文档未明确该逻辑的运行端。",
+            "evidence": "UNO 游戏.md / 3.2 游戏规则 段落29",
+            "risk": "若抢牌逻辑由客户端判定，恶意玩家可通过修改内存或拦截封包实现“假抢牌”或“透视抢牌”，破坏游戏公平性。",
+            "suggestion": "在需求中明确：抢牌的合法性校验、手牌比对、出牌权转移必须由服务端权威计算并下发结果，客户端仅负责表现。",
+            "planner_role": "程序",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UX_UNO_BUTTON",
+            "canonical_title": "UNO按钮点击时机与反馈体验",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "UNO按钮点击时机限制可能导致玩家误操作",
+            "current_state": "规定“打出最后第二张牌的回合时可以点击UNO按钮”。若玩家在出牌前忘记点击，出牌后系统提示已晚。",
+            "evidence": "UNO 游戏.md / 4.5.5 UNO 表现 段落81，段落151",
+            "risk": "新手玩家容易在出牌后才想起喊UNO，导致被罚摸牌，挫败感较强。",
+            "suggestion": "1、建议增加容错机制或更强烈的视觉引导。例如：当手牌剩2张且轮到自己时，UNO按钮持续高亮呼吸提示；2、或在玩家打出倒数第二张牌时，给予0.5秒的极短补按窗口。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "3人局和4人局中，第3名及第4名的具体奖金分配公式或明确为0的说明。",
+      "质疑+4弹框的超时时间设定及超时后的默认处理逻辑。",
+      "摸牌后弹出Keep/Play弹框时，15秒出牌倒计时的状态（暂停/重置/继续）。",
+      "当玩家手中仅剩一张限制功能牌（+2/跳过/转向）时的具体结算流转（强制摸牌或直接判负）。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证108张牌的发牌逻辑及牌堆摸完后的结算。",
+        "验证+2和+4的转嫁（叠加）逻辑，确认跳过/转向是否能转嫁+牌。",
+        "验证2/3/4人局不同名次奖金结算公式的准确性，确保奖池收支平衡。",
+        "验证UNO喊叫时机，剩2张牌时出牌前点击UNO，以及未点击被下家抓包的罚牌逻辑。",
+        "验证百搭和百搭+4的颜色选择及下家颜色限制逻辑。",
+        "验证质疑+4的成功与失败结算，包括质疑失败罚6张（4+2）的逻辑。"
+      ],
+      "异常操作": [
+        "验证15秒出牌超时后AI托管的自动出牌/摸牌逻辑。",
+        "验证质疑+4弹框出现后，玩家不操作的超时处理。",
+        "验证手中仅剩一张+2/跳过/转向时，系统的拦截与流转逻辑。",
+        "验证摸牌后弹出Keep/Play弹框时，倒计时即将结束时的边界处理。"
+      ],
+      "兼容性": [
+        "验证2/3/4人不同人数下的UI布局适配（头像位置、手牌区域）。",
+        "验证阿拉伯语（RTL）环境下的UI排版及文本显示。"
+      ],
+      "安全专项": [
+        "验证抢牌逻辑是否由服务端权威判定，客户端无法伪造抢牌请求。",
+        "验证结算时手牌分数计算是否由服务端下发，防止客户端篡改分数。"
+      ],
+      "回归影响": [
+        "验证UNO游戏入口在大厅及语音房创建列表中的显示与跳转。",
+        "验证结算界面MVP弹窗及排名弹窗的展示，以及“再来一局”的流转。"
+      ],
+      "性能与稳定性": [
+        "验证手牌数量过多（如被加牌到20张以上）时的滑动与渲染性能。",
+        "验证连续触发+4转嫁、多次变色等复杂动画叠加时的帧率表现。"
+      ],
+      "用户体验": [
+        "验证摸牌手指引导、UNO按钮呼吸动画等新手提示的清晰度。",
+        "验证各种功能牌（跳过、转向、+2、+4）的桌面特效及音效反馈。"
+      ]
+    },
+    "quality_notes": [
+      "文档中部分配置值（如10分钟时长、0/10星币入场费）已明确或标注为后端配置，符合规范。",
+      "图片中部分阿拉伯语UI文本因分辨率或语言限制无法完全识别，但不影响核心玩法规则的提取与评审。",
+      "dual_pass 复核备注：资金事务节点（扣款、派奖、失败补偿）在文档中未显式定义，但属于棋牌游戏通用平台能力，无证据表明存在冲突或缺失，故判定为 advice_only。",
+      "dual_pass 复核备注：图片30中的规则弹窗文本与正文在获胜条件（最高vs最少）上存在直接冲突，但 Primary 的 NUM_SCORE_SIGN 已覆盖该计分与获胜条件的语义冲突根因，故不重复新增。",
+      "dual_pass 复核备注：protocol_profile=phase2_v2_2; evidence_packet_id=e48408347fe0e7ae5ff4b66f691a50ce1a9f92a534d96a5203992609807adee3",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "部分截图中的阿拉伯语聊天内容及系统提示因分辨率限制无法完全准确翻译，但核心UI元素（如按钮、卡牌、倒计时）清晰可见，不影响主流程验收标准制定。"
+    ],
+    "atomicity_transform_diagnostics": {
+      "split_source_count": 0,
+      "split_finding_count": 0,
+      "suppressed_fully_covered_umbrella_count": 0,
+      "quarantined_count": 0,
+      "actions": []
+    },
+    "dedupe_diagnostics": {
+      "auto_merge_count": 0,
+      "auto_merge_rejected_count": 1,
+      "possible_duplicate_pair_count": 1,
+      "distinct_issue_id_merge_blocked_count": 1,
+      "decisions": [
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "RULE_UNO_GRAB",
+          "right_issue_id": "SEC_GRAB_AUTHORITY",
+          "left_title": "抢牌规则标记存疑且缺乏实现与交互细节",
+          "right_title": "抢牌规则需明确服务端权威判定以防作弊"
+        }
+      ]
+    },
+    "finding_atomicity_status": "pass",
+    "finding_atomicity_suspect_count": 0,
+    "finding_atomicity_suspects": [],
+    "review_mode": "dual_pass",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 0,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 200,
+    "total_tables": 3,
+    "total_images": 30
+  },
+  "documents": [
+    {
+      "name": "UNO 游戏.md",
+      "kind": "mixed",
+      "paragraph_count": 200,
+      "table_count": 3,
+      "image_count": 30,
+      "errors": []
+    }
+  ]
+}

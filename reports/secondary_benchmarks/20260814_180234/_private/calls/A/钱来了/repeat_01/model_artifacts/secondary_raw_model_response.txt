@@ -1,0 +1,86 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "数值文档中出现了两个“RESPIN发生几率”表格，表格5配置为0.1，表格6配置为0.05，存在直接冲突。",
+      "evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制（RESPIN机制）",
+      "counterevidence": "数值文档段落35明确表格5为“必定命中时RESPIN表演概率”，段落38明确表格6为“必定不命中时RESPIN表演概率”。",
+      "rationale": "Primary 忽略了表格前后的上下文标题，将两个分别对应“命中”与“不命中”不同表演分支的概率表误判为重复冲突配置。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "LOGIC_02",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "数值文档称“不会生成1,3均不为空的局面”，但又规定“当1,3列金币符号不同且有值时...必定发生RESPIN”。若底层不生成1,3均不为空，则RESPIN的触发条件在底层数据中无法成立。",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+      "counterevidence": "数值文档段落12明确补充：“*不会生成 1，3均不为空的局面，仅在表演阶段出现13均不为空的respin场景”。",
+      "rationale": "Primary 将“底层最终结果盘面”与“表演阶段中间态”混淆。数值文档已明确1,3均不为空仅存在于表演阶段，底层逻辑与表演逻辑并未矛盾。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-03",
+      "target_issue_id": "CROSS_02",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "数值文档规定“超过100倍 → 直接强制0倍”，而需求文档规定“免费模式中总赢奖达到投注额的2000倍时，自动结束”。两份文档均未明确“倍数”的基数...口径不清将导致风控逻辑与封顶逻辑互斥。",
+      "evidence": "钱来了数值文档.docx / 七、基础游戏・完整流程总结、六、基础游戏・体验控制 & 风控",
+      "counterevidence": "数值文档段落54-55明确说明：“上述流程如触发了免费 不进行 检查A和 展示结果A。整局游戏仅进行一次风控检测”。",
+      "rationale": "数值文档的流程总结已明确普通游戏风控（100倍）与免费游戏风控是流程上的分支互斥关系，触发免费后跳过普通风控检查。Primary 忽略了流程分支，错误地认为两者在同一结算层级存在互斥冲突。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "LOGIC_01",
+      "correction_type": "clarify",
+      "evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制（RESPIN机制）",
+      "rationale": "两个概率表并非冲突，而是分别对应不同的表演分支。问题在于表格本身缺乏明确的上下文标题，容易引起阅读误解。",
+      "proposed_changes": {
+        "current_state": "数值文档中表格5（0.1）和表格6（0.05）分别对应“必定命中时RESPIN表演概率”和“必定不命中时RESPIN表演概率”，并非重复冲突配置，但表格本身缺乏明确的上下文标题，易引起误解。",
+        "suggestion": "在数值文档的表格5和表格6上方补充明确的章节标题或说明文字，区分“命中时的表演概率”与“不命中时的表演概率”，消除歧义。",
+        "acceptance_criteria": "数值文档中两个RESPIN概率表具备清晰的上下文定语，程序与测试能无歧义地读取对应分支的概率配置。"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-02",
+      "challenge_id": "CH-02",
+      "target_issue_id": "LOGIC_02",
+      "correction_type": "clarify",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+      "rationale": "底层与表演阶段的区分在数值文档中已存在，逻辑并未矛盾。真正的缺失在于需求文档对“表演阶段”的视觉表现（如上下推展在1x3盘面如何展示）缺乏具体说明。",
+      "proposed_changes": {
+        "current_state": "数值文档已明确“1,3均不为空”仅存在于表演阶段，底层逻辑与表演逻辑并未矛盾。但需求文档对“表演阶段”的视觉表现（如上下推展在1x3盘面如何展示）仍缺乏具体说明。",
+        "suggestion": "需求文档需补充RESPIN和推展在“表演阶段”的具体视觉映射规则，明确1x3盘面下如何通过动画表现“上下相邻符号”的中间态。",
+        "acceptance_criteria": "需求文档提供完整的表演阶段视觉表现说明及动效参考，程序可据此实现表演动画。"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-03",
+      "challenge_id": "CH-03",
+      "target_issue_id": "CROSS_02",
+      "correction_type": "clarify",
+      "evidence": "钱来了数值文档.docx / 七、基础游戏・完整流程总结、六、基础游戏・体验控制 & 风控",
+      "rationale": "普通游戏风控与免费游戏风控在流程上是分支互斥关系，并非在同一结算层级互斥。但“100倍”与“2000倍”的统计基数仍需明确统一。",
+      "proposed_changes": {
+        "current_state": "数值文档流程总结已明确普通游戏风控（100倍）与免费游戏风控是流程上的分支互斥关系（触发免费后跳过普通风控检查）。两者并非在同一结算层级互斥，但“100倍”与“2000倍”的统计基数（单局赔付 vs 免费周期累计）仍需明确。",
+        "suggestion": "在数值文档中明确“100倍”的基数为“单局赔付/单局投注”，并在免费风控检查节点补充“2000倍”的统计口径为“单次免费游戏周期内的累计总赢奖”。",
+        "acceptance_criteria": "两份文档对普通风控基数与免费封顶基数的定义清晰且无歧义，程序可据此编写独立的风控校验逻辑。"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "Primary 报告在 LOGIC_01、LOGIC_02、CROSS_02 中均因忽略了数值文档中的上下文定语或流程分支条件，导致将原本合理的配置或互斥的流程误判为逻辑冲突。",
+    "建议重新审阅数值文档的段落12、段落35、段落38以及段落54-55，修正对底层数据与表演阶段、普通风控与免费风控分支关系的理解。",
+    "protocol_profile=phase3_v1; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df"
+  ]
+}

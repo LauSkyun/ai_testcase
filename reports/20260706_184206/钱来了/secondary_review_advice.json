@@ -1,0 +1,202 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了风控阈值与游戏上限的根本冲突、Respin逻辑矛盾以及购买免费游戏规则缺失等关键阻塞问题，但误判了中奖金额公式为严重冲突，实际仅为表述歧义，且遗漏了大奖弹窗阈值缺失和免费游戏余额变化逻辑等清晰度问题。",
+    "strengths": [
+      "准确识别了跨文档风控冲突和Respin矛盾这两个高阻塞问题",
+      "指出了购买免费游戏规则缺失",
+      "问题提出具有明确证据支撑"
+    ],
+    "issues": [
+      "将中奖金额公式歧义错误判定为高阻塞冲突，需修正为表述歧义",
+      "未独立提出大奖弹窗阈值缺失问题",
+      "未指出免费游戏期间余额变化逻辑不清晰"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型对公式冲突的误判，并补充了关键缺失项，可直接交付。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型对公式冲突的误判，并补充了关键缺失项，可直接交付。"
+  },
+  "review_notes": [
+    "修正了主模型对 FORMULA_CONFLICT 的严重程度判定，从高降为中，并重写为表述歧义问题，因为数学上一致，仅需澄清。",
+    "将大奖弹窗阈值缺失从 RESPIN_LOGIC_CONFLICT 中分离，独立列为中风险问题 AWARD_THRESHOLD_MISSING。",
+    "补充了免费游戏余额变化逻辑缺失问题 FREE_GAME_BALANCE_UNCLEAR。",
+    "RESPIN_LOGIC_CONFLICT 的 current_state 和风险描述已移除大奖阈值相关部分，仅保留 Respin 矛盾。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "AWARD_THRESHOLD_MISSING",
+      "title": "大奖弹窗 (Big/Mega/Super Win) 触发倍数阈值未定义",
+      "description": "需求文档2.2节仅提到根据通用倍数显示big win\\mega win\\super win，但未定义这三个等级的具体倍数阈值，也未定义如果同时触发免费游戏和大奖时的弹窗层级和跳过逻辑。",
+      "severity": "中",
+      "dimension": "逻辑一致性与数值平衡",
+      "evidence": "钱来了需求文档.docx / 2.2 大奖获取界面（段落21-26）"
+    },
+    {
+      "issue_id": "FREE_GAME_BALANCE_UNCLEAR",
+      "title": "免费游戏期间余额变化逻辑不清晰",
+      "description": "需求文档仅说明免费游戏不消耗玩家余额，中奖金额在免费游戏全部结束后统一结算展示总收益，但未明确免费游戏进行中玩家余额是否实时变化，是否在界面上显示累计奖金，以及断线重连时累计奖金如何恢复。",
+      "severity": "中",
+      "dimension": "清晰度与完整性",
+      "evidence": "钱来了需求文档.docx / 3.5.1 基础设定（段落176-177）、3.5.2 触发流程（段落189-190）"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "BUY_FREE_MISSING",
+        "primary_issue_ids": [
+          "BUY_FREE_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RESPIN_LOGIC_CONFLICT",
+        "primary_issue_ids": [
+          "RESPIN_LOGIC_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RISK_CONTROL_CONFLICT",
+        "primary_issue_ids": [
+          "RISK_CONTROL_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "EXPAND_LOGIC_CONFLICT",
+        "primary_issue_ids": [
+          "EXPAND_LOGIC_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FORMULA_CONFLICT",
+        "primary_issue_ids": [
+          "FORMULA_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "AWARD_THRESHOLD_MISSING",
+        "source_missed_issue_ids": [
+          "AWARD_THRESHOLD_MISSING"
+        ],
+        "reason": "主模型未独立提出大奖弹窗阈值缺失问题，仅在Respin冲突中附带提及，现单独列为中风险问题。"
+      },
+      {
+        "candidate_issue_id": "FREE_GAME_BALANCE_UNCLEAR",
+        "source_missed_issue_ids": [
+          "FREE_GAME_BALANCE_UNCLEAR"
+        ],
+        "reason": "主模型未指出免费游戏期间余额变化逻辑不清晰，该缺失影响测试验收和断线恢复，现补充为中风险问题。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型对公式冲突的误判，并补充了关键缺失项，可直接交付。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

@@ -1,0 +1,16 @@
+{
+  "source_game_dir": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856\\小鸡",
+  "primary_model": "gpt-5.6-sol",
+  "document_names": [
+    "小鸡.docx",
+    "小鸡数值文档.docx"
+  ],
+  "hashes": {
+    "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+    "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+    "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+    "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11"
+  },
+  "primary_calls_during_freeze": 0,
+  "vision_calls_during_freeze": 0
+}

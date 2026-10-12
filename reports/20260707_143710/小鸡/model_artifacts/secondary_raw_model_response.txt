@@ -1,0 +1,328 @@
+model: deepseek-v4-pro
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "主模型报告结构清晰，识别了跨文档映射断裂、胜负判定边界、UI概率展示、异常恢复等关键问题，但遗漏了核心结算公式歧义，且对胜负判定冲突的严重度标注在维度中与top_blockers矛盾，需修正补充。",
+    "strengths": [
+      "覆盖了结算、异常恢复、UI展示、安全性等多个维度，问题定位较全面",
+      "提供了可测试的验收点和缺失信息清单，有助于后续测试设计",
+      "指出了需求文档与数值文档在难度、倍率、概率上的不一致，并给出了统一建议"
+    ],
+    "issues": [
+      "遗漏了总奖金计算公式中倍率定义（单格倍率连乘 vs 累积倍率）的歧义，将直接阻塞结算实现",
+      "安全性与反作弊维度中胜负判定边界冲突的严重度标注为“低”，与top_blockers中的“高”矛盾，且实际应属高阻塞",
+      "未深入分析数值文档中倍率表（表格2）的数学性质与需求文档公式的兼容性"
+    ],
+    "suggestion_level": "high",
+    "ready_for_direct_output": false,
+    "reason": "候选报告需补充核心公式歧义并修正严重度矛盾，当前版本不可直接交付业务方。"
+  },
+  "missed_findings": [
+    {
+      "missed_id": "MISSED_01",
+      "title": "总奖金计算公式中的倍率定义不明确",
+      "description": "需求文档公式为“总奖金 = 下注金额 × Π(已通过马路倍率)”，暗示每个格子的倍率需要连乘；但数值文档中倍率表数值（如难度1：1.01, 1.03, 1.06... 23.9）增长特征符合累积倍率，且UI中提现金额显示为20×1.03=20.6，也支持累积倍率。文档未明确说明倍率是每格独立倍率还是累积总倍率，将导致结算逻辑实现错误。",
+      "evidence": "小鸡.docx / 3.3 奖金计算系统；小鸡数值文档 / 表格2；小鸡.docx / 图片解析（提现20.6 USD）",
+      "risk": "若按连乘实现，总奖金将指数爆炸，与数值文档设计不符；若按累积倍率，需求文档公式需修正，测试验收无法进行。",
+      "suggestion": "统一定义为：'总奖金 = 下注金额 × 当前所在格子的累积倍率'，并在数值文档中明确标注表格内的倍率为累积倍率。需求文档公式应同步更新。",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "bet_config",
+        "primary_issue_ids": ["bet_config"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "cross_doc_mapping",
+        "primary_issue_ids": ["cross_doc_mapping"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "rtp_validation",
+        "primary_issue_ids": ["rtp_validation"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "ui_probability",
+        "primary_issue_ids": ["ui_probability"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "exception_recovery",
+        "primary_issue_ids": ["exception_recovery"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "client_server_boundary",
+        "primary_issue_ids": ["client_server_boundary"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "art_acceptance",
+        "primary_issue_ids": ["art_acceptance"],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "formula_ambiguity",
+        "source_missed_issue_ids": ["MISSED_01"],
+        "reason": "主模型遗漏了总奖金公式的倍率定义歧义，该问题阻塞结算实现。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档整体描述了‘小鸡过马路’的休闲博弈玩法，主流程（下注-前进-提现/失败）逻辑清晰，题材包装与UI示意较为完整。但核心结算公式存在歧义（倍率连乘 vs 累积倍率），胜负判定边界需明确服务端权威，且需求与数值文档在难度、倍率、概率的映射上存在断裂，需优先修复高阻塞缺口。",
+    "document_quality_score": "C",
+    "score_reason": "主玩法循环可理解，但存在结算公式定义歧义、胜负判定边界冲突等高阻塞缺口，需补充和修正后方可完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "总奖金计算公式中的倍率定义不明确",
+        "owner": "系统策划",
+        "why_now": "结算逻辑无法实现，可能造成总奖金计算错误，导致资金超发或玩家体验异常。"
+      },
+      {
+        "severity": "高",
+        "title": "胜负判定机制的客户端/服务端边界冲突",
+        "owner": "系统策划",
+        "why_now": "若客户端负责碰撞判定，将导致严重的作弊风险和结算不一致，必须明确服务端权威。"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "bet_config",
+            "canonical_title": "下注筹码配置示例冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "cross_document",
+            "severity": "中",
+            "title": "下注筹码配置示例与结构冲突",
+            "current_state": "需求文档示例筹码为3、5、10、20，数值文档示例为100、1000，两者不一致。",
+            "evidence": "小鸡.docx / 表格1；小鸡数值文档 / 表格1",
+            "risk": "配置表结构不明确，开发可能按错误示例实现默认值。",
+            "suggestion": "统一配置表示例，明确筹码列表为可配数组，并给出默认推荐值（如[3, 5, 10, 20]）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "cross_doc_mapping",
+            "canonical_title": "难度、倍率与概率的跨文档定义不一致",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "cross_document",
+            "severity": "中",
+            "title": "难度、倍率与概率的跨文档定义不一致",
+            "current_state": "《小鸡.docx》中简单难度的倍率池仅有4个示例数据（1.03x-1.17x），概率为20%-65%；而《小鸡数值文档》中难度1有30个关卡赔率（1.01-23.9），且采用MAX_MUL=24的CRASH公式。两者对难度、倍率、概率的定义未统一。此外，需求文档提到通关触发‘超级大奖’获得额外高额奖励，但数值文档未提供任何超级大奖的奖励规则或配置。",
+            "evidence": "小鸡.docx / 表格2、2.1 完整游戏流程（通关阶段）；小鸡数值文档 / 表格2、表格3、4. 撞击概率计算",
+            "risk": "开发和测试无法确定真实的赔率表和概率公式，主流程无法编译和验收；通关结算逻辑缺失，无法实现‘额外高额奖励’。",
+            "suggestion": "废弃需求文档中的简单难度4行示例数据，以数值文档的30关卡赔率表和CRASH公式为准，并在需求文档中明确引用。在数值文档中补充‘超级大奖’的奖励规则（如：固定金额、奖池比例或额外倍率），并明确触发条件（如通过第30关）。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "formula_ambiguity",
+            "canonical_title": "总奖金计算公式中的倍率定义不明确",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "cross_document",
+            "severity": "高",
+            "title": "总奖金计算公式中的倍率定义不明确",
+            "current_state": "需求文档公式为‘总奖金 = 下注金额 × Π(已通过马路倍率)’，暗示每格倍率连乘；但数值文档中倍率表数值（如1.01, 1.03... 23.9）增长特征符合累积倍率，且UI提现金额显示为20×1.03=20.6，支持累积倍率。文档未明确倍率是每格独立倍率还是累积总倍率。",
+            "evidence": "小鸡.docx / 3.3 奖金计算系统；小鸡数值文档 / 表格2；小鸡.docx / 图片解析（提现20.6 USD）",
+            "risk": "若按连乘实现，总奖金将指数爆炸，与数值文档设计不符；若按累积倍率，需求文档公式需修正，测试验收无法进行。",
+            "suggestion": "统一定义为：'总奖金 = 下注金额 × 当前所在格子的累积倍率'，并在数值文档中明确标注表格内的倍率为累积倍率。需求文档公式应同步更新。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "rtp_validation",
+            "canonical_title": "RTP目标与数值模型验证标准缺失",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "RTP目标与数值模型验证标准缺失",
+            "current_state": "数值文档提到‘不同RTP设置不同的必被撞击的几率’，但未给出具体的RTP目标值，也没有说明MAX_MUL、必撞概率、RTP三者之间的数学验证关系。",
+            "evidence": "小鸡数值文档 / 4. 撞击概率计算",
+            "risk": "数值模型无法验收，可能导致实际RTP偏离设计目标，造成运营亏损或玩家体验不佳。",
+            "suggestion": "补充各难度档位的RTP目标值（如95%），并提供RTP验证公式或模拟跑批工具，确保MAX_MUL和必撞概率的配置能收敛到目标RTP。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "ui_probability",
+            "canonical_title": "UI概率展示口径脱节",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "cross_document",
+            "severity": "中",
+            "title": "UI“被击中概率”展示口径与底层算法脱节",
+            "current_state": "UI界面显示‘被击中的概率’，但底层算法是CRASH公式（标准爆炸倍数）加上首次/非首次必撞概率（3%/1%），文档未说明UI上的概率值是如何计算和展示的。",
+            "evidence": "小鸡.docx / 图片解析（图片1-8）；小鸡数值文档 / 4. 撞击概率计算",
+            "risk": "UI展示概率与实际结算概率不符，引发玩家客诉和信任危机，测试无法设计验收用例。",
+            "suggestion": "明确UI概率的计算公式（如：当前关卡的必撞概率 + 标准爆炸倍数小于当前关卡倍率的概率），或明确该概率仅为‘当前关卡基础必撞概率’的展示，并在UI上增加说明文案。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "exception_recovery",
+            "canonical_title": "异常恢复规则缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "局内状态机与异常恢复（断线/重进/重复点击）规则缺失",
+            "current_state": "局内包含多次点击（前进、提现），文档未说明断线重连、重进、或在‘提现确认框’时退出的状态恢复规则。",
+            "evidence": "小鸡.docx / 2.1 完整游戏流程、3.4 提现与结算系统",
+            "risk": "玩家可能在提现确认中退出以逃避失败，或断线重连后状态错乱，导致资金损失或客诉。",
+            "suggestion": "补充玩法专属异常规则：如断线重连后恢复当前局状态（保留已通关格数和倍率）；提现确认中退出视为放弃提现，继续游戏或默认失败；重复点击提现/开始需做幂等拦截。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "client_server_boundary",
+            "canonical_title": "胜负判定边界冲突",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "cross_document",
+            "severity": "高",
+            "title": "胜负判定机制的客户端/服务端边界冲突",
+            "current_state": "需求文档描述‘抵达马路后触发碰撞检测’、‘骆驼与车辆碰撞盒重叠即判定失败’，暗示客户端进行碰撞判定；但数值文档明确胜负由服务端CRASH算法（随机爆炸倍数+必撞概率）决定。此外，文档未明确开局扣款时机、本金冻结/扣除方式，以及失败时是仅清零本局浮动奖金还是扣除本金。",
+            "evidence": "小鸡.docx / 3.2 移动与碰撞系统；小鸡数值文档 / 4. 撞击概率计算；小鸡.docx / 2.1 完整游戏流程、3.4 提现与结算系统；小鸡数值文档 / 1. 游戏简介",
+            "risk": "若客户端负责碰撞判定，将导致严重的作弊风险（如修改碰撞盒）和结算不一致；服务端算法无法在客户端碰撞盒中体现。资金链路不明确可能造成超发或资产异常。",
+            "suggestion": "明确服务端权威：服务端根据CRASH算法计算当前关卡是否被撞，下发结果给客户端；客户端仅根据服务端结果播放碰撞或安全通过的动画，取消客户端碰撞盒判定逻辑。同时明确开局扣款时机（如点击开始时扣除本金并冻结），失败结算逻辑（如扣除本金，本局浮动奖金清零），提现到账目标（如钱包余额）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "art_acceptance",
+            "canonical_title": "角色形象验收标准模糊",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "角色形象与题材包装的一期验收标准模糊",
+            "current_state": "文档4.1节描述核心形象为‘卡通骆驼’，但55段备注‘一开始美术可以先用默认的小鸡形象’，且所有解析图片中均为小鸡形象。",
+            "evidence": "小鸡.docx / 4.1 核心形象、段落55、图片解析",
+            "risk": "一期验收标准不明确，可能导致美术资源返工或验收扯皮。",
+            "suggestion": "明确一期上线的验收角色形象（如：一期使用小鸡，二期替换为骆驼），并统一文档描述与图片示例。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "倍率表定义（单格倍率连乘 vs 累积倍率）及对应的总奖金计算公式修正",
+      "开局扣款与本金冻结的具体时机与逻辑",
+      "失败结算时，是扣除本金还是仅清零本局浮动奖金",
+      "断线重连、重进、提现确认中退出的状态恢复规则",
+      "UI“被击中概率”的具体计算公式与展示口径",
+      "“超级大奖”的额外奖励公式或配置规则",
+      "各难度档位的RTP目标值及验证公式",
+      "IN/OUT状态条、粉色冰淇淋图标等UI元素的功能说明",
+      "多人体验和剧情关卡是否影响一期核心玩法验收边界"
+    ],
+    "test_points": {
+      "功能验证": [
+        "开局扣款与余额冻结校验",
+        "局内倍率累加（或累积倍率）与总奖金计算",
+        "提现结算与资金到账校验",
+        "失败清零与本金扣除校验",
+        "通关超级大奖发放校验"
+      ],
+      "异常操作": [
+        "断线重连后局内状态恢复",
+        "提现确认框中强制退出的状态处理",
+        "重复点击开始/提现按钮的幂等拦截",
+        "结算过程中退出游戏的资金状态"
+      ],
+      "兼容性": [
+        "弱网环境下的动画播放与结算延迟",
+        "不同分辨率下的UI适配与倍率显示"
+      ],
+      "安全专项": [
+        "服务端下发结果校验（防篡改）",
+        "客户端修改碰撞盒/倍率/概率的作弊测试",
+        "并发请求下的扣款与派奖幂等性"
+      ],
+      "回归影响": [
+        "无"
+      ],
+      "性能与稳定性": [
+        "连续快速点击前进的动画与逻辑性能",
+        "长时间挂机或连续多局的内存泄漏检测"
+      ],
+      "用户体验": [
+        "新手引导与规则说明的清晰度",
+        "概率展示与玩家心理预期的匹配度",
+        "失败与通关反馈的情绪体验"
+      ]
+    },
+    "quality_notes": [
+      "图片解析中提到的UI元素（如IN/OUT状态条、粉色冰淇淋图标、顶部蓝色小货车图标等）在文档正文中未提及，需确认是否为废弃UI或遗漏说明。",
+      "需求文档中提到的‘多人体验’和‘剧情关卡’属于迭代规划，需明确是否影响一期核心玩法的验收边界。",
+      "主模型首版报告中安全性与反作弊维度严重度标注为‘低’与top_blockers的‘高’矛盾，已修正为‘高’。",
+      "所有倍率相关实现须以数值文档的累积倍率表为准，需求文档公式需同步修正。"
+    ],
+    "image_analysis_gaps": [
+      "图片中的‘IN/OUT’状态条、粉色冰淇淋图标、顶部蓝色小货车图标等元素在文档正文中无对应说明，存在解析盲区。",
+      "图片中显示的‘低-高’难度滑块与‘简单/中等/困难/极限’按钮同时存在，需确认两者的交互关系与映射逻辑。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选报告需补充核心公式歧义并修正严重度矛盾，当前版本不可直接交付业务方。"
+  },
+  "review_notes": [
+    "新增finding 'formula_ambiguity' 解决总奖金公式歧义，该问题为高阻塞，主模型遗漏。",
+    "将 'client_server_boundary' 的严重度从低提升为高，并统一top_blockers，修正了主模型报告中的矛盾。",
+    "在 'cross_doc_mapping' 中明确指出了超级大奖缺失，并强化了建议。",
+    "所有kept finding均沿用主模型issue_id，未做拆分或合并。",
+    "candidate_report 整体结构保持与主模型一致，仅在必要处补充和修正。"
+  ]
+}

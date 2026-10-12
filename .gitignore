@@ -1,2 +1,20 @@
 # Created by venv; see https://docs.python.org/3/library/venv.html
 *
+
+# 本地虚拟环境、日志和临时缓存
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.log.*
+[Ll][Oo][Gg]/
+[Ll][Oo][Gg][Ss]/
+.pytest_cache/
+.pycache_tmp/
+.tmp_pycache/
+.cache/
+.runtime/
+/.tmp_*/
+/C_tmp_preview_assets/

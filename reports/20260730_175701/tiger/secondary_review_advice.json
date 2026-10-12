@@ -1,0 +1,258 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较好，准确识别了核心赔率冲突、奖池口径缺失、概率配置冲突等关键问题，结构清晰、证据引用规范。但存在两个主要缺陷：1）将'赔率全局冲突'这一致命结算问题降级为LOGIC-03的次要症状，未将其提升为独立top blocker；2）遗漏了'兜底逻辑'自身的内在矛盾（当所有选项都超过80%奖池时，'选赔付最少'仍可能导致透支），这是比'实时总奖池口径'更前置的逻辑漏洞。",
+    "strengths": [
+      "准确识别'实时总奖池'口径缺失这一核心结算阻塞项",
+      "发现正文与配置表在'正常状态偏移概率'上的直接冲突（60% vs 20%）",
+      "发现奖池透支缺乏熔断机制的经济安全风险",
+      "发现游戏记录/开奖分析时间范围在正文与UI间的冲突",
+      "问题结构按六维度组织清晰，证据引用格式规范"
+    ],
+    "issues": [
+      "将'赔率全局冲突（2.9 vs 3.0 vs 2.5）'埋入LOGIC-03作为次要症状，未识别为独立top blocker，导致top_blockers遗漏最致命的结算公式冲突",
+      "未发现'兜底逻辑'自身的内在矛盾：当所有选项赔付都>80%奖池时，'选赔付最少'仍可能透支，与'允许透支但无上限'形成双重漏洞",
+      "LOGIC-03混合了'去重规则缺失'和'赔率全局冲突'两个不同根因，前者是中风险边界问题，后者是高风险结算事故",
+      "未识别'亏损大R/预流失用户'时间窗口边界（如注册不足7天/30天用户如何判定）"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已将赔率冲突提升为独立top blocker，补充了兜底逻辑内在矛盾这一高信号遗漏，并保留了主模型其他有效发现，结构完整、证据可追踪，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已将赔率冲突提升为独立top blocker，补充了兜底逻辑内在矛盾这一高信号遗漏，并保留了主模型其他有效发现，结构完整、证据可追踪，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "LOGIC-03当前混合了'赔率全局冲突'（高风险）和'去重规则缺失'（中风险）两个不同根因，建议在后续迭代中拆分为两个独立issue，但本轮为保持与primary结构一致，仍保留原issue_id并在current_state中分点展开。",
+    "表格5中'亏损大R-过去7日累计亏损'的初始数值（5000000 vs 50000000）存在疑似笔误，建议策划确认最终值。",
+    "图片22（机器人投放流程图）若涉及核心匹配逻辑，需补充高清版本或文字说明，否则可能遗漏匹配相关的边界条件。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "primary_issue_ids": [
+        "LOGIC-03"
+      ],
+      "recommendation": "LOGIC-03当前混合了'去重规则缺失'（中风险）和'赔率全局冲突'（高风险）两个不同根因。建议在candidate中保留原issue_id，但在current_state中分点展开，并将'赔率全局冲突'提升为独立top blocker。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED-01",
+      "title": "兜底逻辑自身存在内在矛盾：当所有选项赔付均>80%奖池时，'选赔付最少'仍可能导致奖池透支",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "severity": "高",
+      "current_state": "正文3.7.3/3.7.4/3.8.3的兜底规则为：'若都不够赔付，选择赔付最少的开'。但当奖池处于紧张状态（如回收期）且所有选项赔付均超过80%奖池时，'赔付最少'的选项仍可能远超奖池余额，导致必然透支。文档仅说明'允许透支'但未说明此时是否仍按此规则执行，或应触发强制回收/无开奖。",
+      "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3 兜底条款",
+      "risk": "兜底逻辑在极端情况下无法真正'兜底'，反而成为透支的合法路径，与SEC-01的熔断缺失形成叠加风险。",
+      "suggestion": "明确当所有选项赔付均>80%奖池时的最终处理：1）是否允许继续透支开出；2）还是强制进入'无开奖/退回本金'状态；3）或设定绝对赔付上限（如不超过奖池余额的120%）。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "issue_id": "MISSED-02",
+      "title": "特殊人群判定的时间窗口边界未定义（注册不足7天/30天的用户如何处理）",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "document",
+      "severity": "中",
+      "current_state": "正文3.8.1.2定义'亏损大R'需'过去7日累计亏损≥50000000'；3.8.1.3定义'预流失用户'需'过去15天有投入且环比下降≥70%'。但未说明：若用户注册不足7天/15天，是否直接排除判定？还是按实际天数折算？",
+      "evidence": "tiger需求文档.docx / 3.8.1.2、3.8.1.3",
+      "risk": "新用户可能因时间窗口不足被错误排除在保护策略外，或开发实现时各自理解不一致。",
+      "suggestion": "补充说明：'若用户注册/首次投入时间不足判定窗口（7天/15天/30天），则不参与该类人群判定'或给出折算规则。",
+      "planner_role": "系统策划",
+      "confidence": "中",
+      "blocking": "阻塞测试用例设计"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY-02",
+        "primary_issue_ids": [
+          "CLARITY-02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC-02",
+        "primary_issue_ids": [
+          "LOGIC-02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC-01",
+        "primary_issue_ids": [
+          "LOGIC-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC-03",
+        "primary_issue_ids": [
+          "LOGIC-03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC-04",
+        "primary_issue_ids": [
+          "LOGIC-04"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST-01",
+        "primary_issue_ids": [
+          "TEST-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC-01",
+        "primary_issue_ids": [
+          "SEC-01"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSED-01"
+        ]
+      },
+      {
+        "candidate_issue_id": "UX-01",
+        "primary_issue_ids": [
+          "UX-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC-05",
+        "source_missed_issue_ids": [
+          "MISSED-02"
+        ],
+        "reason": "补充特殊人群判定的时间窗口边界问题，属于中风险清晰度缺口"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MISSED-01"
+  ],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已将赔率冲突提升为独立top blocker，补充了兜底逻辑内在矛盾这一高信号遗漏，并保留了主模型其他有效发现，结构完整、证据可追踪，可直接交付业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

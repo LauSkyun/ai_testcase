@@ -1,0 +1,100 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_2",
+    "expected_primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "expected_echo": "protocol_profile=phase3_v1_2; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "primary_report_hash_after": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "protected_fields_hash_before": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "protected_fields_hash_after": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 1,
+  "abstained_count": 0,
+  "accepted_corrections": [],
+  "rejected_corrections": [
+    {
+      "correction_id": "CR-CORE_BET_CONFIG_MISMATCH",
+      "challenge_id": "CH-CORE_BET_CONFIG_MISMATCH",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "correction_disposition": "clarify",
+      "source_provenance": "mixed",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1；小鸡.docx / 2.2 详细规则，表格1",
+      "rationale": "数值文档已声明下注列表为示例，不存在三端逻辑冲突，但配置表仍需更新为最终业务数值以指导开发。",
+      "residual_issue": "数值文档的下注规则表格仍保留示例数值（100/1000），需在开发前替换为最终业务配置值，并明确货币单位与业务线自定义规则。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，段落6及表格1（明确声明100、1000仅为示例）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+        "risk": "数值文档的下注规则表格仍保留示例数值，若开发前未替换为最终业务配置值，可能导致前后端配置对齐遗漏。",
+        "suggestion": "以UI和实际需求为准（3、5、10、20），在数值文档中填入最终下注配置值，并明确筹码的货币单位与业务线自定义规则。"
+      },
+      "replacement_findings": [],
+      "correction_type": "clarify",
+      "before": {
+        "issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "canonical_title": "下注金额或档位配置口径不一致",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "下注筹码数值配置冲突",
+        "current_state": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，表格1（下注值100、1000）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+        "evidence": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，表格1（下注值100、1000）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+        "risk": "需求、数值、UI三端筹码配置不一致，导致前后端无法对齐，阻塞下注系统开发与数值配置。",
+        "suggestion": "统一三端筹码配置。建议以UI和实际需求为准（3、5、10、20），修正数值文档中的下注规则表格，并明确筹码的货币单位与业务线自定义规则。",
+        "planner_role": "待定",
+        "confidence": "中",
+        "blocking": "阻塞测试用例设计",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      "after_preview": {
+        "disposition": "clarify",
+        "editable_finding_preview": {
+          "issue_id": "CORE_BET_CONFIG_MISMATCH",
+          "canonical_title": "下注金额或档位配置口径不一致",
+          "primary_dimension": "清晰度与完整性",
+          "evidence_scope": "document",
+          "title": "下注筹码数值配置冲突",
+          "current_state": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，段落6及表格1（明确声明100、1000仅为示例）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+          "evidence": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，表格1（下注值100、1000）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+          "risk": "数值文档的下注规则表格仍保留示例数值，若开发前未替换为最终业务配置值，可能导致前后端配置对齐遗漏。",
+          "suggestion": "以UI和实际需求为准（3、5、10、20），在数值文档中填入最终下注配置值，并明确筹码的货币单位与业务线自定义规则。",
+          "planner_role": "待定",
+          "confidence": "中"
+        },
+        "protected_fields_locked": true,
+        "protected_fields_note": "severity/blocking remain unchanged until separate human approval"
+      },
+      "applied_to_report": false,
+      "validation_status": "rejected",
+      "validation_reasons": [
+        "clarify_requires_original_claim_still_valid"
+      ]
+    }
+  ],
+  "abstained_corrections": []
+}

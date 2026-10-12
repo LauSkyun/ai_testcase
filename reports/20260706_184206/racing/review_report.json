@@ -1,0 +1,142 @@
+{
+  "report": {
+    "overall_evaluation": "未完成 AI 评审：模型返回不是合法 JSON：Expecting ',' delimiter: line 242 column 2 (char 8881)",
+    "document_quality_score": "B",
+    "score_reason": "主流程基本可落地，但仍有一些中风险问题需要补充澄清。",
+    "top_blockers": [],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "MISS_02",
+            "title": "引导局是否使用真实资金未明确，存在误扣真实资产风险",
+            "canonical_title": "引导局是否使用真实资金未明确，存在误扣真实资产风险",
+            "primary_dimension": "可测试性与验收标准",
+            "current_state": "引导流程中用户下注100金币，平台下注宝石显示100万，但未说明是否扣除用户真实资产，可能导致强制引导时误扣真实资金。",
+            "evidence": "musee游戏Racing.docx / 3.2蒙层引导 段落18-20",
+            "risk": "引导流程中用户下注100金币，平台下注宝石显示100万，但未说明是否扣除用户真实资产，可能导致强制引导时误扣真实资金。",
+            "severity": "低",
+            "source_missed_issue_id": "MISS_02",
+            "source_issue_id": "MISS_02",
+            "evidence_scope": "document",
+            "confidence": "中",
+            "blocking": "建议优化",
+            "planner_role": "待定",
+            "suggestion": "",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "MISS_01",
+            "title": "假数据（人数/金额）与真实赔率计算的数据源隔离未明确",
+            "canonical_title": "假数据（人数/金额）与真实赔率计算的数据源隔离未明确",
+            "primary_dimension": "安全性与反作弊",
+            "current_state": "文档明确区分真实人数与假人数，但未说明实时赔率计算公式中的“合计下注”和“本选项下注”必须基于真实数据，假数据仅用于展示，存在被误用导致结算错误的风险。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落22-23；图片6",
+            "risk": "文档明确区分真实人数与假人数，但未说明实时赔率计算公式中的“合计下注”和“本选项下注”必须基于真实数据，假数据仅用于展示，存在被误用导致结算错误的风险。",
+            "severity": "中",
+            "source_missed_issue_id": "MISS_01",
+            "source_issue_id": "MISS_01",
+            "evidence_scope": "document",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "planner_role": "待定",
+            "suggestion": "",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "模型返回不是合法 JSON：Expecting ',' delimiter: line 242 column 2 (char 8881)"
+    ],
+    "test_points": {
+      "功能验证": [],
+      "异常操作": [],
+      "兼容性": [],
+      "安全专项": [],
+      "回归影响": [],
+      "性能与稳定性": [],
+      "用户体验": []
+    },
+    "quality_notes": [
+      "模型返回不是合法 JSON：Expecting ',' delimiter: line 242 column 2 (char 8881)",
+      "dual_pass 复核备注：主模型报告中的 cross_document_issues 已合并至清晰度与完整性维度下的“赔率体系冲突”问题，避免重复。",
+      "dual_pass 复核备注：新增了“假数据隔离缺失”问题，归属安全性与反作弊，以覆盖数据源隔离风险。",
+      "dual_pass 复核备注：在“数值变量缺失”中补充了开奖总时间计算方式未明确的说明。",
+      "dual_pass 复核备注：在“引导误扣款”中增加了引导局资金属性未明确的描述。",
+      "dual_pass 复核备注：所有 kept finding 均保持原 issue_id，仅做了最小化修改，未破坏主模型问题骨架。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [],
+    "raw_response": "{\n  \"overall_evaluation\": \"文档描述了Racing游戏的核心对赌玩法、干预逻辑及UI交互，主流程基本可理解。但核心赔率计算存在需求与数值双轨制冲突，且“假赔率”展示、多重干预逻辑优先级、数值公式变量定义等关键边界缺失，存在较高的合规客诉风险与开发阻塞。\",\n  \"document_quality_score\": \"C\",\n  \"score_reason\": \"主流程可落地，但赔率公式跨文档冲突、干预逻辑优先级矛盾及核心数值变量缺失等高风险问题较多，需补充明确后才能进入完整开发与测试设计。\",\n  \"top_blockers\": [\n    {\n      \"severity\": \"高\",\n      \"title\": \"赔率计算双轨制冲突及“假赔率”展示结算口径风险\",\n      \"owner\": \"系统策划\",\n      \"why_now\": \"需求与数值文档的赔率公式根本冲突，且“假赔率”若用于展示而按“实际赔率”结算将引发严重合规与客诉事故，直接阻塞结算链路开发。\"\n    },\n    {\n      \"severity\": \"高\",\n      \"title\": \"多重开奖干预逻辑优先级未定义及边界矛盾\",\n      \"owner\": \"系统策划\",\n      \"why_now\": \"奖池状态、特殊用户、白名单三种干预逻辑同时触发时互斥规则缺失，且“待补充”状态下的兜底逻辑违背回血初衷，导致开奖结果不可控。\"\n    },\n    {\n      \"severity\": \"高\",\n      \"title\": \"核心数值公式变量定义缺失及“干扰指数”映射不明\",\n      \"owner\": \"数值策划\",\n      \"why_now\": \"Odds_X公式中的T/r/W_X等变量无业务定义，“干扰指数”与开奖时间公式中的Luck是否等价未说明，导致无法配表和验收。\"\n    }\n  ],\n  \"dimensions\": [\n    {\n      \"name\": \"清晰度与完整性\",\n      \"dimension_note\": \"未发现明显问题\",\n      \"findings\": [\n        {\n          \"issue_id\": \"赔率体系冲突\",\n          \"canonical_title\": \"赔率计算双轨制冲突及“假赔率”展示结算口径风险\",\n          \"primary_dimension\": \"清晰度与完整性\",\n          \"evidence_scope\": \"cross_document\",\n          \"severity\": \"高\",\n          \"title\": \"赔率计算双轨制冲突及“假赔率”展示结算口径风险\",\n          \"current_state\": \"需求文档定义实时赔率为“合计下注/本选项下注*系数”（类似 pari-mutuel），而数值文档定义为 `Odds_X = ((T*(1-r))/W_X)*γ`，且数值文档提出分“实际赔率”和“假赔率”。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落2-5，图片1\",\n          \"risk\": \"两套公式冲突导致开发无法实现；若客户端展示“假赔率”而服务端按“实际赔率”结算，将引发严重客诉与合规风险。\",\n          \"suggestion\": \"统一赔率计算公式，废弃或明确需求文档中的简单反比公式；明确客户端展示的赔率类型，严禁“展示假赔率、按真赔率结算”；若需展示假赔率，必须明确其仅用于未下注时的氛围展示，下注后必须展示真实预期赔率。\",\n          \"planner_role\": \"系统策划\",\n          \"confidence\": \"高\",\n          \"blocking\": \"阻塞开发\"\n        },\n        {\n          \"issue_id\": \"数值变量缺失\",\n          \"canonical_title\": \"核心数值公式变量定义缺失及“干扰指数”映射不明\",\n          \"primary_dimension\": \"清晰度与完整性\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"高\",\n          \"title\": \"核心数值公式变量定义缺失及“干扰指数”映射不明\",\n          \"current_state\": \"数值文档给出 `Odds_X` 和 `γ` 公式，但未定义 T, r, W_X, α, β 的具体业务含义。需求文档的“干扰指数”与开奖时间公式 `T = L / [V * K * Luck]` 中的 `Luck` 是否等价未说明。\",\n          \"evidence\": \"Racing数值文档.docx / 图片1、图片2；musee游戏Racing.docx / 3.4开奖逻辑 段落36、40、43\",\n          \"risk\": \"数值策划无法配表，程序无法编写公式，测试无法验收数值准确性。\",\n          \"suggestion\": \"补充数值公式变量字典，明确每个变量的取值范围、默认值及业务含义；明确“干扰指数”在开奖时间公式中的具体作用机制（是直接替换Luck，还是作为K的修正系数）。\",\n          \"planner_role\": \"数值策划\",\n          \"confidence\": \"高\",\n          \"blocking\": \"阻塞开发\"\n        }\n      ]\n    },\n    {\n      \"name\": \"逻辑一致性与数值平衡\",\n      \"dimension_note\": \"未发现明显问题\",\n      \"findings\": [\n        {\n          \"issue_id\": \"干预逻辑矛盾\",\n          \"canonical_title\": \"多重开奖干预逻辑优先级未定义及“待补充”状态逻辑矛盾\",\n          \"primary_dimension\": \"逻辑一致性与数值平衡\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"高\",\n          \"title\": \"多重开奖干预逻辑优先级未定义及“待补充”状态逻辑矛盾\",\n          \"current_state\": \"文档定义了奖池状态、新用户/预流失用户、白名单三种干预逻辑，但未说明同时触发时的优先级。且“待补充”状态下，当“下注人数不符合要求时按概率开”，违背了“侧重开最少”以回血的初衷。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.4开奖逻辑 段落40-49；3.5 段落51-57；3.6 段落58-59\",\n          \"risk\": \"干预逻辑冲突导致开奖结果不可控，无法实现数值调控目标；测试无法设计覆盖用例。\",\n          \"suggestion\": \"明确三种干预逻辑的互斥与优先级规则（如：白名单 > 特殊用户 > 奖池状态）；修正“待补充”状态下的兜底逻辑，确保在人数不足时仍能通过地形概率或干扰指数向“低赔付”选项倾斜。\",\n          \"planner_role\": \"系统策划\",\n          \"confidence\": \"高\",\n          \"blocking\": \"阻塞测试用例设计\"\n        },\n        {\n          \"issue_id\": \"除零异常\",\n          \"canonical_title\": \"奖池状态计算公式存在分母为零的异常风险\",\n          \"primary_dimension\": \"逻辑一致性与数值平衡\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"中\",\n          \"title\": \"奖池状态计算公式存在分母为零的异常风险\",\n          \"current_state\": \"奖池状态 = ((今+昨收入) - (今+昨支出)) / (今+昨收入)。若开局或长时间无人下注，收入为0，导致除零错误。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.4开奖逻辑 段落39\",\n          \"risk\": \"服务端计算崩溃或状态机卡死，导致游戏无法开奖。\",\n          \"suggestion\": \"增加分母为0时的兜底逻辑（如：当收入为0时，默认状态为“待补充”或“正常”）。\",\n          \"planner_role\": \"程序\",\n          \"confidence\": \"高\",\n          \"blocking\": \"阻塞开发\"\n        }\n      ]\n    },\n    {\n      \"name\": \"可测试性与验收标准\",\n      \"dimension_note\": \"未发现明显问题\",\n      \"findings\": [\n        {\n          \"issue_id\": \"引导误扣款\",\n          \"canonical_title\": \"新手引导强制交互缺乏跳过机制，存在误扣款风险\",\n          \"primary_dimension\": \"可测试性与验收标准\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"中\",\n          \"title\": \"新手引导强制交互缺乏跳过机制，存在误扣款风险\",\n          \"current_state\": \"蒙层引导第2步仅高亮100金币，倒计时5秒自动进入下一步；第3步高亮超跑，倒计时结束自动下注。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.2蒙层引导 段落17-18\",\n          \"risk\": \"用户若不想下注或想选其他选项，倒计时自动推进会导致强制扣款，引发客诉。\",\n          \"suggestion\": \"在引导流程中增加“跳过”按钮，或取消倒计时自动下注的机制，改为用户必须手动点击确认。\",\n          \"planner_role\": \"系统策划\",\n          \"confidence\": \"高\",\n          \"blocking\": \"建议优化\"\n        }\n      ]\n    },\n    {\n      \"name\": \"跨系统影响与兼容性\",\n      \"dimension_note\": \"未发现明显问题\",\n      \"findings\": [\n        {\n          \"issue_id\": \"半屏适配\",\n          \"canonical_title\": \"半屏模式下开奖动画与结果弹窗的UI适配规则缺失\",\n          \"primary_dimension\": \"跨系统影响与兼容性\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"中\",\n          \"title\": \"半屏模式下开奖动画与结果弹窗的UI适配规则缺失\",\n          \"current_state\": \"需求提到半屏需浓缩交互，但未说明开奖阶段（5S）和结果弹窗（5S）在半屏下的展示规则、层级及是否会被语聊房UI遮挡。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.1首页顶栏板块 段落6-7\",\n          \"risk\": \"半屏下开奖动画无法完整展示，或结果弹窗被遮挡导致用户不知道输赢，影响核心体验。\",\n          \"suggestion\": \"补充半屏模式下的开奖动画缩放/裁剪规则，明确结果弹窗的层级（需置顶覆盖语聊房UI）及关闭方式。\",\n          \"planner_role\": \"系统策划\",\n          \"confidence\": \"中\",\n          \"blocking\": \"建议优化\"\n        }\n      ]\n    },\n    {\n      \"name\": \"安全性与反作弊\",\n      \"dimension_note\": \"未发现明显问题\",\n      \"findings\": [\n        {\n          \"issue_id\": \"赔付兜底\",\n          \"canonical_title\": \"单局最大赔付上限与奖池负数兜底机制缺失\",\n          \"primary_dimension\": \"安全性与反作弊\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"高\",\n          \"title\": \"单局最大赔付上限与奖池负数兜底机制缺失\",\n          \"current_state\": \"需求明确“单选项最多下注100万”，且“奖池可以接受是负数”，但未定义单局/单用户的最大赔付上限，也未说明奖池极度亏损时的赔付资金来源。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.3下注部分 段落32；3.4开奖逻辑 段落37\",\n          \"risk\": \"若出现极端赔率或大R集中下注冷门选项，可能导致单局赔付远超平台承受能力，造成严重资金事故。\",\n          \"suggestion\": \"明确单局/单用户最大赔付上限（MAX_MUL）；明确奖池为负数时的赔付兜底策略（如：由平台资金垫付，或触发熔断机制限制赔付）。\",\n          \"planner_role\": \"系统策划\",\n          \"confidence\": \"高\",\n          \"blocking\": \"阻塞开发\"\n        }\n      ]\n    },\n    {\n      \"name\": \"用户体验与游戏性\",\n      \"dimension_note\": \"未发现明显问题\",\n      \"findings\": [\n        {\n          \"issue_id\": \"默认值误导\",\n          \"canonical_title\": \"统计板块无数据时的默认展示值与实际概率模型脱节\",\n          \"primary_dimension\": \"用户体验与游戏性\",\n          \"evidence_scope\": \"document\",\n          \"severity\": \"低\",\n          \"title\": \"统计板块无数据时的默认展示值与实际概率模型脱节\",\n          \"current_state\": \"统计板块规定无数据时胜率展示33.3%，赔率展示3.3。但实际开奖受地形、干预逻辑影响，并非均等概率。\",\n          \"evidence\": \"musee游戏Racing.docx / 3.1首页顶栏板块 段落9、29\",\n          \"risk\": \"默认值误导用户认为各车型胜率均等，与实际受干预的开奖结果不符，影响用户下注决策。\",\n          \"suggestion\": \"将无数据时的默认展示值修改为基于基础速度/地形系数的理论期望值，或直接隐藏/显示为“--”，避免误导。\",\n          \"planner_role\": \"系统策划\",\n          \"confidence\": \"中\",\n          \"blocking\": \"建议优化\"\n        }\n      ]\n    }\n  ],\n  \"cross_document_issues\": [\n    {\n      \"issue_id\": \"跨文档赔率冲突\",\n      \"title\": \"需求文档与数值文档的赔率计算公式存在根本性冲突\",\n      \"evidence\": \"musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 图片1\",\n      \"risk\": \"需求文档采用简单的资金池反比模型（合计/本选项*系数），数值文档采用包含抽水、gamma膨胀的复杂模型（Odds_X公式）。两套公式无法同时实现，开发无法确定以哪个为准，直接阻塞结算链路开发。\",\n      \"suggestion\": \"组织系统与数值策划对齐，废弃需求文档中的简单反比公式，统一采用数值文档的 Odds_X 模型，并在需求文档中同步更新公式描述及变量说明。\"\n    }\n  ],\n  \"missing_information\": [\n    \"数值公式 `Odds_X = ((T*(1-r))/W_X)*γ` 中 T, r, W_X, α, β 的具体业务含义、取值范围及默认值。\",\n    \"“干扰指数”与开奖时间公式 `T = L / [V * K * Luck]` 中 `Luck` 变量的映射关系及具体作用机制。\",\n    \"奖池状态、特殊用户、白名单三种开奖干预逻辑同时触发时的优先级与互斥规则。\",\n    \"单局/单用户的最大赔付上限（MAX_MUL）及奖池为负数时的资金兜底策略。\",\n    \"半屏模式下开奖动画与结果弹窗的UI适配、层级覆盖及关闭规则。\"\n  ],\n  \"test_points\": {\n    \"功能验证\": [\n      \"验证下注、扣款、开奖动画、结算发奖的完整主流程。\",\n      \"验证不同奖池状态（充裕、正常、待补充）下的干预逻辑是否按预期倾斜。\",\n      \"验证新用户、预流失用户、白名单用户的特征判定及开奖干预生效情况。\",\n      \"验证统计板块（胜率、地形速度、榜单）的数据读取与展示准确性。\"\n    ],\n    \"异常操作\": [\n      \"验证奖池收入为0时，状态计算公式的除零兜底逻辑。\",\n      \"验证单选项下注达到100万上限后的拦截提示与状态保持。\",\n      \"验证新手引导倒计时自动推进时，用户强制退出或切换页面的资产状态。\"\n    ],\n    \"兼容性\": [\n      \"验证全屏与半屏模式下的UI布局、按钮交互及开奖动画展示。\",\n      \"验证半屏模式下结果弹窗与语聊房UI的层级覆盖关系。\",\n      \"验证不同分辨率下的蒙层引导高亮区域对齐情况。\"\n    ],\n    \"安全专项\": [\n      \"验证客户端展示的赔率与服务端实际结算赔率是否严格一致，排查“假赔率”客诉风险。\",\n      \"验证极端下注比例下，最低赔率（1.02）及 gamma 系数膨胀逻辑的生效情况。\",\n      \"验证大R集中下注冷门选项时，单局赔付是否触发最大赔付上限兜底。\"\n    ],\n    \"回归影响\": [\n      \"验证音效开关状态在跨局、重启游戏后的持久化读取。\",\n      \"验证下注档位记忆功能（默认选择最后一次下注的筹码）。\"\n    ],\n    \"性能与稳定性\": [\n      \"验证下注人数/金额假数据乘系数计算及高频刷新（[001]S）时的客户端性能。\",\n      \"验证开奖阶段3段地形动画播放及结果弹窗时的帧率稳定性。\"\n    ],\n    \"用户体验\": [\n      \"验证新手引导流程的流畅度及强制交互的合理性。\",\n      \"验证结果弹窗中TOP3用户昵称过长时的截断/省略号展示。\",\n      \"验证无数据时统计板块默认值（33.3%和3.3）的用户理解成本。\"\n  ],\n  \"quality_notes\": [\n    \"文档中存在大量占位符（如[001]、[002]、[003]），需在开发前替换为具体数值或明确配置表映射。\",\n    \"数值文档中的公式图片清晰度较高，但缺乏配套的文字变量解释，需补充变量字典。\"\n  ],\n  \"image_analysis_gaps\": [\n    \"图片3（Stock Car 车型详情页）下方的地形与速度表格数据行完全空白，无法读取具体数值，需确认是否为占位图或数据缺失。\",\n    \"图片5（STEP 5 结算界面）中部分中文文字及用户昵称区域因分辨率较低无法清晰辨认，可能影响UI验收标准的确认。\"\n  ]\n}",
+    "review_mode": "dual_pass",
+    "primary_model": "gpt-5.4",
+    "secondary_model": "deepseek-v4-pro"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 1,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 64,
+    "total_tables": 1,
+    "total_images": 16
+  },
+  "documents": [
+    {
+      "name": "musee游戏Racing.docx",
+      "kind": "mixed",
+      "paragraph_count": 59,
+      "table_count": 0,
+      "image_count": 13,
+      "errors": []
+    },
+    {
+      "name": "Racing数值文档.docx",
+      "kind": "numeric",
+      "paragraph_count": 5,
+      "table_count": 1,
+      "image_count": 3,
+      "errors": []
+    }
+  ]
+}

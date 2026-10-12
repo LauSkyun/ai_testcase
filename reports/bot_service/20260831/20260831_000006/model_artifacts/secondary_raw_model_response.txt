@@ -1,0 +1,258 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了 Pair Plus 赔率表冲突、Call 扣款基数歧义、干预逻辑死锁等核心高风险问题，覆盖质量较高。但在 payout_timing（中奖金额入账时机）和 pool_negative_floor（奖池负值透支下限与熔断条件）两个 control 上存在遗漏，需补充后方可输出最终报告。",
+    "strengths": [
+      "准确识别 Pair Plus 赔率表在多处 UI 中的严重冲突",
+      "发现 Call 扣款基数与筹码置灰预留规则的逻辑歧义",
+      "识别干预逻辑在极端牌型（如 AAA 豹子）下的死锁风险",
+      "覆盖奖池公式除零异常处理"
+    ],
+    "issues": [
+      "未覆盖中奖金额计入玩家钱包的产品节点时机问题",
+      "未覆盖奖池负值透支下限与熔断条件问题"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "Primary 存在 payout_timing 和 pool_negative_floor 两个 control 的遗漏，需补充后方可输出最终报告"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["FOLD_PP_SETTLEMENT"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 图片解析 图片1、图片6、图片9、图片10",
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.3teenpatti玩法规则 段落27",
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落10"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["PP_PAYOUT_CONFLICT"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 图片解析 图片1、图片9、图片10",
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.2引导蒙层 段落19"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落7-12",
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.2引导蒙层 段落17-19"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落9-10"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["CALL_DEDUCT_BASE"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落8-10"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": ["PAYOUT_TIMING_MISSING"],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落12",
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.4下注记录 段落29-30"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无证据证明公共流程缺失; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 图片解析 图片10",
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.3teenpatti玩法规则 段落27"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": ["POOL_NEGATIVE_FLOOR_MISSING"],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 3.7.1奖池基础概念 段落36-39",
+            "Teenpatti PVE版本.md / 3.7.2抽水逻辑 段落40-41"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 图片解析 图片10",
+            "Teenpatti PVE版本.md / 一、背景 段落2"
+          ],
+          "reason": "source_state=missing; counterevidence=已有倍率上限; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 3.7.1奖池基础概念 段落37-39",
+            "Teenpatti PVE版本.md / 3.7.4预流失用户和新用户发牌逻辑 段落60-62"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Teenpatti PVE版本.md / 三、具体方案 > 3.6统计 段落33-34",
+            "Teenpatti PVE版本.md / 图片解析 图片12"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "PAYOUT_TIMING_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额计入玩家钱包的时机未明确",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "段落12说明'对局结束后。会展示ANTE和pairplus板块赢了多少宝石'，但未明确中奖金额是在对局结束动画播放前、播放中还是播放后计入玩家钱包。",
+      "evidence": "Teenpatti PVE版本.md / 三、具体方案 > 3.1首页 段落12",
+      "risk": "若中奖金额在动画播放前已计入钱包，玩家可能在动画未结束时即可使用 winnings 进行下注，导致状态不一致；若在动画播放后计入，断线重连时可能出现余额显示与实际不符的问题。",
+      "suggestion": "明确中奖金额计入玩家钱包的时机。建议规定：中奖金额在结算动画播放完毕后统一计入玩家钱包，并在UI上明确展示余额更新的时机。",
+      "severity": "medium",
+      "blocking": "block_test",
+      "confidence": "high",
+      "independent_root_cause": "中奖金额计入钱包的产品节点未定义",
+      "root_causes": ["中奖金额计入钱包的产品节点未定义"],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "FOLD_PP_SETTLEMENT",
+        "overlap": false,
+        "reason": "FOLD_PP_SETTLEMENT 关注的是 Fold 时 Pair Plus 的结算规则，而非中奖金额计入钱包的时机"
+      },
+      "severity_basis": "中奖金额计入钱包的时机不明确可能导致断线重连时余额显示异常，影响测试用例设计",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档仅说明'对局结束后展示赢了多少宝石'，未明确钱包入账时机，无兼容解释",
+        "searched_locations": ["Teenpatti PVE版本.md / 全文"],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "POOL_NEGATIVE_FLOOR_MISSING",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "title": "奖池负值透支下限与熔断条件未定义",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "段落37-39定义奖池状态为'充裕'、'正常'、'待补充'三种，但未说明当奖池持续亏损、比值深度为负时的透支下限、回填边界与熔断条件。",
+      "evidence": "Teenpatti PVE版本.md / 3.7.1奖池基础概念 段落37-39",
+      "risk": "若奖池持续深度为负且无熔断机制，平台可能面临无限透支风险；若仅依赖'故意赢'逻辑回填，在极端情况下可能无法有效恢复，导致经济系统失衡。",
+      "suggestion": "补充奖池负值透支下限与熔断条件。建议规定：当奖池比值低于某一阈值（如-50%）时触发熔断，暂停干预逻辑并人工介入；或设定最大透支额度，超出后强制按正常概率出牌。",
+      "severity": "medium",
+      "blocking": "block_test",
+      "confidence": "high",
+      "independent_root_cause": "奖池负值透支下限与熔断条件未定义",
+      "root_causes": ["奖池负值透支下限与熔断条件未定义"],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "POOL_FORMULA_DIV_ZERO",
+        "overlap": false,
+        "reason": "POOL_FORMULA_DIV_ZERO 关注的是奖池公式分母为0的异常处理，而非奖池负值透支下限与熔断条件"
+      },
+      "severity_basis": "奖池负值透支下限与熔断条件缺失可能导致平台经济系统失衡，影响测试用例设计",
+      "fact_check": {
+        "claim_type": "boundary_gap",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档仅定义三种奖池状态，未说明负值透支下限与熔断条件，无兼容解释",
+        "searched_locations": [
+          "Teenpatti PVE版本.md / 3.7.1奖池基础概念 段落36-39",
+          "Teenpatti PVE版本.md / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "Primary 已覆盖 Pair Plus 赔率表冲突、Call 扣款基数歧义、干预逻辑死锁等核心问题，覆盖质量较高。",
+    "新增 payout_timing 和 pool_negative_floor 两个 control 的缺失问题，需补充明确。",
+    "funds_failure_compensation 和 single_round_payout_cap 标记为 advice_only，建议后续版本补充。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=305aba5fc9cd5f85130cc2ff2255956e10599c3cd0b36d5206fa892666fe41fa"
+  ]
+}

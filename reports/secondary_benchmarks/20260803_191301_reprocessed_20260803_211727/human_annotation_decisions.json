@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "review_method": "逐条对照冻结需求上下文与冻结 Primary 报告人工复核；准入状态不替代事实质量判断。",
+  "items": [
+    {
+      "annotation_id": "A-777-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "两份文档对 RESPIN 触发条件的表述确实不等价，且 Primary 未覆盖该跨文档口径差异；证据与统一规则建议完整。"
+    },
+    {
+      "annotation_id": "A-777-R01-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "最大赔付/封顶缺口成立且与 Primary 根因不同；但证据只写“全文”，不满足阶段二可定位证据门槛，因此系统拒收正确。"
+    },
+    {
+      "annotation_id": "A-777-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "UI 赔付数字与配置表直接冲突，属于独立结算口径问题；举例、证据和整改动作均可核验。"
+    },
+    {
+      "annotation_id": "A-777-R02-A002",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "随机到空提前结束与达到抽取次数后强制为空可以作为“提前结束+硬上限”同时实现，模型将可兼容规则误判成不可同时实现的矛盾。"
+    },
+    {
+      "annotation_id": "A-777-R02-A003",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": true,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true,
+      "reviewer_notes": "把 RTP 目标、MAX_MUL 与最大赔付三个独立定义合并为一个根因；且段落55已有超过100倍强制0倍的边界，不能直接断言最大赔付控制完全缺失。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "文档只说明下注额度与余额入口，未定义实际扣款时点和余额校验节点；该资金流缺口未被 Primary 覆盖，严重度与建议合理。"
+    },
+    {
+      "annotation_id": "A-tiger-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "图片中的广播区间在70000至79999重叠，匹配优先级未定义；属于独立且可直接修复的配置冲突。"
+    },
+    {
+      "annotation_id": "A-tiger-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "游戏记录正文3日与UI文案30日直接冲突，证据、风险及二选一整改方案完整，Primary 未覆盖。"
+    },
+    {
+      "annotation_id": "A-tiger-R02-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "开奖分析正文7天与UI文案30天直接冲突；Primary 的可见性配置问题不是同一根因，新增成立。"
+    },
+    {
+      "annotation_id": "A-小鸡-R02-A001",
+      "valid": true,
+      "duplicate": true,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "UI概率与Crash算法映射缺口成立，但 Primary 的 CORE_DIFFICULTY_CONFIG_MISMATCH 已明确覆盖同一UI概率验收问题；准入拒绝重复项正确。"
+    },
+    {
+      "annotation_id": "A-小鸡-R02-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "开局本金扣除与失败/提现结算口径确未定义，证据和资金流建议可执行；模型漏填 root_cause_count，因此按协议拒收合理。"
+    },
+    {
+      "annotation_id": "A-钱来了-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "购买价格如何由系数计算、调用哪个免费配置仍不完整，问题核心成立；但常规免费规则已给出5/10/20次及续杯规则，声称整体无法实现且定为高风险略重。"
+    },
+    {
+      "annotation_id": "A-钱来了-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "文档仅称依据通用倍数展示 Big/Mega/Super Win，未给阈值或明确规范引用；事实、风险和整改建议完整，但文档名未精确填写而被协议拒收。"
+    }
+  ]
+}

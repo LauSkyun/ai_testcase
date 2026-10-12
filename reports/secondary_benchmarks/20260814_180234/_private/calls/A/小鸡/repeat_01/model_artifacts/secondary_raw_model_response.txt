@@ -1,0 +1,87 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "challenge_type": "overstated",
+      "challenged_claim": "需求文档描述的‘固定概率’与数值文档的‘Crash动态概率算法’完全冲突。",
+      "evidence": "小鸡.docx / 3.1 下注系统，表格2及段落37",
+      "counterevidence": "小鸡.docx / 3.1 下注系统，段落37‘具体数值配置由数值策划确定’",
+      "rationale": "需求文档中的固定概率表格下方已明确声明‘具体数值配置由数值策划确定’，表明该表格仅为早期示意或占位，最终规则以数值文档的Crash算法为准。这属于正常的‘需求留白+数值补充’流程，定性为‘完全冲突’过重。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "核心角色与题材包装严重冲突（小鸡 vs 骆驼），美术资源制作方向错误，UI表现与世界观设定割裂。",
+      "evidence": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析",
+      "counterevidence": "小鸡.docx / 4、题材包装，段落55‘一开始美术可以先用默认的小鸡形象，等到时候业务有需求了再替换’",
+      "rationale": "文档已明确说明小鸡是MVP阶段的默认占位形象，骆驼是后续业务需求时的替换目标。两者在开发阶段上是兼容的递进关系，并非‘严重冲突’或‘割裂’，定性为严重冲突会误导开发认为文档存在致命逻辑错误。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-03",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "文档未说明‘爆炸倍数’如何映射到‘第几格撞车’，核心碰撞判定逻辑无法实现。",
+      "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13",
+      "counterevidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11‘先随机随机一个本次被撞倍数...不超过就一直可以成功’；表格2提供了每关的倍率。",
+      "rationale": "数值文档已给出映射的核心逻辑（随机爆炸倍数与关卡倍率比对，不超过即成功），并非‘完全缺失’。问题在于未明确‘关卡倍率’是单格倍率还是累计倍率（这已在LOGIC_PAYOUT_FORMULA_CONFLICT中解决），而非映射逻辑本身缺失。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "correction_type": "clarify",
+      "evidence": "小鸡.docx / 3.1 下注系统，表格2及段落37",
+      "rationale": "将‘完全冲突’修正为‘需求文档占位表格与数值文档最终算法的口径差异’，并建议废弃需求文档的占位表格，统一指向数值文档。",
+      "proposed_changes": {
+        "title": "难度系统概率配置口径差异",
+        "current_state": "小鸡.docx / 3.1 下注系统，表格2提供了简单难度的固定概率示例，但段落37声明‘具体数值配置由数值策划确定’；小鸡数值文档.docx / 4. 撞击概率计算，段落11-17采用Crash算法。",
+        "risk": "需求文档的占位表格可能误导开发或测试，需明确废弃。",
+        "suggestion": "在需求文档中明确标注该表格为‘历史占位/示意’，并添加超链接或说明指向数值文档的Crash算法配置。"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-02",
+      "challenge_id": "CH-02",
+      "target_issue_id": "CLARITY_01",
+      "correction_type": "clarify",
+      "evidence": "小鸡.docx / 4、题材包装，段落55-56",
+      "rationale": "将‘严重冲突’修正为‘MVP占位形象与后续迭代目标的阶段说明’，降低严重性定性，避免误导。",
+      "proposed_changes": {
+        "title": "核心角色MVP占位与迭代目标说明",
+        "current_state": "小鸡.docx / 4、题材包装，段落55说明‘一开始美术可以先用默认的小鸡形象...再替换’，段落56定义‘核心形象：卡通骆驼设计’。UI截图（图片1-8）展示的是MVP阶段的小鸡形象。",
+        "risk": "若未明确阶段划分，可能导致美术在MVP阶段过度投入骆驼资源，或后续替换时缺乏规划。",
+        "suggestion": "明确小鸡为V1.0 MVP版本形象，骆驼为V1.1或后续商业化版本目标，并在美术资源清单中做好占位与替换的资产隔离。"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-03",
+      "challenge_id": "CH-03",
+      "target_issue_id": "LOGIC_01",
+      "correction_type": "clarify",
+      "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11",
+      "rationale": "将‘映射逻辑缺失’修正为‘映射逻辑表述不严谨（未明确比对基准是单格还是累计）’，因为核心比对逻辑已存在。",
+      "proposed_changes": {
+        "title": "Crash算法与离散格子结算的比对基准不明确",
+        "current_state": "小鸡数值文档.docx / 4. 撞击概率计算，段落11说明‘随机爆炸倍数...不超过就一直可以成功’，但未明确‘不超过’的比对基准是当前格的单格倍率，还是前N格的累计倍率。",
+        "risk": "开发在实现碰撞判定时，可能因比对基准不明确导致概率分布与预期不符。",
+        "suggestion": "结合LOGIC_PAYOUT_FORMULA_CONFLICT的修正，明确爆炸倍数的比对基准为‘当前所在马路的累计倍率’，并补充一个完整的判定流程示例。"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "protocol_profile=phase3_v1; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9"
+  ]
+}

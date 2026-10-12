@@ -1,0 +1,22 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "protocol_gate_passed": true,
+  "baseline_lock_passed": true,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "challenge_claimed_count": 1,
+  "challenge_accepted_count": 1,
+  "challenge_rejected_count": 0,
+  "correction_claimed_count": 1,
+  "correction_accepted_count": 1,
+  "correction_rejected_count": 0,
+  "correction_abstained_count": 0,
+  "correction_disposition_counts": {
+    "drop": 1
+  },
+  "challenge_keys": [
+    "CLARITY_02:unsupported:drop"
+  ],
+  "correction_keys": [
+    "CLARITY_02:drop"
+  ]
+}

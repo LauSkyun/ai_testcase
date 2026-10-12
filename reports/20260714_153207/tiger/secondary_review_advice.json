@@ -1,0 +1,241 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告精准识别了核心结算逻辑矛盾、必开空选项漏洞、UI倍率冲突等关键阻塞项，问题定位准确，结构清晰。但部分证据引用不够精确（如倒计时图片引用），且遗漏了亏大R阈值不一致、开奖分析和记录天数冲突等UI/需求不一致问题，需补充修正。",
+    "strengths": [
+      "敏锐捕捉了奖池兜底逻辑的数学矛盾与透支风险，抓住了核心安全漏洞。",
+      "明确了回收状态必开空选项的套利漏洞，问题描述具体，风险分析到位。",
+      "发现了UI、新手引导中的倍率与后台配置的严重冲突，避免了客诉隐患。",
+      "报告结构清晰，维度划分合理，测试点覆盖较全面。"
+    ],
+    "issues": [
+      "部分证据引用不准确，如倒计时冲突引用了不相关的图片16，应修正为图片1、3、7。",
+      "遗漏了亏损大R累计亏损阈值在正文与表格5中的巨大差异（50000000 vs 5000000），可能导致策略判定严重偏差。",
+      "未发现游戏记录天数（3天 vs 30天）和开奖分析胜率天数（7天 vs 30天）在需求与UI截图中的冲突，影响开发一致性。",
+      "未将下注倒计时冲突与扣款时序问题分开描述，虽可合并但建议在现状中分点说明。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的证据引用错误，补充了遗漏的高信号问题，结构完整，证据充分，来源可追溯，可直接交付业务方使用。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的证据引用错误，补充了遗漏的高信号问题，结构完整，证据充分，来源可追溯，可直接交付业务方使用。"
+  },
+  "review_notes": [
+    "主模型报告强项在于抓住了核心结算矛盾，但建议在后续评审中更加注意证据引用的精确性，避免引用无关图片。",
+    "新增的亏大R阈值不一致问题属于高严重度，因其直接影响成本控制，建议策划尽快确认最终数值。",
+    "UI天数冲突虽然严重度中等，但涉及多个功能，建议统一梳理所有UI与需求文档的时间维度，确保一致。",
+    "兜底逻辑矛盾中的跨天窗口问题已并入原问题，无需单独拆分，但建议开发特别注意0点时的状态切换逻辑。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "id": "MISSED_01",
+      "title": "亏损大R累计亏损阈值在正文与后台配置表中不一致",
+      "description": "段落85定义亏损大R需过去7日累计亏损≥{50000000}，但表格5初始数值显示为5000000，相差10倍，将导致亏损大R判定门槛大幅降低，可能造成保护策略滥用或成本失控。",
+      "severity": "高",
+      "dimension": "逻辑一致性与数值平衡"
+    },
+    {
+      "id": "MISSED_02",
+      "title": "游戏记录天数上限在需求与UI截图中不一致",
+      "description": "表格3明确个人记录展示近3日（包括今日），但图片9 UI截图显示“Show your betting records in the last 30 days”，存在冲突，影响开发实现与用户理解。",
+      "severity": "中",
+      "dimension": "用户体验与游戏性"
+    },
+    {
+      "id": "MISSED_03",
+      "title": "开奖分析胜率计算天数在需求与UI截图中不一致",
+      "description": "表格3描述胜率计算范围为最近7天，但图片13 UI截图显示“Last 30 day”，冲突将导致开发实现混乱，影响用户对统计数据的信任。",
+      "severity": "中",
+      "dimension": "用户体验与游戏性"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "时序与状态",
+        "primary_issue_ids": [
+          "时序与状态"
+        ],
+        "modifications": "修正证据引用：将图片16替换为图片1、3、7；将倒计时冲突作为子点1在现状中描述；建议分点细化。"
+      },
+      {
+        "candidate_issue_id": "异常恢复",
+        "primary_issue_ids": [
+          "异常恢复"
+        ],
+        "modifications": "无实质修改。"
+      },
+      {
+        "candidate_issue_id": "回收状态漏洞",
+        "primary_issue_ids": [
+          "回收状态漏洞"
+        ],
+        "modifications": "保留原问题，标题和风险描述微调。"
+      },
+      {
+        "candidate_issue_id": "兜底逻辑矛盾",
+        "primary_issue_ids": [
+          "兜底逻辑矛盾"
+        ],
+        "modifications": "将跨天窗口不一致作为子点2整合进现状与建议，不拆分新问题。"
+      },
+      {
+        "candidate_issue_id": "半屏适配",
+        "primary_issue_ids": [
+          "半屏适配"
+        ],
+        "modifications": "无修改。"
+      },
+      {
+        "candidate_issue_id": "奖池安全",
+        "primary_issue_ids": [
+          "奖池安全"
+        ],
+        "modifications": "保留原问题，建议中补充透支下限的明确量化。"
+      },
+      {
+        "candidate_issue_id": "倍率冲突",
+        "primary_issue_ids": [
+          "倍率冲突"
+        ],
+        "modifications": "保留原问题，未新增其他UI冲突。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "亏大R阈值",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "主模型遗漏了亏损大R阈值在正文与表格中的巨大差异，需单独补充。"
+      },
+      {
+        "candidate_issue_id": "UI天数冲突",
+        "source_missed_issue_ids": [
+          "MISSED_02",
+          "MISSED_03"
+        ],
+        "reason": "将游戏记录和开奖分析两个天数冲突合并为一个问题，避免重复，统一描述。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的证据引用错误，补充了遗漏的高信号问题，结构完整，证据充分，来源可追溯，可直接交付业务方使用。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

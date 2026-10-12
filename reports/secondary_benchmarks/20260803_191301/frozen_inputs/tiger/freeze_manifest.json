@@ -1,0 +1,15 @@
+{
+  "source_game_dir": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856\\tiger",
+  "primary_model": "gpt-5.6-sol",
+  "document_names": [
+    "tiger需求文档.docx"
+  ],
+  "hashes": {
+    "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+    "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+    "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+    "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8"
+  },
+  "primary_calls_during_freeze": 0,
+  "vision_calls_during_freeze": 0
+}

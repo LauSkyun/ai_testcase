@@ -1,0 +1,264 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了需求与数值文档之间的核心冲突和关键缺失，但维度分类存在瑕疵，部分问题堆砌在清晰度下，且遗漏了普通游戏重进恢复等可测试性事项。",
+    "strengths": [
+      "抓住了RESPIN触发条件、风控倍数等根本冲突",
+      "详尽列出了测试点",
+      "对免费旋转公式、术语等问题进行了准确识别"
+    ],
+    "issues": [
+      "逻辑一致性维度标注为空，但核心冲突应归入该维度",
+      "大奖阈值问题中混入了重进恢复等多个不同主题",
+      "遗漏了普通游戏重进恢复、购买免费游戏参数等细节"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。"
+  },
+  "review_notes": [
+    "主模型报告将多个冲突问题集中在清晰度维度，且逻辑一致性标注为空，已修正。",
+    "CLAR-001 原为大奖阈值问题，已扩展为包含重进恢复和记录规则的综合性缺失，吸收了MISS-001。",
+    "新增了 CLAR-006（购买免费游戏参数）和 TEST-003（普通游戏重进恢复），均为阻塞性缺失。",
+    "RESPIN矛盾与风控冲突已合并为一个高严重度问题（LOGIC-001），并分点描述，避免重复。",
+    "建议后续在数值文档中补充RTP和完整风控设计，以彻底解决封顶冲突。",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。",
+    "dual_pass 协议提示：部分 missed finding 被 lineage 声称已吸收进 kept 问题，但在最终 candidate 中仍以独立问题落盘。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS-001",
+      "title": "普通游戏中断重进恢复规则缺失",
+      "dimension": "可测试性与验收标准",
+      "description": "需求文档仅说明免费游戏中断后可继续，但未提及普通游戏旋转过程中退出后重进的处理方式，可能导致状态不一致。",
+      "evidence": "钱来了需求文档.docx / 3.2.4 基础游戏流程",
+      "severity": "中",
+      "suggestion": "补充规则：旋转中退出，重进后应恢复到旋转前状态（或恢复至旋转中并完成），确保不出现重复扣款或丢失奖金。"
+    },
+    {
+      "issue_id": "MISS-002",
+      "title": "购买免费游戏价格系数与配置表序号缺失",
+      "dimension": "清晰度与完整性",
+      "description": "需求文档3.5.3提到OMS后台控制调用配置表序号和价格系数，但未给出具体数值或范围，数值文档也未提及。",
+      "evidence": "钱来了需求文档.docx / 3.5.3 购买免费游戏",
+      "severity": "中",
+      "suggestion": "明确购买免费游戏对应的配置表序号、价格系数（如为基础投注的倍数），并补充免费次数（如固定5/10/20次）与规则。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLAR-001",
+        "primary_issue_ids": [
+          "CLAR-001"
+        ],
+        "modifications": "标题修改为“大奖档位、重进恢复及记录规则缺失”，并扩展现状描述，将免费游戏重进恢复、普通游戏重进恢复、免费游戏记录等规则缺失合并到此问题中，同时调整风险和建议。",
+        "absorbed_missed_issue_ids": [
+          "MISS-001"
+        ]
+      },
+      {
+        "candidate_issue_id": "CLAR-002",
+        "primary_issue_ids": [
+          "CLAR-002"
+        ],
+        "modifications": "无"
+      },
+      {
+        "candidate_issue_id": "CLAR-003",
+        "primary_issue_ids": [
+          "CLAR-003"
+        ],
+        "modifications": "无"
+      },
+      {
+        "candidate_issue_id": "CLAR-005",
+        "primary_issue_ids": [
+          "CLAR-005"
+        ],
+        "modifications": "无"
+      },
+      {
+        "candidate_issue_id": "CROSS_GEN_D1C9F1BF",
+        "primary_issue_ids": [
+          "CROSS_GEN_D1C9F1BF"
+        ],
+        "modifications": "移动至逻辑一致性与数值平衡维度，标题改为“RESPIN触发条件与风控倍数规则冲突”，按子冲突分点描述，并调整风险和建议。"
+      },
+      {
+        "candidate_issue_id": "CROSS_GEN_ACA2CCBB",
+        "primary_issue_ids": [
+          "CROSS_GEN_ACA2CCBB"
+        ],
+        "modifications": "移动至逻辑一致性与数值平衡维度，标题和内容不变。"
+      },
+      {
+        "candidate_issue_id": "TEST-002",
+        "primary_issue_ids": [
+          "TEST-002"
+        ],
+        "modifications": "无"
+      },
+      {
+        "candidate_issue_id": "SEC-001",
+        "primary_issue_ids": [
+          "SEC-001"
+        ],
+        "modifications": "无"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLAR-006",
+        "source_missed_issue_ids": [
+          "MISS-002"
+        ],
+        "reason": "购买免费游戏参数缺失，影响功能实现，需补充配置说明。"
+      },
+      {
+        "candidate_issue_id": "TEST-003",
+        "source_missed_issue_ids": [
+          "MISS-001"
+        ],
+        "reason": "普通游戏中断重进恢复规则缺失，影响可测试性和稳定性。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": true,
+  "advice_claimed_absorbed_but_materialized_separately": [
+    "MISS-001"
+  ],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MISS-001"
+  ],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 4,
+  "candidate_issue_id_repair_count": 4,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "advice_candidate_structure_mismatch",
+    "candidate_absorbed_missed_materialized_separately"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 4,
+    "candidate_issue_id_repair_count": 4,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": false,
+    "advice_claimed_absorbed_but_materialized_separately_absent": false,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch",
+      "candidate_absorbed_missed_materialized_separately"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

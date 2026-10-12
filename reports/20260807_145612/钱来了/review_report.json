@@ -1,0 +1,262 @@
+{
+  "report": {
+    "overall_evaluation": "文档对基础老虎机玩法、符号分类及特色机制（重转、推展、免费）的主流程描述较为清晰，界面与动效说明详尽。但数值文档内部存在概率配置冲突，且免费游戏封顶规则与风控规则存在致命逻辑矛盾；同时，购买免费游戏（Feature Buy）的核心商业规则完全缺失，需紧急修订。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但存在免费封顶与风控逻辑冲突、RESPIN概率配置冲突等高风险数值缺口，且购买免费游戏核心规则缺失，需补充后再完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "免费游戏2000倍封顶与单局风控100倍强制0存在致命逻辑冲突",
+        "owner": "数值策划",
+        "why_now": "若“100倍”指单次Spin，则免费游戏永远无法累计到2000倍，封顶规则失效；若指累计，则与“单局风控”的常规理解冲突，导致数值模型无法自洽。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "free_spin_cap_vs_risk_control",
+        "canonical_title": "免费封顶与风控逻辑冲突",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "RESPIN发生几率配置表数据冲突（0.1与0.05）",
+        "owner": "数值策划",
+        "why_now": "程序无法确定使用哪个概率，导致实际触发率偏离设计预期，直接影响游戏RTP和爆率体验。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "respin_probability_conflict",
+        "canonical_title": "RESPIN概率配置冲突",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "购买免费游戏（Feature Buy）核心规则缺失",
+        "owner": "系统策划",
+        "why_now": "开发无法编写购买逻辑，测试无法设计付费验收用例，存在严重的玩法与商业化规则盲区。；测试无法设计断线重连用例。若重连后直接展示最终中奖结果，会丢失表演体验；若重播动画，需明确客户端状态机如何回退。；Feature Buy是高危资金链路，若缺乏服务端幂等设计，网络抖动可能导致重复扣款或重复发放免费次数，造成资损。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "feature_buy_missing",
+        "canonical_title": "购买免费游戏规则缺失",
+        "blocking": "阻塞开发"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "feature_buy_missing",
+            "canonical_title": "购买免费游戏规则缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "购买免费游戏（Feature Buy）核心规则缺失",
+            "current_state": "1、需求文档3.5.3仅说明OMS后台控制开关和价格系数，但未定义购买价格的具体公式（如投注额的多少倍）、购买后发放的免费次数（固定还是随机）、以及余额不足时的拦截逻辑。；2、数值文档说明服务器先算最终结果，再进行表演（如推展先表演空，再推展中奖）。但未说明在“表演不中”到“推展中奖”的动画切换期间断线，重连后如何恢复。；3、需求文档3.5.3提及购买免费游戏，但未说明扣款与发奖的原子性保障，以及网络超时重试时的防刷机制。",
+            "evidence": "钱来了需求文档.docx / 3.5.3 购买免费游戏；钱来了数值文档.docx / 五、基础游戏・核心机制（推展机制/RESPIN机制）",
+            "risk": "1、开发无法编写购买逻辑，测试无法设计付费验收用例，存在严重的玩法与商业化规则盲区。；2、测试无法设计断线重连用例。若重连后直接展示最终中奖结果，会丢失表演体验；3、若重播动画，需明确客户端状态机如何回退。；4、Feature Buy是高危资金链路，若缺乏服务端幂等设计，网络抖动可能导致重复扣款或重复发放免费次数，造成资损。",
+            "suggestion": "1、补充购买价格公式（如：当前投注额 × 固定倍数）、购买后发放的免费次数规则（如：固定10次或随机5-20次）、以及余额不足时的UI提示与按钮置灰逻辑。；2、补充特色机制（推展/重转）动画播放中途断线重连的恢复规则：明确是直接展示最终结算结果，还是从断点继续播放表演动画。；3、明确购买免费游戏的服务端幂等性设计（如：基于订单号去重），以及扣款成功但发奖失败时的补偿/回滚机制。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "symbol_zero_mapping",
+            "canonical_title": "数值符号0倍与盘面表现映射断层",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "cross_document",
+            "severity": "中",
+            "title": "数值符号“0倍/不一致”的盘面表现与符号分类表存在映射断层",
+            "current_state": "1、数值文档定义金币符号ID=0赔率为0，指1,3列不一致；2、但需求文档3.3.1符号分类总览中，数值符号仅有0.1~10倍。",
+            "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号；钱来了需求文档.docx / 3.3.1 符号分类总览",
+            "risk": "1、当1,3列不一致时，盘面上左右两侧到底显示什么符号？如果显示0，需求文档的符号表里没有0；2、如果不显示，与RESPIN条件中“1,3列不同且有值”冲突。",
+            "suggestion": "明确1,3列不一致时，左右轴具体展示哪个数值符号（如：随机展示两个不同的非0数值符号），并在需求文档符号表中补充说明。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "big_win_threshold",
+            "canonical_title": "大奖触发阈值未定义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "大奖（Big/Mega/Super Win）触发倍数阈值未定义",
+            "current_state": "需求文档2.2提到“根据通用倍数，显示big win\\mega win\\super win”，但未给出具体的倍数区间阈值。",
+            "evidence": "钱来了需求文档.docx / 2.2 大奖获取界面",
+            "risk": "客户端无法配置大奖弹窗的触发条件，测试无法验收不同级别大奖的表现。",
+            "suggestion": "明确定义Big Win、Mega Win、Super Win对应的具体中奖倍数阈值（如：≥50倍、≥200倍、≥500倍）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "respin_probability_conflict",
+            "canonical_title": "RESPIN概率配置冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "RESPIN发生几率配置表数据冲突（0.1与0.05）",
+            "current_state": "数值文档中表5“RESPIN发生几率”为0.1，表6“RESPIN发生几率”为0.05，两者同名但数值不同，且未说明适用场景。",
+            "evidence": "钱来了数值文档.docx / 表5、表6",
+            "risk": "程序无法确定使用哪个概率，导致实际触发率偏离设计预期，直接影响游戏RTP和爆率体验。",
+            "suggestion": "核实并统一RESPIN触发概率。若0.1和0.05分别对应不同场景（如：命中/未命中，或不同卷轴方案），需在表头或备注中明确区分条件。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "free_spin_cap_vs_risk_control",
+            "canonical_title": "免费封顶与风控逻辑冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "cross_document",
+            "severity": "高",
+            "title": "免费游戏2000倍封顶与单局风控100倍强制0存在致命逻辑冲突",
+            "current_state": "1、需求文档规定免费模式总赢奖达2000倍时自动结束；2、但数值文档规定免费游戏风控区间“超过100倍→直接强制0倍”。",
+            "evidence": "钱来了需求文档.docx / 3.4.3 免费旋转模式（封顶规则）；钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控（免费游戏风控区间）",
+            "risk": "1、若“100倍”指单次Spin，则免费游戏永远无法累计到2000倍，封顶规则失效；2、若指累计，则与“单局风控”的常规理解冲突，导致数值模型无法自洽。",
+            "suggestion": "明确风控“100倍”的口径（是单次Spin还是免费模式累计）。建议修改为：单次Spin超过X倍强制0，或免费模式累计超过100倍触发风控，并确保其与2000倍封顶规则在数学逻辑上兼容。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "scrolling_info_interruption",
+            "canonical_title": "未中奖滚动信息打断机制不明确",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "未中奖滚动信息的打断与中奖替换逻辑未定义",
+            "current_state": "需求文档3.6.1说明未中奖时信息从右向左匀速移动（8-10秒），但未说明玩家在信息滚动时点击旋转，或中奖时，信息栏的消失/替换逻辑。",
+            "evidence": "钱来了需求文档.docx / 3.6.1 未中奖信息",
+            "risk": "可能导致UI穿帮、状态残留，或中奖时信息栏突然消失影响视觉体验。",
+            "suggestion": "1、明确点击旋转时滚动信息是否立即消失或淡出；2、明确中奖时“Total Wins”信息替换滚动信息的过渡动画。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "购买免费游戏的具体价格公式、发放次数规则及余额不足拦截逻辑。",
+      "大奖（Big/Mega/Super Win）的具体触发倍数阈值。",
+      "1,3列不一致时，左右轴具体展示哪个数值符号（需求文档符号表仅有0.1~10，无数值文档的0）。",
+      "免费游戏风控“超过100倍强制0”的口径（单次Spin还是累计），及其与2000倍封顶规则的兼容方案。",
+      "RESPIN概率表5（0.1）与表6（0.05）的适用场景区分。",
+      "推展/重转表演动画中途断线重连的恢复规则。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证左右轴数值匹配且中间为功能符号时的中奖金额计算（乘数 × 符号值 × 基础投注）。",
+        "验证重转（Re-spin）触发条件：中间有符号，左右不匹配，且概率命中。",
+        "验证推展（Expand）触发条件：中间无符号，左右匹配，且概率命中，动画表现正确。",
+        "验证免费旋转触发、续杯（无上限）及投注额继承逻辑。",
+        "验证购买免费游戏入口的开启/关闭、扣款及次数发放。"
+      ],
+      "异常操作": [
+        "验证购买免费游戏时余额不足、网络超时重试的幂等性。",
+        "验证免费旋转次数耗尽后的总收益结算弹窗及返回主游戏逻辑。",
+        "验证快速旋转模式下，卷轴停止与中奖判定的同步性。"
+      ],
+      "兼容性": [
+        "验证不同分辨率下，3轴1行盘面符号的虚化效果、对齐方式及中奖线位置。",
+        "验证免费模式背景颜色切换及下注区域隐藏/替换为剩余次数的UI适配。"
+      ],
+      "安全专项": [
+        "验证服务端对中奖金额、免费次数发放的权威性，客户端篡改请求是否被拦截。",
+        "验证风控规则（超过100倍强制0）在服务端的强制执行逻辑。"
+      ],
+      "回归影响": [
+        "验证通用模块（货币显示、排行榜、记录等）复用后，与本作特色机制（如免费模式不显示下注区）的兼容性。"
+      ],
+      "性能与稳定性": [
+        "验证免费旋转自动转动期间，长时间运行的内存泄漏及帧率稳定性。",
+        "验证大奖弹窗、推展/重转复杂动效同时触发时的性能表现。"
+      ],
+      "用户体验": [
+        "验证大奖弹窗数字滚动效果及跳过逻辑。",
+        "验证未中奖滚动信息在点击旋转或中奖时的打断/替换表现。",
+        "验证免费开启/结束界面的10秒自动关闭及手动跳过逻辑。"
+      ]
+    },
+    "quality_notes": [
+      "数值文档中表5和表6同名且数值不同，属于明显的文档编辑失误，需数值策划确认。",
+      "需求文档中多次引用“竞品体验”和“通用模块”，但未提供通用模块的具体链接内容或验收标准，测试时需依赖平台通用规范。",
+      "dual_pass 复核备注：数值文档中表5和表6同名且数值不同，属于明显的文档编辑失误，需数值策划确认。",
+      "dual_pass 复核备注：需求文档中多次引用“竞品体验”和“通用模块”，但未提供通用模块的具体链接内容或验收标准，测试时需依赖平台通用规范。",
+      "dual_pass 复核备注：protocol_profile=phase2_v2_2; evidence_packet_id=3528548398226f1f7426cf7041c44240d6a7f726b1b840e21cb22005fcd68494",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "多张截图（如图片4、5、6、7、8等）底部状态栏、按钮文字及金额标签因分辨率限制或遮挡不可读，无法确认具体的UI交互细节和金额显示格式。",
+      "图片33（规则面板）中的SCATTER符号规则及Tumble Feature描述与当前3轴1行玩法不符，疑似直接截取了其他游戏（如奥林匹斯之门）的规则图，需确认是否为占位图。",
+      "图片29、31中的弹窗文本为明显的占位符（如“额外投注需要...”、“texttexttext...”），需确认最终文案。"
+    ],
+    "review_mode": "dual_pass_candidate",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 1,
+      "numeric": 1,
+      "mixed": 0,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 273,
+    "total_tables": 12,
+    "total_images": 66
+  },
+  "documents": [
+    {
+      "name": "钱来了需求文档.docx",
+      "kind": "requirement",
+      "paragraph_count": 212,
+      "table_count": 3,
+      "image_count": 65,
+      "errors": []
+    },
+    {
+      "name": "钱来了数值文档.docx",
+      "kind": "numeric",
+      "paragraph_count": 61,
+      "table_count": 9,
+      "image_count": 1,
+      "errors": []
+    }
+  ]
+}

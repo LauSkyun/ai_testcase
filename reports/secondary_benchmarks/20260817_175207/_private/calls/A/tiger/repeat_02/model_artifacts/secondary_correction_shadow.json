@@ -1,0 +1,79 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_02",
+      "correction_disposition": "drop",
+      "source_provenance": "reference_or_competitor",
+      "evidence": "tiger需求文档.docx / 3.7.1、3.7.3、图22",
+      "rationale": "图22为无正文佐证的参考/示例图，不能推导当前产品需要机器人机制；且全局奖池模式下投入人数为全服汇总，不存在单房间冷启动人数不足的问题。原判断不成立，必须 drop。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "CLARITY_02",
+        "canonical_title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+        "current_state": "开奖逻辑中大量依赖‘投入人数’阈值（如>=20、>=30、>=50）。图22中存在详细的机器人匹配与投放流程图，但正文需求中完全未提及机器人机制、假人逻辑及人数统计口径。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22",
+        "risk": "在冷启动或低活跃房间，真实人数无法达到阈值，导致奖池状态判断和人群保护策略永远无法触发，核心玩法策略失效。",
+        "suggestion": "在正文中补充机器人/假人投放机制说明，并明确‘投入人数’统计口径是否包含机器人（建议包含，否则阈值永远不满足）。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "CLARITY_02",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

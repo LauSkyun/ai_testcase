@@ -1,0 +1,629 @@
+{
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "primary_quality_assessment": {
+    "summary": "主模型报告准确识别了核心赔率冲突、开奖兜底0赔付缺陷、机器人机制缺失、概率数值冲突等高信号阻塞问题，问题定位精准、证据引用充分。但在奖池透支下限边界、开奖分析时间窗口正文与UI不一致等独立控制面上存在漏判，且部分finding混合了多个子症状（如LOGIC_02同时讨论概率冲突与断线重连），需补充独立根因并拆分描述。",
+    "strengths": [
+      "准确识别LOGIC_01开奖兜底0赔付机制缺陷，证据链完整（段落57/68/108与段落73冲突）",
+      "CLARITY_01核心赔率冲突覆盖全面，同时引用表格4、图1、图5、图7、图21多处证据",
+      "CLARITY_02机器人机制缺失问题定位准确，图22与正文脱节的证据充分",
+      "LOGIC_02概率数值冲突（60% vs 20%）证据明确，段落66/67与表格5直接矛盾"
+    ],
+    "issues": [
+      "LOGIC_02混合了概率冲突与断线重连两个独立根因，违反单根因原则",
+      "漏判奖池透支下限（pool_negative_floor）边界缺口，段落29仅说明允许负数但未定义下限",
+      "漏判开奖分析时间窗口正文（7天）与UI截图（30天）不一致的独立问题",
+      "SEC_01严重度定为低，但'实时计算'快照时机直接影响结算正确性与并发安全，应提升至中"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已补充2个独立根因（奖池透支下限、时间窗口不一致），修正了LOGIC_02的混合描述，证据链完整可追踪，可直接交付业务方阅读。"
+  },
+  "quality_assessment": {
+    "summary": "Candidate 由 Primary 与已准入增量确定性生成。",
+    "strengths": [
+      "完整保留 Primary 骨架、评分和核心问题。"
+    ],
+    "issues": [],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "review_notes": [
+    "LOGIC_02混合了概率冲突与断线重连两个独立根因，建议后续拆分为独立问题以便追踪。",
+    "SEC_01严重度从低提升至中，因'实时计算'快照时机直接影响结算正确性与并发安全。",
+    "新增MAX_PAYOUT_01覆盖奖池透支下限边界缺口，与LOGIC_01的单局封顶问题控制面不同。",
+    "新增STATISTICS_01覆盖开奖分析时间窗口正文与UI不一致问题，与CLARITY_01的赔率冲突问题对象不同。",
+    "protocol_profile=phase2_v2_1; evidence_packet_id=b4a6e1c32c61dd26379c4d03e435f3e135d8de14131c463c80393bdd956b09c9",
+    "phase2 准入已从 candidate 移除 rejected addition：MAX_PAYOUT_01",
+    "phase2 准入已从 candidate 移除 rejected addition：STATISTICS_01",
+    "candidate_generation_mode=deterministic_primary_plus_admitted_delta",
+    "dual_pass 结构提示：candidate 仍保留多根因混合问题，建议继续拆清根因或改为分点展示。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": false,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "Candidate 由系统确定性生成，不依赖模型自评。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 2,
+    "admitted_count": 0,
+    "rejected_count": 2,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "MAX_PAYOUT_01",
+        "title": "奖池透支下限、回填边界与熔断条件未定义",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落29",
+        "coverage_audit_key": "max_payout_economic_boundary",
+        "coverage_control_key": "pool_negative_floor"
+      },
+      {
+        "candidate_issue_id": "STATISTICS_01",
+        "title": "开奖分析时间窗口正文（7天）与UI截图（30天）不一致",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_03",
+            "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3 / 开奖分析模块说明；tiger需求文档.docx / 图片13",
+        "coverage_audit_key": "statistics_time_window",
+        "coverage_control_key": "ui_text_window_alignment"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_control_keys": [
+        "pool_negative_floor",
+        "ui_text_window_alignment"
+      ],
+      "candidate_to_audit_key": {
+        "MAX_PAYOUT_01": "max_payout_economic_boundary",
+        "STATISTICS_01": "statistics_time_window"
+      },
+      "candidate_to_control_key": {
+        "MAX_PAYOUT_01": "pool_negative_floor",
+        "STATISTICS_01": "ui_text_window_alignment"
+      },
+      "finding_audit_keys": {
+        "MAX_PAYOUT_01": "max_payout_economic_boundary",
+        "STATISTICS_01": "statistics_time_window"
+      },
+      "finding_control_keys": {
+        "MAX_PAYOUT_01": "pool_negative_floor",
+        "STATISTICS_01": "ui_text_window_alignment"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [
+        "coverage_control_invalid:max_payout_economic_boundary:single_round_payout_cap:primary_control_mismatch:LOGIC_01"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落72",
+            "tiger需求文档.docx / 表格4",
+            "tiger需求文档.docx / 图1",
+            "tiger需求文档.docx / 图5",
+            "tiger需求文档.docx / 图7",
+            "tiger需求文档.docx / 图21"
+          ],
+          "reason": "结算公式明确：赔付金额 = 本轮各选项已投入金额 × 对应赔率。公式本身无歧义，冲突在于赔率数值映射而非公式结构。；CLARITY_01已完整覆盖UI展示赔率（3X/2.5/2.9）与配置表（2.9）的映射冲突。",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 段落72"
+              ],
+              "reason": "结算公式明确：赔付金额 = 本轮各选项已投入金额 × 对应赔率。公式本身无歧义，冲突在于赔率数值映射而非公式结构。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格4",
+                "tiger需求文档.docx / 图1",
+                "tiger需求文档.docx / 图5",
+                "tiger需求文档.docx / 图7",
+                "tiger需求文档.docx / 图21"
+              ],
+              "reason": "CLARITY_01已完整覆盖UI展示赔率（3X/2.5/2.9）与配置表（2.9）的映射冲突。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_02",
+            "SEC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落78",
+            "tiger需求文档.docx / 图22",
+            "tiger需求文档.docx / 段落24",
+            "tiger需求文档.docx / 段落32",
+            "tiger需求文档.docx / 段落57"
+          ],
+          "reason": "CLARITY_02已覆盖机器人机制缺失导致阈值无法触发的问题，图22流程图与正文脱节的证据充分。；SEC_01已覆盖'实时计算'快照时机未定义的问题，段落24与段落32存在抽水时机冲突。",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 段落78",
+                "tiger需求文档.docx / 图22"
+              ],
+              "reason": "CLARITY_02已覆盖机器人机制缺失导致阈值无法触发的问题，图22流程图与正文脱节的证据充分。",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "SEC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 段落24",
+                "tiger需求文档.docx / 段落32",
+                "tiger需求文档.docx / 段落57"
+              ],
+              "reason": "SEC_01已覆盖'实时计算'快照时机未定义的问题，段落24与段落32存在抽水时机冲突。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3",
+            "tiger需求文档.docx / 图片解析"
+          ],
+          "reason": "文档通过'投入'交互暗示扣款发生在下注时，但未明确说明是即时冻结还是结算时扣除。TEST_02已覆盖Repeat边界，扣款时机可作为补充建议。；表格3明确说明'在结束弹窗消失回到投入阶段时，余额增加对应数值'，派奖时机清晰。；文档未明确资金事务失败的回滚补偿机制，但属于通用中台能力，无直接冲突证据，仅作为建议提醒。",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3"
+              ],
+              "reason": "文档通过'投入'交互暗示扣款发生在下注时，但未明确说明是即时冻结还是结算时扣除。TEST_02已覆盖Repeat边界，扣款时机可作为补充建议。",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3"
+              ],
+              "reason": "表格3明确说明'在结束弹窗消失回到投入阶段时，余额增加对应数值'，派奖时机清晰。",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 图片解析"
+              ],
+              "reason": "文档未明确资金事务失败的回滚补偿机制，但属于通用中台能力，无直接冲突证据，仅作为建议提醒。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "confirmed_add",
+          "primary_issue_ids": [
+            "LOGIC_01"
+          ],
+          "candidate_issue_ids": [
+            "MAX_PAYOUT_01"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落72",
+            "tiger需求文档.docx / 表格3",
+            "tiger需求文档.docx / 段落29",
+            "tiger需求文档.docx / 段落57",
+            "tiger需求文档.docx / 段落68"
+          ],
+          "reason": "赔率固定为2.9倍（表格4/表格5），相对赔付上限隐含为2.9x投注额，边界清晰。；段落29明确'奖池余额允许为负数'但未定义透支下限、回填边界与熔断条件，存在无限透支风险。；LOGIC_01已覆盖80%奖池兜底逻辑导致0赔付的缺陷，单局封顶问题已被吸收。",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 段落72",
+                "tiger需求文档.docx / 表格3"
+              ],
+              "reason": "赔率固定为2.9倍（表格4/表格5），相对赔付上限隐含为2.9x投注额，边界清晰。",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "MAX_PAYOUT_01"
+              ],
+              "evidence_checked": [
+                "tiger需求文档.docx / 段落29"
+              ],
+              "reason": "段落29明确'奖池余额允许为负数'但未定义透支下限、回填边界与熔断条件，存在无限透支风险。",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 段落57",
+                "tiger需求文档.docx / 段落68"
+              ],
+              "reason": "LOGIC_01已覆盖80%奖池兜底逻辑导致0赔付的缺陷，单局封顶问题已被吸收。",
+              "errors": [
+                "primary_control_mismatch:LOGIC_01"
+              ]
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "STATISTICS_01"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3",
+            "tiger需求文档.docx / 图片13"
+          ],
+          "reason": "表格3明确定义三个时间窗口：最近1小时、今日、最近7天，窗口定义内部一致。；表格3正文写'最近7天（Last 7 days）'，但图片13 UI截图显示'Last 30 day（最近30天）'，同一指标时间窗口不一致。",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3"
+              ],
+              "reason": "表格3明确定义三个时间窗口：最近1小时、今日、最近7天，窗口定义内部一致。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "STATISTICS_01"
+              ],
+              "evidence_checked": [
+                "tiger需求文档.docx / 表格3",
+                "tiger需求文档.docx / 图片13"
+              ],
+              "reason": "表格3正文写'最近7天（Last 7 days）'，但图片13 UI截图显示'Last 30 day（最近30天）'，同一指标时间窗口不一致。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_control_invalid:max_payout_economic_boundary:single_round_payout_cap:primary_control_mismatch:LOGIC_01"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 2,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "phase2_coverage_ledger_invalid"
+    ]
+  }
+}

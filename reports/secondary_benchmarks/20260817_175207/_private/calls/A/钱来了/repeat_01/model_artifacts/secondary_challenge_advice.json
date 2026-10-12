@@ -1,0 +1,49 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "primary_report_hash_after": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "protected_fields_hash_before": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "protected_fields_hash_after": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-001",
+      "target_issue_id": "CROSS_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "程序在实现结算公式时可能因术语歧义导致乘区错误，引发严重的资金结算事故",
+      "evidence": "需求文档 / 3.3.1 符号分类总览（段落132）、3.3.2 中间轴符号（段落142、147）；数值文档 / 四、基础游戏・投注与中奖计算（段落22）、表格2",
+      "counterevidence": "需求文档段落147示例'左/右轴为10倍投注，中间轴为x100，则中奖金额=10×100×投注额'与数值文档公式'中奖金额=乘数符号×符号值（即基础投注×符号赔率）'在逻辑上完全一致，表格2中金币赔率倍数（0.1, 0.5, 1, 5, 10）与需求文档段落132的数值档位完全相同",
+      "rationale": "虽然术语表述不一致（需求文档用'投注金额的倍数'，数值文档用'金币赔率倍数'），但实际数值完全相同，公式逻辑也一致。需求文档示例明确展示了计算方式，数值文档公式虽然表述不够简洁，但逻辑正确。因此，术语不一致不会导致'严重的资金结算事故'，风险被高估。",
+      "recommended_action": "demote",
+      "proposed_split": [],
+      "target_title": "中奖金额计算公式与符号定义口径分裂",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": []
+}

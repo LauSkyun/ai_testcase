@@ -1,0 +1,706 @@
+{
+  "status": "completed",
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 2,
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 0,
+    "materially_changed_titles": [],
+    "materially_changed_examples": []
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": true,
+      "results": [],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": true,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [],
+        "confirmed_control_keys": [],
+        "candidate_to_audit_key": {},
+        "candidate_to_control_key": {},
+        "finding_audit_keys": {},
+        "finding_control_keys": {},
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "inferred_coverage_schema_version:2_from_complete_control_shape"
+        ],
+        "errors": [],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "advice_only",
+            "primary_issue_ids": [
+              "CROSS_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 1.3 项目特色 [段落15]",
+              "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算 [段落22]",
+              "钱来了需求文档.docx / 3.5.2 触发流程 [段落190]",
+              "钱来了需求文档.docx / 图片解析 图片11"
+            ],
+            "reason": "Primary CROSS_01 已覆盖结算公式的术语歧义问题，虽然严重度调整为中，但控制面已覆盖。；文档提及免费次数结束后展示总收益，但未明确所有场景（如重转、推展）下UI与结算的映射关系。属于一般性提醒，非具体阻塞问题。",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 1.3 项目特色 [段落15]",
+                  "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算 [段落22]"
+                ],
+                "reason": "Primary CROSS_01 已覆盖结算公式的术语歧义问题，虽然严重度调整为中，但控制面已覆盖。",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.5.2 触发流程 [段落190]",
+                  "钱来了需求文档.docx / 图片解析 图片11"
+                ],
+                "reason": "文档提及免费次数结束后展示总收益，但未明确所有场景（如重转、推展）下UI与结算的映射关系。属于一般性提醒，非具体阻塞问题。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_02",
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 3.4.1 重转模式 [段落154]",
+              "钱来了需求文档.docx / 3.4.2 推展模式 [段落158]",
+              "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+              "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落122]"
+            ],
+            "reason": "Primary LOGIC_02 已覆盖RESPIN触发条件与底层数据的矛盾。需求文档 [段落183] 的续杯触发条件错误属于不同根因，已写入review_notes。；Primary CROSS_02 已覆盖风控基数与封顶规则的口径冲突。",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.4.1 重转模式 [段落154]",
+                  "钱来了需求文档.docx / 3.4.2 推展模式 [段落158]"
+                ],
+                "reason": "Primary LOGIC_02 已覆盖RESPIN触发条件与底层数据的矛盾。需求文档 [段落183] 的续杯触发条件错误属于不同根因，已写入review_notes。",
+                "errors": []
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+                  "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落122]"
+                ],
+                "reason": "Primary CROSS_02 已覆盖风控基数与封顶规则的口径冲突。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "advice_only",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 2.4.7 余额变化 [段落63]",
+              "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+              "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落125]",
+              "钱来了需求文档.docx / 全文",
+              "钱来了数值文档.docx / 全文"
+            ],
+            "reason": "文档提及下注扣除货币时直接减少，但未明确具体触发节点（旋转前还是旋转后）。属于一般性提醒，常见于老虎机游戏（旋转前扣款）。；文档提及基础游戏每局结算、免费游戏结束后展示总收益，但未明确免费游戏派奖的具体到账节点。属于一般性提醒。；文档未涉及资金事务失败的回滚、补发、重试与幂等规则。此类能力通常由平台中台统一处理，非本玩法专属规则。",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 2.4.7 余额变化 [段落63]"
+                ],
+                "reason": "文档提及下注扣除货币时直接减少，但未明确具体触发节点（旋转前还是旋转后）。属于一般性提醒，常见于老虎机游戏（旋转前扣款）。",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+                  "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落125]"
+                ],
+                "reason": "文档提及基础游戏每局结算、免费游戏结束后展示总收益，但未明确免费游戏派奖的具体到账节点。属于一般性提醒。",
+                "errors": []
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "文档未涉及资金事务失败的回滚、补发、重试与幂等规则。此类能力通常由平台中台统一处理，非本玩法专属规则。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "advice_only",
+            "primary_issue_ids": [
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了数值文档.docx / 表格8",
+              "钱来了数值文档.docx / 表格9",
+              "钱来了需求文档.docx / 全文",
+              "钱来了数值文档.docx / 全文",
+              "钱来了需求文档.docx / 1.3 项目特色 [段落15]"
+            ],
+            "reason": "Primary CROSS_02 已覆盖100倍风控上限的口径问题。；文档未涉及奖池机制，本游戏为普通老虎机，无奖池透支场景。；文档提及2000倍封顶大奖（相对上限），但未明确绝对金额封顶。此类上限通常由平台统一配置，可补充说明。",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了数值文档.docx / 表格8",
+                  "钱来了数值文档.docx / 表格9"
+                ],
+                "reason": "Primary CROSS_02 已覆盖100倍风控上限的口径问题。",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "文档未涉及奖池机制，本游戏为普通老虎机，无奖池透支场景。",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 1.3 项目特色 [段落15]"
+                ],
+                "reason": "文档提及2000倍封顶大奖（相对上限），但未明确绝对金额封顶。此类上限通常由平台统一配置，可补充说明。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 图片解析 图片32",
+              "钱来了需求文档.docx / 图片解析 图片1",
+              "钱来了需求文档.docx / 3.3.2 中间轴符号 [段落150]"
+            ],
+            "reason": "记录界面明确显示\"最多显示100条最近记录\"，统计窗口清晰。；UI截图显示免费旋转次数为5、10、20，与需求文档描述一致。",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 图片解析 图片32"
+                ],
+                "reason": "记录界面明确显示\"最多显示100条最近记录\"，统计窗口清晰。",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 图片解析 图片1",
+                  "钱来了需求文档.docx / 3.3.2 中间轴符号 [段落150]"
+                ],
+                "reason": "UI截图显示免费旋转次数为5、10、20，与需求文档描述一致。",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": true
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [],
+      "confirmed_control_keys": [],
+      "candidate_to_audit_key": {},
+      "candidate_to_control_key": {},
+      "finding_audit_keys": {},
+      "finding_control_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CROSS_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 1.3 项目特色 [段落15]",
+            "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算 [段落22]",
+            "钱来了需求文档.docx / 3.5.2 触发流程 [段落190]",
+            "钱来了需求文档.docx / 图片解析 图片11"
+          ],
+          "reason": "Primary CROSS_01 已覆盖结算公式的术语歧义问题，虽然严重度调整为中，但控制面已覆盖。；文档提及免费次数结束后展示总收益，但未明确所有场景（如重转、推展）下UI与结算的映射关系。属于一般性提醒，非具体阻塞问题。",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 1.3 项目特色 [段落15]",
+                "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算 [段落22]"
+              ],
+              "reason": "Primary CROSS_01 已覆盖结算公式的术语歧义问题，虽然严重度调整为中，但控制面已覆盖。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.5.2 触发流程 [段落190]",
+                "钱来了需求文档.docx / 图片解析 图片11"
+              ],
+              "reason": "文档提及免费次数结束后展示总收益，但未明确所有场景（如重转、推展）下UI与结算的映射关系。属于一般性提醒，非具体阻塞问题。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.4.1 重转模式 [段落154]",
+            "钱来了需求文档.docx / 3.4.2 推展模式 [段落158]",
+            "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落122]"
+          ],
+          "reason": "Primary LOGIC_02 已覆盖RESPIN触发条件与底层数据的矛盾。需求文档 [段落183] 的续杯触发条件错误属于不同根因，已写入review_notes。；Primary CROSS_02 已覆盖风控基数与封顶规则的口径冲突。",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.4.1 重转模式 [段落154]",
+                "钱来了需求文档.docx / 3.4.2 推展模式 [段落158]"
+              ],
+              "reason": "Primary LOGIC_02 已覆盖RESPIN触发条件与底层数据的矛盾。需求文档 [段落183] 的续杯触发条件错误属于不同根因，已写入review_notes。",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+                "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落122]"
+              ],
+              "reason": "Primary CROSS_02 已覆盖风控基数与封顶规则的口径冲突。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 2.4.7 余额变化 [段落63]",
+            "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落125]",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "文档提及下注扣除货币时直接减少，但未明确具体触发节点（旋转前还是旋转后）。属于一般性提醒，常见于老虎机游戏（旋转前扣款）。；文档提及基础游戏每局结算、免费游戏结束后展示总收益，但未明确免费游戏派奖的具体到账节点。属于一般性提醒。；文档未涉及资金事务失败的回滚、补发、重试与幂等规则。此类能力通常由平台中台统一处理，非本玩法专属规则。",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 2.4.7 余额变化 [段落63]"
+              ],
+              "reason": "文档提及下注扣除货币时直接减少，但未明确具体触发节点（旋转前还是旋转后）。属于一般性提醒，常见于老虎机游戏（旋转前扣款）。",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 2.3 免费次数界面 [段落35]",
+                "钱来了需求文档.docx / 3.2.4 基础游戏流程 [段落125]"
+              ],
+              "reason": "文档提及基础游戏每局结算、免费游戏结束后展示总收益，但未明确免费游戏派奖的具体到账节点。属于一般性提醒。",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及资金事务失败的回滚、补发、重试与幂等规则。此类能力通常由平台中台统一处理，非本玩法专属规则。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 表格8",
+            "钱来了数值文档.docx / 表格9",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文",
+            "钱来了需求文档.docx / 1.3 项目特色 [段落15]"
+          ],
+          "reason": "Primary CROSS_02 已覆盖100倍风控上限的口径问题。；文档未涉及奖池机制，本游戏为普通老虎机，无奖池透支场景。；文档提及2000倍封顶大奖（相对上限），但未明确绝对金额封顶。此类上限通常由平台统一配置，可补充说明。",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了数值文档.docx / 表格8",
+                "钱来了数值文档.docx / 表格9"
+              ],
+              "reason": "Primary CROSS_02 已覆盖100倍风控上限的口径问题。",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及奖池机制，本游戏为普通老虎机，无奖池透支场景。",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 1.3 项目特色 [段落15]"
+              ],
+              "reason": "文档提及2000倍封顶大奖（相对上限），但未明确绝对金额封顶。此类上限通常由平台统一配置，可补充说明。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析 图片32",
+            "钱来了需求文档.docx / 图片解析 图片1",
+            "钱来了需求文档.docx / 3.3.2 中间轴符号 [段落150]"
+          ],
+          "reason": "记录界面明确显示\"最多显示100条最近记录\"，统计窗口清晰。；UI截图显示免费旋转次数为5、10、20，与需求文档描述一致。",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 图片解析 图片32"
+              ],
+              "reason": "记录界面明确显示\"最多显示100条最近记录\"，统计窗口清晰。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 图片解析 图片1",
+                "钱来了需求文档.docx / 3.3.2 中间轴符号 [段落150]"
+              ],
+              "reason": "UI截图显示免费旋转次数为5、10、20，与需求文档描述一致。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "coverage_protocol_revision": "phase2_v2_1",
+  "coverage_evidence_packet_id": "5704fbea4ae2d6f1376ad53f7d890af5ad31be87609b1db25794644c814951de",
+  "coverage_evidence_packet_echoed": true
+}

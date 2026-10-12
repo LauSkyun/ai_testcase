@@ -1,0 +1,232 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较高，准确识别了免费游戏封顶与风控规则的根本冲突、Respin表演逻辑缺乏服务端映射约束、购买免费功能配置缺失等核心阻塞问题。但在WIN_FORMULA的定性上可更精确（属于术语歧义而非根本冲突），且遗漏了数值文档中RESPIN概率表存在两份不同配置的问题。",
+    "strengths": [
+      "准确识别了FREE_CAP_VS_RISK这一根本冲突，免费游戏2000倍封顶与单局100倍风控强制0确实无法同时满足",
+      "RESPIN_PERFORMANCE问题抓住了服务端定果与客户端表演的映射缺口，这是Slots游戏的核心体验风险",
+      "PURCHASE_FREE_MISSING问题全面覆盖了购买功能的核心配置缺失、断线恢复、幂等性等多个子症状",
+      "正确识别了需求文档3.5.1节'4个及以上夺宝符号'的复制粘贴错误，并合理吸收到购买免费功能问题中"
+    ],
+    "issues": [
+      "WIN_FORMULA定性为'表述不一致'但未明确区分'术语歧义'与'根本冲突'，实际上两份文档的公式在数学上可兼容实现，只是'符号值'术语定义不清",
+      "数值文档中存在两份RESPIN发生几率表格（0.15/0.1和0.05），主模型仅在quality_notes中提及，未作为正式finding输出",
+      "部分finding的evidence字段为空字符串，缺乏具体的文档段落或表格引用"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的定性偏差，补充了RESPIN概率表不一致的遗漏问题，结构完整、证据可追踪、lineage清晰，可直接给业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的定性偏差，补充了RESPIN概率表不一致的遗漏问题，结构完整、证据可追踪、lineage清晰，可直接给业务方阅读。"
+  },
+  "review_notes": [
+    "WIN_FORMULA问题已修正定性：从'表述不一致'改为'术语歧义'，明确两份文档在数学上可兼容实现，但'符号值'术语定义不清可能导致实现偏差。保持高严重度是因为歧义可能导致10倍资损风险。",
+    "RESPIN_PROBABILITY_CONFLICT为新增finding，补充了数值文档中两份RESPIN概率表不一致的问题，主模型仅在quality_notes中提及，未作为正式finding输出。",
+    "需求文档3.5.1节'4个及以上夺宝符号'的复制粘贴错误已被主模型吸收到PURCHASE_FREE_MISSING问题中，不再单独列出。",
+    "建议后续进一步排查需求文档中是否还有其他从竞品或其他项目复制过来的未修改文本。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "RESPIN_PROBABILITY_CONFLICT",
+      "title": "数值文档中存在两份不同的RESPIN发生几率配置表",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "severity": "中",
+      "current_state": "数值文档中表格5和表格6均命名为'RESPIN发生几率'，但表格5的值为0.1，表格6的值为0.05，未说明哪份为最终生效配置，也未说明两份配置的适用场景（如普通游戏/免费游戏区分）。",
+      "evidence": "钱来了数值文档.docx / 表格5、表格6",
+      "risk": "开发无法确定RESPIN的实际触发概率，可能导致配置表冗余或触发逻辑错误，影响游戏爆率和玩家体验。",
+      "suggestion": "明确两份RESPIN概率表的适用场景（如表格5用于普通游戏、表格6用于免费游戏），或删除冗余表格，确保配置唯一性。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞配置落地"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "PURCHASE_FREE_MISSING",
+        "primary_issue_ids": [
+          "PURCHASE_FREE_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "BIG_WIN_THRESHOLD",
+        "primary_issue_ids": [
+          "BIG_WIN_THRESHOLD"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "NUM_SYMBOL_DISPLAY",
+        "primary_issue_ids": [
+          "NUM_SYMBOL_DISPLAY"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "ZERO_SYMBOL_DISPLAY",
+        "primary_issue_ids": [
+          "ZERO_SYMBOL_DISPLAY"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RESPIN_PERFORMANCE",
+        "primary_issue_ids": [
+          "RESPIN_PERFORMANCE"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "WIN_FORMULA",
+        "primary_issue_ids": [
+          "WIN_FORMULA"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FREE_CAP_VS_RISK",
+        "primary_issue_ids": [
+          "FREE_CAP_VS_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "EXPAND_TRIGGER",
+        "primary_issue_ids": [
+          "EXPAND_TRIGGER"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "RESPIN_PROBABILITY_CONFLICT",
+        "source_missed_issue_ids": [
+          "RESPIN_PROBABILITY_CONFLICT"
+        ],
+        "reason": "数值文档中存在两份不同值的RESPIN概率表，主模型仅在quality_notes中提及，未作为正式finding输出，需补充以确保配置落地无歧义。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的定性偏差，补充了RESPIN概率表不一致的遗漏问题，结构完整、证据可追踪、lineage清晰，可直接给业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

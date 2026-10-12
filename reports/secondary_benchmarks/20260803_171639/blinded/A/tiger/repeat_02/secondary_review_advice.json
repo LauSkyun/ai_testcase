@@ -1,0 +1,340 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告总体结构完整，抓住了赔率冲突、兜底逻辑缺陷、机器人机制缺失等核心问题，方向正确。但报告在问题归并、证据引用、严重度判定上存在若干可优化项：部分问题可合并为同一根因，部分风险描述与证据链不完全匹配，且遗漏了少量关键边界问题。",
+    "strengths": [
+      "准确识别了赔率/倍数在正文、配置表、UI截图中的多处矛盾",
+      "发现了开奖兜底逻辑中「开出0赔付选项」的机制缺陷",
+      "指出了开奖阈值强依赖投入人数但缺失机器人机制的架构风险",
+      "报告结构清晰，维度覆盖全面，测试要点具备可执行性"
+    ],
+    "issues": [
+      "将 '奖池正常状态偏移概率冲突' 与 '断线重连缺失' 揉在同一个finding中，混淆了根因",
+      "将 '赔率展示冲突' 与 '规则说明冲突' 作为两个独立问题处理，实际可合并为同一赔率口径问题",
+      "遗漏了 '不抽水触发条件' 中的公式与判定顺序冲突",
+      "遗漏了 '结算弹窗重复拉起' 的幂等风险",
+      "部分证据引用未精确到段落编号或表格编号",
+      "对 '假人数/假金额' 展示与真实结算的数据源隔离问题未做专项检查",
+      "top_blockers 中包含了非阻塞性问题（如断线重连），应聚焦真正阻塞开发的核心项"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "review_notes": [
+    "主模型将LOGIC_02与断线重连缺失混写在同一finding中，已拆分为独立的LOGIC_02（数值冲突）与TEST_01（断线重连缺失）",
+    "主模型将CLARITY_01（赔率冲突）与断线重连缺失混写在同一finding中，已拆分为独立的CLARITY_04（赔率冲突）与TEST_01（断线重连缺失）",
+    "补充了MISS_01「不抽水触发条件逻辑冲突」为新增LOGIC_04，属高信号遗漏",
+    "补充了MISS_02「结算弹窗幂等风险」为新增TEST_03",
+    "补充了MISS_03「假金额展示与真实结算数据源隔离」为新增UX_02",
+    "top_blockers已更新为CLARITY_04、LOGIC_01、LOGIC_04、CLARITY_02，移除原CLARITY_01和LOGIC_02",
+    "表格5中亏损大R累计亏损初始值5000000与正文段落85的50000000存在数量级差异，已在quality_notes中标注",
+    "建议后续评审中关注：奖池透支上限、最大赔付封顶、新手引导局是否污染真实统计数据等边界",
+    "dual_pass trace 提示：candidate_lineage 不为空，但未完整覆盖 primary/candidate 的问题血缘；当前候选稿暂不建议默认直出。",
+    "dual_pass 补漏落盘提示：candidate_lineage.added 中声明的新增问题未完整落入最终 candidate。",
+    "dual_pass 协议提示：部分 lineage.added 声称的新问题未实际落盘到最终 candidate。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "primary_issue_ids": [
+        "CLARITY_01",
+        "LOGIC_01"
+      ],
+      "recommended_action": "CLARITY_01（赔率展示冲突）与 LOGIC_01（兜底0赔付缺陷）为不同根因，不建议合并。前者是UI/配置口径不一致，后者是开奖算法逻辑缺陷。",
+      "reason": "根因不同，应保持独立"
+    }
+  ],
+  "missed_findings": [
+    {
+      "missed_issue_id": "MISS_01",
+      "canonical_title": "「不抽水触发条件」中判定顺序与公式存在逻辑冲突",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "single_document",
+      "severity": "高",
+      "current_state": "段落34-35定义判定条件为：统计「今日+昨日奖池累计净收入（累计收入-累计支出）」，若净收入＜本轮最小选项投入金额×3，则可能触发不抽水。段落32又规定判定时机在「投入结束后、抽水前」。但本轮的最小选项投入金额在投入结束后才确定，且净收入公式中未包含本轮投入额，若奖池历史净收入为0，本轮投入额巨大，则净收入可能远小于本轮投入额×3，触发不抽水概率极高，可能造成奖池被过度放水。",
+      "evidence": "tiger需求文档.docx / 3.7.1 段落32-38",
+      "risk": "判定逻辑可能导致不抽水被频繁触发，奖池持续失血，透支风险加剧，破坏数值平衡。",
+      "suggestion": "1. 明确「净收入」是否包含本轮投入额；2. 明确「本轮最小选项投入金额」究竟是实时值还是上一轮值；3. 建议在判定条件中增加奖池当前余额或收益率的安全阈值，避免奖池负值时仍触发不抽水。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "missed_issue_id": "MISS_02",
+      "canonical_title": "结算弹窗自动收起后重复拉起的幂等风险未定义",
+      "primary_dimension": "可测试性与验收标准",
+      "evidence_scope": "single_document",
+      "severity": "中",
+      "current_state": "表格3规定结算弹窗展示5s后自动收起，但未说明在5s倒计时期间若发生断线重连、后台切前台、或服务端推送延迟，结算弹窗是否会被重复拉起。",
+      "evidence": "tiger需求文档.docx / 表格3",
+      "risk": "用户可能看到重复的结算弹窗，或结算弹窗在自动收起后又被重新拉起，体验混乱且可能引发重复派奖的担忧。",
+      "suggestion": "补充结算弹窗的幂等规则：1. 每局仅展示一次结算弹窗；2. 客户端本地记录已展示状态，重连后不再重复拉起；3. 服务端推送结算结果时携带唯一结算ID，客户端据此去重。",
+      "planner_role": "系统策划",
+      "confidence": "中",
+      "blocking": "阻塞测试用例设计"
+    },
+    {
+      "missed_issue_id": "MISS_03",
+      "canonical_title": "跑马灯/排行榜展示的「假金额」是否参与真实奖池计算未声明",
+      "primary_dimension": "用户体验与游戏性",
+      "evidence_scope": "single_document",
+      "severity": "中",
+      "current_state": "表格3跑马灯展示全服中奖信息，排行榜展示用户win金额，但文档未声明这些展示数据是否与真实结算数据完全一致，是否存在假数据填充或数值美化。",
+      "evidence": "tiger需求文档.docx / 表格3（跑马灯、排行榜）",
+      "risk": "若展示数据与真实结算不一致，玩家可能通过比对排行榜与自身记录发现数据造假，引发信任危机。",
+      "suggestion": "明确声明：1. 跑马灯与排行榜数据必须与真实结算数据完全一致，禁止假数据填充；2. 若存在假数据需求，需单独说明假数据生成规则、占比及与真实奖池的隔离机制。",
+      "planner_role": "系统策划",
+      "confidence": "中",
+      "blocking": "阻塞测试用例设计"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "补全了证据引用，将 finding 独立为单一问题（原主模型将机器人缺失与断线重连混写在同一finding）"
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，仅润色建议"
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，补充了证据段落编号"
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，仅润色建议"
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，仅润色建议"
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，仅润色建议"
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，补充了证据段落编号"
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "保持原骨架，仅润色建议"
+      },
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "主模型未识别「不抽水触发条件」中的判定顺序与公式冲突，属高信号遗漏"
+      },
+      {
+        "candidate_issue_id": "TEST_03",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "主模型未覆盖结算弹窗的幂等风险"
+      },
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [],
+        "reason": "主模型将赔率展示冲突（CLARITY_01）与断线重连缺失混写在同一finding中，需拆分为独立问题并补全证据"
+      },
+      {
+        "candidate_issue_id": "UX_02",
+        "source_missed_issue_ids": [
+          "MISS_03"
+        ],
+        "reason": "主模型未检查跑马灯/排行榜展示数据与真实结算的数据源隔离问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": true,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [
+    "CLARITY_04"
+  ],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "partial",
+  "candidate_structure_drift": true,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [
+    "CLARITY_04"
+  ],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "partial",
+  "candidate_added_materialization_missing_ids": [
+    "CLARITY_04"
+  ],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "advice_candidate_structure_mismatch",
+    "candidate_added_not_materialized",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": false,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": false,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch",
+      "candidate_added_not_materialized"
+    ],
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_traceability_partial"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  }
+}

@@ -1,0 +1,950 @@
+{
+  "schema_version": 1,
+  "status": "pending_human_review",
+  "instructions": "Annotate while _private/provider_mapping.json remains closed. Use true/false for all labels.",
+  "label_definitions": {
+    "valid": "事实和风险成立",
+    "duplicate": "与冻结 Primary 的问题重复",
+    "unsupported": "证据不足",
+    "overstated": "严重度过高",
+    "understated": "严重度过低",
+    "multiroot": "包含多个独立根因",
+    "actionable": "责任人与修改建议可直接执行"
+  },
+  "items": [
+    {
+      "annotation_id": "A-777-R01-A001",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_SETTLE_01",
+      "audit_key": "",
+      "title": "基础盘面空白与特殊轴空白的结算倍率表述存在致命歧义",
+      "current_state": "1. 需求文档段落18描述中奖公式时称“若组合结果为空白，则用户为1倍奖金”，但未明确“组合结果为空白”是指基础盘面（123列）出现空符号，还是指第4列特殊轴出现空白。\n2. 若指基础盘面出现空符号，根据需求表格1及数值文档段落15，有空符号出现时赔率为0倍，此时奖金应为0，而非“1倍奖金”（退还本金）。\n3. 若指第4列特殊轴为空白，根据数值文档段落21，乘数值默认为1，此时公式应为“投注额*赔率*1”，表述为“1倍奖金”易与基础赔率混淆。",
+      "evidence": "疯狂777需求文档修改后.docx / 二、需求描述，段落18；表格1；crazy777数值文档修改后.docx / 二、基础游戏・基础符号，段落15；三、基础游戏・乘数符号，段落21。",
+      "risk": "若开发按“基础盘面空白=1倍奖金”实现，将导致大量空盘局退还本金，造成严重资损；若按0倍实现，则与需求文档字面描述冲突，引发测试验收阻塞。",
+      "suggestion": "明确区分基础盘面空白与特殊轴空白的结算规则：1. 基础盘面（123列）任意一列为空时，赔率为0，奖金为0；2. 第4列特殊轴为空白时，乘数符号值为1，奖金=基础投注×赔率×1。删除或重写需求文档段落18中“若组合结果为空白，则用户为1倍奖金”的表述。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_02",
+        "overlap": false,
+        "reason": "CLARITY_02 仅关注第4列乘数符号0与空白的图案定义混淆，未覆盖需求文档段落18中关于基础盘面空白结算为1倍奖金的致命公式错误。"
+      },
+      "independent_root_cause": "需求文档对“空白”导致的结算结果表述错误，混淆了基础盘面0倍与特殊轴乘数1的概念。",
+      "root_cause_count": 1,
+      "root_causes": [
+        "需求文档对“空白”导致的结算结果表述错误，混淆了基础盘面0倍与特殊轴乘数1的概念。"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "需求文档段落18明确写出‘若组合结果为空白，则用户为1倍奖金’，而表格1和数值文档段落15明确有空符号时赔率为0。两者在结算金额上直接冲突，不存在兼容解释。",
+        "searched_locations": [
+          "疯狂777需求文档修改后.docx / 二、需求描述，段落18",
+          "疯狂777需求文档修改后.docx / 表格1",
+          "crazy777数值文档修改后.docx / 二、基础游戏・基础符号，段落15"
+        ]
+      },
+      "severity_basis": "若按字面实现将导致空盘局退还本金，造成直接资损；若按0倍实现则与需求文档冲突，阻塞测试验收。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "fact_check_compatible_interpretation_contradiction",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-777-R02-A001",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_MAX_MUL_01",
+      "audit_key": "",
+      "title": "RESPIN玩法最大赔付上限（MAX_MUL）缺失，且与风控规则边界不清",
+      "current_state": "1. 数值文档仅规定了普通结果“超过100倍强制0倍”的风控规则，但未明确RESPIN累加玩法的最大赔付上限（MAX_MUL）。\n2. 若RESPIN累加结果受100倍风控限制，则与LOGIC_02（风控与RESPIN触发条件冲突）形成死结；若RESPIN豁免风控，则缺乏最大赔付兜底，可能导致极端情况下的经济事故（如连续转出高倍率）。",
+      "evidence": "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55-56；五、基础游戏・推展机制，段落41-46",
+      "risk": "缺乏MAX_MUL验收口径，测试无法设计极端赔付用例；若程序未做兜底，可能引发严重资损。",
+      "suggestion": "明确RESPIN玩法的最大赔付上限（如：单次RESPIN最高赔付不超过基础投注的X倍），并明确该上限是否受100倍风控规则约束。",
+      "severity": "高",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "LOGIC_02关注的是风控触发时机与RESPIN触发条件的逻辑互斥，本问题关注的是RESPIN玩法本身缺乏最大赔付上限（MAX_MUL）的兜底定义，两者属于不同层面的边界缺口。"
+      },
+      "independent_root_cause": "缺乏RESPIN玩法的最大赔付上限（MAX_MUL）定义及与风控规则的边界划分。",
+      "root_cause_count": 1,
+      "root_causes": [
+        "缺乏RESPIN玩法的最大赔付上限（MAX_MUL）定义及与风控规则的边界划分。"
+      ],
+      "fact_check": {
+        "claim_type": "boundary_gap",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档中仅提及100倍风控，未提及RESPIN的MAX_MUL，且无法通过兼容解释得出RESPIN的上限。",
+        "searched_locations": [
+          "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控"
+        ]
+      },
+      "severity_basis": "缺乏MAX_MUL会导致测试无法验收极端赔付场景，且若程序未做兜底可能引发严重资损。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突"
+        },
+        {
+          "issue_id": "LOGIC_04",
+          "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+        },
+        {
+          "issue_id": "TEST_01",
+          "title": "自动旋转/快捷旋转与RESPIN状态的交互规则缺失"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-racing-R01-A001",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "SECURITY_BET_DEDUCTION_TIMING",
+      "audit_key": "",
+      "title": "下注本金扣除/冻结时机缺失，存在经济漏洞风险",
+      "current_state": "文档描述了‘下注余额，点击前往按钮唤起收银台’及‘选中档位后点击下注内容一次下注’，但未明确下注成功后是立即扣除/冻结余额，还是开奖后统一结算。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落25、段落32",
+      "risk": "对赌游戏若不在下注时冻结/扣除本金，会导致用户余额不足时仍能下注，或开奖时余额已被挪用，产生严重的经济漏洞与资损风险。",
+      "suggestion": "明确下注成功即冻结/扣除对应本金，开奖后仅发放净收益（或退回本金+收益），并在服务端做余额强校验。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK 关注的是开奖后的赔付上限兜底，而本问题关注的是下注动作发生时的本金扣除/冻结时机，两者属于不同阶段的经济边界，无重叠。"
+      },
+      "independent_root_cause": "下注动作发生时的本金扣除/冻结时机规则缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "下注动作发生时的本金扣除/冻结时机规则缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "原文仅描述了UI交互和唤起收银台，未提及任何关于余额冻结、扣除或结算时机的规则，不存在兼容解释。",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落25、段落32"
+        ]
+      },
+      "severity_basis": "对赌游戏核心经济链路缺失，直接导致可刷钱或余额透支等严重资损事故。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-racing-R02-A001",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "SECURITY_DEDUCT_TIMING",
+      "audit_key": "",
+      "title": "下注扣款与奖池注入时机未明确，存在超额下注或账实不符风险",
+      "current_state": "需求文档说明下注宝石数注入奖池，且单选项下注有100万上限，但未明确下注时是否立即扣款/冻结余额，以及奖池注入的具体时机。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+      "risk": "若下注时不立即扣款，可能导致用户余额不足仍下注成功，或开奖时平台无法赔付；奖池注入时机若与扣款不同步，会导致奖池账面数据失真，影响干预逻辑判断。",
+      "suggestion": "明确下注时立即扣除/冻结用户余额，并同步注入奖池；补充余额不足时的拦截提示与异常处理流程。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK 关注奖池负数时的最大赔付兜底，而本问题关注下注时的扣款时机与奖池注入同步性，属于不同的经济边界缺口。"
+      },
+      "independent_root_cause": "下注扣款与奖池注入的经济边界规则缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "下注扣款与奖池注入的经济边界规则缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档中仅描述了奖池注入和扣款的概念，未明确扣款发生的时机（下注时还是开奖时），无法通过兼容解释得出唯一实现方案。",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分",
+          "musee游戏Racing.docx / 3.4开奖逻辑"
+        ]
+      },
+      "severity_basis": "若下注不扣款，会导致严重的资金漏洞和超额赔付风险，直接阻塞经济系统开发。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-tiger-R01-A001",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "CLARITY_FORMULA_01",
+      "audit_key": "",
+      "title": "开奖分析模块胜率公式分母'范围内的游戏局数'口径未定义",
+      "current_state": "表格3'开奖分析'模块说明中给出胜率计算公式：'对应图案出现次数/范围内的游戏局数（结果为百分比，保留2位小数）'，时间维度包括Last 1 hour、Today、Last 7 days。但'范围内的游戏局数'未明确定义：1. 是指该时间窗口内的总开奖局数（此时三选项胜率之和恒为100%）；2. 还是指该时间窗口内'有有效开奖结果'的局数（需定义何为有效）；3. 是否包含流局、异常局、未结算局。",
+      "evidence": "tiger需求文档.docx / 表格3（开奖分析模块说明）",
+      "risk": "分母口径不清将导致客户端展示胜率与服务端实际统计不一致，玩家看到三项胜率之和≠100%时会质疑公平性；测试无法设计验收用例。",
+      "suggestion": "明确定义：'范围内的游戏局数' = 该时间窗口内已完成结算的总开奖局数（三选项胜率之和恒为100%），并在文档中写明流局/异常局不计入。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_01",
+        "overlap": false,
+        "reason": "CLARITY_01聚焦于赔率/倍数在正文、配置、UI、规则间的数值冲突；本问题是开奖分析模块胜率公式分母定义缺失，属于独立的数据统计口径缺口，两者根因不同"
+      },
+      "independent_root_cause": "开奖分析胜率公式分母口径缺失，与primary中赔率冲突、兜底逻辑、机器人机制等根因均不重叠",
+      "root_cause_count": 1,
+      "root_causes": [
+        "开奖分析胜率公式分母口径缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "表格3仅给出公式形式，未定义分母口径；全文搜索未发现对'游戏局数'的等价定义或公共模块引用；不存在可兼容解释",
+        "searched_locations": [
+          "tiger需求文档.docx / 表格3（开奖分析模块说明）",
+          "tiger需求文档.docx / 3.7.开奖部分（基础概率）",
+          "tiger需求文档.docx / 4.后台配置"
+        ]
+      },
+      "severity_basis": "分母口径不清将直接导致客户端展示与服务端统计不一致，玩家可感知三项胜率之和≠100%，引发公平性质疑；测试无法设计验收用例",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CLARITY_03",
+          "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-tiger-R02-A001",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_04",
+      "audit_key": "",
+      "title": "投入人数统计口径在不同规则中不一致（非去重 vs 去重）",
+      "current_state": "文档中多处使用'投入人数'作为开奖阈值判断依据，但统计口径不一致：\n1. 段落53（奖池充裕状态）：'每个选项都有 ≥ {20} 人投入（非去重）'\n2. 段落70（奖池回收状态）：'当局总投入人数 ≥ {30}'（未说明去重/非去重）\n3. 段落99（人群保护触发）：'本轮总投入人数 ≥ {50}'（未说明去重/非去重）\n4. 段落100（人群保护比例）：'「新进用户 + 预流失用户 + 亏损大R」的投入人数去重数'（明确去重）",
+      "evidence": "tiger需求文档.docx / 3.7.3、3.7.5、3.8.2、3.8.3",
+      "risk": "开发无法确定'投入人数'的统一统计口径，可能导致不同规则下人数计算逻辑不一致，进而影响开奖阈值触发和人群保护策略的正确性。测试无法设计统一的验收标准。",
+      "suggestion": "统一'投入人数'的统计口径：明确所有规则中的'投入人数'是否包含机器人、是否去重。建议：1. 在3.7节开头增加'投入人数统计口径'定义；2. 统一所有阈值判断的口径（建议全部使用'非去重'或全部使用'去重'）。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "LOGIC_02 关注的是概率数值冲突（60% vs 20%），本问题关注的是投入人数统计口径不一致，两者是独立的根因"
+      },
+      "independent_root_cause": "投入人数统计口径定义不一致",
+      "root_cause_count": 1,
+      "root_causes": [
+        "投入人数统计口径定义不一致"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落53明确写'非去重'，段落100明确写'去重数'，两者在同一文档中对同一概念使用了不同的统计口径，无法兼容解释"
+      },
+      "severity_basis": "统计口径不一致会导致开发实现歧义，不同规则下人数计算逻辑可能冲突，影响开奖阈值触发和人群保护策略的正确性，测试无法设计统一验收标准",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "value_mismatch_same_scope_unverified",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CLARITY_02",
+          "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制"
+        },
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-tiger-R02-A002",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_05",
+      "audit_key": "",
+      "title": "亏损大R累计亏损阈值在正文与配置表中存在10倍差异",
+      "current_state": "亏损大R的判定条件中，'过去7日累计亏损'阈值在正文与配置表中存在10倍差异：\n1. 段落85：'过去 7日（不含今日）游戏 累计亏损 ≥ {50000000}'（5千万）\n2. 表格5：'亏损大R-过去{x}日，累计总亏损 ≥ {y}' = 7, 5000000（5百万）",
+      "evidence": "tiger需求文档.docx / 3.8.1.2、表格5",
+      "risk": "数值口径存在10倍差异，开发无法确定最终生效的阈值，导致人群保护策略触发条件偏离数值预期。若按5千万执行，则保护范围过窄；若按5百万执行，则保护范围过宽，均会影响经济平衡。",
+      "suggestion": "核对并统一数值。建议以表格5的后台配置表为准（5000000），同步修改段落85的描述。若实际应为5千万，则修改表格5。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "LOGIC_02 关注的是奖池正常状态下的概率冲突，本问题关注的是亏损大R阈值冲突，两者是独立的根因"
+      },
+      "independent_root_cause": "亏损大R累计亏损阈值数值冲突",
+      "root_cause_count": 1,
+      "root_causes": [
+        "亏损大R累计亏损阈值数值冲突"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落85写50000000（5千万），表格5写5000000（5百万），两者相差10倍，无法兼容解释"
+      },
+      "severity_basis": "10倍数值差异会导致人群保护策略触发条件严重偏离预期，影响经济平衡和用户体验，开发无法确定最终生效值",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-tiger-R02-A003",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "CLARITY_04",
+      "audit_key": "",
+      "title": "开奖分析模块的时间范围在正文与UI截图中存在冲突",
+      "current_state": "开奖分析模块的胜率计算时间范围在正文与UI截图中存在冲突：\n1. 表格3：'胜率计算范围：最近1小时（Last 1 hour），今日（Today），最近7天（Last 7 days）'\n2. 图13：UI截图显示三个时间维度为'Last 1 hour'、'Today'、'Last 30 day'",
+      "evidence": "tiger需求文档.docx / 表格3、图13",
+      "risk": "时间范围不一致会导致开发实现与UI设计不符，测试无法确定验收标准。若按7天实现，则UI需修改；若按30天实现，则正文需修改。",
+      "suggestion": "统一时间范围。建议以UI截图为准（30天），同步修改表格3的描述。若实际应为7天，则修改UI设计。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_03",
+        "overlap": false,
+        "reason": "CLARITY_03 关注的是开奖分析模块的可见性配置矛盾，本问题关注的是时间范围冲突，两者是独立的根因"
+      },
+      "independent_root_cause": "开奖分析时间范围定义冲突",
+      "root_cause_count": 1,
+      "root_causes": [
+        "开奖分析时间范围定义冲突"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "表格3写'最近7天'，图13显示'Last 30 day'，两者不一致，无法兼容解释"
+      },
+      "severity_basis": "时间范围不一致会导致开发实现与UI设计不符，测试无法确定验收标准",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-tiger-R02-A004",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "CLARITY_05",
+      "audit_key": "",
+      "title": "游戏记录展示范围在正文与UI截图中存在冲突",
+      "current_state": "游戏记录模块的展示范围在正文与UI截图中存在冲突：\n1. 表格3：'最多展示近3日的游戏记录（包括今日，按自然日）'\n2. 图6：UI截图显示'Show your betting records in the last 30 days'（30天）\n3. 图8：UI截图显示'Show the records of the fast 1 day'（1天）",
+      "evidence": "tiger需求文档.docx / 表格3、图6、图8",
+      "risk": "展示范围不一致会导致开发实现与UI设计不符，测试无法确定验收标准。若按3日实现，则UI需修改；若按30日/1日实现，则正文需修改。",
+      "suggestion": "统一展示范围。建议以正文为准（3日），同步修改UI设计。若实际应为30日或1日，则修改表格3。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_01",
+        "overlap": false,
+        "reason": "CLARITY_01 关注的是赔率数值冲突，本问题关注的是游戏记录展示范围冲突，两者是独立的根因"
+      },
+      "independent_root_cause": "游戏记录展示范围定义冲突",
+      "root_cause_count": 1,
+      "root_causes": [
+        "游戏记录展示范围定义冲突"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "表格3写'近3日'，图6显示'30 days'，图8显示'1 day'，三者不一致，无法兼容解释"
+      },
+      "severity_basis": "展示范围不一致会导致开发实现与UI设计不符，测试无法确定验收标准",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-小鸡-R01-A001",
+      "variant_id": "A",
+      "game": "小鸡",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "CLARITY_ART_CONFLICT",
+      "audit_key": "",
+      "title": "核心角色与题材包装冲突（小鸡 vs 骆驼）",
+      "current_state": "1. 角色设定冲突：小鸡.docx / 4、题材包装，段落55提及“一开始美术可以先用默认的小鸡形象”，但段落56又定义“核心形象：卡通骆驼设计”。\n2. UI与世界观割裂：所有UI截图（图片1-8）及游戏标题均为“CHICKEN ROAD”（小鸡），角色均为白色小鸡，与“中东沙漠商队”世界观及骆驼设定完全割裂。",
+      "evidence": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析。",
+      "risk": "美术资源制作方向错误，UI表现与世界观设定割裂，可能导致大规模返工。",
+      "suggestion": "明确最终核心角色（小鸡或骆驼）。若保留小鸡，需重写世界观与场景包装；若使用骆驼，需重新设计UI资源与游戏标题，并统一所有文档术语。",
+      "severity": "中",
+      "blocking": "阻塞美术资源制作与验收",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "overlap": false,
+        "reason": "主模型将美术冲突混入了概率计算问题，但两者属于完全不同的根因（美术资源方向 vs 数值算法模型），必须独立处理。"
+      },
+      "independent_root_cause": "需求文档内部角色设定与UI实际表现存在直接冲突，且未给出最终决策。",
+      "root_cause_count": 1,
+      "root_causes": [
+        "需求文档内部角色设定与UI实际表现存在直接冲突，且未给出最终决策。"
+      ],
+      "fact_check": {
+        "claim_type": "direct_conflict",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落55明确说先用小鸡，段落56明确定义核心形象为骆驼，且UI全是小鸡，无法由同一套实现同时满足，必须二选一。"
+      },
+      "severity_basis": "不影响核心结算逻辑，但会导致美术资源制作方向错误，造成返工成本。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "primary_duplicate_declared_nearest",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+          "title": "难度系统概率计算逻辑冲突"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-小鸡-R01-A002",
+      "variant_id": "A",
+      "game": "小鸡",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "ECONOMY_DEDUCT_TIMING",
+      "audit_key": "",
+      "title": "开局扣款与本金结算口径未明确",
+      "current_state": "1. 扣款时机未明确：小鸡.docx / 2.1 完整游戏流程，段落20-22描述了准备阶段（选择筹码、点击开始），但未明确“下注金额”是在点击“开始”时预扣，还是在“提现”时结算扣除。\n2. 失败清零口径歧义：段落26描述失败时“所有奖金清零”，段落44给出公式“总奖金 = 下注金额 × 已通过马路倍率”。若开局不预扣，玩家可无限次免费点击“开始”试探；若预扣，失败时“清零”的表述需明确是“扣除的本金不退还”还是“局内累计奖金清零”。",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程，段落20-22、26；小鸡.docx / 3.3 奖金计算系统，段落44。",
+      "risk": "涉及核心经济循环与状态机，扣款时机不明确可能导致刷接口漏洞或结算歧义，造成资损。",
+      "suggestion": "明确下注金额的扣款时机（建议开局预扣）。修正失败结算的表述，明确“清零”是指“本金扣除且局内累计奖金不发放”，避免与“局内累计奖金清零”混淆。",
+      "severity": "高",
+      "blocking": "阻塞开发与测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_03",
+        "overlap": false,
+        "reason": "主模型关注了超级大奖和Crash映射，但完全遗漏了最基础的开局扣款时机问题，属于独立的经济边界缺口。"
+      },
+      "independent_root_cause": "需求文档未定义核心经济循环中的扣款时机与本金口径。",
+      "root_cause_count": 1,
+      "root_causes": [
+        "需求文档未定义核心经济循环中的扣款时机与本金口径。"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "searched_locations": [
+          "小鸡.docx / 2.1 完整游戏流程",
+          "小鸡.docx / 3.3 奖金计算系统"
+        ],
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档中确实未说明是预扣还是后扣，且“清零”表述存在歧义，无法通过兼容解释消除。"
+      },
+      "severity_basis": "扣款时机是博弈游戏的核心经济边界，不明确会导致状态机实现错误和潜在的刷接口资损。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-小鸡-R02-A001",
+      "variant_id": "A",
+      "game": "小鸡",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_BET_DEDUCTION_TIMING",
+      "audit_key": "",
+      "title": "扣款时机与失败结算本金口径缺失",
+      "current_state": "1. 需求文档段落20提及‘玩家选择下注筹码’，段落26提及‘若被车辆撞击：游戏结束，所有奖金清零’。\n2. 数值文档段落3提及‘如果失败了，则扣除本次积累的全部金币’。\n3. 文档未明确‘下注金额’是在点击‘开始’时从钱包扣除，还是在‘提现’时结算。若失败时‘清零’或‘扣除’，需明确是扣除‘下注本金’还是‘当前累计奖金（含本金）’，否则无法实现经济闭环。",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程，段落20、26；小鸡数值文档.docx / 1. 游戏简介，段落3。",
+      "risk": "扣款时机不明确会导致前后端结算逻辑冲突，若失败时不扣除本金则存在刷分/套利风险，若扣除口径不清则会导致玩家资产计算错误。",
+      "suggestion": "明确扣款时机为‘点击开始时扣除下注本金’，失败结算口径为‘没收本金，不退还任何累计奖金’；提现时发放‘本金×当前累计倍率’。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_03",
+        "overlap": false,
+        "reason": "LOGIC_03关注通关超级大奖的边界，本问题关注开局扣款与失败时的本金结算口径，属于不同阶段的经济边界。"
+      },
+      "independent_root_cause": "扣款时机与失败结算本金口径缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "扣款时机与失败结算本金口径缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档仅提及‘奖金清零’和‘扣除积累金币’，未明确本金扣除时机及失败时的具体资产变动口径，存在经济边界缺口。",
+        "searched_locations": [
+          "小鸡.docx / 2.1 完整游戏流程",
+          "小鸡.docx / 3.4 提现与结算系统",
+          "小鸡数值文档.docx / 1. 游戏简介"
+        ]
+      },
+      "severity_basis": "扣款时机和失败结算口径是博弈类游戏的核心经济链路，缺失将直接导致结算逻辑无法实现或产生资损。",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-钱来了-R01-A001",
+      "variant_id": "A",
+      "game": "钱来了",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "CLARITY_02",
+      "audit_key": "",
+      "title": "购买免费游戏功能缺少核心配置",
+      "current_state": "需求文档3.5.3提及OMS后台控制\"购买免费游戏的价格系数\"，但未说明：1）价格系数的基数是什么（基础投注？固定值？）；2）购买后获得多少次免费旋转；3）购买价格的具体计算公式；4）购买功能与自然触发的互斥/叠加规则。",
+      "evidence": "需求文档 / 3.5.3 购买免费游戏",
+      "risk": "程序无法实现购买功能的扣款逻辑和次数发放，测试无法验收购买流程。",
+      "suggestion": "补充购买价格公式（如：基础投注 × 系数 × 固定次数）、购买后进入的免费游戏初始次数、以及购买状态与自然触发的互斥规则。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CROSS_03",
+        "overlap": false,
+        "reason": "CROSS_03关注的是免费续杯概率配置缺失，而本问题关注的是购买功能本身的核心配置缺失，两者是独立的功能模块"
+      },
+      "independent_root_cause": "购买免费游戏功能的核心配置（价格公式、初始次数、互斥规则）完全缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "购买免费游戏功能的核心配置缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "需求文档3.5.3仅提及OMS控制价格系数，但未提供价格公式、初始次数等核心配置，无法通过兼容解释补全",
+        "searched_locations": [
+          "需求文档 / 3.5.3 购买免费游戏"
+        ]
+      },
+      "severity_basis": "缺少价格公式和初始次数配置，程序无法实现扣款和发奖逻辑，直接阻塞购买功能开发",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "primary_duplicate_declared_nearest",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CROSS_03",
+          "title": "免费游戏续杯概率配置缺失"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-钱来了-R01-A002",
+      "variant_id": "A",
+      "game": "钱来了",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_04",
+      "audit_key": "",
+      "title": "表演权重与出现权重的使用场景关系不清",
+      "current_state": "数值文档表格3中乘数符号同时配置了\"出现权重\"和\"表演权重\"，但未说明：1）两种权重分别在什么阶段使用；2）两者的关系是什么（独立？关联？）；3）ID=0的特殊逻辑中\"表演权重随机到2个免费类别\"的具体含义。",
+      "evidence": "数值文档 / 三、基础游戏・乘数符号、表格3",
+      "risk": "程序无法确定随机生成逻辑，可能导致实际概率与配置概率不符。",
+      "suggestion": "明确说明出现权重用于底层数据生成，表演权重用于表演阶段展示，并给出ID=0逻辑的完整示例。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_03",
+        "overlap": false,
+        "reason": "LOGIC_03关注ID=0的具体逻辑表述不清，而本问题关注的是两种权重的整体使用场景关系，是更上层的问题"
+      },
+      "independent_root_cause": "表演权重与出现权重的使用场景和关系未说明",
+      "root_cause_count": 1,
+      "root_causes": [
+        "表演权重与出现权重关系不清"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "数值文档仅列出两种权重，未说明使用场景和关系，无法通过兼容解释补全",
+        "searched_locations": [
+          "数值文档 / 三、基础游戏・乘数符号、表格3"
+        ]
+      },
+      "severity_basis": "两种权重的使用场景不清，程序无法实现正确的随机生成逻辑，阻塞核心玩法开发",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "primary_duplicate_declared_nearest",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_03",
+          "title": "乘数符号ID=0的表演权重替换逻辑表述不清"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-钱来了-R01-A003",
+      "variant_id": "A",
+      "game": "钱来了",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_05",
+      "audit_key": "",
+      "title": "重转与推展互斥逻辑的必要性疑问",
+      "current_state": "数值文档五、基础游戏・核心机制指出\"RESPIN机制触发判定优先于推展判定，且两个判定互斥\"，但根据触发条件：1）重转：中间有符号且左右不匹配；2）推展：中间无符号且左右匹配。这两个条件本身已互斥，为何需要额外说明优先级？是否存在其他场景使两者可能同时触发？",
+      "evidence": "数值文档 / 五、基础游戏・核心机制",
+      "risk": "程序可能误解为存在两者同时触发的场景，导致实现复杂化或逻辑错误。",
+      "suggestion": "澄清是否存在两者可能同时触发的场景，或说明优先级说明的意图（如：代码实现顺序、性能优化等）。",
+      "severity": "中",
+      "blocking": "阻塞开发",
+      "confidence": "中",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "LOGIC_02关注RESPIN触发条件与底层数据的矛盾，而本问题关注的是RESPIN与推展互斥逻辑的必要性，是独立的问题"
+      },
+      "independent_root_cause": "重转与推展触发条件已互斥，但文档额外说明优先级造成理解困惑",
+      "root_cause_count": 1,
+      "root_causes": [
+        "互斥逻辑必要性说明不清"
+      ],
+      "fact_check": {
+        "claim_type": "boundary_gap",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": true,
+        "conclusion": "confirmed",
+        "reason": "触发条件本身已互斥，但文档额外说明优先级，可能存在未说明的场景或意图，需要澄清"
+      },
+      "severity_basis": "可能导致程序实现复杂化或逻辑错误，影响核心机制的正确实现",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "evidence_position_unlocatable",
+        "fact_check_inconclusive_compatible_interpretation",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    },
+    {
+      "annotation_id": "A-钱来了-R02-A001",
+      "variant_id": "A",
+      "game": "钱来了",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "LOGIC_04",
+      "audit_key": "",
+      "title": "免费续杯触发条件与盘面结构冲突",
+      "current_state": "需求文档 3.5.1 规定'免费旋转期间再次出现4个及以上夺宝符号，可额外追加免费旋转次数'，但本游戏盘面结构为 1x3（共 3 个符号位，见 3.2.1），不可能出现 4 个及以上符号。该描述疑似从其他游戏复制粘贴而来，与 3.4.3 中'再次出现免费旋转符号且左右匹配'的续杯规则冲突。",
+      "evidence": "需求文档 / 3.5.1 基础设定（段落183）、3.2.1 卷轴结构（段落96）、3.4.3 免费旋转模式（段落166）",
+      "risk": "程序无法实现'4个及以上夺宝符号'的触发条件，测试无法验收续杯机制。若按 3.4.3 规则实现，则 3.5.1 的描述会造成混淆，可能导致开发团队误读需求。",
+      "suggestion": "删除 3.5.1 中'4个及以上夺宝符号'的错误描述，统一按 3.4.3 规则：'免费模式中再次出现免费旋转符号且左右匹配，可再次发放免费次数'。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CROSS_03",
+        "overlap": false,
+        "reason": "CROSS_03 关注的是续杯概率配置缺失，而本问题关注的是续杯触发条件的描述错误（1x3盘面不可能出现4个及以上符号），两者根因不同"
+      },
+      "independent_root_cause": "需求文档中存在从其他游戏复制粘贴的错误描述，导致续杯触发条件与盘面结构冲突",
+      "root_cause_count": 1,
+      "root_causes": [
+        "需求文档中存在从其他游戏复制粘贴的错误描述，导致续杯触发条件与盘面结构冲突"
+      ],
+      "fact_check": {
+        "claim_type": "direct_conflict",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "1x3 盘面最多 3 个符号位，不可能出现 4 个及以上符号，与'4个及以上夺宝符号'的描述直接冲突，无兼容解释"
+      },
+      "severity_basis": "程序无法实现'4个及以上夺宝符号'的触发条件，直接阻塞续杯机制的开发与测试验收，且可能导致开发团队误读需求",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "missing_fields:audit_key",
+        "coverage_ledger_invalid",
+        "coverage_confirmed_add_link_missing"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "推展机制的“上下”方向与1x3盘面结构冲突"
+        },
+        {
+          "issue_id": "LOGIC_02",
+          "title": "底层数据生成规则与RESPIN触发条件矛盾"
+        },
+        {
+          "issue_id": "CROSS_03",
+          "title": "免费游戏续杯概率配置缺失"
+        }
+      ],
+      "reviewer_notes": "",
+      "valid": null,
+      "duplicate": null,
+      "unsupported": null,
+      "overstated": null,
+      "understated": null,
+      "multiroot": null,
+      "actionable": null
+    }
+  ]
+}

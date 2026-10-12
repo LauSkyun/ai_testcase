@@ -1,0 +1,305 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了核心结算公式冲突、基础盘面空符号定义重叠、推展机制触发条件混淆等关键问题，问题定位准确，证据引用基本到位。但存在以下不足：LOGIC_01 把 RESPIN 结算公式、自动旋转停止时机、盘面生成算法、断线恢复、快捷动画时长、数值分布/RTP/MAX_MUL 等六个不同根因的问题合并成一个，链条过长，导致责任归属和开发修复路径不清晰；CLARITY_01 对空符号定义重叠的分析未指出数值文档中表格3的权重与表格2的权重是独立随机过程，过度强调互斥性；遗漏了 RESPIN 乘数符号为 1 的权重未定义、基础盘面权重配置残缺、推展机制中 0 倍盘面与表演冲突、布局描述不一致等直接影响开发实现和测试验收的问题。",
+    "strengths": [
+      "准确识别 RESPIN 结算公式在需求文档与数值文档之间的表述冲突，证据引用完整",
+      "对基础盘面空符号定义重叠的风险判断准确，指出了概率模型不可计算的核心问题",
+      "推展机制触发条件单位混淆的定位精确，证据充分",
+      "UI 赔付表展示数值与底层配置赔率脱节的问题判断准确，风险等级合理"
+    ],
+    "issues": [
+      "LOGIC_01 把 RESPIN 结算公式、自动旋转停止、盘面生成、断线恢复、快捷动画、数值分布等六个不同根因合并成一个问题，需要拆分以明确各自的责任归属和修复路径",
+      "遗漏了 RESPIN 乘数符号为 1 的权重未定义，导致数值文档中表格 7 的权重池不完整",
+      "遗漏了基础盘面权重配置残缺，表格 2 中各 ID 权重均为 100 且无归一化说明",
+      "遗漏了推展机制中 0 倍盘面与表演的冲突，即风控强制 0 倍后是否仍触发推展表演",
+      "遗漏了界面布局描述不一致，需求文档段落 4 描述为 3*3+1*3，而数值文档中游戏为 3*3+1 列，第二维度不同",
+      "CROSS_01 和 CROSS_02 在原生维度中未出现，LOGIC_01 工单中引用了它们，但内部结构不一致"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "review_notes": [
+    "主模型 LOGIC_01 合并了六个不同根因的问题，本期候选报告已将其拆分为六个独立子问题，保持原 issue_id 不变，但采用子编号（LOGIC_01_02 至 LOGIC_01_06）区分，便于后续追踪和责任归属。",
+    "主模型 CROSS_01 和 CROSS_02 在原生维度中未出现，但在 LOGIC_01 工单中引用了它们，本期候选报告已将其还原到清晰度与完整性维度中，并保持原 issue_id 不变。",
+    "主模型 TEST_01 和 MISS_03 本质上是同一根因的不同侧面，本期候选报告已将其合并到 TEST_01 中，并吸收了 MISS_03 的内容。",
+    "数值文档中表格 2 和表格 3 的权重配置明显为占位符，建议在后续版本中补充完整。",
+    "需求文档中多处 UI 图片为占位符或截断状态，建议在后续版本中提供最终视觉稿。",
+    "候选报告中的 LOGIC_01_02 至 LOGIC_01_06 子编号仅用于内部追踪，建议在后续版本中为每个子问题分配独立的 issue_id。",
+    "dual_pass trace 提示：candidate_lineage 不为空，但未完整覆盖 primary/candidate 的问题血缘；当前候选稿暂不建议默认直出。",
+    "dual_pass trace 提示：candidate 存在未被 lineage 覆盖的问题映射，需补齐 kept/added/merged/dropped 后再考虑默认直出。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "candidate_issue_id": "CLARITY_02",
+      "primary_issue_ids": [
+        "CLARITY_02",
+        "LOGIC_01"
+      ],
+      "reason": "CLARITY_02 和 LOGIC_01 中关于推展机制触发条件单位和 RESPIN 结算公式的部分可以合并，但 LOGIC_01 中包含了 RESPIN 自动旋转停止、盘面生成、断线恢复、快捷动画、数值分布等多个独立根因，不适合全部合并。建议保留 CLARITY_02 独立，将 LOGIC_01 拆分为多个子问题，但本期不重构主模型的问题结构。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "missed_issue_id": "MISS_01",
+      "canonical_title": "基础盘面权重配置残缺且无归一化说明",
+      "description": "数值文档表格 2 中各 ID 的出现权重均为 100，但未说明总权重基数、归一化方式以及各 ID 之间的随机选择顺序。表格 3 中空符号表演权重（1个空/2个空/3个空）也为 100，未说明表格 2 和表格 3 是如何协同工作的。",
+      "evidence": "crazy777数值文档修改后.docx / 表格2、表格3",
+      "severity": "中",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "document",
+      "risk": "程序无法实现盘面生成算法，测试无法验证各符号的出现概率，阻塞开奖逻辑开发。",
+      "suggestion": "补充基础盘面完整的随机生成算法说明：1) 明确表格 2 中 ID 0-8 的总权重基准（如总权重 1000 或 100%），2) 明确表格 2 和表格 3 的调用顺序（先判断是否为空，再根据权重选择空符号的表演结果，还是其他逻辑），3) 补充任意符号的随机选择范围。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "missed_issue_id": "MISS_02",
+      "canonical_title": "RESPIN 乘数符号为 1 的权重未定义",
+      "description": "需求文档段落 19 的举例中提到了 RESPIN 过程中出现 1 倍的情况，数值文档段落 45 也说明 RESPIN 时引入 X1 的可能性，但数值文档表格 7 中仅列出了乘数符号值 2、3、5、10，缺少值 1 的权重配置。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落45、表格7",
+      "severity": "中",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "cross_document",
+      "risk": "RESPIN 的数值模型不完整，无法计算 RTP 和验证最大赔付，阻塞数值验收。",
+      "suggestion": "在数值文档表格 7 中补充乘数符号值 1 的出现权重，确保与需求文档举例和说明一致。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞数值验收"
+    },
+    {
+      "missed_issue_id": "MISS_03",
+      "canonical_title": "推展机制中 0 倍盘面与表演冲突",
+      "description": "数值文档说明风控强制 0 倍时 123 列至少有一列为空，但未说明此时是否仍需要触发推展机制的表演。而推展机制的描述中仅说明了从 5 倍+X10 变成 5 倍+空再推展为 X10 的表演逻辑，未说明如果最终结算结果是 0 倍时如何处理。",
+      "evidence": "crazy777数值文档修改后.docx / 段落38-40、55-56",
+      "severity": "中",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "risk": "风控触发时可能出现表演与结算结果不一致的 Bug，导致客户端显示推展动画但最终结算为 0 的异常体验。",
+      "suggestion": "补充风控强制 0 倍时的推展表演规则：明确当最终结算倍数小于等于 0 时，跳过推展机制表演，直接展示含空符号的最终盘面。",
+      "planner_role": "系统策划",
+      "confidence": "中",
+      "blocking": "阻塞测试用例设计"
+    },
+    {
+      "missed_issue_id": "MISS_04",
+      "canonical_title": "界面布局描述不一致",
+      "description": "需求文档描述游戏为 3*3+1*3 的异轴 SLOTS，数值文档描述为 3X3 +1 列特殊轴，两者在第二个维度 3 的解释上不一致。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落4；crazy777数值文档修改后.docx / 段落5",
+      "severity": "低",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "cross_document",
+      "risk": "开发对界面布局理解不一致，可能导致客户端 UI 布局错误。",
+      "suggestion": "统一两个文档中的布局描述，建议使用数值文档的 3X3 +1 列特殊轴表述，并明确说明特殊轴是独立于主卷轴的一列。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "非阻塞"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "补充了数值文档中表格3的权重与表格2的权重是独立随机过程的说明，调整了建议的描述"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "无变化"
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "无变化"
+      },
+      {
+        "candidate_issue_id": "CROSS_02",
+        "primary_issue_ids": [
+          "CROSS_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "无变化"
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "将合并的六个问题拆分为独立的子问题，分别描述现状、证据、风险和建议，保持原issue_id不变"
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISS_03"
+        ],
+        "changes": "吸收了 MISS_03 关于推展机制中 0 倍盘面与表演冲突的内容，合并到风控强制 0 倍后的表现冲突中"
+      },
+      {
+        "candidate_issue_id": "UX_02",
+        "primary_issue_ids": [
+          "UX_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "无变化"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "基础盘面权重配置残缺且无归一化说明，直接影响盘面生成算法实现，是主模型遗漏的高信号问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "RESPIN 乘数符号为 1 的权重未定义，导致数值模型不完整，是主模型遗漏的直接影响数值验收的问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY_05",
+        "source_missed_issue_ids": [
+          "MISS_04"
+        ],
+        "reason": "界面布局描述不一致，可能影响客户端 UI 布局实现，是主模型遗漏的低风险问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MISS_03"
+  ],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "partial",
+  "candidate_structure_drift": true,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [
+    "LOGIC_01_02",
+    "LOGIC_01_03",
+    "LOGIC_01_04",
+    "LOGIC_01_05",
+    "LOGIC_01_06"
+  ],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "candidate_block_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": false,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_candidate_findings",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

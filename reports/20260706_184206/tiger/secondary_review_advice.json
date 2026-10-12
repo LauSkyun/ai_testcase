@@ -1,0 +1,255 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了文档中几处高危的数值配置冲突和数学逻辑死锁，问题定位具体，证据引用清晰，整体结构完整，top_blockers 切中要害。但漏掉了至少两个直接影响结算实现的核心缺口：干预概率映射缺失和假数据/真实结算的数据源隔离问题，导致报告覆盖度不足，尚不能直接作为最终交付物。",
+    "strengths": [
+      "精准抓住了奖池透支与80%兜底阈值的数学死锁，逻辑链条完整。",
+      "对概率配置冲突、UI文案与规则不一致等问题的证据定位具体，引用到确切段落和表格。",
+      "报告结构清晰，维度分组合理，问题描述与建议可操作。"
+    ],
+    "issues": [
+      "遗漏了干预概率映射缺失这一根本性的实现阻塞问题，开发无法在缺少最终生效概率公式的情况下完成开奖函数。",
+      "未指出结算弹窗展示的Top3赢家信息与真实奖池赔付之间的数据源隔离问题，存在结算数据被投放假数据污染的风险。",
+      "部分问题（如概率配置冲突）可在同一finding内分点描述，避免拆散为多个top_blockers。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充主模型遗漏的干预概率映射缺失、假数据/真实结算数据源隔离缺失和流程顺序缺失三个高危缺口，结构完整，证据充分，来源可追踪，可直接交付业务方。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充主模型遗漏的干预概率映射缺失、假数据/真实结算数据源隔离缺失和流程顺序缺失三个高危缺口，结构完整，证据充分，来源可追踪，可直接交付业务方。"
+  },
+  "review_notes": [
+    "候选报告保留了主模型所有原始finding的issue_id和结构，仅在现状描述中做了分点展开，未拆分或合并任何问题。",
+    "新增的三个missed findings（MISSED_01、MISSED_02、MISSED_03）均基于共享输入中的明确证据，无经验推断。",
+    "主模型的merge_recommendations建议将“概率配置冲突”与“UI与文案一致性”合并，但本轮候选报告未执行合并，保留原有两个独立问题，建议在下一轮评审中由主模型或人工决定是否合并。",
+    "dual_pass 协议收敛提示：副模型对主模型首版报告给出负评，但 candidate_readiness=true 且候选稿结构/血缘完整，系统已按候选稿 readiness 自动收敛。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "recommended_merge_group": [
+        "概率配置冲突",
+        "UI与文案一致性"
+      ],
+      "target_issue_id": "概率配置冲突",
+      "reason": "两者的根因都是文档中多个数值口径未统一（倍率、概率、档位），只是表现形式不同，建议在候选报告中合并为一个主问题，分点描述英文文案、概率值和档位值的冲突。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "missed_issue_id": "MISSED_01",
+      "canonical_title": "干预概率映射缺失：基础概率、奖池状态偏移、人群保护策略之间缺少最终生效概率的合成公式",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "高",
+      "current_state": "文档定义了基础概率权重（表格4）、奖池状态偏移概率（3.7.3/3.7.4/3.7.5节）和人群保护偏移概率（3.8.3节），但完全没有说明这些概率如何合成最终生效的开奖概率。例如，3.8.3节写“{60}%概率开特殊用户投入人数最多的选项，1-{60}%概率按正常概率开奖”，但“正常概率”是指基础概率，还是指基础概率叠加奖池状态偏移后的概率？文档未定义任何优先级覆盖、权重叠加或概率树合成规则。",
+      "evidence": "tiger需求文档.docx / 3.7节表格4、3.7.3-3.7.5节、3.8.3节",
+      "risk": "开发无法实现开奖概率函数，测试无法验证任何RTP或回收率目标，所有概率相关用例均无法编写。",
+      "suggestion": "补充一份完整的开奖概率决策树或伪代码，明确每一层干预的触发条件、概率取值、覆盖规则和最终输出的归一化方案。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "missed_issue_id": "MISSED_02",
+      "canonical_title": "结算弹窗Top3赢家信息的数据源未定义，存在假数据参与真实结算的风险",
+      "primary_dimension": "安全性与反作弊",
+      "severity": "高",
+      "current_state": "表3结算弹窗模块要求展示“赢最多top3用户信息”，且投入阶段有“其他用户投入：从左上角用户icon处频繁随机向不同图案飞入钻石（若无其他实际用户投入则无飞入动画）”的描述。但文档未说明这些展示数据是来自真实玩家投入记录，还是系统生成的假数据；也未说明假数据对应的金额是否参与奖池注入、赔付计算或统计口径。",
+      "evidence": "tiger需求文档.docx / 表3结算弹窗模块、图案区模块",
+      "risk": "若假数据被误计入奖池流水或赔付计算，将导致真实玩家结算金额错误，引发严重经济事故。",
+      "suggestion": "明确声明：所有展示的Top3赢家信息、飞入动画均来自真实玩家投入记录，不引入任何假数据参与结算；若无真实数据，则对应模块不展示。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞结算安全"
+    },
+    {
+      "missed_issue_id": "MISSED_03",
+      "canonical_title": "人群保护策略与奖池状态判断的流程顺序缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "中",
+      "current_state": "段落78声明“3.8用户保护开奖逻辑→优先执行，仅当3.8不触发时，才进入3.7奖池状态判断流程”，但3.8.3节写“1-{60}%概率：按正常概率开奖（进入3.3奖池状态流程）”，而3.3节实际是各模块功能说明，并非奖池状态流程。文档未定义3.8触发后，其兜底逻辑（段落108）中的“实时总奖池”是否已经包含了3.7节的抽水、注入等操作，也未定义3.8不触发时，3.7的奖池状态判定是否已经完成抽水。",
+      "evidence": "tiger需求文档.docx / 3.8节段落78、3.8.3节段落108/109",
+      "risk": "服务端实现时无法确定抽水、奖池状态判定、人群保护判定、兜底赔付的先后顺序，导致结算链路实现错误。",
+      "suggestion": "补充一份完整的开奖时序图或伪代码，按顺序列出：投入截止→抽水判定→奖池状态判定→人群保护判定→开奖结果计算→赔付计算→扣款派奖。",
+      "planner_role": "系统策划",
+      "confidence": "中",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "流程时长冲突",
+        "primary_issue_ids": [
+          "流程时长冲突"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UI与文案一致性",
+        "primary_issue_ids": [
+          "UI与文案一致性"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "兜底边界与语义歧义",
+        "primary_issue_ids": [
+          "兜底边界与语义歧义"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "奖池数学死锁",
+        "primary_issue_ids": [
+          "奖池数学死锁"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "概率配置冲突",
+        "primary_issue_ids": [
+          "概率配置冲突"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "服务端权威边界",
+        "primary_issue_ids": [
+          "服务端权威边界"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "Repeat交互缺失",
+        "primary_issue_ids": [
+          "Repeat交互缺失"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "MISSED_01",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "主模型遗漏了干预概率映射缺失这一根本性的实现阻塞问题，开发无法在缺少最终生效概率公式的情况下完成开奖函数。"
+      },
+      {
+        "candidate_issue_id": "MISSED_02",
+        "source_missed_issue_ids": [
+          "MISSED_02"
+        ],
+        "reason": "主模型遗漏了结算弹窗Top3数据源与真实结算的隔离问题，存在假数据污染奖池赔付的风险。"
+      },
+      {
+        "candidate_issue_id": "MISSED_03",
+        "source_missed_issue_ids": [
+          "MISSED_03"
+        ],
+        "reason": "主模型遗漏了人群保护策略与奖池状态判断的流程顺序缺失，导致服务端无法编排完整的结算链路。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": true,
+  "readiness_conflict_auto_resolved": true,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充主模型遗漏的干预概率映射缺失、假数据/真实结算数据源隔离缺失和流程顺序缺失三个高危缺口，结构完整，证据充分，来源可追踪，可直接交付业务方。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": true,
+    "readiness_conflict_auto_resolved": true,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

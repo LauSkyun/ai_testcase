@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "pending_human_review",
+  "instructions": "Annotate while _private/provider_mapping.json remains closed. Use true/false for all labels.",
+  "label_definitions": {
+    "valid": "事实和风险成立",
+    "duplicate": "与冻结 Primary 的问题重复",
+    "unsupported": "证据不足",
+    "overstated": "严重度过高",
+    "understated": "严重度过低",
+    "multiroot": "包含多个独立根因",
+    "actionable": "责任人与修改建议可直接执行"
+  },
+  "items": []
+}

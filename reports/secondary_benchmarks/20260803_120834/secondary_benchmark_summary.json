@@ -1,0 +1,449 @@
+{
+  "schema_version": 1,
+  "benchmark_type": "frozen_primary_secondary_ab",
+  "created_at": "2026-08-03T12:13:15+08:00",
+  "source": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856",
+  "blinding": {
+    "public_outputs_use_variant_ids_only": true,
+    "provider_mapping_path": "_private/provider_mapping.json",
+    "annotation_status": "pending_human_review"
+  },
+  "design": {
+    "game_count": 5,
+    "secondary_variant_count": 2,
+    "repeats_per_variant_per_game": 2,
+    "expected_secondary_calls": 20,
+    "primary_calls": 0,
+    "vision_calls": 0,
+    "temperature": 0
+  },
+  "completion": {
+    "completed_secondary_calls": 0,
+    "failed_secondary_calls": 20,
+    "all_calls_paired": false
+  },
+  "fairness_invariants": {
+    "passed": true,
+    "only_secondary_provider_varies": true,
+    "primary_calls_observed": 0,
+    "vision_calls_observed": 0,
+    "per_game": [
+      {
+        "game": "777",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "secondary_message_hash_identical": true,
+          "temperature_identical": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+          "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+          "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+          "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c"
+        }
+      },
+      {
+        "game": "racing",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "secondary_message_hash_identical": true,
+          "temperature_identical": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+          "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+          "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+          "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5"
+        }
+      },
+      {
+        "game": "tiger",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "secondary_message_hash_identical": true,
+          "temperature_identical": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+          "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+          "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+          "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8"
+        }
+      },
+      {
+        "game": "小鸡",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "secondary_message_hash_identical": true,
+          "temperature_identical": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+          "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+          "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+          "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11"
+        }
+      },
+      {
+        "game": "钱来了",
+        "passed": true,
+        "checks": {
+          "shared_input_hash_identical": true,
+          "primary_raw_hash_identical": true,
+          "primary_messages_hash_identical": true,
+          "primary_report_hash_identical": true,
+          "secondary_message_hash_identical": true,
+          "temperature_identical": true
+        },
+        "frozen_hashes": {
+          "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+          "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+          "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+          "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794"
+        }
+      }
+    ]
+  },
+  "variant_metrics": [
+    {
+      "variant_id": "A",
+      "expected_calls": 10,
+      "completed_calls": 0,
+      "candidate_gate_pass_rate": null,
+      "candidate_default_adoption_rate": null,
+      "average_claimed_added_count": null,
+      "average_materialized_added_count": null,
+      "average_primary_top_blocker_retention": null,
+      "average_field_completeness": null,
+      "multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch_count": 0,
+      "materialization_mismatch_count": 0,
+      "major_judgment_drift_count": 0
+    },
+    {
+      "variant_id": "B",
+      "expected_calls": 10,
+      "completed_calls": 0,
+      "candidate_gate_pass_rate": null,
+      "candidate_default_adoption_rate": null,
+      "average_claimed_added_count": null,
+      "average_materialized_added_count": null,
+      "average_primary_top_blocker_retention": null,
+      "average_field_completeness": null,
+      "multiroot_finding_count": 0,
+      "unsupported_severity_change_count": 0,
+      "unsupported_blocking_change_count": 0,
+      "lineage_mismatch_count": 0,
+      "materialization_mismatch_count": 0,
+      "major_judgment_drift_count": 0
+    }
+  ],
+  "stability_comparison": [],
+  "human_metrics": {
+    "status": "pending_human_annotation",
+    "valid_added_finding_count": null,
+    "added_finding_precision": null,
+    "high_value_added_count": null,
+    "duplicate_add_rate": null
+  },
+  "calls": [
+    {
+      "game": "777",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/777/repeat_01",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "e28ea0719ff9cd79bdb2b06cc3ab3b8a7b830ed0b2c73fea4db2271e49225b72",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:777:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "777",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/777/repeat_02",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "e28ea0719ff9cd79bdb2b06cc3ab3b8a7b830ed0b2c73fea4db2271e49225b72",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:777:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "777",
+      "variant_id": "B",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/B/777/repeat_01",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "e28ea0719ff9cd79bdb2b06cc3ab3b8a7b830ed0b2c73fea4db2271e49225b72",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:777:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "777",
+      "variant_id": "B",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/B/777/repeat_02",
+      "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+      "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+      "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+      "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+      "secondary_message_hash": "e28ea0719ff9cd79bdb2b06cc3ab3b8a7b830ed0b2c73fea4db2271e49225b72",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:777:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "racing",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/racing/repeat_01",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "325704cb5e87210c372dc15c0a21d69a14c13fecaf8eaf80919103c2f48ad90d",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:racing:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "racing",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/racing/repeat_02",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "325704cb5e87210c372dc15c0a21d69a14c13fecaf8eaf80919103c2f48ad90d",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:racing:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "racing",
+      "variant_id": "B",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/B/racing/repeat_01",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "325704cb5e87210c372dc15c0a21d69a14c13fecaf8eaf80919103c2f48ad90d",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:racing:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "racing",
+      "variant_id": "B",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/B/racing/repeat_02",
+      "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+      "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+      "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+      "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+      "secondary_message_hash": "325704cb5e87210c372dc15c0a21d69a14c13fecaf8eaf80919103c2f48ad90d",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:racing:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "tiger",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/tiger/repeat_01",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "1722ed508c9fbee496d95e482050334c5ebe07684441b1ddbb2823b657af42d8",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:tiger:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "tiger",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/tiger/repeat_02",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "1722ed508c9fbee496d95e482050334c5ebe07684441b1ddbb2823b657af42d8",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:tiger:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "tiger",
+      "variant_id": "B",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/B/tiger/repeat_01",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "1722ed508c9fbee496d95e482050334c5ebe07684441b1ddbb2823b657af42d8",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:tiger:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "tiger",
+      "variant_id": "B",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/B/tiger/repeat_02",
+      "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+      "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+      "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+      "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+      "secondary_message_hash": "1722ed508c9fbee496d95e482050334c5ebe07684441b1ddbb2823b657af42d8",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:tiger:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/小鸡/repeat_01",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "c5047332ff89fde5e7c245f0eeadfbf30bc8b51dd1bd662abac398d3142eb7cd",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:小鸡:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/小鸡/repeat_02",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "c5047332ff89fde5e7c245f0eeadfbf30bc8b51dd1bd662abac398d3142eb7cd",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:小鸡:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "B",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/B/小鸡/repeat_01",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "c5047332ff89fde5e7c245f0eeadfbf30bc8b51dd1bd662abac398d3142eb7cd",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:小鸡:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "小鸡",
+      "variant_id": "B",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/B/小鸡/repeat_02",
+      "shared_input_hash": "55f5d81b2bfa20fc92b7e00cb558b6d38db79edc7b4258a1443aebb5b878d3c7",
+      "primary_raw_hash": "c0435aeb47ad5806a705a810df4fb9595419c6c45dcb767ab2279baff69a5495",
+      "primary_messages_hash": "1fc285fff12b6b6964142f8511f8e2783f07c7577e1085eff9980a4135b1a615",
+      "primary_report_hash": "7fc84b5d075c32da182518fbdefbbc95b0c764854314911e8c9e946867f62b11",
+      "secondary_message_hash": "c5047332ff89fde5e7c245f0eeadfbf30bc8b51dd1bd662abac398d3142eb7cd",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:小鸡:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "A",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/A/钱来了/repeat_01",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b41ee3c482024d47fee10207209036a8a9f3e3a43d5847ff407a7e638a57ed30",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:钱来了:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "A",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/A/钱来了/repeat_02",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b41ee3c482024d47fee10207209036a8a9f3e3a43d5847ff407a7e638a57ed30",
+      "temperature": 0,
+      "error": "secondary_benchmark:A:钱来了:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "B",
+      "repeat": 1,
+      "status": "failed",
+      "output_dir": "blinded/B/钱来了/repeat_01",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b41ee3c482024d47fee10207209036a8a9f3e3a43d5847ff407a7e638a57ed30",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:钱来了:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    },
+    {
+      "game": "钱来了",
+      "variant_id": "B",
+      "repeat": 2,
+      "status": "failed",
+      "output_dir": "blinded/B/钱来了/repeat_02",
+      "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+      "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+      "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+      "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+      "secondary_message_hash": "b41ee3c482024d47fee10207209036a8a9f3e3a43d5847ff407a7e638a57ed30",
+      "temperature": 0,
+      "error": "secondary_benchmark:B:钱来了:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+    }
+  ]
+}

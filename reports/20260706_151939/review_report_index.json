@@ -1,0 +1,174 @@
+{
+  "mode": "dual_pass",
+  "status": "complete",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "deepseek-v4-pro",
+  "selected_report_owner": "candidate",
+  "selected_report_path": "review_report.md",
+  "selected_source_report_path": "review_report_candidate.md",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "candidate_gate_failure_categories": {},
+  "pipeline_report_path": "review_report_pipeline.md",
+  "candidate_report_path": "review_report_candidate.md",
+  "advice_path": "secondary_review_advice.md",
+  "primary_score": "C",
+  "pipeline_score": "C",
+  "candidate_score": "D",
+  "selected_score": "D",
+  "pipeline_finding_count": 12,
+  "candidate_finding_count": 12,
+  "selected_finding_count": 12,
+  "candidate_ready_for_direct_output": true,
+  "candidate_ready_reason": "候选报告已补充中等风险遗漏，结构完整，证据充分，可直接交付业务方",
+  "lineage_counts": {
+    "kept": 7,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "readiness_conflict": false,
+  "candidate_structure_drift": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "candidate_block_reasons": [],
+  "candidate_block_reason_categories": {},
+  "trace_warning": "",
+  "cross_document_section_disabled": true,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 6,
+    "materially_changed_titles": [
+      "推展机制（Push）仅在数值文档定义，需求文档缺失UI与动效说明",
+      "需求文档缺失Respin次数上限与强制结束逻辑",
+      "Respin累加公式与举例表述歧义（相加 vs 相乘，初始值处理）",
+      "风控“强制0倍”机制的客户端表现与扣款逻辑缺失",
+      "UI赔率表展示数值与数值文档配置严重冲突",
+      "未中奖时第4列高倍/Respin的视觉反馈易误导"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CLARITY_01",
+        "issue_id": "CLARITY_01",
+        "title": "推展机制（Push）仅在数值文档定义，需求文档缺失UI与动效说明",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_01",
+        "issue_id": "CLARITY_04",
+        "title": "需求文档缺失Respin次数上限与强制结束逻辑",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_03",
+        "issue_id": "LOGIC_03",
+        "title": "Respin累加公式与举例表述歧义（相加 vs 相乘，初始值处理）",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_04",
+        "issue_id": "LOGIC_04",
+        "title": "风控“强制0倍”机制的客户端表现与扣款逻辑缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:TEST_01",
+        "issue_id": "TEST_01",
+        "title": "UI赔率表展示数值与数值文档配置严重冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_05",
+        "issue_id": "UX_01",
+        "title": "未中奖时第4列高倍/Respin的视觉反馈易误导",
+        "change_kinds": [
+          "title_changed"
+        ]
+      }
+    ]
+  },
+  "warning": ""
+}

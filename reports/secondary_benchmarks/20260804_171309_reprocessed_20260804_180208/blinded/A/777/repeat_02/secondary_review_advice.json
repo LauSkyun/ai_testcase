@@ -1,0 +1,720 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了RESPIN累加算法歧义、风控与RESPIN触发条件冲突、基础盘面生成规则混乱等核心高信号问题，问题定位准确、证据引用清晰。但在资金流控制面（扣款时机、派奖时机、失败补偿）和经济边界（单局最大赔付封顶）存在明显漏项，这些是直接影响结算正确性和经济安全的关键缺口。",
+    "strengths": [
+      "准确识别RESPIN累加算法加法/乘法歧义这一致命问题",
+      "发现风控强制0倍与RESPIN触发条件的逻辑冲突",
+      "基础盘面生成规则混乱问题定位准确，证据充分",
+      "推展机制表现与结果矛盾问题识别到位"
+    ],
+    "issues": [
+      "完全遗漏资金流控制面：扣款时机、派奖时机、失败补偿均未涉及",
+      "遗漏单局最大赔付封顶这一关键经济边界",
+      "部分finding的证据引用可以更精确到具体表格/段落",
+      "测试用例设计缺少资金流异常场景"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "候选报告已补充资金流控制面和经济边界的关键缺口，但主模型报告本身存在这些重大遗漏，需要补充后才能直出"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选报告已补充资金流控制面和经济边界的关键缺口，但主模型报告本身存在这些重大遗漏，需要补充后才能直出"
+  },
+  "review_notes": [
+    "主模型报告准确识别了核心高信号问题，但在资金流控制面（扣款时机、派奖时机、失败补偿）和经济边界（单局最大赔付封顶）存在明显漏项",
+    "建议优先补充资金流控制面的定义，这是直接影响结算正确性和经济安全的关键缺口",
+    "建议补充单局最大赔付的绝对金额封顶，作为风控100倍相对上限的兜底机制",
+    "protocol_profile=phase2",
+    "phase2 准入已从 candidate 移除 rejected addition：FUNDS_DEBIT_01",
+    "phase2 准入已从 candidate 移除 rejected addition：FUNDS_PAYOUT_01"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "FUNDS_FAILURE_01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "资金事务失败补偿机制未定义",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "两份文档均未说明资金事务失败时的补偿机制：1）扣款成功但游戏异常（如服务端崩溃）时是否回滚扣款；2）派奖失败时是否重试或补偿；3）网络中断时如何保证资金一致性。需求文档段落20仅提到'复用中台统一处理流程'，但未说明具体补偿策略。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落20；crazy777数值文档修改后.docx / 全文",
+      "risk": "缺少失败补偿机制会导致：1）扣款成功但游戏异常时玩家资金损失；2）派奖失败时玩家无法获得应得奖金；3）网络中断时资金状态不一致。这是经济安全的底线，直接影响玩家信任和合规性。",
+      "suggestion": "明确失败补偿机制：1）扣款成功但游戏异常时，服务端应记录事务日志，重连后恢复游戏状态或回滚扣款；2）派奖失败时，服务端应重试派奖或记录待派奖列表；3）网络中断时，客户端应显示'恢复中'状态，服务端保证资金一致性。建议补充资金事务的幂等设计和对账机制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "资金事务失败处理未定义",
+      "root_causes": [
+        "资金事务失败处理未定义"
+      ],
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "Primary LOGIC_02关注风控与RESPIN的逻辑冲突，未涉及资金事务失败时的补偿机制"
+      },
+      "severity_basis": "缺少失败补偿机制会导致扣款成功但游戏异常时玩家资金损失，派奖失败时玩家无法获得应得奖金，网络中断时资金状态不一致，这是经济安全的底线，直接影响玩家信任和合规性",
+      "root_cause_count": 1,
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "两份文档全文搜索均未找到资金事务失败补偿的明确定义，段落20仅提到'复用中台统一处理流程'，但未说明具体补偿策略",
+        "searched_locations": [
+          "疯狂777需求文档修改后.docx / 全文",
+          "crazy777数值文档修改后.docx / 全文"
+        ]
+      }
+    },
+    {
+      "candidate_issue_id": "MAX_PAYOUT_01",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "title": "单局最大赔付绝对金额封顶未定义",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "数值文档段落55-56提到'超过100倍→直接强制0倍'的风控规则，但这仅是相对倍率上限，未定义单局最大赔付的绝对金额封顶。考虑到RESPIN累加机制（段落43-46），理论上可以累加到极高倍率，若无绝对金额封顶，可能导致极端赔付。",
+      "evidence": "crazy777数值文档修改后.docx / 段落43-46、55-56",
+      "risk": "缺少绝对金额封顶会导致：1）RESPIN累加可能产生极端赔付（如连续多次10倍）；2）风控100倍上限与RESPIN累加存在冲突（已被Primary LOGIC_02覆盖），但即使解决冲突，仍需绝对金额封顶兜底；3）可能超出业务承受能力，造成经济损失。",
+      "suggestion": "定义单局最大赔付绝对金额封顶：1）根据业务承受能力设定最大赔付金额（如100万金币）；2）当RESPIN累加结果超过封顶时，按封顶金额派奖；3）在规则说明中告知玩家最大赔付限制。建议同时评估RTP和最大赔付的关系，确保数值平衡。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "单局最大赔付绝对金额封顶未定义",
+      "root_causes": [
+        "单局最大赔付绝对金额封顶未定义"
+      ],
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "Primary LOGIC_02关注风控100倍相对上限与RESPIN的逻辑冲突，未涉及单局最大赔付的绝对金额封顶"
+      },
+      "severity_basis": "缺少绝对金额封顶会导致RESPIN累加可能产生极端赔付，可能超出业务承受能力造成经济损失，即使解决风控与RESPIN的冲突，仍需绝对金额封顶兜底",
+      "root_cause_count": 1,
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "数值文档仅提到100倍相对上限用于风控，未定义单局最大赔付的绝对金额封顶，RESPIN累加机制可能导致极端赔付",
+        "searched_locations": [
+          "crazy777数值文档修改后.docx / 段落43-46、55-56"
+        ]
+      }
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "FUNDS_FAILURE_01",
+        "source_missed_issue_ids": [
+          "FUNDS_FAILURE_01"
+        ],
+        "reason": "补充资金事务失败时的补偿机制"
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_01",
+        "source_missed_issue_ids": [
+          "MAX_PAYOUT_01"
+        ],
+        "reason": "补充单局最大赔付的绝对金额封顶"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "候选报告已补充资金流控制面和经济边界的关键缺口，但主模型报告本身存在这些重大遗漏，需要补充后才能直出",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 4,
+    "admitted_count": 2,
+    "rejected_count": 2,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "FUNDS_DEBIT_01",
+        "title": "玩家下注扣款时机未明确",
+        "status": "rejected",
+        "reasons": [
+          "source_rule_already_explicit"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "疯狂777需求文档修改后.docx / 段落37；crazy777数值文档修改后.docx / 段落25-27",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "debit_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_PAYOUT_01",
+        "title": "中奖金额派奖时机未明确",
+        "status": "rejected",
+        "reasons": [
+          "source_rule_already_explicit"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "疯狂777需求文档修改后.docx / 段落18-19；crazy777数值文档修改后.docx / 段落30-35",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "payout_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_FAILURE_01",
+        "title": "资金事务失败补偿机制未定义",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "疯狂777需求文档修改后.docx / 段落20；crazy777数值文档修改后.docx / 全文",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "funds_failure_compensation"
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_01",
+        "title": "单局最大赔付绝对金额封顶未定义",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "crazy777数值文档修改后.docx / 段落43-46、55-56",
+        "coverage_audit_key": "max_payout_economic_boundary",
+        "coverage_control_key": "single_round_payout_cap"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [
+        "funds_deduction_payout",
+        "max_payout_economic_boundary"
+      ],
+      "confirmed_control_keys": [
+        "debit_timing",
+        "payout_timing",
+        "funds_failure_compensation",
+        "single_round_payout_cap"
+      ],
+      "candidate_to_audit_key": {
+        "FUNDS_DEBIT_01": "funds_deduction_payout",
+        "FUNDS_PAYOUT_01": "funds_deduction_payout",
+        "FUNDS_FAILURE_01": "funds_deduction_payout",
+        "MAX_PAYOUT_01": "max_payout_economic_boundary"
+      },
+      "candidate_to_control_key": {
+        "FUNDS_DEBIT_01": "debit_timing",
+        "FUNDS_PAYOUT_01": "payout_timing",
+        "FUNDS_FAILURE_01": "funds_failure_compensation",
+        "MAX_PAYOUT_01": "single_round_payout_cap"
+      },
+      "finding_audit_keys": {
+        "FUNDS_DEBIT_01": "funds_deduction_payout",
+        "FUNDS_PAYOUT_01": "funds_deduction_payout",
+        "FUNDS_FAILURE_01": "funds_deduction_payout",
+        "MAX_PAYOUT_01": "max_payout_economic_boundary"
+      },
+      "finding_control_keys": {
+        "FUNDS_DEBIT_01": "debit_timing",
+        "FUNDS_PAYOUT_01": "payout_timing",
+        "FUNDS_FAILURE_01": "funds_failure_compensation",
+        "MAX_PAYOUT_01": "single_round_payout_cap"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01",
+            "CLARITY_02",
+            "CLARITY_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 段落19",
+            "crazy777数值文档修改后.docx / 段落23、30、43-45",
+            "疯狂777需求文档修改后.docx / 段落30",
+            "crazy777数值文档修改后.docx / 段落21、表格4"
+          ],
+          "reason": "Primary LOGIC_01已覆盖结算公式中RESPIN累加算法的加法/乘法歧义；Primary CLARITY_02和CLARITY_03已覆盖乘数符号定义混淆和金额展示精度问题",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落19",
+                "crazy777数值文档修改后.docx / 段落23、30、43-45"
+              ],
+              "reason": "Primary LOGIC_01已覆盖结算公式中RESPIN累加算法的加法/乘法歧义",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_02",
+                "CLARITY_03"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落30",
+                "crazy777数值文档修改后.docx / 段落21、表格4"
+              ],
+              "reason": "Primary CLARITY_02和CLARITY_03已覆盖乘数符号定义混淆和金额展示精度问题",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 段落42",
+            "crazy777数值文档修改后.docx / 段落42、55-56、59"
+          ],
+          "reason": "RESPIN触发条件明确：第4列停在respin且123列均不为空；Primary LOGIC_02已覆盖风控强制0倍与RESPIN终止条件的冲突",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 段落42"
+              ],
+              "reason": "RESPIN触发条件明确：第4列停在respin且123列均不为空",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 段落42、55-56、59"
+              ],
+              "reason": "Primary LOGIC_02已覆盖风控强制0倍与RESPIN终止条件的冲突",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUNDS_DEBIT_01",
+            "FUNDS_PAYOUT_01",
+            "FUNDS_FAILURE_01"
+          ],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "两份文档均未明确说明玩家下注金额的扣款时机（点击旋转时/开奖前/开奖后），这是资金事务的起点；两份文档均未明确说明中奖金额的派奖时机（基础游戏结算后/RESPIN结束后/推展表现后），影响资金到账验收；两份文档均未说明扣款成功但游戏异常、或派奖失败时的回滚补偿机制，缺少资金事务的失败处理",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUNDS_DEBIT_01"
+              ],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "两份文档均未明确说明玩家下注金额的扣款时机（点击旋转时/开奖前/开奖后），这是资金事务的起点",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUNDS_PAYOUT_01"
+              ],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "两份文档均未明确说明中奖金额的派奖时机（基础游戏结算后/RESPIN结束后/推展表现后），影响资金到账验收",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUNDS_FAILURE_01"
+              ],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "两份文档均未说明扣款成功但游戏异常、或派奖失败时的回滚补偿机制，缺少资金事务的失败处理",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "confirmed_add",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [
+            "MAX_PAYOUT_01"
+          ],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 段落55-56",
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "Primary LOGIC_02已覆盖100倍相对上限与RESPIN的冲突；本文档为单局SLOTS游戏，不涉及奖池透支场景，属于平台通用能力；文档仅提及100倍相对上限用于风控，但未明确单局最大赔付的绝对金额封顶，RESPIN累加可能导致极端赔付",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 段落55-56"
+              ],
+              "reason": "Primary LOGIC_02已覆盖100倍相对上限与RESPIN的冲突",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "本文档为单局SLOTS游戏，不涉及奖池透支场景，属于平台通用能力",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "MAX_PAYOUT_01"
+              ],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "文档仅提及100倍相对上限用于风控，但未明确单局最大赔付的绝对金额封顶，RESPIN累加可能导致极端赔付",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "本文档未涉及排行榜等统计指标的时间窗口定义，属于公共模块配置；本文档未涉及统计指标的UI展示与正文定义对齐问题",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "本文档未涉及排行榜等统计指标的时间窗口定义，属于公共模块配置",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "本文档未涉及统计指标的UI展示与正文定义对齐问题",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 2,
+    "phase2_rejected_count": 2,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  }
+}

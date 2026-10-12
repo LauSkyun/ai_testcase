@@ -1,0 +1,285 @@
+{
+  "candidate_generation_mode": "model_authored",
+  "primary_quality_assessment": {},
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较高，准确识别了核心赔率冲突、开奖兜底逻辑缺陷、奖池状态概率数值冲突、机器人机制缺失等高信号阻塞问题，证据引用准确，严重度判定合理。但存在少量问题内部混写多症状的情况（如 LOGIC_02 将概率冲突与断线重连规则混在同一 finding），且对部分关键边界（如 80% 兜底阈值的计算快照时机、投入阶段与开奖阶段的扣款/幂等时机）可进一步补强。",
+    "strengths": [
+      "准确识别开奖兜底逻辑可能开出 0 赔付选项的机制缺陷（LOGIC_01），证据链完整。",
+      "准确识别奖池正常状态偏移概率正文 60% 与配置表 20% 的数值冲突（LOGIC_02）。",
+      "准确识别核心赔率在表格、UI、规则文本、引导文案中的多处不一致（CLARITY_01）。",
+      "准确识别图 22 机器人流程图与正文脱节的问题（CLARITY_02）。",
+      "准确识别开奖分析模块可见性在修改记录与详细说明中的矛盾（CLARITY_03）。",
+      "评分 C 与 top_blockers 聚焦合理，未因问题数量多而误判为 D。"
+    ],
+    "issues": [
+      "LOGIC_02 的 current_state 与 risk 中混入了断线重连规则缺失的内容，与标题（概率数值冲突）不一致，属于多症状混写。",
+      "SEC_01 已识别 80% 兜底阈值的快照时机问题，但建议部分可更明确地绑定到服务端权威边界与扣款幂等。",
+      "未单独提出投入阶段重复点击/弱网下的扣款幂等与下注资格校验规则，仅在 test_points 中提及。",
+      "未明确指出‘今日+昨日’奖池统计窗口的本地时间切点（自然日 0 点还是滚动 24 小时），可能影响跨日局结算。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正主模型 LOGIC_02 的混写问题，将断线重连规则拆为独立 finding，并补充了扣款幂等与奖池统计窗口的高信号缺口，证据充分、来源可追踪、结构完整，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正主模型 LOGIC_02 的混写问题，将断线重连规则拆为独立 finding，并补充了扣款幂等与奖池统计窗口的高信号缺口，证据充分、来源可追踪、结构完整，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "主模型 LOGIC_02 原 finding 中混入了断线重连规则缺失的内容，已在候选稿中剥离为独立的 LOGIC_04，避免多症状混写。",
+    "新增 SEC_02（扣款幂等）与 LOGIC_05（奖池统计窗口）为高信号缺口，直接影响结算正确性与资损控制，建议优先补充。",
+    "候选稿保留了主模型所有高信号核心问题（LOGIC_01 兜底 0 赔付、CLARITY_02 机器人机制、LOGIC_02 概率冲突），未做降级处理。",
+    "建议后续进一步拆分 CLARITY_01（赔率冲突）为多个子问题（正文 vs UI、正文 vs 配置表、UI vs 配置表），但本轮保留原骨架以避免过度重构。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_01",
+      "title": "投入阶段重复点击/弱网下的扣款幂等与下注资格校验规则缺失",
+      "evidence": "tiger需求文档.docx / 3.2、3.6、表格3（档位模块/Repeat）",
+      "reason": "20s 投入阶段内，用户可能连续点击多个档位或 Repeat，文档未明确服务端扣款幂等、下注截止前的最后有效下注、以及弱网下重复请求的去重规则，直接影响结算正确性与资损风险。"
+    },
+    {
+      "issue_id": "MISS_02",
+      "title": "奖池‘今日+昨日’统计窗口的本地时间切点未定义",
+      "evidence": "tiger需求文档.docx / 3.7.1、3.7.2",
+      "reason": "段落 34/42 使用‘今日+昨日’与‘本地时间，近{2}天’，但未明确是自然日 0 点切分还是滚动 24/48 小时，跨日局（如 23:59 投入、00:01 开奖）的归属与奖池收益率计算会产生歧义。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "source_missed_issue_ids": [],
+        "reason": "从主模型 LOGIC_02 中剥离断线重连规则缺失内容，独立为跨系统/异常恢复维度的高信号问题，避免原 finding 多症状混写。"
+      },
+      {
+        "candidate_issue_id": "SEC_02",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "补充投入阶段扣款幂等与下注资格校验规则，直接影响结算正确性与资损控制。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "补充奖池统计窗口本地时间切点定义，避免跨日局结算歧义。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已修正主模型 LOGIC_02 的混写问题，将断线重连规则拆为独立 finding，并补充了扣款幂等与奖池统计窗口的高信号缺口，证据充分、来源可追踪、结构完整，可直接交付业务方阅读。",
+  "phase2_admission": {
+    "enabled": false,
+    "claimed_count": 2,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "errors": []
+    },
+    "protocol_gate": {}
+  },
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": false,
+    "phase2_candidate_inputs_sanitized": false,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {},
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {}
+}

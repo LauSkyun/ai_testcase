@@ -1,0 +1,79 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_2",
+    "expected_primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "expected_echo": "protocol_profile=phase3_v1_2; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "primary_report_hash_after": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "protected_fields_hash_before": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "protected_fields_hash_after": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-LOGIC_02",
+      "challenge_id": "CH-LOGIC_02",
+      "target_issue_id": "LOGIC_02",
+      "correction_disposition": "drop",
+      "source_provenance": "numeric_config",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12）、五、基础游戏・核心机制（段落30-40）",
+      "rationale": "数值文档已明确说明RESPIN是表演阶段机制，底层数据与表演阶段分离，服务器根据最终结果决定是否触发RESPIN表演。原finding基于对文档的误读，将表演阶段规则误认为底层数据规则，文档本身已自洽解释该机制，不存在矛盾，应移除该finding。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "LOGIC_02",
+        "canonical_title": "底层数据与RESPIN触发条件矛盾",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "底层数据生成规则与RESPIN触发条件矛盾",
+        "current_state": "数值文档称“不会生成1,3均不为空的局面”，但又规定“当1,3列金币符号不同且有值时...必定发生RESPIN”。若底层不生成1,3均不为空，则RESPIN的触发条件在底层数据中无法成立。",
+        "evidence": "数值文档 / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+        "risk": "底层逻辑与表演逻辑无法闭环，程序无法实现RESPIN的触发判定。",
+        "suggestion": "澄清RESPIN是纯表演机制还是底层结果机制。若是表演机制，需明确底层数据如何映射到表演阶段的“1,3列不同且有值”的中间态。",
+        "planner_role": "数值策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "LOGIC_02",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

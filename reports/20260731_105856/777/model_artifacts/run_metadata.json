@@ -1,0 +1,18 @@
+{
+  "review_mode": "dual_pass",
+  "document_hash": "623e36de0f1c77ec0453e4b6314bf453c690dc18048113348f185f3bd69e90af",
+  "text_model": "gpt-5.6-sol",
+  "vision_model": "kimi-k2.6",
+  "wire_api": "responses",
+  "vision_wire_api": "chat_completions",
+  "temperature": 0,
+  "seed": null,
+  "document_count": 2,
+  "model_retries": 3,
+  "primary_text_model": "gpt-5.6-sol",
+  "secondary_text_model": "gpt-5.6-sol",
+  "primary_wire_api": "responses",
+  "secondary_wire_api": "responses",
+  "primary_seed": null,
+  "secondary_seed": null
+}

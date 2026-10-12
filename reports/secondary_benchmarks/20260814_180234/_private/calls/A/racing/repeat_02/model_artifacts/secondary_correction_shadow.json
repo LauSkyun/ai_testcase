@@ -1,0 +1,155 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "primary_report_hash_after": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "protected_fields_hash_before": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "protected_fields_hash_after": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 1,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "INTERVENTION_MAPPING",
+      "correction_type": "split",
+      "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13；musee游戏Racing.docx / 3.3下注部分 段落26",
+      "rationale": "将干预逻辑拆分为速度变量映射和地形生成干预两个独立对象，确保修复动作和验收闭环的原子性。",
+      "proposed_changes": {},
+      "replacement_findings": [
+        {
+          "title": "干扰指数缺乏到速度公式变量的映射",
+          "decision_object": "干扰指数",
+          "current_state": "需求文档提到调整车型的“干扰指数”（如1.01-1.1），但未说明该指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。",
+          "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落43及图片13",
+          "risk": "程序无法实现“侧重开某车”的速度干预逻辑。",
+          "suggestion": "明确干扰指数的作用机制，例如直接乘算在Luck变量上，或作为V的修正系数。",
+          "planner_role": "数值策划",
+          "acceptance_criteria": "速度公式中包含干扰指数的明确数学映射，且程序可据此编码。"
+        },
+        {
+          "title": "隐藏地形概率的干预规则与生效阶段缺失",
+          "decision_object": "隐藏地形概率",
+          "current_state": "需求文档提到“调整隐藏地形的出现概率”及“开启两个路段的各地形概率”，但未说明隐藏地形的定义、干预概率的具体配置方式及在3段地形中的生效阶段。",
+          "evidence": "musee游戏Racing.docx / 3.3下注部分 段落26；musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落44",
+          "risk": "地形生成逻辑无法实现干预，导致控盘策略缺失一环。",
+          "suggestion": "补充隐藏地形的定义、概率配置表结构，以及干预时地形概率的覆盖或权重叠加规则。",
+          "planner_role": "系统策划",
+          "acceptance_criteria": "明确隐藏地形概率的配置字段与干预生效逻辑，地形生成模块可据此实现控盘。"
+        }
+      ],
+      "before": {
+        "issue_id": "INTERVENTION_MAPPING",
+        "canonical_title": "干预逻辑缺乏到速度公式的具体映射",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，干预逻辑无法落地",
+        "current_state": "需求文档提到通过调整“干扰指数”和“隐藏地形概率”来干预开奖，但未说明干扰指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13",
+        "risk": "干预逻辑是核心控盘手段，缺乏映射导致程序无法实现“侧重开某车”的逻辑。",
+        "suggestion": "补充干扰指数的作用机制，例如明确干扰指数是直接乘算在Luck上，还是作为地形概率的权重系数。",
+        "planner_role": "系统策划",
+        "confidence": "中",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "replacement_findings": [
+          {
+            "title": "干扰指数缺乏到速度公式变量的映射",
+            "decision_object": "干扰指数",
+            "current_state": "需求文档提到调整车型的“干扰指数”（如1.01-1.1），但未说明该指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落43及图片13",
+            "risk": "程序无法实现“侧重开某车”的速度干预逻辑。",
+            "suggestion": "明确干扰指数的作用机制，例如直接乘算在Luck变量上，或作为V的修正系数。",
+            "planner_role": "数值策划",
+            "acceptance_criteria": "速度公式中包含干扰指数的明确数学映射，且程序可据此编码。"
+          },
+          {
+            "title": "隐藏地形概率的干预规则与生效阶段缺失",
+            "decision_object": "隐藏地形概率",
+            "current_state": "需求文档提到“调整隐藏地形的出现概率”及“开启两个路段的各地形概率”，但未说明隐藏地形的定义、干预概率的具体配置方式及在3段地形中的生效阶段。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落26；musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落44",
+            "risk": "地形生成逻辑无法实现干预，导致控盘策略缺失一环。",
+            "suggestion": "补充隐藏地形的定义、概率配置表结构，以及干预时地形概率的覆盖或权重叠加规则。",
+            "planner_role": "系统策划",
+            "acceptance_criteria": "明确隐藏地形概率的配置字段与干预生效逻辑，地形生成模块可据此实现控盘。"
+          }
+        ]
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [
+    {
+      "correction_id": "CR-002",
+      "challenge_id": "CH-002",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "correction_type": "evidence_fix",
+      "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1及段落2",
+      "rationale": "清理冗余和格式错误的证据引用，保留跨文档变量冲突的核心证据链。",
+      "proposed_changes": {
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1及段落2"
+      },
+      "replacement_findings": [],
+      "before": {
+        "issue_id": "T_VARIABLE_CONFLICT",
+        "canonical_title": "T变量定义冲突导致公式无法求值",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "current_state": "需求文档中T定义为“实际消耗的秒数（完成时间）”，而数值文档赔率公式中T作为分子参与计算，若T为耗时，则耗时越长赔率越高，违背常理；若T为总下注额，则与需求文档定义冲突。",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落2；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 图片1；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 图片1']；['musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13', 'Racing数值文档.docx / 图片1']",
+        "risk": "变量定义歧义导致赔率公式无法正确编码，结算结果不可预期。",
+        "suggestion": "重新定义赔率公式中的变量，明确T的物理意义（如总下注额、总权重等），并与开奖时间公式中的T区分命名。",
+        "planner_role": "数值策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "issue_id": "T_VARIABLE_CONFLICT",
+        "canonical_title": "T变量定义冲突导致公式无法求值",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "current_state": "需求文档中T定义为“实际消耗的秒数（完成时间）”，而数值文档赔率公式中T作为分子参与计算，若T为耗时，则耗时越长赔率越高，违背常理；若T为总下注额，则与需求文档定义冲突。",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1及段落2",
+        "risk": "变量定义歧义导致赔率公式无法正确编码，结算结果不可预期。",
+        "suggestion": "重新定义赔率公式中的变量，明确T的物理意义（如总下注额、总权重等），并与开奖时间公式中的T区分命名。",
+        "planner_role": "数值策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "applied_to_report": false,
+      "validation_status": "rejected",
+      "validation_reasons": [
+        "accepted_challenge_not_found"
+      ]
+    }
+  ]
+}

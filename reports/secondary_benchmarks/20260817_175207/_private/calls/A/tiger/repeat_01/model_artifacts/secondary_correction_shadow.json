@@ -1,0 +1,152 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 2,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_01",
+      "correction_disposition": "clarify",
+      "source_provenance": "product_screenshot",
+      "evidence": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+      "rationale": "修正对图21的赔率描述，明确图21中三个选项均为X3，与表格4的2.9倍率冲突依然存在，但需剔除错误的其他X2.9描述。",
+      "residual_issue": "核心赔率在正文配置（2.9）、UI截图（图1的3X与2.9混用、图5的2.5/2.9、图7的3倍、图21的3X）之间存在多处冲突，需统一。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": true,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "文档表格4配置三个选项倍率均为2.9；但图1 UI标题写(3X)且实际显示X 2.9、图5 UI显示孔雀2.5/中间2.9/老虎2.9、图7规则文本写‘猜中获得3倍奖励’、图21引导中三个选项均显示为X3（Peacock Win X3, Draw Win 3X, Lion Win X3）。",
+        "evidence": "tiger需求文档.docx / 表格4、图1、图5、图7、图21"
+      },
+      "replacement_findings": [],
+      "correction_type": "clarify",
+      "before": {
+        "issue_id": "CLARITY_01",
+        "canonical_title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "中",
+        "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+        "current_state": "文档表格4配置三个选项倍率均为2.9；但图1 UI标题写(3X)、图5 UI显示孔雀2.9/中间2.9/老虎2.9（或孔雀2.5）、图7规则文本写‘猜中获得3倍奖励’、图21引导写孔雀X3/其他X2.9。",
+        "evidence": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+        "risk": "赔率是结算与展示的核心，多处数值矛盾将导致客户端展示、规则说明与实际结算不符，上线后必引发严重客诉与资损风险。",
+        "suggestion": "全局统一赔率数值。若实际为2.9，需修改图1标题、图7规则文本、图21引导文案；若存在差异化赔率（如图5的2.5），需在表格4和正文中明确各选项独立赔率配置。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞测试用例设计"
+      },
+      "after_preview": {
+        "disposition": "clarify",
+        "editable_finding_preview": {
+          "issue_id": "CLARITY_01",
+          "canonical_title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+          "primary_dimension": "清晰度与完整性",
+          "evidence_scope": "document",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+          "current_state": "文档表格4配置三个选项倍率均为2.9；但图1 UI标题写(3X)且实际显示X 2.9、图5 UI显示孔雀2.5/中间2.9/老虎2.9、图7规则文本写‘猜中获得3倍奖励’、图21引导中三个选项均显示为X3（Peacock Win X3, Draw Win 3X, Lion Win X3）。",
+          "evidence": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+          "risk": "赔率是结算与展示的核心，多处数值矛盾将导致客户端展示、规则说明与实际结算不符，上线后必引发严重客诉与资损风险。",
+          "suggestion": "全局统一赔率数值。若实际为2.9，需修改图1标题、图7规则文本、图21引导文案；若存在差异化赔率（如图5的2.5），需在表格4和正文中明确各选项独立赔率配置。",
+          "planner_role": "系统策划",
+          "confidence": "高"
+        },
+        "protected_fields_locked": true,
+        "protected_fields_note": "severity/blocking remain unchanged until separate human approval"
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "correction_id": "CR-02",
+      "challenge_id": "CH-02",
+      "target_issue_id": "LOGIC_01",
+      "correction_disposition": "clarify",
+      "source_provenance": "requirement_text",
+      "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+      "rationale": "修正证据引用，明确3.7.5的主逻辑直接规定开赔付最小且0赔付可参与，而3.7.3/3.7.4/3.8.3的兜底逻辑中未排除0赔付选项，两者均存在开出0赔付的机制缺陷。",
+      "residual_issue": "开奖兜底逻辑（3.7.3/3.7.4/3.8.3）及回收状态主逻辑（3.7.5）中，当有人投注的选项均超过奖池80%时，系统可能开出无人投注的选项（赔付0），导致所有玩家输掉且奖池不扣除，违背保护初衷。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": true,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "3.7.5“奖池状态-回收”的主逻辑（段落71-73）直接规定开“赔付最小金额”的选项，且明确无人投入选项赔付视为0；而3.7.3/3.7.4/3.8.3的兜底逻辑（段落57/68/108）规定“若都不够赔付，选择赔付最少的开”，未排除0赔付选项。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3"
+      },
+      "replacement_findings": [],
+      "correction_type": "clarify",
+      "before": {
+        "issue_id": "LOGIC_01",
+        "canonical_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "current_state": "段落57/68/108规定兜底时‘若都不够赔付，选择赔付最少的开’；段落73明确‘若某选项无人投入，其赔付金额视为0（可能成为赔付最小）’。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+        "risk": "当有人投注的选项均超过奖池80%时，系统会开出无人投注的选项（赔付0）。这会导致所有玩家全部输掉，且奖池不扣除任何金额，完全违背了‘兜底’和‘回收’保护奖池的初衷，且极易引发玩家群体客诉。",
+        "suggestion": "修改兜底逻辑：无人投注的选项（赔付为0）不应参与兜底候选；或强制在有人投注的选项中，选择赔付金额最小的选项开出。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "clarify",
+        "editable_finding_preview": {
+          "issue_id": "LOGIC_01",
+          "canonical_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+          "primary_dimension": "逻辑一致性与数值平衡",
+          "evidence_scope": "document",
+          "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+          "current_state": "3.7.5“奖池状态-回收”的主逻辑（段落71-73）直接规定开“赔付最小金额”的选项，且明确无人投入选项赔付视为0；而3.7.3/3.7.4/3.8.3的兜底逻辑（段落57/68/108）规定“若都不够赔付，选择赔付最少的开”，未排除0赔付选项。",
+          "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+          "risk": "当有人投注的选项均超过奖池80%时，系统会开出无人投注的选项（赔付0）。这会导致所有玩家全部输掉，且奖池不扣除任何金额，完全违背了‘兜底’和‘回收’保护奖池的初衷，且极易引发玩家群体客诉。",
+          "suggestion": "修改兜底逻辑：无人投注的选项（赔付为0）不应参与兜底候选；或强制在有人投注的选项中，选择赔付金额最小的选项开出。",
+          "planner_role": "系统策划",
+          "confidence": "高"
+        },
+        "protected_fields_locked": true,
+        "protected_fields_note": "severity/blocking remain unchanged until separate human approval"
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

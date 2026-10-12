@@ -1,0 +1,48 @@
+{
+  "game": "777",
+  "variant_id": "B",
+  "repeat": 1,
+  "status": "completed",
+  "output_dir": "blinded/B/777/repeat_01",
+  "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+  "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+  "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+  "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+  "secondary_message_hash": "e28ea0719ff9cd79bdb2b06cc3ab3b8a7b830ed0b2c73fea4db2271e49225b72",
+  "temperature": 0,
+  "attempt_count": 0,
+  "reprocessed_saved_raw": true,
+  "secondary_response_hash": "4f45a7f9da37e47783e0abf6c4fc820ef3a90f764ae1d55f70b08781b99868b2",
+  "selected_report_owner": "candidate",
+  "candidate_gate_passed": true,
+  "candidate_recommendation_status": "recommended",
+  "traceability_status": "complete",
+  "claimed_added_count": 2,
+  "materialized_added_count": 2,
+  "added_root_keys": [
+    "issue:CORE_BET_CONFIG_MISMATCH",
+    "issue:LOGIC_MAX_PAYOUT_MISSING"
+  ],
+  "high_added_root_keys": [
+    "issue:CORE_BET_CONFIG_MISMATCH",
+    "issue:LOGIC_MAX_PAYOUT_MISSING"
+  ],
+  "added_severity_by_root": {
+    "issue:CORE_BET_CONFIG_MISMATCH": "high",
+    "issue:LOGIC_MAX_PAYOUT_MISSING": "high"
+  },
+  "selected_top_blocker_keys": [
+    "title:respin累加算法存在加法与乘法的严重歧义",
+    "title:基础符号盘面生成规则描述混乱开发无法实现",
+    "title:风控强制0倍逻辑与respin触发条件存在致命冲突"
+  ],
+  "primary_top_blocker_retention": 1.0,
+  "field_completeness": 0.4286,
+  "multiroot_finding_count": 0,
+  "unsupported_severity_change_count": 0,
+  "unsupported_blocking_change_count": 0,
+  "lineage_mismatch": false,
+  "materialization_mismatch": false,
+  "major_judgment_drift": false,
+  "selected_finding_count": 11
+}

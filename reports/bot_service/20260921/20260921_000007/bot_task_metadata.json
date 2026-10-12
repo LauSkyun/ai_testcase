@@ -1,0 +1,20 @@
+{
+  "task_id": "20260921_000007",
+  "game_name": "",
+  "source": "bot_service",
+  "snapshot_dir": "D:\\project\\script\\mid_prototest\\bot_service\\.runtime\\yuque_snapshots\\20260921\\20260921_000007",
+  "review_mode": "dual_pass",
+  "extract_only": false,
+  "analyze_images": true,
+  "documents": [
+    {
+      "name": "UNO 游戏.md",
+      "kind": "mixed",
+      "paragraph_count": 200,
+      "table_count": 3,
+      "image_count": 30,
+      "unresolved_image_count": 0,
+      "errors": []
+    }
+  ]
+}

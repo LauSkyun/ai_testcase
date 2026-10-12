@@ -1,0 +1,185 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告对 UNO 游戏的核心规则、结算公式、UI映射及异常流转进行了全面审查，准确识别了奖金公式缺失、计分语义冲突及转嫁逻辑混乱等关键问题，覆盖了主要控制面。",
+    "strengths": [
+      "准确识别3/4人局奖金分配公式缺失第3/4名说明",
+      "敏锐发现计分正负号与获胜条件的语义冲突",
+      "全面覆盖了抢牌、转嫁等复杂规则的逻辑漏洞与状态机风险"
+    ],
+    "issues": [
+      "未明确指出正文与UI截图(图片30)中关于获胜条件(最少vs最高)的直接文本冲突，但已通过NUM_SCORE_SIGN覆盖其根因"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": false,
+    "reason": "Primary 已覆盖所有关键控制面，但部分资金事务节点依赖通用平台能力，需在评审中明确说明。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "NUM_REWARD_FORMULA"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.3 游戏入场费及奖金规则 段落49-59"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "NUM_SCORE_SIGN"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.2 游戏规则 段落44-48",
+            "UNO 游戏.md / 4.5.6.2 积分显示 段落165",
+            "UNO 游戏.md / 图片解析 图片30"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.2 游戏规则 段落22-23"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.2 游戏规则 段落23",
+            "UNO 游戏.md / 3.2 游戏规则 段落31",
+            "UNO 游戏.md / 3.2 游戏规则 段落43"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.3 游戏入场费及奖金规则 段落49-50"
+          ],
+          "reason": "source_state=missing; counterevidence=棋牌游戏通用平台能力，无证据表明缺失或冲突; primary_coverage=not_covered; final=advice_only"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.3 游戏入场费及奖金规则 段落51-59"
+          ],
+          "reason": "source_state=missing; counterevidence=棋牌游戏通用平台能力，无证据表明缺失或冲突; primary_coverage=not_covered; final=advice_only"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=棋牌游戏通用平台能力，无证据表明缺失或冲突; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.3 游戏入场费及奖金规则 段落49-59"
+          ],
+          "reason": "source_state=not_applicable; counterevidence=无; primary_coverage=not_applicable; final=not_applicable"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.2 游戏规则 段落43",
+            "UNO 游戏.md / 4.5.6.2 积分显示 段落165"
+          ],
+          "reason": "source_state=not_applicable; counterevidence=无; primary_coverage=not_applicable; final=not_applicable"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 3.3 游戏入场费及奖金规则 段落49-59"
+          ],
+          "reason": "source_state=not_applicable; counterevidence=无; primary_coverage=not_applicable; final=not_applicable"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 全文"
+          ],
+          "reason": "source_state=not_applicable; counterevidence=无; primary_coverage=not_applicable; final=not_applicable"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "UNO 游戏.md / 2.2 概述 段落6",
+            "UNO 游戏.md / 图片解析 图片30"
+          ],
+          "reason": "source_state=not_applicable; counterevidence=无; primary_coverage=not_applicable; final=not_applicable"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "资金事务节点（扣款、派奖、失败补偿）在文档中未显式定义，但属于棋牌游戏通用平台能力，无证据表明存在冲突或缺失，故判定为 advice_only。",
+    "图片30中的规则弹窗文本与正文在获胜条件（最高vs最少）上存在直接冲突，但 Primary 的 NUM_SCORE_SIGN 已覆盖该计分与获胜条件的语义冲突根因，故不重复新增。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=e48408347fe0e7ae5ff4b66f691a50ce1a9f92a534d96a5203992609807adee3"
+  ]
+}

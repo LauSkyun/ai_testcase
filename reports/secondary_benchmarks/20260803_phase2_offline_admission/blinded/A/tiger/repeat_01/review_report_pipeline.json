@@ -1,0 +1,318 @@
+{
+  "report": {
+    "overall_evaluation": "文档整体描述了竞猜玩法的核心循环、奖池机制与人群保护策略，主流程框架基本完整。但核心赔率在正文、配置表与UI截图中存在多处严重冲突，开奖兜底逻辑存在导致‘开出0赔付’的机制缺陷，且强依赖投入人数的开奖阈值缺乏机器人机制支撑，需重点修复。",
+    "document_quality_score": "C",
+    "score_reason": "核心赔率展示与配置存在多处矛盾，开奖兜底逻辑存在开出0赔付的机制缺陷，且强依赖人数的开奖阈值缺乏机器人机制支撑，需补充和修复后再完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "owner": "系统策划",
+        "why_now": "当有人投注的选项均超过奖池80%时，系统会开出无人投注的选项（赔付0）。这会导致所有玩家全部输掉，且奖池不扣除任何金额，完全违背了‘兜底’和‘回收’保护奖池的初衷，且极易引发玩家群体客诉。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+        "owner": "系统策划",
+        "why_now": "在冷启动或低活跃房间，真实人数无法达到阈值，导致奖池状态判断和人群保护策略永远无法触发，核心玩法策略失效。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+        "owner": "数值策划",
+        "why_now": "数值口径分裂，开发无法确定最终生效的概率值，导致奖池回收/消耗速率偏离数值预期。；测试无法设计异常恢复用例，开发可能遗漏状态机恢复逻辑，导致玩家重连后卡死或重复扣款。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CLARITY_02",
+            "canonical_title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+            "current_state": "开奖逻辑中大量依赖‘投入人数’阈值（如>=20、>=30、>=50）。图22中存在详细的机器人匹配与投放流程图，但正文需求中完全未提及机器人机制、假人逻辑及人数统计口径。",
+            "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22",
+            "risk": "在冷启动或低活跃房间，真实人数无法达到阈值，导致奖池状态判断和人群保护策略永远无法触发，核心玩法策略失效。",
+            "suggestion": "在正文中补充机器人/假人投放机制说明，并明确‘投入人数’统计口径是否包含机器人（建议包含，否则阈值永远不满足）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_03",
+            "canonical_title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾",
+            "current_state": "1、表格1修改记录（3/3）写明‘删除开奖分析功能的可见配置，默认全开’；2、但表格3‘开奖分析’模块说明中又写明‘该模块上线时默认白名单可见’。",
+            "evidence": "tiger需求文档.docx / 表格1、表格3",
+            "risk": "开发对是否开发白名单配置功能产生歧义，可能导致过度开发或上线后权限控制不符预期。",
+            "suggestion": "1、统一口径。若默认全开，则删除表格3中的白名单说明；2、若需灰度，则修改表格1记录并保留白名单配置需求。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "CLARITY_01",
+            "canonical_title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+            "current_state": "1、文档表格4配置三个选项倍率均为2.9；2、但图1 UI标题写(3X)、图5 UI显示孔雀2.9/中间2.9/老虎2.9（或孔雀2.5）、图7规则文本写‘猜中获得3倍奖励’、图21引导写孔雀X3/其他X2.9。",
+            "evidence": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+            "risk": "赔率是结算与展示的核心，多处数值矛盾将导致客户端展示、规则说明与实际结算不符，上线后必引发严重客诉与资损风险。",
+            "suggestion": "1、全局统一赔率数值。若实际为2.9，需修改图1标题、图7规则文本、图21引导文案；2、若存在差异化赔率（如图5的2.5），需在表格4和正文中明确各选项独立赔率配置。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "LOGIC_02",
+            "canonical_title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+            "current_state": "1、段落66/67描述奖池状态-正常时，‘{60}% 概率：开投入人数最多的选项’；2、但表格5后台配置中，‘奖池——正常开奖偏移概率’初始数值为‘20%’。；3、游戏为20s下注+5s开奖+5s结算的短轮次制，文档未说明在投入阶段、开奖阶段、结算阶段断线重连后的表现、数据恢复及下注资格。",
+            "evidence": "tiger需求文档.docx / 3.7.4、表格5；tiger需求文档.docx / 3.2、3.6",
+            "risk": "1、数值口径分裂，开发无法确定最终生效的概率值，导致奖池回收/消耗速率偏离数值预期。；2、测试无法设计异常恢复用例，开发可能遗漏状态机恢复逻辑，导致玩家重连后卡死或重复扣款。",
+            "suggestion": "1、核对并统一数值。建议以表格5的后台配置表为准（20%），同步修改正文段落66/67的描述。；2、补充断线重连专属规则：1. 投入阶段断线重连后是否保留下注资格及倒计时；3、2. 开奖/结算阶段断线重连后如何补发结算弹窗或直接恢复主界面。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "LOGIC_01",
+            "canonical_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+            "current_state": "1、段落57/68/108规定兜底时‘若都不够赔付，选择赔付最少的开’；2、段落73明确‘若某选项无人投入，其赔付金额视为0（可能成为赔付最小）’。",
+            "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+            "risk": "当有人投注的选项均超过奖池80%时，系统会开出无人投注的选项（赔付0）。这会导致所有玩家全部输掉，且奖池不扣除任何金额，完全违背了‘兜底’和‘回收’保护奖池的初衷，且极易引发玩家群体客诉。",
+            "suggestion": "1、修改兜底逻辑：无人投注的选项（赔付为0）不应参与兜底候选；2、或强制在有人投注的选项中，选择赔付金额最小的选项开出。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "LOGIC_03",
+            "canonical_title": "排行榜同分排序规则与UI展示信息不匹配",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "排行榜同分排序规则与UI展示信息不匹配",
+            "current_state": "表格3规定‘积分相同按达到时间先后排序’，但排行榜UI展示列仅有Rank、User、Score，未展示达到时间。",
+            "evidence": "tiger需求文档.docx / 表格3",
+            "risk": "玩家无法理解同分情况下排名先后的依据，可能产生‘暗箱操作’的质疑。",
+            "suggestion": "1、在UI中增加‘达到时间’列展示；2、或修改排序规则为‘同分按UID大小排序’等无需向玩家解释的底层逻辑。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TEST_02",
+            "canonical_title": "Repeat按钮在余额不足时的边界行为未定义",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "Repeat按钮在余额不足时的边界行为未定义",
+            "current_state": "表格3说明‘若当前余额不足，则置灰’。但未明确：若上一局投注了3个选项，本局余额仅够投注1个选项时，Repeat按钮是整体置灰不可点，还是降级只投注1个选项。",
+            "evidence": "tiger需求文档.docx / 表格3",
+            "risk": "边界条件模糊，开发实现与测试验收标准不一致，易产生交互Bug。",
+            "suggestion": "明确Repeat的降级策略：建议余额不足时整体置灰，或支持部分投注（需补充部分投注时的UI飞入动画和提示逻辑）。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CROSS_01",
+            "canonical_title": "半屏入口下的UI层级与弹窗适配规则缺失",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "半屏入口下的UI层级与弹窗适配规则缺失",
+            "current_state": "段落14/15说明存在‘半屏’（room game入口）和‘全屏’两种尺寸。但未说明半屏模式下，规则、记录、排行榜、结算等弹窗是半屏展示还是全屏拉起，以及跑马灯、倒计时的适配方案。",
+            "evidence": "tiger需求文档.docx / 3.5",
+            "risk": "半屏空间有限，弹窗若不适配可能导致UI遮挡、按钮无法点击或层级错乱。",
+            "suggestion": "补充半屏模式下的UI适配规范：明确各弹窗的拉起方式（半屏内嵌或全屏覆盖）及半屏下的元素缩放/隐藏规则。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "SEC_01",
+            "canonical_title": "开奖兜底中‘实时计算’的判定快照时机未定义",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "开奖兜底中‘实时计算’的判定快照时机未定义",
+            "current_state": "段落57/68/108多次提到‘实时计算该选项赔付的总金额是否<=实时总奖池的80%’。未明确此‘实时’是指20s下注截止瞬间的快照，还是5s开奖动画播放期间的动态计算。",
+            "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+            "risk": "1、若为动态计算，在开奖动画期间若有其他房间/玩家的数据变动，可能导致判定结果闪烁或超发；2、若为快照，需明确服务端落库时机。存在并发超发风险。",
+            "suggestion": "明确服务端权威边界：规定‘实时计算’必须基于‘下注截止瞬间（20s结束）’的全服/全房间数据快照，开奖动画期间数据冻结，禁止动态重算。",
+            "planner_role": "程序",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UX_01",
+            "canonical_title": "结算弹窗强制5s自动收起可能打断用户查看收益体验",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "结算弹窗强制5s自动收起可能打断用户查看收益体验",
+            "current_state": "表格3规定‘结算弹窗展示5s后自动收起’。未提供用户主动关闭或延长展示的交互。",
+            "evidence": "tiger需求文档.docx / 表格3",
+            "risk": "用户正在查看Top3或自己的大额收益时弹窗突然消失，体验突兀。",
+            "suggestion": "1、增加交互优化：允许用户点击弹窗外部或关闭按钮提前收起；2、或当用户点击弹窗内部时暂停倒计时。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "断线重连与局内状态恢复的专属规则（投入期、开奖期、结算期）。",
+      "机器人/假人投放机制及‘投入人数’统计口径说明。",
+      "半屏模式下的UI适配与弹窗层级规范。",
+      "Repeat按钮在余额仅够部分下注时的降级交互策略。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证三个选项的实际结算赔率是否与最终统一的配置值（2.9或3.0）完全一致。",
+        "验证奖池充裕、正常、回收三种状态下的开奖偏移概率是否按配置表生效。",
+        "验证人群保护策略（新进、亏损大R、预流失）的触发条件与开奖偏移逻辑。",
+        "验证奖池兜底逻辑：当所有有人投注的选项均>80%奖池时，是否避开0赔付选项。",
+        "验证排行榜同分情况下的排序逻辑及展示。"
+      ],
+      "异常操作": [
+        "20s下注阶段断网重连，验证下注资格与倒计时恢复。",
+        "5s开奖/结算阶段断网重连，验证结算弹窗补发与数据一致性。",
+        "弱网环境下连续点击Repeat按钮，验证幂等性与扣款正确性。",
+        "余额仅够部分下注时点击Repeat，验证按钮状态与交互。"
+      ],
+      "兼容性": [
+        "半屏入口（room game）拉起游戏，验证各弹窗（规则、记录、排行榜）的UI适配与层级。",
+        "不同分辨率设备下的跑马灯、倒计时、筹码区展示完整性。"
+      ],
+      "安全专项": [
+        "验证‘实时计算’兜底逻辑是否严格基于下注截止瞬间的数据快照，防止并发超发。",
+        "验证奖池允许透支为负数时，后续抽水回填逻辑是否正确，无死锁。",
+        "验证客户端无法通过篡改本地数据影响开奖结果与人群标签判定。"
+      ],
+      "回归影响": [
+        "验证游戏记录、开奖分析、跑马灯等模块与主玩法结算数据的一致性。",
+        "验证后台配置热更后，历史局记录与当前局逻辑的隔离性。"
+      ],
+      "性能与稳定性": [
+        "验证开奖瞬间服务端统计全服/全房间实时人数、金额的并发性能。",
+        "验证跑马灯队列在大量中奖数据下的内存占用与排队逻辑。"
+      ],
+      "用户体验": [
+        "验证结算弹窗5s自动收起的交互，及用户主动关闭的响应。",
+        "验证新手引导5个步骤的文案、高亮与赔率展示是否与正式游戏一致。"
+      ]
+    },
+    "quality_notes": [
+      "文档中大量使用占位符（如{2}、{3000000}、{60}%），虽在表格5中有初始值映射，但正文阅读时易造成混淆，建议正文直接引用表格配置项名称。",
+      "图22的机器人流程图与正文需求脱节，属于典型的图文不符，需警惕文档拼凑导致的逻辑遗漏。",
+      "dual_pass phase2 准入拒绝：《玩家投入扣款时机未明确，影响结算流程与充值交互》未进入最终报告，原因：missing_fields:candidate_issue_id,primary_dimension,current_state,risk,suggestion,severity,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid",
+      "dual_pass phase2 准入拒绝：《预流失用户判定条件中‘有投入’口径模糊》未进入最终报告，原因：missing_fields:candidate_issue_id,primary_dimension,current_state,risk,suggestion,severity,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, primary_duplicate_root",
+      "dual_pass phase2 准入拒绝：《不抽水触发条件中最小选项投入金额为0时的边界行为未定义》未进入最终报告，原因：missing_fields:candidate_issue_id,primary_dimension,current_state,risk,suggestion,severity,blocking,confidence,independent_root_cause,primary_overlap_check, primary_overlap_check_invalid, multiroot_or_root_count_invalid, primary_duplicate_root",
+      "dual_pass 复核备注：将CLARITY_01（赔率冲突）严重度从‘中’上调至‘高’，因其直接影响结算金额和玩家信任，应作为顶级阻塞项。",
+      "dual_pass 复核备注：将CLARITY_02（机器人机制缺失）严重度从‘高’下调至‘中’，因文档未明确要求机器人，属于设计选择待澄清，非绝对阻塞。",
+      "dual_pass 复核备注：新增CLARITY_04（投入扣款时机）为高优先级，缺失该定义将导致结算实现歧义。",
+      "dual_pass 复核备注：新增LOGIC_04、LOGIC_05为低风险补充，用于完善边界条件。",
+      "dual_pass 复核备注：更新top_blockers列表，反映上调后的赔率冲突和新增的扣款时机问题，移除机器人机制问题。",
+      "dual_pass 复核备注：建议策划在后续版本中明确‘投入人数’是否包含机器人，以及不抽水触发条件中的零值处理。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图5中孔雀赔率显示为2.5，与正文表格4的2.9冲突，需确认是UI设计错误还是数值变更。",
+      "图7规则文本中‘猜中获得3倍奖励’与2.9倍配置冲突，需确认文案是否需要修改。",
+      "图21引导步骤中Peacock显示X3，Draw/Lion显示X2.9，需确认是否存在差异化赔率设计。",
+      "图22机器人流程图部分节点文字因分辨率过低无法准确识别，需补充高清原图或文字版流程说明。",
+      "图24后台配置截图中关键表单区域被红色遮挡框覆盖，无法确认‘新用户保护金’等具体配置字段。"
+    ],
+    "review_mode": "dual_pass",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "variant_A"
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 1,
+      "numeric": 0,
+      "mixed": 0,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": false,
+    "missing_companion_docs": [
+      "数值文档"
+    ],
+    "total_paragraphs": 121,
+    "total_tables": 7,
+    "total_images": 27
+  },
+  "documents": [
+    {
+      "name": "tiger需求文档.docx",
+      "kind": "requirement",
+      "paragraph_count": 121,
+      "table_count": 7,
+      "image_count": 27,
+      "errors": []
+    }
+  ]
+}

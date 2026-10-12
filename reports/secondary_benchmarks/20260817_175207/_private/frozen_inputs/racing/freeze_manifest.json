@@ -1,0 +1,16 @@
+{
+  "source_game_dir": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856\\racing",
+  "primary_model": "gpt-5.6-sol",
+  "document_names": [
+    "musee游戏Racing.docx",
+    "Racing数值文档.docx"
+  ],
+  "hashes": {
+    "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+    "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+    "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+    "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b"
+  },
+  "primary_calls_during_freeze": 0,
+  "vision_calls_during_freeze": 0
+}

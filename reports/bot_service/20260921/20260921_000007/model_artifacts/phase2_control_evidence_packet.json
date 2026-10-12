@@ -1,0 +1,219 @@
+{
+  "evidence_packet_id": "e48408347fe0e7ae5ff4b66f691a50ce1a9f92a534d96a5203992609807adee3",
+  "protocol_revision": "phase2_v2_2",
+  "decision_order": [
+    "1_applicability:先判断当前文档是否涉及该control；确实不涉及才可not_applicable",
+    "2_source_state:逐条核对证据卡和共享正文，固定判为explicit/partial/missing/conflict之一",
+    "3_counterevidence:主动查找能推翻缺失或冲突判断的原文、公共模块引用、等价上限或兼容解释",
+    "4_primary_coverage:只有Primary正文实际覆盖同一control时才可same_control；一旦为same_control，status和final必须都是covered_by_primary",
+    "5_status:explicit且无冲突=no_issue；partial或有兼容解释=advice_only；missing/conflict且无反证并未被Primary覆盖=confirmed_add",
+    "6_materialize:confirmed_add必须生成且只生成一个绑定同audit_key+control_key的单根因finding"
+  ],
+  "cards": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "settlement_formula",
+      "definition": "实际用于服务端结算的公式、变量、计算顺序与最终金额口径",
+      "source_evidence_candidates": [
+        "UNO 游戏.md / [段落49]: [段落49][章节：3 规则说明 > 3.3 游戏入场费及奖金规则] 3.3 游戏入场费及奖金规则",
+        "UNO 游戏.md / [段落50]: [段落50][章节：3 规则说明 > 3.3 游戏入场费及奖金规则] 1 入场费：免费0星币，10星币，入场费后台可配置调整。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "NUM_REWARD_FORMULA",
+          "title": "3/4人局奖金分配公式缺失第3/4名说明"
+        }
+      ],
+      "do_not_merge_with": [
+        "ui_config_mapping",
+        "relative_payout_cap",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "control_key": "ui_config_mapping",
+      "definition": "UI、正文、配置表与实际结算字段之间的同对象映射",
+      "source_evidence_candidates": [
+        "UNO 游戏.md / [段落159]: [段落159][章节：4 UI交互 > 4.5 游戏阶段交互说明 > 4.5.6 结算界面 > 4.5.6.1 结算手牌显示] 1 结算时展示各个玩家手中剩余的手牌，当剩余手牌过多时，叠加处理。",
+        "UNO 游戏.md / [段落163]: [段落163][章节：4 UI交互 > 4.5 游戏阶段交互说明 > 4.5.6 结算界面 > 4.5.6.1 结算手牌显示] 5 手牌展示后显示积分"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "NUM_SCORE_SIGN",
+          "title": "计分规则中“负数表示”与“点数最少者获胜”存在语义冲突"
+        },
+        {
+          "issue_id": "RULE_UNO_GRAB",
+          "title": "抢牌规则标记存疑且缺乏实现与交互细节"
+        }
+      ],
+      "do_not_merge_with": [
+        "settlement_formula",
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "trigger_entry",
+      "definition": "玩法、奖励、重转或特殊状态的唯一触发入口和前置条件",
+      "source_evidence_candidates": [
+        "UNO 游戏.md / [段落22]: [段落22][章节：3 规则说明 > 3.2 游戏规则] b 出牌操作时长：15秒，若15秒未出牌，则进入AI 托管。",
+        "UNO 游戏.md / [段落23]: [段落23][章节：3 规则说明 > 3.2 游戏规则] c 取消托管：非自己回合可取消托管，已经进入托管则需要等本次回合结束后，才能取消托管。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "RULE_UNO_GRAB",
+          "title": "抢牌规则标记存疑且缺乏实现与交互细节"
+        },
+        {
+          "issue_id": "TEST_DRAW_KEEP_TIMER",
+          "title": "摸牌后的Keep/Play弹框与15秒出牌倒计时的时间交互未定义"
+        }
+      ],
+      "do_not_merge_with": [
+        "termination_priority"
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "control_key": "termination_priority",
+      "definition": "状态结束条件、最大次数、提前终止以及冲突分支优先级",
+      "source_evidence_candidates": [
+        "UNO 游戏.md / [段落23]: [段落23][章节：3 规则说明 > 3.2 游戏规则] c 取消托管：非自己回合可取消托管，已经进入托管则需要等本次回合结束后，才能取消托管。",
+        "UNO 游戏.md / [段落31]: [段落31][章节：3 规则说明 > 3.2 游戏规则] a 如果玩家打出了“+牌”（+2或者 百搭 +4），玩家手中有颜色相符的 “跳过”“转向” 或者“+2”“ 百搭 +4”牌，可打出该牌转嫁惩罚（转嫁“ 百搭 +4”时优先级在质疑之后）。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "COMP_RECONNECT",
+          "title": "断线重连与AI托管状态同步规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "trigger_entry"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "definition": "玩家本金实际冻结或扣除的产品触发节点",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "payout_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "definition": "中奖金额计入玩家钱包或可用余额的产品节点",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "definition": "资金事务失败后的回滚、补发、重试与幂等，不包含奖池经济边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "RULE_UNO_LAST_CARD",
+          "title": "“最后一张牌不能是功能牌”规则缺乏异常流转说明"
+        },
+        {
+          "issue_id": "COMP_RECONNECT",
+          "title": "断线重连与AI托管状态同步规则缺失"
+        }
+      ],
+      "do_not_merge_with": [
+        "debit_timing",
+        "payout_timing",
+        "pool_negative_floor"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "definition": "MAX_MUL、倍率上限、强制0倍等相对投注额的赔付边界",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "pool_negative_floor",
+        "single_round_payout_cap"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "definition": "奖池允许为负时的透支下限、回填边界与熔断条件",
+      "source_evidence_candidates": [
+        "UNO 游戏.md / [段落43]: [段落43][章节：3 规则说明 > 3.2 游戏规则] a 其中一人打出手中所有的牌，游戏结束。或者剩余牌堆数≤0（ 百搭 +4牌会出现剩余牌＜0的负数情况），或者游戏时长=0，游戏结束。",
+        "UNO 游戏.md / [段落165]: [段落165][章节：4 UI交互 > 4.5 游戏阶段交互说明 > 4.5.6 结算界面 > 4.5.6.2 积分显示] 1 显示各自的手牌的分数，分数用负数表示。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "NUM_REWARD_FORMULA",
+          "title": "3/4人局奖金分配公式缺失第3/4名说明"
+        },
+        {
+          "issue_id": "NUM_SCORE_SIGN",
+          "title": "计分规则中“负数表示”与“点数最少者获胜”存在语义冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "single_round_payout_cap",
+        "funds_failure_compensation"
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "definition": "单局、单次、单用户或单选项的绝对赔付金额封顶",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "relative_payout_cap",
+        "pool_negative_floor",
+        "settlement_formula"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "definition": "同一统计对象、同一指标、同一用途下的时间窗口一致性",
+      "source_evidence_candidates": [],
+      "primary_candidates_to_verify": [],
+      "do_not_merge_with": [
+        "ui_text_window_alignment"
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "definition": "同一统计指标在正文与UI截图中的窗口值一致性",
+      "source_evidence_candidates": [
+        "UNO 游戏.md / [段落6]: [段落6][章节：2 2 内容概述 > 2.2 概述] 1 本文主要介绍在UNO 游戏规则及UI交互。",
+        "UNO 游戏.md / 图片解析: 1. **规则弹窗 UI**：左侧截图显示游戏内有一个\"Rule\"规则弹窗，顶部有关闭按钮（X），弹窗内包含\"How to play\"玩法说明和\"Cards points\"卡牌分值两个板块。"
+      ],
+      "primary_candidates_to_verify": [
+        {
+          "issue_id": "RULE_UNO_GRAB",
+          "title": "抢牌规则标记存疑且缺乏实现与交互细节"
+        },
+        {
+          "issue_id": "NUM_SCORE_SIGN",
+          "title": "计分规则中“负数表示”与“点数最少者获胜”存在语义冲突"
+        }
+      ],
+      "do_not_merge_with": [
+        "same_metric_window"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,546 @@
+{
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "primary_quality_assessment": {
+    "summary": "主模型报告准确识别了跨文档的公式变量冲突、数据隔离及真假赔率映射等核心高信号问题，结构完整，证据充分，严重度判定合理。",
+    "strengths": [
+      "准确捕捉T变量在需求与数值文档中的物理意义冲突，直击结算链路致命阻塞点。",
+      "明确区分了假数据展示与真实结算的隔离风险，以及真假赔率映射缺失的客诉隐患。",
+      "问题分类清晰，严格遵循了占位符缺失降级、通用能力不泛化等评审原则。"
+    ],
+    "issues": [
+      "部分问题（如T_VARIABLE_CONFLICT、FAKE_ODDS_MAPPING）的现状描述中存在重复表述，可进一步精简以提升可读性。",
+      "未对资金事务的通用幂等/补偿机制做低风险提示（但按规则不强制，已放入review_notes）。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已完整覆盖所有高信号核心问题，证据链闭环，lineage追踪清晰，可直接输出给业务方阅读。"
+  },
+  "quality_assessment": {
+    "summary": "Candidate 由 Primary 与已准入增量确定性生成。",
+    "strengths": [
+      "完整保留 Primary 骨架、评分和核心问题。"
+    ],
+    "issues": [],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "review_notes": [
+    "主模型报告中 T_VARIABLE_CONFLICT 和 FAKE_ODDS_MAPPING 的现状描述存在部分重复表述，候选稿已进行去重和分点整理，提升可读性。",
+    "debit_timing 和 payout_timing 在需求文档中已有 explicit 证据（段落32明确点击下注时扣除，段落20/34明确结果弹窗展示时派奖），故判定为 no_issue。",
+    "funds_failure_compensation（资金失败回滚/补偿/幂等）当前文档无直接证据表明缺失，且属于通用中台能力，按规则降为 advice_only，不新增 finding。",
+    "protocol_profile=phase2_v2_1; evidence_packet_id=fc5be3da5ba2faca28df1a181e31830827c20be97eaa561c3c4ef6d336697933",
+    "candidate_generation_mode=deterministic_primary_plus_admitted_delta"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DATA_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FAKE_ODDS_MAPPING",
+        "primary_issue_ids": [
+          "FAKE_ODDS_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "Candidate 由系统确定性生成，不依赖模型自评。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": false,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [],
+      "confirmed_control_keys": [],
+      "candidate_to_audit_key": {},
+      "candidate_to_control_key": {},
+      "finding_audit_keys": {},
+      "finding_control_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [
+        "coverage_control_invalid:funds_deduction_payout:funds_failure_compensation:evidence_checked_missing"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "T_VARIABLE_CONFLICT",
+            "FAKE_ODDS_MAPPING",
+            "DATA_ISOLATION"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+            "Racing数值文档.docx / 图片1",
+            "musee游戏Racing.docx / 3.3下注部分 段落28",
+            "Racing数值文档.docx / 段落5"
+          ],
+          "reason": "Primary finding T_VARIABLE_CONFLICT 已明确指出需求文档与数值文档中T变量的物理意义冲突，导致公式无法求值，完全覆盖该控制面。；Primary findings FAKE_ODDS_MAPPING 和 DATA_ISOLATION 已覆盖真假赔率展示与结算映射缺失，以及假数据参与计算导致赔率失真的问题，完全覆盖该控制面。",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "T_VARIABLE_CONFLICT"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+                "Racing数值文档.docx / 图片1"
+              ],
+              "reason": "Primary finding T_VARIABLE_CONFLICT 已明确指出需求文档与数值文档中T变量的物理意义冲突，导致公式无法求值，完全覆盖该控制面。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "FAKE_ODDS_MAPPING",
+                "DATA_ISOLATION"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.3下注部分 段落28",
+                "Racing数值文档.docx / 段落5"
+              ],
+              "reason": "Primary findings FAKE_ODDS_MAPPING 和 DATA_ISOLATION 已覆盖真假赔率展示与结算映射缺失，以及假数据参与计算导致赔率失真的问题，完全覆盖该控制面。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "PLACEHOLDER_MISSING"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49",
+            "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 段落51"
+          ],
+          "reason": "Primary finding PLACEHOLDER_MISSING 已覆盖干预触发条件占位符缺失导致无法验收的问题，完全覆盖该控制面。；需求文档段落51已明确‘优先看本逻辑 其次进入奖池状态判断’，优先级规则 explicit，无缺失或冲突。",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "PLACEHOLDER_MISSING"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49"
+              ],
+              "reason": "Primary finding PLACEHOLDER_MISSING 已覆盖干预触发条件占位符缺失导致无法验收的问题，完全覆盖该控制面。",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 段落51"
+              ],
+              "reason": "需求文档段落51已明确‘优先看本逻辑 其次进入奖池状态判断’，优先级规则 explicit，无缺失或冲突。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 段落32",
+            "musee游戏Racing.docx / 3.2蒙层引导 段落20",
+            "musee游戏Racing.docx / 3.3下注部分 段落34"
+          ],
+          "reason": "需求文档段落32已明确‘选中档位后点击下注内容一次下注对应档位的数值’，扣款节点 explicit，无缺失。；需求文档段落20和34已明确‘结果弹窗展示...返奖是330’，派奖节点 explicit，无缺失。；当前文档无直接证据表明资金失败补偿机制缺失，且属于通用中台能力，按规则降为 advice_only，写入 review_notes。",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.3下注部分 段落32"
+              ],
+              "reason": "需求文档段落32已明确‘选中档位后点击下注内容一次下注对应档位的数值’，扣款节点 explicit，无缺失。",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.2蒙层引导 段落20",
+                "musee游戏Racing.docx / 3.3下注部分 段落34"
+              ],
+              "reason": "需求文档段落20和34已明确‘结果弹窗展示...返奖是330’，派奖节点 explicit，无缺失。",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [],
+              "reason": "当前文档无直接证据表明资金失败补偿机制缺失，且属于通用中台能力，按规则降为 advice_only，写入 review_notes。",
+              "errors": [
+                "evidence_checked_missing"
+              ]
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "T_VARIABLE_CONFLICT",
+            "MAX_PAYOUT_RISK"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 段落28",
+            "Racing数值文档.docx / 段落2",
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落39",
+            "musee游戏Racing.docx / 3.6接入自动化和白名单干预逻辑 段落59"
+          ],
+          "reason": "Primary findings T_VARIABLE_CONFLICT 和 MAX_PAYOUT_RISK 已覆盖赔率公式冲突、最低赔率取整矛盾及最大赔付兜底缺失，完全覆盖该控制面。；Primary finding MAX_PAYOUT_RISK 已覆盖奖池允许负数但未定义透支下限与熔断条件的问题，完全覆盖该控制面。；Primary finding MAX_PAYOUT_RISK 已覆盖单局最大赔付上限（MAX_MUL）缺失的问题，完全覆盖该控制面。",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "T_VARIABLE_CONFLICT",
+                "MAX_PAYOUT_RISK"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.3下注部分 段落28",
+                "Racing数值文档.docx / 段落2"
+              ],
+              "reason": "Primary findings T_VARIABLE_CONFLICT 和 MAX_PAYOUT_RISK 已覆盖赔率公式冲突、最低赔率取整矛盾及最大赔付兜底缺失，完全覆盖该控制面。",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "MAX_PAYOUT_RISK"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落39"
+              ],
+              "reason": "Primary finding MAX_PAYOUT_RISK 已覆盖奖池允许负数但未定义透支下限与熔断条件的问题，完全覆盖该控制面。",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "MAX_PAYOUT_RISK"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.6接入自动化和白名单干预逻辑 段落59"
+              ],
+              "reason": "Primary finding MAX_PAYOUT_RISK 已覆盖单局最大赔付上限（MAX_MUL）缺失的问题，完全覆盖该控制面。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.1首页顶栏板块 段落9",
+            "musee游戏Racing.docx / 3.3下注部分 段落28",
+            "musee游戏Racing.docx / 3.3下注部分 段落29",
+            "musee游戏Racing.docx / 图片解析 图片3"
+          ],
+          "reason": "需求文档段落9、28、29均明确统计窗口为‘最近30天’，同指标窗口一致，无冲突。；需求文档正文与UI截图（图片3）中关于胜率、赔率的展示窗口一致，无冲突。",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.1首页顶栏板块 段落9",
+                "musee游戏Racing.docx / 3.3下注部分 段落28",
+                "musee游戏Racing.docx / 3.3下注部分 段落29"
+              ],
+              "reason": "需求文档段落9、28、29均明确统计窗口为‘最近30天’，同指标窗口一致，无冲突。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.1首页顶栏板块 段落9",
+                "musee游戏Racing.docx / 图片解析 图片3"
+              ],
+              "reason": "需求文档正文与UI截图（图片3）中关于胜率、赔率的展示窗口一致，无冲突。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_control_invalid:funds_deduction_payout:funds_failure_compensation:evidence_checked_missing"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "phase2_coverage_ledger_invalid"
+    ]
+  }
+}

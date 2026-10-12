@@ -1,0 +1,93 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "primary_report_hash_after": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "protected_fields_hash_before": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "protected_fields_hash_after": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "CROSS_01",
+      "correction_disposition": "downgrade",
+      "source_provenance": "mixed",
+      "evidence": "需求文档 / 3.3.1 符号分类总览（段落132）、3.3.2 中间轴符号（段落142、147）；数值文档 / 四、基础游戏・投注与中奖计算（段落22）、表格2",
+      "rationale": "术语不一致确实存在，但实际数值和逻辑完全相同，不会导致严重的资金结算事故。风险应从'引发严重的资金结算事故'降级为'可能导致开发初期的理解偏差，需通过代码评审和测试用例验证来消除'。",
+      "residual_issue": "需求文档与数值文档在符号定义术语上存在不一致（'投注金额的倍数' vs '金币赔率倍数'），公式表述也不够简洁，可能导致开发初期的理解偏差。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": true,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": true
+      },
+      "proposed_changes": {
+        "risk": "术语不一致可能导致开发初期的理解偏差，但实际数值和逻辑相同，不会引发资金结算事故。需通过代码评审和测试用例验证来消除歧义。"
+      },
+      "replacement_findings": [],
+      "correction_type": "downgrade",
+      "before": {
+        "issue_id": "CROSS_01",
+        "canonical_title": "结算公式与符号定义口径分裂",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "中奖金额计算公式与符号定义口径分裂",
+        "current_state": "需求文档将左右轴符号定义为“0.1倍、0.5倍...投注金额”，而数值文档定义为“金币赔率倍数”，且公式表述为“中奖金额 = 乘数符号 × 符号值（即基础投注 × 符号赔率）”，存在术语不一致与公式歧义。",
+        "evidence": "需求文档 / 3.3.1 符号分类总览、3.3.2 中间轴符号；数值文档 / 四、基础游戏・投注与中奖计算",
+        "risk": "程序在实现结算公式时可能因术语歧义导致乘区错误，引发严重的资金结算事故。",
+        "suggestion": "统一术语，将“金币赔率倍数”明确为“投注额乘数”，并给出无歧义的最终结算公式示例（如：中奖金额 = 基础投注 × 左/右轴乘数 × 中间轴乘数）。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "downgrade",
+        "editable_finding_preview": {
+          "issue_id": "CROSS_01",
+          "canonical_title": "结算公式与符号定义口径分裂",
+          "primary_dimension": "逻辑一致性与数值平衡",
+          "evidence_scope": "document",
+          "title": "中奖金额计算公式与符号定义口径分裂",
+          "current_state": "需求文档将左右轴符号定义为“0.1倍、0.5倍...投注金额”，而数值文档定义为“金币赔率倍数”，且公式表述为“中奖金额 = 乘数符号 × 符号值（即基础投注 × 符号赔率）”，存在术语不一致与公式歧义。",
+          "evidence": "需求文档 / 3.3.1 符号分类总览、3.3.2 中间轴符号；数值文档 / 四、基础游戏・投注与中奖计算",
+          "risk": "术语不一致可能导致开发初期的理解偏差，但实际数值和逻辑相同，不会引发资金结算事故。需通过代码评审和测试用例验证来消除歧义。",
+          "suggestion": "统一术语，将“金币赔率倍数”明确为“投注额乘数”，并给出无歧义的最终结算公式示例（如：中奖金额 = 基础投注 × 左/右轴乘数 × 中间轴乘数）。",
+          "planner_role": "系统策划",
+          "confidence": "高"
+        },
+        "protected_fields_locked": true,
+        "protected_fields_note": "severity/blocking remain unchanged until separate human approval"
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

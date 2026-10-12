@@ -1,0 +1,87 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369",
+    "primary_report_hash_after": "411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369",
+    "protected_fields_hash_before": "9bd300f5e8c7fa9c415fece4e4c739d663515a35936426a46abe5b8b39cffc45",
+    "protected_fields_hash_after": "9bd300f5e8c7fa9c415fece4e4c739d663515a35936426a46abe5b8b39cffc45",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "CROSS_01",
+      "correction_type": "clarify",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "rationale": "CROSS_01 本质上是 LOGIC_01 的证据补充，两者描述的是同一个核心逻辑歧义问题。应将其合并至 LOGIC_01，避免报告冗余和修复动作重复。",
+      "proposed_changes": {
+        "title": "RESPIN累加算法存在加法与乘法的严重歧义（合并CROSS_01证据）",
+        "current_state": "需求举例使用加法(1+2+1+5)，但数值文档通篇使用“乘数符号值”、“累加乘数值”，未明确是加法累加还是乘法累加。",
+        "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+        "risk": "极易导致程序实现为乘法，造成赔付指数级爆炸或RTP严重偏离，引发重大经济事故。",
+        "suggestion": "统一两份文档中的公式与术语。若为加法，改为“累加倍数”，公式为：最终乘数 = 初始乘数 + Σ(每次重转乘数值)；若为乘法，改为“累乘倍数”，并重新评估RTP与最大赔付。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "acceptance_criteria": "两份文档中关于RESPIN累加算法的公式与术语完全一致，且明确为加法或乘法。"
+      },
+      "replacement_findings": [],
+      "before": {
+        "issue_id": "CROSS_01",
+        "title": "RESPIN累加算法在需求与数值文档中存在表述冲突",
+        "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+        "risk": "需求举例为加法，数值文档术语暗示乘法，导致开发实现歧义。",
+        "suggestion": "统一两份文档中的公式与术语，明确是加法还是乘法。",
+        "canonical_title": "RESPIN累加算法在需求与数值文档中存在表述冲突",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "中",
+        "confidence": "中",
+        "blocking": "阻塞测试用例设计",
+        "planner_role": "待定",
+        "current_state": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45"
+      },
+      "after_preview": {
+        "issue_id": "CROSS_01",
+        "title": "RESPIN累加算法存在加法与乘法的严重歧义（合并CROSS_01证据）",
+        "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+        "risk": "极易导致程序实现为乘法，造成赔付指数级爆炸或RTP严重偏离，引发重大经济事故。",
+        "suggestion": "统一两份文档中的公式与术语。若为加法，改为“累加倍数”，公式为：最终乘数 = 初始乘数 + Σ(每次重转乘数值)；若为乘法，改为“累乘倍数”，并重新评估RTP与最大赔付。",
+        "canonical_title": "RESPIN累加算法在需求与数值文档中存在表述冲突",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "中",
+        "confidence": "高",
+        "blocking": "阻塞测试用例设计",
+        "planner_role": "系统策划",
+        "current_state": "需求举例使用加法(1+2+1+5)，但数值文档通篇使用“乘数符号值”、“累加乘数值”，未明确是加法累加还是乘法累加。",
+        "acceptance_criteria": "两份文档中关于RESPIN累加算法的公式与术语完全一致，且明确为加法或乘法。"
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": []
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "reviewer": "Codex evidence-based blind review",
+  "items": [
+    {"annotation_id":"A-777-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"需求示例、配置表与UI赔率不一致，属独立且可定位的口径冲突；该条自身未给出可直接执行的完整建议。"},
+    {"annotation_id":"A-777-R01-A002","valid":true,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"经济边界值得确认，但文档已有100倍强制0倍等相对边界，未证明该边界不参与结算，不能直接断言完全无封顶。"},
+    {"annotation_id":"A-777-R01-A003","valid":true,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"幂等规则确有补充价值，但原文已写点击后消耗货币；把扣款时点与幂等两个根因合并并称全部缺失，证据不足。"},
+    {"annotation_id":"A-777-R01-A004","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"服务端权威序列边界确未明确，但又混入断线恢复这一独立根因；该条结构化建议字段缺失。"},
+    {"annotation_id":"A-777-R02-A001","valid":true,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"需确认绝对封顶，但已有强制0倍相对边界，未证明其失效，直接判定MAX_WIN完全缺失过重。"},
+    {"annotation_id":"A-777-R02-A002","valid":true,"duplicate":true,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"空白组合1倍与0倍口径确有歧义，但与Primary关于0/空白符号及基础盘面定义的根因高度重合。"},
+    {"annotation_id":"A-777-R02-A003","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"复用中台断线流程仍未覆盖RESPIN中间态持久化与恢复边界，作为低风险补充成立；条目未提供完整可执行字段。"},
+
+    {"annotation_id":"B-racing-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"全文只有UI下注动作，未定义真实本金扣除或冻结节点；证据、风险与修改建议完整。"},
+    {"annotation_id":"B-racing-R01-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"返奖仅有展示描述，钱包入账事务节点未定义，且不与Primary真假赔率映射重复。"},
+    {"annotation_id":"B-racing-R01-A003","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"合计下注/单项下注公式在分母极小时会放大，文档仅给最低赔率，无相对倍率上限；与单局绝对赔付封顶是不同控制面。"},
+    {"annotation_id":"B-racing-R01-A004","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"文档明确允许奖池为负，但无负值下限和熔断；该经济边界不同于Primary的单局最大赔付问题。"},
+    {"annotation_id":"B-racing-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"重复回放仍准确定位本金事务节点缺失，证据与建议可执行。"},
+    {"annotation_id":"B-racing-R02-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"重复回放稳定识别钱包入账节点缺失，不与Primary现有问题重复。"},
+    {"annotation_id":"B-racing-R02-A003","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"相对赔率上限缺失可由公式直接验证，单根因且建议明确。"},
+    {"annotation_id":"B-racing-R02-A004","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"负奖池无透支下限与熔断规则，属于独立且稳定复现的经济边界缺口。"},
+    {"annotation_id":"A-racing-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":true,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"扣款与并发幂等均值得补充，但合并了事务节点、幂等和100万上限风险，标题风险推断偏重且缺完整修改字段。"},
+    {"annotation_id":"A-racing-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"扣款/冻结时点与失败回退是两个独立根因，事实成立但条目缺少完整风险与建议字段。"},
+
+    {"annotation_id":"B-tiger-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"正文3日/7日与UI两处30日均可核验；两处均属于同一‘正文与UI统计窗口未对齐’根因和同一UI文本对齐控制面。"},
+    {"annotation_id":"B-tiger-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"文档描述投入与余额校验但未定义扣除/冻结事务动作，独立于Repeat余额不足问题。"},
+    {"annotation_id":"B-tiger-R02-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"允许透支赔付但无负值下限及熔断，证据充分且不与Primary概率冲突问题重复。"},
+    {"annotation_id":"B-tiger-R02-A003","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"开奖分析正文7日、UI 30日为同对象同指标的直接冲突。"},
+    {"annotation_id":"B-tiger-R02-A004","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"游戏记录正文3日、UI 30日为直接冲突，证据和建议完整。"},
+    {"annotation_id":"A-tiger-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"回退章节引用3.3确为明显笔误，但文档实际章节为3.7.3/3.7.4/3.7.5，直接断言系统必然跳过状态偏重；条目缺完整建议字段。"},
+    {"annotation_id":"A-tiger-R01-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"奖池为负时80%比较条件确会失效，但原文还有选择足够赔付或最小赔付的回退，不构成逻辑死锁。"},
+    {"annotation_id":"A-tiger-R01-A003","valid":false,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"今日+昨日窗口在0点仍包含完整昨日数据，且文档已明确分母为0时进入回收，无法据此推出跨天频繁跳变。"},
+    {"annotation_id":"A-tiger-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"弱网幂等缺口成立，但同时混入下注资格/截止请求两个根因；标注条目未携带完整修改建议。"},
+    {"annotation_id":"A-tiger-R02-A002","valid":true,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"‘本地时间、今日+昨日’已强烈指向自然日0点切分；跨日局归属与刷新时点仍可补充，但称切点完全未定义证据不足。"},
+
+    {"annotation_id":"B-小鸡-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"点击开始与失败结算均未定义初始下注本金的扣除/冻结事务节点，独立于Primary的配置冲突。"},
+    {"annotation_id":"B-小鸡-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"重复回放稳定识别本金事务节点缺失，事实与建议均完整。"},
+    {"annotation_id":"B-小鸡-R02-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"文档只描述局内奖金与模拟到账，未定义真实钱包入账触发点；不与提现幂等问题重复。"},
+    {"annotation_id":"A-小鸡-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"下注扣款与结算发奖两个事务缺口均存在，但被合并为多根因条目且缺完整建议字段。"},
+    {"annotation_id":"A-小鸡-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"扣款时机和本金口径属于两个需要分别确认的根因；事实成立但输出结构不完整。"},
+    {"annotation_id":"A-小鸡-R02-A002","valid":true,"duplicate":true,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"极端倍率风险真实，但Primary已识别赔率表/公式数量级冲突，且文档存在MAX_MUL相对边界；不能直接断言完全无封顶。"},
+
+    {"annotation_id":"B-钱来了-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"3轴1行最多3个符号，与4个以上夺宝符号续杯条件物理冲突；不同于Primary的续杯概率缺失。"},
+    {"annotation_id":"A-钱来了-R01-A001","valid":true,"duplicate":true,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"1行结构与上中下/上下推展描述确有冲突，但Primary已直接覆盖1x3盘面与上下推展的同一根因。"},
+    {"annotation_id":"A-钱来了-R01-A002","valid":true,"duplicate":true,"unsupported":false,"overstated":false,"understated":false,"multiroot":true,"actionable":false,"reviewer_notes":"购买价格、初始次数和互斥规则缺失完全被Primary CLARITY_02覆盖，且合并多个独立购买边界；条目本身字段不完整。"}
+  ]
+}

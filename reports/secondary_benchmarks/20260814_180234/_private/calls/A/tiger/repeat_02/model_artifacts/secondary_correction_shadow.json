@@ -1,0 +1,89 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 1,
+  "accepted_corrections": [],
+  "rejected_corrections": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "LOGIC_01",
+      "correction_type": "narrow_claim",
+      "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+      "rationale": "剔除 3.7.5 回收状态的证据，将问题精准聚焦于 3.7.3/3.7.4/3.8.3 的兜底逻辑漏洞，避免误导开发修改正常的回收机制。",
+      "proposed_changes": {
+        "title": "开奖兜底逻辑（充裕/正常状态）存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "current_state": "段落57/68/108规定兜底时‘若都不够赔付，选择赔付最少的开’。未排除无人投注选项（赔付为0）的候选资格。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+        "risk": "在奖池充裕或正常状态下，若有人投注的选项均超过奖池80%，系统会错误地开出无人投注的选项（赔付0），导致玩家全输且违背该状态下保护玩家体验的初衷。",
+        "suggestion": "修改 3.7.3/3.7.4/3.8.3 的兜底逻辑：无人投注的选项（赔付为0）不应参与兜底候选；或强制在有人投注的选项中，选择赔付金额最小的选项开出。保留 3.7.5 回收状态的原有逻辑不变。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "acceptance_criteria": "充裕/正常状态下，兜底逻辑不会开出0赔付选项；回收状态下仍按原逻辑执行。"
+      },
+      "replacement_findings": [],
+      "before": {
+        "issue_id": "LOGIC_01",
+        "canonical_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "current_state": "段落57/68/108规定兜底时‘若都不够赔付，选择赔付最少的开’；段落73明确‘若某选项无人投入，其赔付金额视为0（可能成为赔付最小）’。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+        "risk": "当有人投注的选项均超过奖池80%时，系统会开出无人投注的选项（赔付0）。这会导致所有玩家全部输掉，且奖池不扣除任何金额，完全违背了‘兜底’和‘回收’保护奖池的初衷，且极易引发玩家群体客诉。",
+        "suggestion": "修改兜底逻辑：无人投注的选项（赔付为0）不应参与兜底候选；或强制在有人投注的选项中，选择赔付金额最小的选项开出。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "issue_id": "LOGIC_01",
+        "canonical_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖兜底逻辑（充裕/正常状态）存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "current_state": "段落57/68/108规定兜底时‘若都不够赔付，选择赔付最少的开’。未排除无人投注选项（赔付为0）的候选资格。",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+        "risk": "在奖池充裕或正常状态下，若有人投注的选项均超过奖池80%，系统会错误地开出无人投注的选项（赔付0），导致玩家全输且违背该状态下保护玩家体验的初衷。",
+        "suggestion": "修改 3.7.3/3.7.4/3.8.3 的兜底逻辑：无人投注的选项（赔付为0）不应参与兜底候选；或强制在有人投注的选项中，选择赔付金额最小的选项开出。保留 3.7.5 回收状态的原有逻辑不变。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发",
+        "acceptance_criteria": "充裕/正常状态下，兜底逻辑不会开出0赔付选项；回收状态下仍按原逻辑执行。"
+      },
+      "applied_to_report": false,
+      "validation_status": "rejected",
+      "validation_reasons": [
+        "accepted_challenge_not_found"
+      ]
+    }
+  ]
+}

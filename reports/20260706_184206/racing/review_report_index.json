@@ -1,0 +1,187 @@
+{
+  "mode": "dual_pass",
+  "status": "complete",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "deepseek-v4-pro",
+  "selected_report_owner": "pipeline",
+  "selected_report_path": "review_report.md",
+  "selected_source_report_path": "review_report_pipeline.md",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": false,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_gate_failure_reasons": [
+    "warning_present",
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_failure_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "warning_present",
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "pipeline_report_path": "review_report_pipeline.md",
+  "candidate_report_path": "review_report_candidate.md",
+  "advice_path": "secondary_review_advice.md",
+  "primary_score": "未评定",
+  "pipeline_score": "B",
+  "candidate_score": "D",
+  "selected_score": "B",
+  "pipeline_finding_count": 2,
+  "candidate_finding_count": 9,
+  "selected_finding_count": 2,
+  "candidate_ready_for_direct_output": false,
+  "candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "lineage_counts": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 1
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 1
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 1,
+    "merged": 0,
+    "dropped": 1
+  },
+  "traceability_status": "partial",
+  "readiness_conflict": false,
+  "candidate_structure_drift": true,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "candidate_block_reasons": [
+    "warning_present",
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_traceability_partial"
+  ],
+  "candidate_block_reason_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "warning_present",
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "cross_document_section_disabled": true,
+  "comparison_summary": {
+    "pipeline_only_count": 1,
+    "candidate_only_count": 8,
+    "pipeline_only_titles": [
+      "引导局是否使用真实资金未明确，存在误扣真实资产风险"
+    ],
+    "candidate_only_titles": [
+      "核心数值公式变量定义缺失及“干扰指数”映射不明",
+      "赔率计算双轨制冲突及“假赔率”展示结算口径风险",
+      "多重开奖干预逻辑优先级未定义及“待补充”状态逻辑矛盾",
+      "奖池状态计算公式存在分母为零的异常风险",
+      "新手引导强制交互缺乏跳过机制，且资金属性未明确，存在误扣款风险",
+      "半屏模式下开奖动画与结果弹窗的UI适配规则缺失",
+      "单局最大赔付上限与奖池负数兜底机制缺失",
+      "统计板块无数据时的默认展示值与实际概率模型脱节"
+    ],
+    "materially_changed_count": 1,
+    "materially_changed_titles": [
+      "假数据（人数/金额）与真实赔率计算的数据源隔离未明确"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "secondary-origin:MISS_01",
+        "issue_id": "假数据隔离缺失",
+        "title": "假数据（人数/金额）与真实赔率计算的数据源隔离未明确",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "warning": "主评审模型返回 JSON 解析失败，已保留原始响应：Expecting ',' delimiter: line 242 column 2 (char 8881)；副评审调用失败，本次仅保留 pipeline 版：Object of type set is not JSON serializable"
+}

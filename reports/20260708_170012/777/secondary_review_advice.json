@@ -1,0 +1,225 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告成功识别了RESPIN结算矛盾、符号优先级缺失、推展机制歧义等关键问题，但错误地将RESPIN累加描述为“乘法”冲突，且遗漏了展示赔率与结算赔率根本性不一致的重大缺陷，导致报告在核心结算链路完整性上仍有缺口。",
+    "strengths": [
+      "准确抓住了RESPIN次数控制、符号优先级、推展机制等阻塞性矛盾",
+      "维度划分清晰，测试要点覆盖全面",
+      "对UI缩位展示、快捷旋转表现等细节问题有具体建议"
+    ],
+    "issues": [
+      "将RESPIN的加法累加误判为“乘法”冲突，且未识别出需求文档与数值文档在累加算法上的一致性",
+      "遗漏了需求文档内部展示赔率（1000倍）与自身赔率表（77倍）及数值文档赔率（77倍）的根本性冲突，该冲突直接影响玩家预期奖金与实际结算，属于高阻塞问题",
+      "对第4列随机时机的描述未充分结合需求文档的“单线连线”规则，导致子问题表述稍显冗杂"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型对RESPIN的误判，并补充了展示赔率冲突这一关键遗漏，所有问题均有明确文档证据支撑，结构完整，可直接交付业务方评审。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型对RESPIN的误判，并补充了展示赔率冲突这一关键遗漏，所有问题均有明确文档证据支撑，结构完整，可直接交付业务方评审。"
+  },
+  "review_notes": [
+    "修正了主模型对RESPIN结算公式的“乘法”误判，确认加法算法一致，聚焦于次数控制逻辑矛盾。",
+    "补充了需求文档展示赔率1000倍与自身表格及数值文档77倍的根本冲突，标记为高阻塞。",
+    "保持主模型的其他发现不变，仅对部分描述进行微调以增强可读性。",
+    "由于候选报告已修正关键缺陷，建议直接采用本报告作为最终评审输出。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_01",
+      "title": "需求文档内部展示赔率与结算赔率存在根本性冲突",
+      "description": "需求文档段落30描述中奖金额展示区域时，举例“777*3获奖倍率为1000倍”，而同一文档的表格1（基础符号赔付表）明确777的赔率是77倍；数值文档表格2同样为77倍。这将导致玩家在UI上看到的预期奖金（如10000）与实际结算奖金（770）严重不符，引发重大客诉和结算事故。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落30、表格1；crazy777数值文档修改后.docx / 表格2",
+      "severity": "高",
+      "primary_dimension": "逻辑一致性与数值平衡"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "symbol_priority",
+        "primary_issue_ids": [
+          "symbol_priority"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "未修改"
+      },
+      {
+        "candidate_issue_id": "amount_truncation",
+        "primary_issue_ids": [
+          "amount_truncation"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "建议措辞微调，保持原问题"
+      },
+      {
+        "candidate_issue_id": "tease_mechanism",
+        "primary_issue_ids": [
+          "tease_mechanism"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "保持原问题，补充推展未在需求文档提及的说明"
+      },
+      {
+        "candidate_issue_id": "reel4_random_timing",
+        "primary_issue_ids": [
+          "reel4_random_timing"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "未修改"
+      },
+      {
+        "candidate_issue_id": "respin_formula_conflict",
+        "primary_issue_ids": [
+          "respin_formula_conflict"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "修正标题和描述，移除“乘法”误判，聚焦于“固定次数”与“独立随机遇空结束”的矛盾；明确加法算法一致，但次数控制逻辑冲突"
+      },
+      {
+        "candidate_issue_id": "quick_spin_respin",
+        "primary_issue_ids": [
+          "quick_spin_respin"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "未修改"
+      },
+      {
+        "candidate_issue_id": "risk_control_zero",
+        "primary_issue_ids": [
+          "risk_control_zero"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "未修改"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "display_payout_mismatch",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "主模型遗漏了展示赔率与结算赔率的根本冲突，直接影响结算正确性与玩家预期，必须补充"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型对RESPIN的误判，并补充了展示赔率冲突这一关键遗漏，所有问题均有明确文档证据支撑，结构完整，可直接交付业务方评审。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

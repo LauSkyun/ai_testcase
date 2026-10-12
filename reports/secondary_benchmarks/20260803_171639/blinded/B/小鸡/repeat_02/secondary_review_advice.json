@@ -1,0 +1,226 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心数值冲突和配置不一致问题，结构清晰、证据追踪完整。但在根因解释深度、数据异常识别和公式冲突的本质说明上仍有提升空间。",
+    "strengths": [
+      "准确识别了倍率公式与数值表的根本冲突",
+      "正确发现了难度系统概率计算逻辑的矛盾",
+      "问题结构清晰，证据来源可追踪",
+      "top_blockers 聚焦核心阻塞项"
+    ],
+    "issues": [
+      "未清晰说明数值表实际是累计倍率而非单格倍率，导致公式冲突的根因解释不够透彻",
+      "未发现难度3和难度4表格数据与命名存在明显数量级错误（103倍盘实际624倍，176倍盘实际6600万倍）",
+      "未明确说明Crash算法的爆炸倍数如何映射到离散格子的具体规则缺失",
+      "下注筹码冲突严重度可下调，因UI与需求文档一致，仅数值文档示例不同",
+      "缺少对'超级大奖'与第30格结算关系的明确澄清建议"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充根因解释、数据异常识别和映射规则缺失说明，结构完整、证据充分、来源可追踪，可直接给业务方阅读"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充根因解释、数据异常识别和映射规则缺失说明，结构完整、证据充分、来源可追踪，可直接给业务方阅读"
+  },
+  "review_notes": [
+    "主模型报告整体质量良好，准确识别了核心冲突，但在根因解释深度上可进一步提升",
+    "建议数值策划优先解决倍率公式与数值表的口径冲突，这是最核心的阻塞项",
+    "建议补充Crash算法到离散格子的映射规则示例，这是实现碰撞判定的前提",
+    "建议重新校验难度3和难度4的赔率数据，避免上线后出现严重资损",
+    "下注筹码冲突严重度从中调整为中，因UI与需求文档一致，仅数值文档示例不同，实际影响相对可控",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSING_CRASH_TO_GRID_MAPPING",
+      "title": "Crash算法爆炸倍数到离散格子的映射规则完全缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "高",
+      "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13（描述Crash算法生成爆炸倍数）；小鸡数值文档.docx / 3. 难度选择，段落9（明确30个离散格子）",
+      "risk": "核心碰撞判定逻辑无法实现。文档未说明当随机爆炸倍数为2.5时，玩家在第几格撞车。若爆炸倍数指累计倍率，需明确当随机值介于两格累计倍率之间时的判定规则（如：第N格累计倍率>爆炸倍数时撞车）。",
+      "suggestion": "补充映射规则示例：'随机爆炸倍数为X，玩家依次通过第1格、第2格...直到第N格的累计倍率首次超过X时，在第N格撞车'。提供至少2个具体数值示例说明判定逻辑。"
+    },
+    {
+      "issue_id": "DATA_ANOMALY_DIFFICULTY_3_4",
+      "title": "难度3和难度4的赔率数据与命名存在数量级错误",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "高",
+      "evidence": "小鸡数值文档.docx / 3. 难度选择，表格2（难度3命名为'103倍盘'但第30关为624.86；难度4命名为'176倍盘'但第30关为66278475.57）；小鸡数值文档.docx / 4. 撞击概率计算，表格3（MAX_MUL分别为103和176）",
+      "risk": "数据与命名存在巨大数量级差异，直接导致最高赔付失控。若按当前数据实现，难度4第30关赔付将达下注金额的6600万倍，造成严重资损风险。",
+      "suggestion": "数值策划需重新校验难度3和难度4的赔率推导公式。建议：1）若命名正确（103倍、176倍），则第30关数值应修正为接近103和176；2）若数据正确，则命名应修正为'624倍盘'和'6600万倍盘'；3）提供完整的赔率推导公式和校验过程。"
+    },
+    {
+      "issue_id": "SUPER_PRIZE_DEFINITION_AMBIGUITY",
+      "title": "'超级大奖'与第30格结算的关系未明确",
+      "primary_dimension": "清晰度与完整性",
+      "severity": "中",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程，段落31（'成功通过所有预设马路，触发超级大奖，获得额外高额奖励'）；小鸡数值文档.docx / 3. 难度选择，段落9（'需要经过30个格子'）",
+      "risk": "结算逻辑存在分支歧义。未说明第30格是仅按第30格累计倍率结算，还是额外叠加固定/动态的超级大奖金额。可能导致重复赔付或玩家预期不符。",
+      "suggestion": "明确定义：'通过第30格后，总奖金 = 下注金额 × 第30格累计倍率 + 超级大奖金额'。并说明超级大奖的具体数值（固定金额、奖池分红或额外倍率）及配置规则。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_DIFFICULTY_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_BET_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": [
+          "SUPER_PRIZE_DEFINITION_AMBIGUITY"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "primary_issue_ids": [
+          "LOGIC_PAYOUT_FORMULA_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSING_CRASH_TO_GRID_MAPPING",
+          "DATA_ANOMALY_DIFFICULTY_3_4"
+        ]
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "DATA_ANOMALY_DIFFICULTY_3_4",
+    "MISSING_CRASH_TO_GRID_MAPPING",
+    "SUPER_PRIZE_DEFINITION_AMBIGUITY"
+  ],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 3,
+  "candidate_issue_id_repair_count": 3,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充根因解释、数据异常识别和映射规则缺失说明，结构完整、证据充分、来源可追踪，可直接给业务方阅读",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 3,
+    "candidate_issue_id_repair_count": 3,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {}
+}

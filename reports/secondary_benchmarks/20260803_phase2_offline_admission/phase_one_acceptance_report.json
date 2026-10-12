@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "benchmark_directory": "reports/secondary_benchmarks/20260803_171639",
+  "source_batch": "reports/20260731_105856",
+  "experiment": {
+    "games": 5,
+    "secondary_calls": 20,
+    "completed_calls": 20,
+    "failed_calls": 0,
+    "paired": true,
+    "fairness_invariants_passed": true,
+    "primary_calls": 0,
+    "vision_calls": 0,
+    "temperature": 0
+  },
+  "unblinded_mapping": {
+    "A": {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro"
+    },
+    "B": {
+      "provider": "qwen",
+      "model": "gpt-5.6-sol"
+    }
+  },
+  "blind_conclusion_preserved_at": "blind_evaluation_conclusion.json",
+  "quality_ranking": [
+    "qwen/gpt-5.6-sol",
+    "deepseek/deepseek-v4-pro"
+  ],
+  "metrics": {
+    "qwen": {
+      "valid_added_finding_count": 10,
+      "added_finding_precision": 0.5556,
+      "high_value_added_count": 5,
+      "duplicate_add_rate": 0.1667,
+      "human_multiroot_count": 1,
+      "human_unsupported_count": 6,
+      "human_overstated_count": 2,
+      "candidate_gate_pass_rate": 0.9,
+      "candidate_default_adoption_rate": 0.9,
+      "average_primary_top_blocker_retention": 0.8,
+      "minimum_primary_top_blocker_retention": 0.3333,
+      "average_field_completeness": 0.5714,
+      "lineage_mismatch_count": 1,
+      "materialization_mismatch_count": 1,
+      "major_judgment_drift_count": 0,
+      "applicable_high_value_repeat_overlap": 0.0
+    },
+    "deepseek": {
+      "valid_added_finding_count": 2,
+      "added_finding_precision": 0.1538,
+      "high_value_added_count": 0,
+      "duplicate_add_rate": 0.2308,
+      "human_multiroot_count": 1,
+      "human_unsupported_count": 11,
+      "human_overstated_count": 2,
+      "candidate_gate_pass_rate": 0.8,
+      "candidate_default_adoption_rate": 0.8,
+      "average_primary_top_blocker_retention": 0.7333,
+      "minimum_primary_top_blocker_retention": 0.3333,
+      "average_field_completeness": 0.5143,
+      "lineage_mismatch_count": 1,
+      "materialization_mismatch_count": 1,
+      "major_judgment_drift_count": 0,
+      "applicable_high_value_repeat_overlap": 0.0
+    }
+  },
+  "threshold_audit": [
+    {
+      "id": 1,
+      "threshold": "新增问题人工有效率 >= 80%",
+      "qwen": "fail: 55.56%",
+      "deepseek": "fail: 15.38%"
+    },
+    {
+      "id": 2,
+      "threshold": "异模型每款稳定增加 >= 1 个有效高价值问题，或相同召回下显著降低重复",
+      "qwen": "reference",
+      "deepseek": "fail: 高价值有效新增 0，且重复率更高"
+    },
+    {
+      "id": 3,
+      "threshold": "重复新增率 <= 15%",
+      "qwen": "fail: 16.67%",
+      "deepseek": "fail: 23.08%"
+    },
+    {
+      "id": 4,
+      "threshold": "无依据严重度升降级 = 0",
+      "qwen": "pass by structural detector; human annotation still found 2 overstated additions",
+      "deepseek": "pass by structural detector; human annotation still found 2 overstated additions"
+    },
+    {
+      "id": 5,
+      "threshold": "多根因 finding = 0",
+      "qwen": "fail: 1",
+      "deepseek": "fail: 1"
+    },
+    {
+      "id": 6,
+      "threshold": "Primary Top 3 根因平均保留率 >= 2/3",
+      "qwen": "pass average: 80%; minimum single run: 33.33%",
+      "deepseek": "pass average: 73.33%; minimum single run: 33.33%"
+    },
+    {
+      "id": 7,
+      "threshold": "Candidate 结构门槛通过率 >= 90%",
+      "qwen": "pass: 90%",
+      "deepseek": "fail: 80%"
+    },
+    {
+      "id": 8,
+      "threshold": "两次复跑高价值新增重合率 >= 60%",
+      "qwen": "fail: applicable comparisons are 0%",
+      "deepseek": "fail: applicable comparisons are 0%"
+    },
+    {
+      "id": 9,
+      "threshold": "lineage/materialization mismatch 和 major judgment drift 均为 0",
+      "qwen": "fail: lineage 1, materialization 1, drift 0",
+      "deepseek": "fail: lineage 1, materialization 1, drift 0"
+    },
+    {
+      "id": 10,
+      "threshold": "Secondary 失败时 100% 回退 Primary pipeline",
+      "qwen": "implemented in dual_pass exception path; no external failure occurred in this 20-call batch",
+      "deepseek": "implemented in dual_pass exception path; no external failure occurred in this 20-call batch"
+    }
+  ],
+  "acceptance": {
+    "phase_one_experiment_execution": "passed",
+    "qwen_secondary_default_switch": "not_approved",
+    "deepseek_secondary_default_switch": "not_approved",
+    "deepseek_advice_only": "eligible_for_phase_two_experiment_only",
+    "production_recommendation": "keep_qwen_primary_plus_qwen_secondary",
+    "active_environment_change_required": false
+  },
+  "next_actions": [
+    "保持当前 Qwen Primary + Qwen Secondary 生产基线，不把活动环境切到 Qwen + DeepSeek。",
+    "阶段二若继续评估 DeepSeek，只允许 advice-only，不赋予 Candidate 默认成稿权。",
+    "收紧 Secondary 协议：逐项强制 evidence、independent_root_cause、primary_overlap_check、severity_basis。",
+    "把人工 unsupported、duplicate、multiroot 判定前移为确定性阻断规则。",
+    "完成协议修改后重新运行同一 frozen-primary 20 次回放；达到所有门槛后再做 30 次正式验收。"
+  ]
+}

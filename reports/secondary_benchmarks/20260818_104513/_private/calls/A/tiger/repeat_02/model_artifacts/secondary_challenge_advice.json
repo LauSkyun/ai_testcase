@@ -1,0 +1,259 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_2",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1_2; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 0,
+  "accepted_challenges": [],
+  "rejected_challenges": [],
+  "target_coverage_ledger": {
+    "schema_version": 1,
+    "expected_count": 11,
+    "actual_count": 11,
+    "completeness": 1.0,
+    "valid": true,
+    "errors": [],
+    "inventory": [
+      {
+        "target_order": 1,
+        "target_issue_id": "CLARITY_02",
+        "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+        "dimension": "清晰度与完整性",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22"
+      },
+      {
+        "target_order": 2,
+        "target_issue_id": "CLARITY_03",
+        "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾",
+        "dimension": "清晰度与完整性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 表格1、表格3"
+      },
+      {
+        "target_order": 3,
+        "target_issue_id": "CLARITY_01",
+        "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+        "dimension": "清晰度与完整性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 表格4、图1、图5、图7、图21"
+      },
+      {
+        "target_order": 4,
+        "target_issue_id": "LOGIC_02",
+        "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "tiger需求文档.docx / 3.7.4、表格5"
+      },
+      {
+        "target_order": 5,
+        "target_issue_id": "LOGIC_01",
+        "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "高",
+        "blocking": "阻塞开发",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3"
+      },
+      {
+        "target_order": 6,
+        "target_issue_id": "LOGIC_03",
+        "title": "排行榜同分排序规则与UI展示信息不匹配",
+        "dimension": "逻辑一致性与数值平衡",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 表格3"
+      },
+      {
+        "target_order": 7,
+        "target_issue_id": "TEST_01",
+        "title": "短轮次玩法的断线重连与局内状态恢复规则缺失",
+        "dimension": "可测试性与验收标准",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 3.2、3.6"
+      },
+      {
+        "target_order": 8,
+        "target_issue_id": "TEST_02",
+        "title": "Repeat按钮在余额不足时的边界行为未定义",
+        "dimension": "可测试性与验收标准",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 表格3"
+      },
+      {
+        "target_order": 9,
+        "target_issue_id": "CROSS_01",
+        "title": "半屏入口下的UI层级与弹窗适配规则缺失",
+        "dimension": "跨系统影响与兼容性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 3.5"
+      },
+      {
+        "target_order": 10,
+        "target_issue_id": "SEC_01",
+        "title": "开奖兜底中‘实时计算’的判定快照时机未定义",
+        "dimension": "安全性与反作弊",
+        "severity": "低",
+        "blocking": "建议优化",
+        "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3"
+      },
+      {
+        "target_order": 11,
+        "target_issue_id": "UX_01",
+        "title": "结算弹窗强制5s自动收起可能打断用户查看收益体验",
+        "dimension": "用户体验与游戏性",
+        "severity": "中",
+        "blocking": "阻塞测试用例设计",
+        "evidence": "tiger需求文档.docx / 表格3"
+      }
+    ],
+    "entries": [
+      {
+        "target_issue_id": "CLARITY_02",
+        "target_order": 1,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22",
+        "rationale": "图22确实包含机器人匹配与投放流程图，但正文需求中完全未提及机器人机制及人数统计口径，原finding证据确凿，判断成立。"
+      },
+      {
+        "target_issue_id": "CLARITY_03",
+        "target_order": 2,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 表格1、表格3",
+        "rationale": "表格1修改记录明确‘删除可见配置，默认全开’，而表格3详细说明中仍保留‘默认白名单可见’，前后矛盾客观存在，原finding成立。"
+      },
+      {
+        "target_issue_id": "CLARITY_01",
+        "target_order": 3,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+        "rationale": "表格4配置2.9倍，图1标题3X，图5出现2.5倍，图7规则文本3倍，图21引导文案存在3X与2.9X混用，核心赔率多处冲突，原finding成立。"
+      },
+      {
+        "target_issue_id": "LOGIC_02",
+        "target_order": 4,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 3.7.4、表格5",
+        "rationale": "段落66描述奖池正常状态偏移概率为{60}%，而表格5后台配置表中对应字段初始值为20%，数值口径分裂，原finding成立。"
+      },
+      {
+        "target_issue_id": "LOGIC_01",
+        "target_order": 5,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+        "rationale": "段落57/68/108的兜底逻辑允许选择赔付最少的选项，结合段落73无人投入赔付视为0的规则，确实存在开出0赔付选项的机制缺陷，原finding成立。"
+      },
+      {
+        "target_issue_id": "LOGIC_03",
+        "target_order": 6,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 表格3",
+        "rationale": "表格3规定同分按达到时间先后排序，但UI展示列仅有Rank、User、Score，未展示时间信息，规则与展示不匹配，原finding成立。"
+      },
+      {
+        "target_issue_id": "TEST_01",
+        "target_order": 7,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 3.2、3.6",
+        "rationale": "文档主流程与开奖流程章节均未提及短轮次玩法下的断线重连与局内状态恢复规则，原finding成立。"
+      },
+      {
+        "target_issue_id": "TEST_02",
+        "target_order": 8,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 表格3",
+        "rationale": "表格3仅说明余额不足时Repeat按钮置灰，未定义上一局多选项下注而本局余额仅够部分下注时的降级交互策略，原finding成立。"
+      },
+      {
+        "target_issue_id": "CROSS_01",
+        "target_order": 9,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 3.5",
+        "rationale": "3.5节仅定义了半屏与全屏的入口区分，未说明半屏模式下各弹窗的UI层级、适配与拉起规则，原finding成立。"
+      },
+      {
+        "target_issue_id": "SEC_01",
+        "target_order": 10,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+        "rationale": "段落57/68/108多次使用‘实时计算’但未界定是下注截止瞬间的快照还是动画期间的动态计算，存在并发超发风险，原finding成立。"
+      },
+      {
+        "target_issue_id": "UX_01",
+        "target_order": 11,
+        "decision": "pass",
+        "challenge_type": "",
+        "recommended_action": "",
+        "evidence_checked": "tiger需求文档.docx / 表格3",
+        "rationale": "表格3结算弹窗模块明确规定‘展示5s后自动收起’且未提供用户主动关闭或暂停的交互，原finding成立。"
+      }
+    ],
+    "decision_keys": [
+      "CLARITY_01:pass",
+      "CLARITY_02:pass",
+      "CLARITY_03:pass",
+      "CROSS_01:pass",
+      "LOGIC_01:pass",
+      "LOGIC_02:pass",
+      "LOGIC_03:pass",
+      "SEC_01:pass",
+      "TEST_01:pass",
+      "TEST_02:pass",
+      "UX_01:pass"
+    ]
+  },
+  "review_notes": [
+    "本轮审查严格基于冻结输入与共享文档，所有11项Primary finding均具备明确的文档定位与逻辑支撑，未发现反证或过度推断，故全部判定为pass，不生成challenge与correction。"
+  ]
+}

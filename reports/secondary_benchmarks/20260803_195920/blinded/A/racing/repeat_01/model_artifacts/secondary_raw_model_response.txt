@@ -1,0 +1,393 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心赔率公式冲突、T变量定义歧义、假数据隔离及真假赔率映射等致命阻塞项，问题定位精准。但在扣款/冻结时机、干预逻辑边界条件等经济安全与测试验收细节上存在遗漏，部分高阻塞问题的证据引用格式略显混乱，需进一步结构化整理。",
+    "strengths": [
+      "准确抓住了需求文档与数值文档在赔率计算模型上的根本性冲突（资金池模式 vs 权重膨胀模式）。",
+      "敏锐发现了T变量在时间公式与赔率公式中的物理意义矛盾，避免了开发阶段的严重逻辑错误。",
+      "对假数据参与真实计算、真假赔率展示与结算映射等经济安全边界问题识别到位。"
+    ],
+    "issues": [
+      "T_VARIABLE_CONFLICT 问题的证据引用格式混乱，包含重复和嵌套数组，不利于业务方追踪。",
+      "遗漏了对赌游戏核心的‘下注本金扣除/冻结时机’规则，存在经济漏洞风险。",
+      "干预逻辑的触发边界（如选项下注人数不满足条件时的降级处理）未做深入挖掘，影响测试验收。",
+      "MAX_PAYOUT_RISK 未结合‘单选项限注100万’的具体规则进行量化风险分析。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的证据格式问题，补充了扣款时机与干预边界等关键遗漏，结构完整、证据充分、追踪清晰，可直接作为评审终稿交付业务方进行需求修订。"
+  },
+  "missed_findings": [
+    {
+      "candidate_issue_id": "SECURITY_BET_DEDUCTION_TIMING",
+      "title": "下注本金扣除/冻结时机缺失，存在经济漏洞风险",
+      "primary_dimension": "安全性与反作弊",
+      "current_state": "文档描述了‘下注余额，点击前往按钮唤起收银台’及‘选中档位后点击下注内容一次下注’，但未明确下注成功后是立即扣除/冻结余额，还是开奖后统一结算。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落25、段落32",
+      "risk": "对赌游戏若不在下注时冻结/扣除本金，会导致用户余额不足时仍能下注，或开奖时余额已被挪用，产生严重的经济漏洞与资损风险。",
+      "suggestion": "明确下注成功即冻结/扣除对应本金，开奖后仅发放净收益（或退回本金+收益），并在服务端做余额强校验。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "下注动作发生时的本金扣除/冻结时机规则缺失",
+      "root_causes": [
+        "下注动作发生时的本金扣除/冻结时机规则缺失"
+      ],
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK 关注的是开奖后的赔付上限兜底，而本问题关注的是下注动作发生时的本金扣除/冻结时机，两者属于不同阶段的经济边界，无重叠。"
+      },
+      "severity_basis": "对赌游戏核心经济链路缺失，直接导致可刷钱或余额透支等严重资损事故。",
+      "root_cause_count": 1,
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "原文仅描述了UI交互和唤起收银台，未提及任何关于余额冻结、扣除或结算时机的规则，不存在兼容解释。",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落25、段落32"
+        ]
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DATA_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FAKE_ODDS_MAPPING",
+        "primary_issue_ids": [
+          "FAKE_ODDS_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "SECURITY_BET_DEDUCTION_TIMING",
+        "source_missed_issue_ids": [
+          "SECURITY_BET_DEDUCTION_TIMING"
+        ],
+        "reason": "补充对赌游戏核心的下注本金扣除/冻结时机规则，防止经济漏洞。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档整体描述了Racing玩法的核心循环、干预逻辑与UI交互，但核心结算链路存在严重的公式冲突与变量定义歧义，且关键经济边界（如扣款时机、最大赔付兜底）缺失。主流程在概念上可理解，但直接用于开发会导致结算逻辑无法实现或产生资金风险。",
+    "document_quality_score": "C",
+    "score_reason": "核心赔率公式在需求与数值文档中存在根本性冲突，T变量定义矛盾，干预逻辑缺乏到速度公式的具体映射，且下注扣款时机缺失，导致结算链路无法落地，需补充对齐后再开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，且两套赔率公式逻辑互斥",
+        "owner": "数值策划",
+        "why_now": "变量定义歧义与公式冲突导致赔率无法正确编码，结算结果不可预期，直接阻塞核心结算链路开发。"
+      },
+      {
+        "severity": "高",
+        "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失",
+        "owner": "系统策划",
+        "why_now": "若假数据参与赔率计算，会导致真实用户的赔率被虚假繁荣稀释或扭曲，引发严重客诉与资损。"
+      },
+      {
+        "severity": "高",
+        "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失",
+        "owner": "系统策划",
+        "why_now": "若展示假赔率而结算用实际赔率，会导致用户看到的预期收益与实际到账不符，引发严重客诉。"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "DATA_ISOLATION",
+            "canonical_title": "假数据与真实数据隔离规则缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "假人数/假金额参与实时赔率计算会导致赔率失真，数据源隔离规则缺失",
+            "current_state": "需求文档说明下注人数和金额包含假数据（乘系数），但未明确实时赔率计算时，分子分母使用的是真实下注还是包含假数据的下注。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落22-23、段落28",
+            "risk": "若假数据参与赔率计算，会导致真实用户的赔率被虚假繁荣稀释或扭曲，引发严重客诉。",
+            "suggestion": "明确实时赔率计算必须且只能使用真实下注数据，假数据仅用于UI展示氛围。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "TUTORIAL_ISOLATION",
+            "canonical_title": "新手引导数据隔离未说明",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计",
+            "current_state": "需求文档蒙层引导中，赔率固定3.3，下注100返奖330，平台下注宝石变成1000100。未说明这是纯客户端演示还是走真实服务端。",
+            "evidence": "musee游戏Racing.docx / 3.2蒙层引导 段落15-20",
+            "risk": "若走真实服务端，假数据可能污染真实奖池、统计榜单和胜率排行。",
+            "suggestion": "明确新手引导为纯客户端单机演示，不注入真实奖池，不写入历史下注记录和统计榜单。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "INTERVENTION_MAPPING",
+            "canonical_title": "干预逻辑缺乏到速度公式的具体映射及触发边界不清",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，且干预触发边界存在歧义",
+            "current_state": "1. 需求文档提到通过调整“干扰指数”和“隐藏地形概率”来干预开奖，但未说明干扰指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。\n2. 干预触发条件“当3个选项都有至少[001]人下注时”与“不符合要求时”的边界不清，如只有2个选项有人下注时的降级开奖逻辑未定义。",
+            "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-45及图片13",
+            "risk": "干预逻辑是核心控盘手段，缺乏映射导致程序无法实现“侧重开某车”的逻辑；边界不清导致测试无法设计验收用例。",
+            "suggestion": "1. 补充干扰指数的作用机制（如明确是直接乘算在Luck上，还是作为地形概率的权重系数）。\n2. 明确选项下注人数不满足“3个选项都有人”或“最低人数”时的降级开奖逻辑。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "T_VARIABLE_CONFLICT",
+            "canonical_title": "T变量定义冲突且两套赔率公式逻辑互斥",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "开奖时间T与赔率公式中的T变量定义冲突，且两套赔率公式逻辑互斥，导致公式无法求值",
+            "current_state": "1. 赔率公式跨文档冲突：需求文档（段落28）定义为资金池比例（合计下注/本选项下注*系数），数值文档定义为权重膨胀模型（Odds_X = (T*(1-r)/W_X)*γ），两者逻辑完全不同。\n2. T变量物理意义冲突：需求文档图片13定义T为“完成时间（秒）”，但数值文档图片1中T作为赔率公式分子，若T为时间则耗时越长赔率越高，违背常理，T极大概率为Total Bet（总下注额）或Total Weight。\n3. 精度规则矛盾：需求文档要求“保留两位小数，向下取整”，表述存在逻辑冲突（保留两位小数后如何向下取整？）。",
+            "evidence": [
+              "musee游戏Racing.docx / 3.3下注部分 段落28",
+              "musee游戏Racing.docx / 3.4开奖逻辑 图片13",
+              "Racing数值文档.docx / 图片1",
+              "Racing数值文档.docx / 段落2-5"
+            ],
+            "risk": "两套公式无法兼容，T定义歧义导致结算链路无法编码，直接阻塞核心开发；精度规则不清可能导致平台抽水失效或用户赔付金额计算错误。",
+            "suggestion": "1. 统一赔率计算模型，废弃或修改其中一套，明确最终采用的公式及所有变量的物理意义。\n2. 重命名数值文档中的T（如改为TotalBet），与时间T区分命名。\n3. 明确取整规则（如“保留两位小数，赔付金额向下取整到整数”），并明确最低赔率1.02是否参与取整逻辑。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "PLACEHOLDER_MISSING",
+            "canonical_title": "干预触发条件占位符缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "奖池状态阈值与干预触发条件全为占位符，导致干预逻辑无法测试验收",
+            "current_state": "需求文档中奖池状态判断、干预触发条件、假人数系数等均使用[001]%、[002]等占位符，无具体数值。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落22、3.4开奖逻辑 段落39-49",
+            "risk": "虽不直接阻断主流程编译，但导致测试无法设计干预逻辑的验收用例，数值平衡无法验证。",
+            "suggestion": "补充所有占位符的具体数值或可配范围，并提供配置表示例。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "AUDIO_MIXING",
+            "canonical_title": "半屏音频混合规则缺失",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "半屏模式下直播间音频与游戏音效的混合规则缺失",
+            "current_state": "需求文档要求半屏在语聊房需保留直播间音频，同时游戏内音效默认开启。未说明两路音频的混合策略。",
+            "evidence": "musee游戏Racing.docx / 3.1首页顶栏板块 段落6、段落8",
+            "risk": "双音频同时播放可能导致声音嘈杂，影响用户体验，或触发系统音频焦点冲突。",
+            "suggestion": "补充音频混合规则，如“游戏音效播放时，直播间音频音量降低至20%”或“互斥播放”。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "MAX_PAYOUT_RISK",
+            "canonical_title": "奖池负数且单选项限注100万，无最大赔付兜底",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "奖池允许为负数且单选项限注100万，未定义单局最大赔付兜底机制，存在极端赔付风险",
+            "current_state": "1. 需求文档明确奖池可以接受负数（段落37），但未说明当奖池严重亏损时的兜底策略。\n2. 单选项限注100万宝石（段落32），若无赔率上限（MAX_MUL），100万*高赔率可能导致极端资损。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32、3.4开奖逻辑 段落37",
+            "risk": "极端情况下（如奖池负数且大R下注MAX并中奖），可能导致平台单次赔付超出承受范围，造成资金事故。",
+            "suggestion": "补充单局最大赔付上限（MAX_MUL）或奖池负数时的赔付折扣/兜底规则，确保极端情况下的资损可控。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "FAKE_ODDS_MAPPING",
+            "canonical_title": "真假赔率展示与结算映射缺失",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "“实际赔率”与“假赔率”的客户端展示与服务端结算映射缺失",
+            "current_state": "数值文档提到“分实际赔率和假赔率”，需求文档提到“实时赔率”和“实际赔率”，但未明确客户端UI展示的是哪个，服务端结算用的是哪个。",
+            "evidence": [
+              "musee游戏Racing.docx / 3.3下注部分 段落28",
+              "Racing数值文档.docx / 段落5"
+            ],
+            "risk": "若展示假赔率而结算用实际赔率，会导致用户看到的预期收益与实际到账不符，引发严重客诉。",
+            "suggestion": "明确客户端UI展示的赔率类型（如展示假赔率用于氛围），并强制规定服务端结算必须使用实际赔率，且需在规则说明中向用户披露。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "SECURITY_BET_DEDUCTION_TIMING",
+            "canonical_title": "下注本金扣除/冻结时机缺失",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "下注本金扣除/冻结时机缺失，存在经济漏洞风险",
+            "current_state": "文档描述了“下注余额，点击前往按钮唤起收银台”及“选中档位后点击下注内容一次下注”，但未明确下注成功后是立即扣除/冻结余额，还是开奖后统一结算。",
+            "evidence": "musee游戏Racing.docx / 3.3下注部分 段落25、段落32",
+            "risk": "对赌游戏若不在下注时冻结/扣除本金，会导致用户余额不足时仍能下注，或开奖时余额已被挪用，产生严重的经济漏洞与资损风险。",
+            "suggestion": "明确下注成功即冻结/扣除对应本金，开奖后仅发放净收益（或退回本金+收益），并在服务端做余额强校验。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "干扰指数如何具体影响速度公式 T = L / (V * K * Luck) 中Luck或V/K的映射规则。",
+      "实际赔率与假赔率在客户端UI的具体展示规则及切换时机。",
+      "奖池为负数且单选项限注100万时的平台兜底策略或单局最大赔付上限（MAX_MUL）。",
+      "所有干预逻辑触发条件中的占位符（如[001]%、[002]）的具体数值或可配范围。",
+      "下注成功后本金的扣除/冻结时机及开奖后的结算发放逻辑。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "真实下注与假下注的数据隔离验证，确保假数据不参与赔率计算。",
+        "奖池状态流转（待补充、正常、充裕）及对应干预逻辑的触发验证。",
+        "新手引导流程的单机演示隔离验证，确保不污染真实奖池与统计榜单。",
+        "下注成功后的余额冻结/扣除验证，确保余额不足时无法下注。"
+      ],
+      "异常操作": [
+        "断线重连后的下注与开奖恢复，确保状态与服务端一致。",
+        "极端下注（单选项100万MAX）时的赔率计算与赔付金额验证。",
+        "下注倒计时结束瞬间的并发下注请求处理（幂等性）。"
+      ],
+      "兼容性": [
+        "半屏/全屏切换时的UI布局与按钮功能验证。",
+        "半屏模式下直播间音频与游戏音效的混合播放体验。"
+      ],
+      "安全专项": [
+        "客户端篡改下注金额/选项的拦截与服务端权威校验。",
+        "奖池负数状态下的极端赔付测试，验证最大赔付兜底机制。",
+        "假赔率展示与实际赔率结算的防篡改与一致性校验。"
+      ],
+      "回归影响": [],
+      "性能与稳定性": [
+        "高并发下注时的赔率实时刷新性能与服务器压力测试。",
+        "开奖动画播放期间的内存与CPU占用监控。"
+      ],
+      "用户体验": [
+        "新手引导流程的流畅度与文案清晰度。",
+        "新手/预流失用户的特殊开奖体验与氛围反馈。"
+      ]
+    },
+    "quality_notes": [
+      "根据评审原则，占位符缺失（如奖池状态阈值）若不直接阻断主流程编译，已降级为低风险；新手引导与音频混合问题已降级为低/中风险。",
+      "核心赔率公式冲突与T变量定义冲突为致命阻塞项，必须优先解决。",
+      "已按协议要求将跨文档一致性问题回归至原维度展示，cross_document_issues 保持为空。",
+      "补充了下注本金扣除/冻结时机这一核心经济安全边界问题。"
+    ],
+    "image_analysis_gaps": [
+      "图片13（需求）和图片3（数值）中的T公式结构一致，但T的物理意义在两份文档中未明确统一，存在解析歧义。",
+      "图片1（数值）中的gamma公式（γ = 1 + α × (P_max / P_low)^β），参数α、β的具体配置范围与默认值缺失，无法验证极端资金比例下的膨胀效果。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的证据格式问题，补充了扣款时机与干预边界等关键遗漏，结构完整、证据充分、追踪清晰，可直接作为评审终稿交付业务方进行需求修订。"
+  },
+  "review_notes": [
+    "主模型在 T_VARIABLE_CONFLICT 中的证据引用存在嵌套数组和重复字符串，已在候选稿中整理为清晰的字符串列表，提升可读性。",
+    "主模型未识别出对赌游戏核心的‘下注本金扣除/冻结时机’规则，已在候选稿中作为高信号安全问题补充（SECURITY_BET_DEDUCTION_TIMING）。",
+    "干预逻辑的触发边界（如选项下注人数不满足条件时的降级处理）在主模型中未做深入挖掘，已将其吸收至 INTERVENTION_MAPPING 的现状描述中，避免问题碎片化。",
+    "MAX_PAYOUT_RISK 已结合‘单选项限注100万’的具体规则进行量化风险分析，使资损风险更具说服力。",
+    "protocol_profile=phase2"
+  ]
+}

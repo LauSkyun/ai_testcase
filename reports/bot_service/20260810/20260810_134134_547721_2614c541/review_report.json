@@ -1,0 +1,91 @@
+{
+  "report": {
+    "overall_evaluation": "未完成 AI 评审：extract-only 模式，仅完成文档解析，未执行 AI 评审。",
+    "document_quality_score": "未评定",
+    "score_reason": "extract-only 模式，仅完成文档解析，未执行 AI 评审。",
+    "top_blockers": [],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "extract-only 模式，仅完成文档解析，未执行 AI 评审。"
+    ],
+    "test_points": {
+      "功能验证": [],
+      "异常操作": [],
+      "兼容性": [],
+      "安全专项": [],
+      "回归影响": [],
+      "性能与稳定性": [],
+      "用户体验": []
+    },
+    "quality_notes": [
+      "extract-only 模式，仅完成文档解析，未执行 AI 评审。"
+    ],
+    "image_analysis_gaps": [],
+    "raw_response": ""
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 1,
+      "numeric": 1,
+      "mixed": 0,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 108,
+    "total_tables": 18,
+    "total_images": 2
+  },
+  "documents": [
+    {
+      "name": "LUCKY77 转盘投注游戏设计方案.md",
+      "kind": "requirement",
+      "paragraph_count": 76,
+      "table_count": 9,
+      "image_count": 2,
+      "errors": []
+    },
+    {
+      "name": "LUCKT 77 数值文档.md",
+      "kind": "numeric",
+      "paragraph_count": 32,
+      "table_count": 9,
+      "image_count": 0,
+      "errors": []
+    }
+  ]
+}

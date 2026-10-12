@@ -1,0 +1,310 @@
+{
+  "quality_assessment": {
+    "summary": "主模型首版报告整体结构完整，准确识别了开奖兜底0赔付缺陷、奖池正常状态概率冲突、核心赔率多处矛盾、机器人机制缺失等高信号核心问题，top_blockers 聚焦合理，C 评分与证据强度匹配。但存在两处可改进点：(1) CLARITY_01（核心赔率冲突）直接决定结算金额与展示一致性，主模型仅判中风险偏保守，应升至高风险；(2) LOGIC_02 将'概率数值冲突'与'断线重连缺失'两个不同根因揉在同一条 finding 中，违反单根因原则，需在现状描述中分点展开或拆分归属维度。",
+    "strengths": [],
+    "issues": [
+      "CLARITY_01 核心赔率冲突直接决定结算与展示，判中风险偏保守，应升至高风险并进入 top_blockers。",
+      "LOGIC_02 混合了'奖池正常概率冲突'与'断线重连缺失'两个不同根因，违反单根因原则。",
+      "未识别 spend/投入 术语冲突、开奖分析与游戏记录时间范围在正文与 UI 截图间的矛盾等中信号问题。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正 CLARITY_01 严重度、拆分 LOGIC_02 子症状并补充术语/时间范围口径冲突，结构完整、证据可追踪、lineage 清晰，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正 CLARITY_01 严重度、拆分 LOGIC_02 子症状并补充术语/时间范围口径冲突，结构完整、证据可追踪、lineage 清晰，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "CLARITY_01 由中风险升至高风险，理由：赔率直接决定结算金额与客户端展示，多处冲突将导致结算与展示不一致，属核心结算链路冲突。",
+    "LOGIC_02 保留原 issue_id，在 current_state 中分点展开两个子症状：(1) 奖池正常状态概率正文 60% vs 配置表 20% 冲突；(2) 20s+5s+5s 短轮次制下断线重连专属规则缺失。",
+    "新增 CLARITY_04（术语冲突）与 CLARITY_05（时间范围矛盾），均基于共享输入中的明确证据（段落19、表格3、表格6、图1/图3/图6/图13/图18）。",
+    "主模型 top_blockers 原为 3 项，候选稿补充 CLARITY_01 为第 4 项高风险 blocker，与 overall_evaluation 和 score_reason 保持一致。",
+    "断线重连规则缺失虽属通用能力缺口，但因短轮次制（20s+5s+5s）下状态机切换频繁，且文档未明确任何恢复规则，故保留在 LOGIC_02 中作为子症状，不单独升维。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_01",
+      "title": "正文强制术语'spend'与 UI/规则/配置中大量'投入/bet'并存，存在术语冲突",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "document",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 段落19（明确'spend'）；表格3（规则页、投入阶段、Repeat、Spend 混用）；表格6（peacock_or_tiger_bet_amounts / peacock_or_tiger_bet 事件名使用 bet）；图1/图3/图18 UI 文案 'placing a bet'",
+      "risk": "前后端字段命名、埋点事件名、多语言文案、规则页翻译口径不一致，开发易混用 spend/bet/invest 等字段，埋点与结算对账困难。",
+      "suggestion": "在术语表或全局约定中统一：客户端展示文案、埋点事件名、后台字段名、规则页英文翻译均使用同一词根（建议 spend），并在表格3、表格6、图1/图7/图18 中同步替换。"
+    },
+    {
+      "issue_id": "MISSED_02",
+      "title": "开奖分析与游戏记录的'时间范围'在正文与 UI 截图间存在矛盾",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "document",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（开奖分析：Last 1 hour / Today / Last 7 days；游戏记录：近3日）；图13（Statistics 弹窗列头为 Last 1 hour / Today / Last 30 day）；图6（Record 弹窗文案 'Show your betting records in the last 30 days'）",
+      "risk": "开发按正文实现 7 天/3 日，UI 验收按截图走 30 天，将导致返工与数据口径不一致；玩家看到的历史数据范围与规则说明不符，易引发客诉。",
+      "suggestion": "统一开奖分析时间维度（建议 Last 1 hour / Today / Last 7 days 或 Last 30 days 二选一），统一游戏记录时间范围（3 日或 30 天二选一），并同步更新表格3 文案与对应 UI 截图。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "adjustments": "严重度由 中 升至 高，理由：赔率直接决定结算金额与客户端展示，多处冲突将导致结算与展示不一致，属核心结算链路冲突，符合高风险判定。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "adjustments": "保留原 issue_id，在 current_state 中分点展开两个子症状：(1) 奖池正常状态概率正文 60% vs 配置表 20% 冲突；(2) 20s+5s+5s 短轮次制下断线重连专属规则缺失。risk 与 suggestion 同步分点描述。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "adjustments": "保持原状，沿用主模型骨架。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "正文强制 spend 与 UI/埋点/规则中 bet/投入 并存，属术语冲突，影响字段命名与多语言一致性，补入清晰度维度。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_05",
+        "source_missed_issue_ids": [
+          "MISSED_02"
+        ],
+        "reason": "开奖分析（7天 vs 30天）与游戏记录（3日 vs 30天）时间范围在正文与 UI 截图间矛盾，补入清晰度维度。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已修正 CLARITY_01 严重度、拆分 LOGIC_02 子症状并补充术语/时间范围口径冲突，结构完整、证据可追踪、lineage 清晰，可直接交付业务方阅读。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 2,
+    "admitted_count": 0,
+    "rejected_count": 2,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "MISSED_01",
+        "title": "正文强制术语'spend'与 UI/规则/配置中大量'投入/bet'并存，存在术语冲突",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,current_state,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "current_state",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      },
+      {
+        "candidate_issue_id": "MISSED_02",
+        "title": "开奖分析与游戏记录的'时间范围'在正文与 UI 截图间存在矛盾",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,current_state,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "current_state",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      }
+    ]
+  },
+  "candidate_block_reasons": [
+    "phase2_added_admission_rejected"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": false,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 2,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "quality_blockers": [
+      "phase2_added_admission_rejected"
+    ]
+  }
+}

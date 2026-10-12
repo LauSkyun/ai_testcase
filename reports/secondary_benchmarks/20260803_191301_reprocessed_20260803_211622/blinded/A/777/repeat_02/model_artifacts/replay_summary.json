@@ -1,0 +1,360 @@
+{
+  "status": "completed",
+  "game": "777",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 0.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_count_invalid:0",
+      "coverage_audit_key_order_invalid",
+      "missed_finding_not_in_confirmed_add:CLARITY_04",
+      "missed_finding_not_in_confirmed_add:LOGIC_05",
+      "missed_finding_not_in_confirmed_add:LOGIC_06"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 3,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 1,
+    "materially_changed_titles": [
+      "RESPIN累加算法存在加法与乘法的严重歧义"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:LOGIC_01",
+        "issue_id": "LOGIC_01",
+        "title": "RESPIN累加算法存在加法与乘法的严重歧义",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 3,
+      "admitted_count": 0,
+      "rejected_count": 3,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "CLARITY_04",
+          "title": "赔付表UI展示与配置表数值不匹配",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key,root_causes,fact_check",
+            "multiroot_or_root_count_invalid",
+            "fact_check_invalid",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key",
+            "root_causes",
+            "fact_check"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "疯狂777需求文档修改后.docx / 图片14、18、21；crazy777数值文档修改后.docx / 表格2",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "LOGIC_05",
+          "title": "RESPIN结束条件存在两种互相矛盾的描述",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key,root_causes,fact_check",
+            "multiroot_or_root_count_invalid",
+            "fact_check_invalid",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key",
+            "root_causes",
+            "fact_check"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突"
+            },
+            {
+              "issue_id": "LOGIC_04",
+              "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "crazy777数值文档修改后.docx / 段落46、61",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "LOGIC_06",
+          "title": "缺少RTP目标、MAX_MUL和最大赔付封顶 specification",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key,root_causes,fact_check",
+            "multiroot_or_root_count_invalid",
+            "fact_check_invalid",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key",
+            "root_causes",
+            "fact_check"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_04",
+              "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "crazy777数值文档修改后.docx / 段落55-56",
+          "coverage_audit_key": ""
+        }
+      ],
+      "coverage_ledger": {
+        "passed": false,
+        "completeness": 0.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {
+          "CLARITY_04": "",
+          "LOGIC_05": "",
+          "LOGIC_06": ""
+        },
+        "unmapped_missed_issue_ids": [
+          "CLARITY_04",
+          "LOGIC_05",
+          "LOGIC_06"
+        ],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "errors": [
+          "coverage_entry_count_invalid:0",
+          "coverage_audit_key_order_invalid",
+          "missed_finding_not_in_confirmed_add:CLARITY_04",
+          "missed_finding_not_in_confirmed_add:LOGIC_05",
+          "missed_finding_not_in_confirmed_add:LOGIC_06"
+        ],
+        "entries": []
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 3,
+    "admitted_count": 0,
+    "rejected_count": 3,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "title": "赔付表UI展示与配置表数值不匹配",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key,root_causes,fact_check",
+          "multiroot_or_root_count_invalid",
+          "fact_check_invalid",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key",
+          "root_causes",
+          "fact_check"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "疯狂777需求文档修改后.docx / 图片14、18、21；crazy777数值文档修改后.docx / 表格2",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "title": "RESPIN结束条件存在两种互相矛盾的描述",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key,root_causes,fact_check",
+          "multiroot_or_root_count_invalid",
+          "fact_check_invalid",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key",
+          "root_causes",
+          "fact_check"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突"
+          },
+          {
+            "issue_id": "LOGIC_04",
+            "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "crazy777数值文档修改后.docx / 段落46、61",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_06",
+        "title": "缺少RTP目标、MAX_MUL和最大赔付封顶 specification",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key,root_causes,fact_check",
+          "multiroot_or_root_count_invalid",
+          "fact_check_invalid",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key",
+          "root_causes",
+          "fact_check"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_04",
+            "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "crazy777数值文档修改后.docx / 段落55-56",
+        "coverage_audit_key": ""
+      }
+    ],
+    "coverage_ledger": {
+      "passed": false,
+      "completeness": 0.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "CLARITY_04": "",
+        "LOGIC_05": "",
+        "LOGIC_06": ""
+      },
+      "unmapped_missed_issue_ids": [
+        "CLARITY_04",
+        "LOGIC_05",
+        "LOGIC_06"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [
+        "coverage_entry_count_invalid:0",
+        "coverage_audit_key_order_invalid",
+        "missed_finding_not_in_confirmed_add:CLARITY_04",
+        "missed_finding_not_in_confirmed_add:LOGIC_05",
+        "missed_finding_not_in_confirmed_add:LOGIC_06"
+      ],
+      "entries": []
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

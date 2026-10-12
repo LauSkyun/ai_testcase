@@ -1,0 +1,113 @@
+{
+  "target_coverage_ledger": [
+    {
+      "target_issue_id": "CLARITY_01",
+      "target_order": 1,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.2.1 卷轴结构（段落96-111）、3.4.2 推展模式（段落157-160）；钱来了数值文档.docx / 五、基础游戏・核心机制（段落28-31）",
+      "rationale": "需求文档明确盘面为1行3列但推展描述为'向上或向下推展'，数值文档举例'上方或下方的一个乘数为X3'，两者均未说明1行盘面如何表现上下方向；需求文档3.2.1虽提到上下符号虚化显示，但未与推展机制关联，原finding证据充分。"
+    },
+    {
+      "target_issue_id": "CLARITY_02",
+      "target_order": 2,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.5.3 购买免费游戏（段落191-198）",
+      "rationale": "需求文档仅提及'购买免费游戏的价格系数'和'购买后免费旋转次数、倍数翻倍规则与常规免费旋转一致'，但未给出具体价格公式、初始免费次数、以及购买状态与自然触发的互斥规则，原finding准确识别了核心规则缺失。"
+    },
+    {
+      "target_issue_id": "LOGIC_01",
+      "target_order": 3,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了数值文档.docx / 表格5（RESPIN发生几率 0.1）、表格6（RESPIN发生几率 0.05）",
+      "rationale": "数值文档中确实存在两个同名'RESPIN发生几率'表格，分别配置0.1和0.05，且文档未明确区分两者适用场景（如必定命中/必定不命中），原finding准确识别了配置冲突。"
+    },
+    {
+      "target_issue_id": "LOGIC_03",
+      "target_order": 4,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了数值文档.docx / 三、基础游戏・乘数符号（段落13-15）、表格3（乘数符号出现权重与表演权重）",
+      "rationale": "数值文档描述'当表演权重随机到了2个免费类别时，随机将其中一个替换为100倍'，但第2列仅有1个乘数符号位置，'2个免费类别'指代不明（是3个免费档位中抽2个？还是连续抽2次？），原finding准确识别了逻辑表述不清。"
+    },
+    {
+      "target_issue_id": "LOGIC_02",
+      "target_order": 5,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "drop",
+      "evidence_checked": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12）、五、基础游戏・核心机制（段落30-40）",
+      "rationale": "数值文档明确说明'不会生成1,3均不为空的局面，仅在表演阶段出现13均不为空的respin场景'，并解释'服务器处理RESPIN机制为，当最终结果不命中时，RESPIN必定不命中，最终结果命中时，RESPIN必定命中'。文档已澄清RESPIN是表演阶段机制，底层数据与表演阶段分离，原finding所称'底层数据生成规则与RESPIN触发条件矛盾'属于对文档的误读，文档已自洽解释该机制。"
+    },
+    {
+      "target_issue_id": "CROSS_01",
+      "target_order": 6,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.3.1 符号分类总览（表格3）、3.3.2 中间轴符号（段落137-147）；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算（段落17-25）、表格2（金币赔率倍数）",
+      "rationale": "需求文档使用'下注金额*0.1/0.5/1/5/10'描述左右轴符号，数值文档使用'金币赔率倍数'且公式为'中奖金额=乘数符号×符号值（即基础投注×符号赔率）'，术语确实不一致，可能导致乘区理解歧义，原finding准确识别了口径分裂问题。"
+    },
+    {
+      "target_issue_id": "CROSS_02",
+      "target_order": 7,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.4.3 免费旋转模式（段落168）；钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控（段落45-51）、表格8、表格9",
+      "rationale": "数值文档规定'超过100倍→直接强制0倍'但未明确基数（单局/累计），需求文档规定'免费模式中总赢奖达到投注额的2000倍时自动结束'，两份文档均未明确倍数统计口径，可能导致风控逻辑与封顶逻辑互斥，原finding准确识别了口径冲突。"
+    },
+    {
+      "target_issue_id": "CROSS_03",
+      "target_order": 8,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.4.3 免费旋转模式（段落166）；钱来了数值文档.docx / 八、免费游戏（段落56-58）",
+      "rationale": "需求文档明确免费游戏可续杯，数值文档仅提及'概率独立配置'但未提供具体概率表或配置结构，原finding准确识别了续杯概率配置缺失。"
+    }
+  ],
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-LOGIC_02",
+      "target_issue_id": "LOGIC_02",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "底层数据生成规则与RESPIN触发条件矛盾：数值文档称'不会生成1,3均不为空的局面'，但又规定'当1,3列金币符号不同且有值时...必定发生RESPIN'，若底层不生成1,3均不为空，则RESPIN的触发条件在底层数据中无法成立。",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12）、五、基础游戏・核心机制（段落30-40）",
+      "counterevidence": "数值文档段落12明确说明'仅在表演阶段出现13均不为空的respin场景'；段落30说明'服务器处理机制为先得到最终结果盘面，再进行一次表演'；段落34说明'服务器处理RESPIN机制为，当最终结果不命中时，RESPIN必定不命中，最终结果命中时，RESPIN必定命中'；段落36说明'逻辑为先生成13列不同的两个金币符号，2列生成最终结果'。",
+      "rationale": "数值文档已明确区分底层数据生成与表演阶段：底层不生成1,3均不为空的局面，但表演阶段会构造该中间态用于RESPIN动画表现。服务器根据最终结果决定是否触发RESPIN表演，而非根据底层数据直接触发。原finding将表演阶段的触发条件误读为底层数据规则，文档本身已自洽解释该机制，不存在矛盾。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-LOGIC_02",
+      "challenge_id": "CH-LOGIC_02",
+      "target_issue_id": "LOGIC_02",
+      "correction_disposition": "drop",
+      "source_provenance": "numeric_config",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12）、五、基础游戏・核心机制（段落30-40）",
+      "rationale": "数值文档已明确说明RESPIN是表演阶段机制，底层数据与表演阶段分离，服务器根据最终结果决定是否触发RESPIN表演。原finding基于对文档的误读，将表演阶段规则误认为底层数据规则，文档本身已自洽解释该机制，不存在矛盾，应移除该finding。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "LOGIC_02原finding声称底层数据生成规则与RESPIN触发条件矛盾，但数值文档已明确区分底层数据与表演阶段，说明RESPIN是表演阶段机制，服务器根据最终结果决定是否触发RESPIN表演，文档本身已自洽解释该机制，不存在矛盾。",
+    "protocol_profile=phase3_v1_2; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df"
+  ]
+}

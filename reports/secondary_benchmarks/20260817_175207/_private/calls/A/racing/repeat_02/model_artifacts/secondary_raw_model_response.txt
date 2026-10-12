@@ -1,0 +1,46 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "MAX_PAYOUT_RISK",
+      "challenge_type": "overstated",
+      "challenged_claim": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；Racing数值文档.docx / 段落2-3；musee游戏Racing.docx / 3.4开奖逻辑 段落48-49",
+      "counterevidence": "段落32明确单选项下注上限100万；数值文档段落2-3明确最低赔率1.02；段落48-49明确奖池待补充时侧重开投注人数最少的选项。",
+      "rationale": "文档已具备单选项下注上限（100万）、最低赔率兜底（1.02）以及奖池不足时的控盘干预（避开大R选项）三重机制。在最低赔率1.02和上限100万的限制下，单局最大赔付在数学上被限制在102万以内，且可通过干预避免赔付给大R，因此“极端赔付风险”的定性属于过度推断，忽略了已有的数值与控盘兜底。",
+      "recommended_action": "demote",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-01",
+      "challenge_id": "CH-01",
+      "target_issue_id": "MAX_PAYOUT_RISK",
+      "correction_disposition": "downgrade",
+      "source_provenance": "mixed",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；Racing数值文档.docx / 段落2-3；musee游戏Racing.docx / 3.4开奖逻辑 段落48-49",
+      "rationale": "基于单选项下注上限、最低赔率限制及控盘干预逻辑，单局最大赔付在数学上可控，原“极端赔付风险”定性过高，需降级并重写风险描述以反映已有的兜底机制。",
+      "residual_issue": "虽存在下注上限与最低赔率兜底，但102万的绝对赔付上限是否满足平台资金风控要求，以及控盘干预在极端并发下的失效概率仍未明确，需数值与风控确认。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": false,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": true
+      },
+      "proposed_changes": {
+        "title": "奖池负数时的赔付上限与风控确认",
+        "current_state": "需求文档明确奖池可以接受负数，但单选项下注上限为100万（段落32），且数值文档设定最低赔率为1.02（段落2-3），同时奖池待补充时会侧重开投注人数最少的选项（段落48-49）。",
+        "evidence": "musee游戏Racing.docx / 3.3下注部分 段落32；Racing数值文档.docx / 段落2-3；musee游戏Racing.docx / 3.4开奖逻辑 段落48-49",
+        "risk": "在100万下注上限与1.02最低赔率的双重限制下，单局理论最大赔付被限制在102万以内，且可通过控盘避开大R。但若102万超出平台单次风控阈值，或控盘干预在极端情况下失效，仍存在资金风险。",
+        "suggestion": "需数值策划与风控确认102万的理论最大赔付是否在平台可承受范围内，并补充控盘干预失效时的最终兜底策略。",
+        "planner_role": "数值策划",
+        "confidence": "中"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "protocol_profile=phase3_v1_1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b"
+  ]
+}

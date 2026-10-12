@@ -1,0 +1,895 @@
+{
+  "status": "completed",
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 1,
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_protocol_gate_passed": false,
+    "phase2_protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_2",
+      "evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+      "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+      "echo_required": true,
+      "echo_matched": false,
+      "delta_only_required": true,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [],
+      "unexpected_fields_present": [],
+      "passed": false,
+      "errors": [
+        "phase2_protocol_echo_missing_or_mismatch"
+      ]
+    },
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "phase2_protocol_gate:phase2_protocol_echo_missing_or_mismatch"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 1,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_protocol_gate_invalid",
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 0,
+    "materially_changed_titles": [],
+    "materially_changed_examples": []
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 1,
+      "admitted_count": 0,
+      "rejected_count": 1,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "TERM_01",
+          "title": "免费游戏结束条件次数描述与触发档位矛盾",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "底层数据生成规则与RESPIN触发条件矛盾"
+            },
+            {
+              "issue_id": "CROSS_03",
+              "title": "免费游戏续杯概率配置缺失"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "钱来了需求文档.docx / [段落35]、[段落150]、[段落182]",
+          "coverage_audit_key": "trigger_state_termination",
+          "coverage_control_key": "termination_priority"
+        }
+      ],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": false,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [
+          "trigger_state_termination"
+        ],
+        "confirmed_control_keys": [
+          "termination_priority"
+        ],
+        "candidate_to_audit_key": {
+          "TERM_01": "trigger_state_termination"
+        },
+        "candidate_to_control_key": {
+          "TERM_01": "termination_priority"
+        },
+        "finding_audit_keys": {
+          "TERM_01": "trigger_state_termination"
+        },
+        "finding_control_keys": {
+          "TERM_01": "termination_priority"
+        },
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [],
+        "errors": [
+          "phase2_protocol_gate:phase2_protocol_echo_missing_or_mismatch"
+        ],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CROSS_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / [段落15]",
+              "钱来了数值文档.docx / [段落22]",
+              "钱来了需求文档.docx / [段落190]",
+              "钱来了需求文档.docx / 图片解析"
+            ],
+            "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落15]",
+                  "钱来了数值文档.docx / [段落22]"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落190]",
+                  "钱来了需求文档.docx / 图片解析"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "confirmed_add",
+            "primary_issue_ids": [
+              "LOGIC_02"
+            ],
+            "candidate_issue_ids": [
+              "TERM_01"
+            ],
+            "evidence_checked": [
+              "钱来了需求文档.docx / [段落154]",
+              "钱来了需求文档.docx / [段落158]",
+              "钱来了需求文档.docx / [段落35]",
+              "钱来了需求文档.docx / [段落122]",
+              "钱来了需求文档.docx / [段落150]",
+              "钱来了需求文档.docx / [段落182]"
+            ],
+            "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落154]",
+                  "钱来了需求文档.docx / [段落158]"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "TERM_01"
+                ],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落35]",
+                  "钱来了需求文档.docx / [段落122]",
+                  "钱来了需求文档.docx / [段落150]",
+                  "钱来了需求文档.docx / [段落182]"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "advice_only",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / [段落63]",
+              "钱来了需求文档.docx / [段落79]",
+              "钱来了需求文档.docx / [段落35]",
+              "钱来了需求文档.docx / [段落125]",
+              "钱来了需求文档.docx / 全文",
+              "钱来了数值文档.docx / 全文"
+            ],
+            "reason": "source_state=partial; counterevidence=有，引用通用模块1.3投注功能; primary_coverage=not_covered; final=advice_only；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=有，属于平台/中台统一承接的资金事务失败处理; primary_coverage=not_covered; final=advice_only",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落63]",
+                  "钱来了需求文档.docx / [段落79]"
+                ],
+                "reason": "source_state=partial; counterevidence=有，引用通用模块1.3投注功能; primary_coverage=not_covered; final=advice_only",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落35]",
+                  "钱来了需求文档.docx / [段落125]"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "source_state=missing; counterevidence=有，属于平台/中台统一承接的资金事务失败处理; primary_coverage=not_covered; final=advice_only",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "advice_only",
+            "primary_issue_ids": [
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了数值文档.docx / 表格8",
+              "钱来了数值文档.docx / 表格9",
+              "钱来了需求文档.docx / 全文",
+              "钱来了数值文档.docx / 全文",
+              "钱来了需求文档.docx / [段落168]",
+              "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+            ],
+            "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable；source_state=partial; counterevidence=有，已有2000倍及100倍强制0的相对边界; primary_coverage=not_covered; final=advice_only",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了数值文档.docx / 表格8",
+                  "钱来了数值文档.docx / 表格9"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / [段落168]",
+                  "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+                ],
+                "reason": "source_state=partial; counterevidence=有，已有2000倍及100倍强制0的相对边界; primary_coverage=not_covered; final=advice_only",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 图片解析"
+            ],
+            "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 图片解析"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 图片解析"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": false,
+        "protocol_gate": {
+          "required": true,
+          "protocol_revision": "phase2_v2_2",
+          "evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+          "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+          "echo_required": true,
+          "echo_matched": false,
+          "delta_only_required": true,
+          "delta_only_compliant": true,
+          "forbidden_fields_present": [],
+          "unexpected_fields_present": [],
+          "passed": false,
+          "errors": [
+            "phase2_protocol_echo_missing_or_mismatch"
+          ]
+        }
+      },
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_2",
+        "evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+        "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+        "echo_required": true,
+        "echo_matched": false,
+        "delta_only_required": true,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [],
+        "unexpected_fields_present": [],
+        "passed": false,
+        "errors": [
+          "phase2_protocol_echo_missing_or_mismatch"
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 1,
+    "admitted_count": 0,
+    "rejected_count": 1,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "TERM_01",
+        "title": "免费游戏结束条件次数描述与触发档位矛盾",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "底层数据生成规则与RESPIN触发条件矛盾"
+          },
+          {
+            "issue_id": "CROSS_03",
+            "title": "免费游戏续杯概率配置缺失"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了需求文档.docx / [段落35]、[段落150]、[段落182]",
+        "coverage_audit_key": "trigger_state_termination",
+        "coverage_control_key": "termination_priority"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [
+        "trigger_state_termination"
+      ],
+      "confirmed_control_keys": [
+        "termination_priority"
+      ],
+      "candidate_to_audit_key": {
+        "TERM_01": "trigger_state_termination"
+      },
+      "candidate_to_control_key": {
+        "TERM_01": "termination_priority"
+      },
+      "finding_audit_keys": {
+        "TERM_01": "trigger_state_termination"
+      },
+      "finding_control_keys": {
+        "TERM_01": "termination_priority"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [],
+      "errors": [
+        "phase2_protocol_gate:phase2_protocol_echo_missing_or_mismatch"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落15]",
+            "钱来了数值文档.docx / [段落22]",
+            "钱来了需求文档.docx / [段落190]",
+            "钱来了需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落15]",
+                "钱来了数值文档.docx / [段落22]"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落190]",
+                "钱来了需求文档.docx / 图片解析"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "confirmed_add",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [
+            "TERM_01"
+          ],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落154]",
+            "钱来了需求文档.docx / [段落158]",
+            "钱来了需求文档.docx / [段落35]",
+            "钱来了需求文档.docx / [段落122]",
+            "钱来了需求文档.docx / [段落150]",
+            "钱来了需求文档.docx / [段落182]"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落154]",
+                "钱来了需求文档.docx / [段落158]"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "TERM_01"
+              ],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落35]",
+                "钱来了需求文档.docx / [段落122]",
+                "钱来了需求文档.docx / [段落150]",
+                "钱来了需求文档.docx / [段落182]"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落63]",
+            "钱来了需求文档.docx / [段落79]",
+            "钱来了需求文档.docx / [段落35]",
+            "钱来了需求文档.docx / [段落125]",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "source_state=partial; counterevidence=有，引用通用模块1.3投注功能; primary_coverage=not_covered; final=advice_only；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=有，属于平台/中台统一承接的资金事务失败处理; primary_coverage=not_covered; final=advice_only",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落63]",
+                "钱来了需求文档.docx / [段落79]"
+              ],
+              "reason": "source_state=partial; counterevidence=有，引用通用模块1.3投注功能; primary_coverage=not_covered; final=advice_only",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落35]",
+                "钱来了需求文档.docx / [段落125]"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "source_state=missing; counterevidence=有，属于平台/中台统一承接的资金事务失败处理; primary_coverage=not_covered; final=advice_only",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 表格8",
+            "钱来了数值文档.docx / 表格9",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文",
+            "钱来了需求文档.docx / [段落168]",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable；source_state=partial; counterevidence=有，已有2000倍及100倍强制0的相对边界; primary_coverage=not_covered; final=advice_only",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了数值文档.docx / 表格8",
+                "钱来了数值文档.docx / 表格9"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / [段落168]",
+                "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+              ],
+              "reason": "source_state=partial; counterevidence=有，已有2000倍及100倍强制0的相对边界; primary_coverage=not_covered; final=advice_only",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 图片解析"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 图片解析"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": false,
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_2",
+        "evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+        "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+        "echo_required": true,
+        "echo_matched": false,
+        "delta_only_required": true,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [],
+        "unexpected_fields_present": [],
+        "passed": false,
+        "errors": [
+          "phase2_protocol_echo_missing_or_mismatch"
+        ]
+      }
+    },
+    "protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_2",
+      "evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+      "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+      "echo_required": true,
+      "echo_matched": false,
+      "delta_only_required": true,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [],
+      "unexpected_fields_present": [],
+      "passed": false,
+      "errors": [
+        "phase2_protocol_echo_missing_or_mismatch"
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+  "coverage_evidence_packet_echoed": false,
+  "phase2_delta_only_compliant": true,
+  "phase2_protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase2_v2_2",
+    "evidence_packet_id": "55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+    "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=55af33ae54dc75545182f751be06a538306a0e6147e22d51f0308a6489067077",
+    "echo_required": true,
+    "echo_matched": false,
+    "delta_only_required": true,
+    "delta_only_compliant": true,
+    "forbidden_fields_present": [],
+    "unexpected_fields_present": [],
+    "passed": false,
+    "errors": [
+      "phase2_protocol_echo_missing_or_mismatch"
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "target_coverage_ledger": [
+    {
+      "target_issue_id": "CLARITY_02",
+      "target_order": 1,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22",
+      "rationale": "正文3.7及3.8章节确实未提及机器人机制及人数统计口径，图22虽有流程图但缺乏文字说明，finding准确指出正文缺失。"
+    },
+    {
+      "target_issue_id": "CLARITY_03",
+      "target_order": 2,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格1、表格3",
+      "rationale": "表格1修改记录明确删除可见配置默认全开，表格3仍保留白名单可见说明，前后矛盾事实成立。"
+    },
+    {
+      "target_issue_id": "CLARITY_01",
+      "target_order": 3,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+      "rationale": "表格4配置2.9，图1/7/21多处出现3X或3倍，图5出现2.5，赔率冲突证据确凿。"
+    },
+    {
+      "target_issue_id": "LOGIC_02",
+      "target_order": 4,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.4、表格5",
+      "rationale": "段落66正文描述正常状态偏移概率为{60}%，表格5配置为20%，数值冲突成立。"
+    },
+    {
+      "target_issue_id": "LOGIC_01",
+      "target_order": 5,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+      "rationale": "段落73明确无人投入赔付为0，结合段落57/68/108兜底选择赔付最少，逻辑推导会导致开出0赔付选项，缺陷分析准确。"
+    },
+    {
+      "target_issue_id": "LOGIC_03",
+      "target_order": 6,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格3",
+      "rationale": "表格3规定同分按时间排序，但UI展示列无时间字段，匹配问题成立。"
+    },
+    {
+      "target_issue_id": "TEST_01",
+      "target_order": 7,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.2、3.6",
+      "rationale": "3.2和3.6仅描述正常流程，确实缺失断线重连与状态恢复规则。"
+    },
+    {
+      "target_issue_id": "TEST_02",
+      "target_order": 8,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格3",
+      "rationale": "表格3仅说明余额不足置灰，未定义部分下注的边界行为，缺失事实成立。"
+    },
+    {
+      "target_issue_id": "CROSS_01",
+      "target_order": 9,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.5",
+      "rationale": "3.5仅定义半屏/全屏入口，未说明弹窗层级与适配规则，缺失事实成立。"
+    },
+    {
+      "target_issue_id": "SEC_01",
+      "target_order": 10,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+      "rationale": "段落57/68/108使用“实时计算”但未定义快照时机，风险点成立。"
+    },
+    {
+      "target_issue_id": "UX_01",
+      "target_order": 11,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格3",
+      "rationale": "表格3规定5s自动收起且无主动关闭交互，体验打断风险成立。"
+    }
+  ],
+  "challenge_findings": [],
+  "correction_shadows": [],
+  "review_notes": [
+    "All 11 targets in the primary report are well-supported by the provided document evidence. No counterevidence or overstated claims were found to warrant a challenge.",
+    "protocol_profile=phase3_v1_2; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581"
+  ]
+}

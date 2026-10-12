@@ -1,0 +1,163 @@
+{
+  "status": "completed",
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 1,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": true,
+    "readiness_conflict_auto_resolved": true,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 7,
+    "materially_changed_titles": [
+      "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制说明",
+      "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+      "不抽水触发条件中最小选项投入金额为0时的边界行为未定义",
+      "玩家投入扣款时机未明确，影响结算流程与充值交互",
+      "预流失用户判定条件中‘有投入’口径模糊",
+      "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+      "开奖兜底中‘实时计算’的判定快照时机未定义"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CLARITY_02",
+        "issue_id": "CLARITY_02",
+        "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制说明",
+        "change_kinds": [
+          "title_changed",
+          "severity_changed",
+          "blocking_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CLARITY_01",
+        "issue_id": "CLARITY_01",
+        "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+        "change_kinds": [
+          "severity_changed",
+          "blocking_changed",
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_LOGIC_05",
+        "issue_id": "LOGIC_05",
+        "title": "不抽水触发条件中最小选项投入金额为0时的边界行为未定义",
+        "change_kinds": [
+          "dimension_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_CLARITY_04",
+        "issue_id": "CLARITY_04",
+        "title": "玩家投入扣款时机未明确，影响结算流程与充值交互",
+        "change_kinds": [
+          "severity_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS_LOGIC_04",
+        "issue_id": "LOGIC_04",
+        "title": "预流失用户判定条件中‘有投入’口径模糊",
+        "change_kinds": [
+          "dimension_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:SEC_01",
+        "issue_id": "SEC_01",
+        "title": "开奖兜底中‘实时计算’的判定快照时机未定义",
+        "change_kinds": [
+          "risk_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 3,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0
+  }
+}

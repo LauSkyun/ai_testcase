@@ -1,0 +1,262 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心结算冲突、UI配置矛盾及风控表现缺失等关键问题，但遗漏了Respin次数上限、乘数符号集、风控/推展倍数定义等中等风险边界，且部分问题跨维度重复，未做去重。",
+    "strengths": [
+      "成功定位跨文档的核心结算规则冲突",
+      "抓住了UI赔率表与数值配置严重不符的高危问题",
+      "对Respin累加歧义和触发条件矛盾的分析深入",
+      "提供了详尽的测试检查点"
+    ],
+    "issues": [
+      "遗漏了Respin次数上限/强制结束逻辑在需求文档的缺失",
+      "遗漏了Respin期间乘数符号集（含1倍）在需求文档的缺失",
+      "推展和风控中“倍数”定义模糊未指出",
+      "部分问题跨维度重复，未做去重",
+      "用户体验维度未发现明显问题，但实际存在未中奖时第4列高倍展示的误导风险"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充中等风险遗漏，结构完整，证据充分，可直接交付业务方"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充中等风险遗漏，结构完整，证据充分，可直接交付业务方"
+  },
+  "review_notes": [
+    "主模型报告的top_blockers与维度finding存在重复，候选报告已保留三个blocker，确保各维度问题独立列出。",
+    "补充了Respin次数上限、乘数符号集、倍数定义等遗漏，均标注为中等风险，不影响核心流程理解。",
+    "用户体验维度新增UX_01，覆盖未中奖时第4列视觉反馈问题。",
+    "所有保持的主模型问题均已修正证据、优化建议，并保持原issue_id不变。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_01",
+      "title": "需求文档缺失Respin次数上限与强制结束逻辑",
+      "primary_dimension": "清晰度与完整性",
+      "severity": "中",
+      "evidence": "crazy777数值文档修改后.docx / 段落47-48、表格6、段落61",
+      "description": "数值文档已明确Respin最多10次，且到达上限时最后一次重转必为空（0）以强制结束；需求文档全文无此限制，仅描述“直到特殊倍率抽重转结果为空”。",
+      "risk": "测试可能遗漏上限验证，客户端若未实现强制结束逻辑，可能导致Respin无限循环或表现异常。",
+      "suggestion": "在需求文档中补充Respin次数上限（默认10次）及到达上限后强制结束的规则，对齐数值文档。"
+    },
+    {
+      "issue_id": "MISS_02",
+      "title": "需求文档缺失Respin期间乘数符号集（含1倍）",
+      "primary_dimension": "清晰度与完整性",
+      "severity": "中",
+      "evidence": "crazy777数值文档修改后.docx / 表格7；疯狂777需求文档修改后.docx / 表格3",
+      "description": "数值文档定义Respin时乘数符号包含1,2,3,5,10，而需求文档特殊倍率轴图案仅列出2,3,5,10和respin，未包含1倍图标。",
+      "risk": "UI缺少1倍资源，Respin中若出现1倍将无法展示，影响玩家体验。",
+      "suggestion": "需求文档补充Respin专用乘数符号集，增加1倍图标，并协调美术制作。"
+    },
+    {
+      "issue_id": "MISS_03",
+      "title": "推展机制触发条件“倍数”定义模糊",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "中",
+      "evidence": "crazy777数值文档修改后.docx / 段落38",
+      "description": "数值文档称“最终结算结果倍数大于总下注N时”触发推展，但未明确该倍数是指基础赔率（不含乘数）还是总赔率（含乘数符号），举例中“5倍+X10”暗示可能为基础赔率5倍。",
+      "risk": "开发实现推展判定时误解倍数口径，导致推展触发错误，影响收益控制。",
+      "suggestion": "明确“倍数”指基础赔率倍数（不含乘数），并补充示例：如基础赔率5倍，乘数符号10倍，总赔率50倍，若N=5，则触发推展。"
+    },
+    {
+      "issue_id": "MISS_04",
+      "title": "风控“超过100倍”的倍数定义模糊",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "中",
+      "evidence": "crazy777数值文档修改后.docx / 段落55",
+      "description": "风控阈值“超过100倍→强制0倍”未明确是指基础赔率还是总赔率，若理解为总赔率，可能误杀含高乘数的正常中奖。",
+      "risk": "风控阈值设置错误，可能导致预期外的吞奖或漏控，影响资金安全。",
+      "suggestion": "明确100倍是指基础赔率倍数，并给出示例：如基础赔率77倍，乘数符号10倍，总赔率770倍，超过100倍基础赔率，触发风控。"
+    },
+    {
+      "issue_id": "MISS_05",
+      "title": "未中奖时第4列高倍/Respin的视觉反馈缺失",
+      "primary_dimension": "用户体验与游戏性",
+      "severity": "中",
+      "evidence": "疯狂777需求文档修改后.docx / 全文；crazy777数值文档修改后.docx / 段落20",
+      "description": "需求文档未说明当123列未中奖时，第4列若转出高倍乘数或Respin的视觉表现；数值文档仅说明表演权重在未中奖时仍可能出高倍。",
+      "risk": "玩家看到高倍或Respin图标但无奖金，产生“我转到了为什么没奖励”的误解，引发客诉。",
+      "suggestion": "明确未中奖时第4列的视觉表现：建议采用灰暗色调或普通停止动效，不播放中奖专属的鎏金/放大缩小动画，避免误导。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_06",
+        "primary_issue_ids": [
+          "LOGIC_06"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "补充主模型遗漏的Respin次数上限缺失问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY_05",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "补充主模型遗漏的Respin乘数符号集缺失问题"
+      },
+      {
+        "candidate_issue_id": "LOGIC_07",
+        "source_missed_issue_ids": [
+          "MISS_03"
+        ],
+        "reason": "补充主模型遗漏的推展倍数定义模糊问题"
+      },
+      {
+        "candidate_issue_id": "LOGIC_08",
+        "source_missed_issue_ids": [
+          "MISS_04"
+        ],
+        "reason": "补充主模型遗漏的风控倍数定义模糊问题"
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "source_missed_issue_ids": [
+          "MISS_05"
+        ],
+        "reason": "补充主模型遗漏的未中奖时第4列视觉反馈问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充中等风险遗漏，结构完整，证据充分，可直接交付业务方",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

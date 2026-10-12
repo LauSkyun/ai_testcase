@@ -1,0 +1,49 @@
+{
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 2,
+  "status": "completed",
+  "output_dir": "blinded/A/tiger/repeat_02",
+  "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+  "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+  "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+  "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+  "secondary_message_hash": "1722ed508c9fbee496d95e482050334c5ebe07684441b1ddbb2823b657af42d8",
+  "temperature": 0,
+  "attempt_count": 0,
+  "reprocessed_saved_raw": true,
+  "secondary_response_hash": "3da3c9c44c39b302103722b554570a99ee308e60d638aec794842509a9c2ec97",
+  "selected_report_owner": "pipeline",
+  "candidate_gate_passed": false,
+  "candidate_recommendation_status": "fallback_pipeline",
+  "traceability_status": "partial",
+  "claimed_added_count": 3,
+  "materialized_added_count": 3,
+  "added_root_keys": [
+    "cluster:display_real_data_isolation",
+    "cluster:formula_odds_conflict",
+    "issue:COMP_RECONNECT_REENTER_MISSING"
+  ],
+  "high_added_root_keys": [
+    "cluster:formula_odds_conflict"
+  ],
+  "added_severity_by_root": {
+    "cluster:formula_odds_conflict": "high",
+    "issue:COMP_RECONNECT_REENTER_MISSING": "medium",
+    "cluster:display_real_data_isolation": "medium"
+  },
+  "selected_top_blocker_keys": [
+    "issue:COMP_RECONNECT_REENTER_MISSING",
+    "title:开奖兜底逻辑存在导致开出无人投注选项（0赔付）的机制缺陷",
+    "title:开奖阈值强依赖投入人数但正文缺失机器人假人投放机制"
+  ],
+  "primary_top_blocker_retention": 1.0,
+  "field_completeness": 0.8571,
+  "multiroot_finding_count": 0,
+  "unsupported_severity_change_count": 0,
+  "unsupported_blocking_change_count": 0,
+  "lineage_mismatch": true,
+  "materialization_mismatch": true,
+  "major_judgment_drift": false,
+  "selected_finding_count": 13
+}

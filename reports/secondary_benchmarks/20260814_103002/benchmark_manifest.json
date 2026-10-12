@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "source": "D:\\project\\script\\ai_agents\\RAD\\reports\\20260731_105856",
+  "games": [
+    "777",
+    "racing",
+    "tiger",
+    "小鸡",
+    "钱来了"
+  ],
+  "variants": [
+    "A",
+    "B"
+  ],
+  "comparison_axis": "protocol_profile",
+  "protocol_profiles": [
+    "baseline",
+    "phase2"
+  ],
+  "provider_config_hashes": [
+    "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52"
+  ],
+  "prompt_hashes_by_variant": {
+    "A": [
+      "345aefc6671f2b007b120722bd72020bf0b9085257c9b21bbf21de6d22bc94e5",
+      "4af6f5c98147ca42adac879b06e2fd885c9a78e9c7cac8f6be5de808ff12f2ba",
+      "69a5abbf6980eefcd50a15934c70c3003dbf64967bb567ac734704df0449988d",
+      "79de4f5965ad2704ca34d36cb2cbecac498bf813a23e54e04b243ee09815a4f1",
+      "c0727c1ca6aca88f82bfcbefabd7fa27d44e5b3374f17c713b80df6355c11ef2"
+    ],
+    "B": [
+      "3c61137fec53203d9a33f583756632e1dc836e07cda800c89c8016bb957477b0",
+      "6258b4a3fbc3504df3e5f6204d1e8cb3633995e7857571ebf94e5c6e30c0f460",
+      "87967804693e55ea63a7c0aa85182ae4f87c423273e670bfe0123c931699fd6d",
+      "ad171947f8f7205e81bcddce4a48b8f9f021e1248fd66af7eb17275a1ee0105e",
+      "e5e582635b62b620a647a4952a8b932b0a3903aab1d72d9e375a722ea784df77"
+    ]
+  },
+  "repeats": 2,
+  "expected_secondary_calls": 20,
+  "primary_calls": 0,
+  "vision_calls": 0,
+  "summary": "secondary_benchmark_summary.json",
+  "annotation_template": "human_annotation_template.json",
+  "provider_mapping": "_private/provider_mapping.json"
+}

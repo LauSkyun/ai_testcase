@@ -1,0 +1,325 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心机制的底层逻辑矛盾、数值配置冲突和术语不一致问题，证据引用准确，问题定位清晰。但在购买功能配置、表演权重与出现权重的关系、以及重转与推展互斥逻辑的必要性等方面存在遗漏，需补充后方可完整指导开发。",
+    "strengths": [
+      "准确识别了RESPIN触发条件与底层数据生成规则的矛盾",
+      "发现了两个RESPIN概率表的配置冲突",
+      "指出了结算公式术语不一致的风险",
+      "问题结构清晰，证据引用准确"
+    ],
+    "issues": [
+      "遗漏了购买免费游戏功能的核心配置缺失",
+      "未识别表演权重与出现权重的使用场景关系不清",
+      "未指出重转与推展互斥逻辑的必要性疑问"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充高信号遗漏问题，结构完整，证据充分，可直接输出给业务方阅读"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充高信号遗漏问题，结构完整，证据充分，可直接输出给业务方阅读"
+  },
+  "review_notes": [
+    "主模型报告整体质量良好，准确识别了核心问题，但在购买功能配置、权重关系、互斥逻辑等方面存在遗漏。",
+    "建议数值策划优先澄清RESPIN触发条件与底层数据的关系，明确是表演机制还是底层机制。",
+    "建议系统策划统一结算公式术语，避免资金结算事故。",
+    "建议补充购买免费游戏功能的核心配置，包括价格公式、初始次数、互斥规则。",
+    "protocol_profile=phase2",
+    "phase2 准入已从 candidate 移除 rejected addition：CLARITY_02",
+    "phase2 准入已从 candidate 移除 rejected addition：LOGIC_04",
+    "phase2 准入已从 candidate 移除 rejected addition：LOGIC_05"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_02",
+        "primary_issue_ids": [
+          "CROSS_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_03",
+        "primary_issue_ids": [
+          "CROSS_03"
+        ]
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充高信号遗漏问题，结构完整，证据充分，可直接输出给业务方阅读",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 3,
+    "admitted_count": 0,
+    "rejected_count": 3,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "title": "购买免费游戏功能缺少核心配置",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "primary_duplicate_declared_nearest",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CROSS_03",
+            "title": "免费游戏续杯概率配置缺失"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了需求文档.docx / 3.5.3 购买免费游戏",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "title": "表演权重与出现权重的使用场景关系不清",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "primary_duplicate_declared_nearest",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_03",
+            "title": "乘数符号ID=0的表演权重替换逻辑表述不清"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了数值文档.docx / 三、基础游戏・乘数符号、表格3",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "title": "重转与推展互斥逻辑的必要性疑问",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "evidence_position_unlocatable",
+          "fact_check_inconclusive_compatible_interpretation",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制",
+        "coverage_audit_key": ""
+      }
+    ],
+    "coverage_ledger": {
+      "passed": false,
+      "completeness": 0.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "CLARITY_02": "",
+        "LOGIC_04": "",
+        "LOGIC_05": ""
+      },
+      "unmapped_missed_issue_ids": [
+        "CLARITY_02",
+        "LOGIC_04",
+        "LOGIC_05"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [
+        "coverage_entry_count_invalid:0",
+        "coverage_audit_key_order_invalid",
+        "missed_finding_not_in_confirmed_add:CLARITY_02",
+        "missed_finding_not_in_confirmed_add:LOGIC_04",
+        "missed_finding_not_in_confirmed_add:LOGIC_05"
+      ],
+      "entries": []
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 0.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_count_invalid:0",
+      "coverage_audit_key_order_invalid",
+      "missed_finding_not_in_confirmed_add:CLARITY_02",
+      "missed_finding_not_in_confirmed_add:LOGIC_04",
+      "missed_finding_not_in_confirmed_add:LOGIC_05"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 3,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "phase2_coverage_ledger_invalid"
+    ]
+  }
+}

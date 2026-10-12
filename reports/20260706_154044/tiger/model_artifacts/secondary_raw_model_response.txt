@@ -1,0 +1,506 @@
+model: deepseek-v4-pro
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "主模型报告基本捕捉了核心玩法参数冲突、兜底逻辑缺陷和最大赔付缺失等关键问题，结构清晰，但遗漏了多个重要数值冲突（如亏损大R累计亏损阈值、开奖分析和游戏记录范围冲突、档位配置冲突）以及新手引导数据隔离问题，且部分问题描述不够精确。",
+    "strengths": [
+      "识别了核心参数冲突和兜底逻辑致命缺陷",
+      "结构合理，维度完整",
+      "提供了测试点建议"
+    ],
+    "issues": [
+      "遗漏了亏损大R累计亏损阈值50000000 vs 5000000的严重冲突",
+      "未发现开奖分析胜率范围、游戏记录范围、档位配置等多处UI与文档不一致",
+      "未覆盖新手引导局是否真实扣款及计入统计的问题",
+      "部分问题描述过于泛化，缺少具体证据定位"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充关键遗漏问题，证据链完整，可直接交付业务方评审，但仍有部分冲突待产品确认，建议后续跟进。"
+  },
+  "missed_findings": [
+    {
+      "issue_id": "WHALE_LOSS_THRESHOLD",
+      "title": "亏损大R累计亏损阈值在正文与配置表中存在数量级冲突（50000000 vs 5000000）",
+      "description": "正文段落85定义亏损大R需满足“过去7日（不含今日）游戏累计亏损 ≥ {50000000}”，但表格5配置项“亏损大R-过去{x}日，累计总亏损 ≥ {y}”初始值为5000000，两者相差10倍。",
+      "severity": "高",
+      "evidence": "tiger需求文档.docx / 段落85、表格5",
+      "impact": "若按正文实现，亏损大R判定门槛极高，人群保护策略几乎不触发；若按配置表实现，门槛过低，成本失控。直接导致开发实现与运营预期完全背离。",
+      "suggestion": "统一累计亏损阈值，明确最终数值（50000000或5000000），并同步修改正文与配置表。"
+    },
+    {
+      "issue_id": "STATS_RANGE_CONFLICT",
+      "title": "开奖分析胜率计算范围在文档与UI截图中不一致（7天 vs 30天）",
+      "description": "表格3说明开奖分析胜率计算范围为“最近1小时、今日、最近7天”，而图片13界面显示为“Last 1 hour, Today, Last 30 day”。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（开奖分析）、图片13",
+      "impact": "前端开发与后端数据统计口径不一致，导致交付后界面与需求不符，引发返工。",
+      "suggestion": "明确最终胜率统计范围，统一为7天或30天，并更新所有相关描述与UI设计。"
+    },
+    {
+      "issue_id": "RECORD_RANGE_CONFLICT",
+      "title": "游戏记录展示范围在文档与UI截图中不一致（3天 vs 30天）",
+      "description": "表格3说明个人记录最多展示近3日（包括今日），但图片9界面显示“Show your betting records in the last 30 days”。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（游戏记录）、图片9",
+      "impact": "开发按文档实现3天，但UI设计为30天，导致数据拉取与展示逻辑错误，需重新适配。",
+      "suggestion": "统一游戏记录展示范围，明确为3天或30天，并同步更新文档与UI设计。"
+    },
+    {
+      "issue_id": "BET_DENOM_CONFLICT",
+      "title": "投入档位数值在文档说明、配置表与UI原型中存在多处不一致",
+      "description": "表格3档位模块说明初始值为10/100/1k/10k，表格5配置初始值为10/100/1000/5000，而UI截图（图片1/18）显示按钮为100/1000/10000/100000。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（档位模块）、表格5、图片1、图片18",
+      "impact": "前后端开发与UI设计参考不同源，导致投入金额单位、档位数量与数值全线混乱，严重影响接入。",
+      "suggestion": "确定最终档位数值与数量，更新所有文档、配置表及UI设计稿，确保唯一源头。"
+    },
+    {
+      "issue_id": "TUTORIAL_ISOLATION",
+      "title": "新手指引局是否真实扣款、是否计入统计数据未定义",
+      "description": "段落12及图片21描述了5步新手引导，但未说明引导过程中的投入是否消耗真实货币，以及引导局的结果是否计入游戏记录、排行榜、开奖分析等统计。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 段落12、图片21",
+      "impact": "若引导局真实扣款且计入统计，会影响新用户的首局体验与数据准确性；若不计入，则需开发特殊处理，目前规则缺失将导致实现分歧。",
+      "suggestion": "明确引导局为模拟局（不扣款、不计入任何统计），或正常局但额外标记，补充相应的规则说明。"
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "PARAM_CONFLICT",
+        "primary_issue_ids": ["PARAM_CONFLICT"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "REPEAT_DEGRADE",
+        "primary_issue_ids": ["REPEAT_DEGRADE"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FATAL_FALLBACK",
+        "primary_issue_ids": ["FATAL_FALLBACK"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROWD_RATIO",
+        "primary_issue_ids": ["CROWD_RATIO"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RANKING_TIE",
+        "primary_issue_ids": ["RANKING_TIE"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "BET_IDEMPOTENT",
+        "primary_issue_ids": ["BET_IDEMPOTENT"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "HOT_UPDATE",
+        "primary_issue_ids": ["HOT_UPDATE"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT",
+        "primary_issue_ids": ["MAX_PAYOUT"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UI_TYPO",
+        "primary_issue_ids": ["UI_TYPO"],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "WHALE_LOSS_THRESHOLD",
+        "source_missed_issue_ids": ["WHALE_LOSS_THRESHOLD"],
+        "reason": "主模型遗漏了正文与配置表之间亏损大R累计亏损阈值的数量级冲突，直接影响成本控制与策略触发。"
+      },
+      {
+        "candidate_issue_id": "STATS_RANGE_CONFLICT",
+        "source_missed_issue_ids": ["STATS_RANGE_CONFLICT"],
+        "reason": "主模型未发现开奖分析胜率时间范围在文档与UI截图中的不一致，导致数据统计口径分裂。"
+      },
+      {
+        "candidate_issue_id": "RECORD_RANGE_CONFLICT",
+        "source_missed_issue_ids": ["RECORD_RANGE_CONFLICT"],
+        "reason": "主模型未发现游戏记录展示范围在文档与UI截图中的不一致，影响数据拉取逻辑。"
+      },
+      {
+        "candidate_issue_id": "BET_DENOM_CONFLICT",
+        "source_missed_issue_ids": ["BET_DENOM_CONFLICT"],
+        "reason": "主模型未覆盖投入档位数值在文档、配置表、UI原型间的多处冲突，会导致开发实现混乱。"
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "source_missed_issue_ids": ["TUTORIAL_ISOLATION"],
+        "reason": "主模型未涉及新手引导局的数据隔离规则，遗漏了引导局是否扣款及计入统计的关键问题。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档描述了竞猜游戏的主流程、奖池机制与人群保护策略，核心玩法循环基本可理解。但存在多处核心参数（选项名、赔率、倒计时、亏损阈值、统计范围、档位）在文档、配置与UI间的直接冲突，且开奖兜底逻辑存在致命缺陷，关键数值冲突将导致成本控制偏差，异常流程与安全边界缺失较多，需大幅修订后方可进入开发。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但核心玩法参数存在多处直接冲突，开奖兜底逻辑存在必输死局风险，且关键数值阈值冲突、最大赔付上限、投入扣款幂等性等关键边界缺失，需补充澄清后再完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "核心玩法参数（选项名、赔率、倒计时、档位、统计范围）在文档、UI与配置表中存在多处直接冲突",
+        "owner": "系统策划",
+        "why_now": "开发按文档配置Tiger和2.9倍，但UI展示Lion和3X，会导致结算金额与玩家预期不符，引发严重客诉；倒计时冲突会导致前后端状态机不同步；档位、统计范围冲突将导致全线返工。",
+        "finding_source": "candidate",
+        "finding_source_label": "PARAM_CONFLICT, BET_DENOM_CONFLICT, STATS_RANGE_CONFLICT, RECORD_RANGE_CONFLICT",
+        "source_model": "candidate"
+      },
+      {
+        "severity": "高",
+        "title": "开奖兜底逻辑与“无人投入赔付为0”规则存在致命冲突，可能导致极端情况下的必输体验",
+        "owner": "数值策划",
+        "why_now": "在奖池不足（或回收状态）时，只要有一个选项无人投入（赔付为0），兜底逻辑将100%开出该0赔付选项。导致玩家只要下注必输，完全违背游戏公平性预期，且与“回收状态”开赔付最小的逻辑产生死循环冲突。",
+        "finding_source": "candidate",
+        "finding_source_label": "FATAL_FALLBACK",
+        "source_model": "primary"
+      },
+      {
+        "severity": "高",
+        "title": "亏损大R累计亏损阈值在正文与配置表中存在数量级冲突（50000000 vs 5000000）",
+        "owner": "数值策划",
+        "why_now": "阈值相差10倍，将导致人群保护策略完全失效或成本失控，直接影响运营成本与用户留存。",
+        "finding_source": "candidate",
+        "finding_source_label": "WHALE_LOSS_THRESHOLD",
+        "source_model": "candidate"
+      },
+      {
+        "severity": "高",
+        "title": "全局奖池允许透支但缺乏单局/单用户最大赔付上限（MAX_PAYOUT）的安全边界定义",
+        "owner": "数值策划",
+        "why_now": "若遇极端概率或恶意刷奖池，单局赔付可能远超奖池承受力，导致奖池深度负数，且无熔断机制，引发严重资损。",
+        "finding_source": "candidate",
+        "finding_source_label": "MAX_PAYOUT",
+        "source_model": "primary"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "包含参数冲突、交互规则缺失、范围冲突、档位冲突及引导隔离问题，需要统一澄清。",
+        "findings": [
+          {
+            "issue_id": "PARAM_CONFLICT",
+            "canonical_title": "核心参数多源冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "image",
+            "severity": "高",
+            "title": "核心玩法参数（选项名、赔率、倒计时）在文档、UI与配置表中存在多处直接冲突",
+            "current_state": "1. 选项名称：正文与表格4写Tiger，但UI截图(图片1/3/13/18)及规则页(图片7/表格3)写Lion。2. 赔率：表格4写2.9，但UI(图片1/3/18)下方文案写(3X)，规则页(图片7)写3倍。3. 倒计时：流程图(图片6)与正文写20s，但UI顶部提示栏(图片1/3/16)写(15)。",
+            "evidence": "tiger需求文档.docx / 段落18、表格4、表格3、图片1、图片3、图片6、图片7、图片13、图片18",
+            "risk": "开发按文档配置Tiger和2.9倍，但UI展示Lion和3X，会导致结算金额与玩家预期不符，引发严重客诉；倒计时冲突会导致前后端状态机不同步。",
+            "suggestion": "统一全局参数：明确第三选项名称（Tiger或Lion）；明确实际结算赔率（2.9或3.0）并同步修改所有UI文案；明确投入阶段倒计时（20s或15s）并统一流程图与UI。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "BET_DENOM_CONFLICT",
+            "canonical_title": "档位数值多源冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "table",
+            "severity": "中",
+            "title": "投入档位数值在文档说明、配置表与UI原型中存在多处不一致",
+            "current_state": "表格3档位模块说明初始值为10/100/1k/10k，表格5配置初始值为10/100/1000/5000，而UI截图（图片1/18）显示按钮为100/1000/10000/100000。",
+            "evidence": "tiger需求文档.docx / 表格3（档位模块）、表格5、图片1、图片18",
+            "risk": "前后端开发与UI设计参考不同源，导致投入金额单位、档位数量与数值全线混乱，严重影响接入。",
+            "suggestion": "确定最终档位数值与数量，更新所有文档、配置表及UI设计稿，确保唯一源头。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "STATS_RANGE_CONFLICT",
+            "canonical_title": "开奖分析范围冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "image",
+            "severity": "中",
+            "title": "开奖分析胜率计算范围在文档与UI截图中不一致（7天 vs 30天）",
+            "current_state": "表格3说明开奖分析胜率计算范围为“最近1小时、今日、最近7天”，而图片13界面显示为“Last 1 hour, Today, Last 30 day”。",
+            "evidence": "tiger需求文档.docx / 表格3（开奖分析）、图片13",
+            "risk": "前端开发与后端数据统计口径不一致，导致交付后界面与需求不符，引发返工。",
+            "suggestion": "明确最终胜率统计范围，统一为7天或30天，并更新所有相关描述与UI设计。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "RECORD_RANGE_CONFLICT",
+            "canonical_title": "游戏记录范围冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "image",
+            "severity": "中",
+            "title": "游戏记录展示范围在文档与UI截图中不一致（3天 vs 30天）",
+            "current_state": "表格3说明个人记录最多展示近3日（包括今日），但图片9界面显示“Show your betting records in the last 30 days”。",
+            "evidence": "tiger需求文档.docx / 表格3（游戏记录）、图片9",
+            "risk": "开发按文档实现3天，但UI设计为30天，导致数据拉取与展示逻辑错误，需重新适配。",
+            "suggestion": "统一游戏记录展示范围，明确为3天或30天，并同步更新文档与UI设计。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "REPEAT_DEGRADE",
+            "canonical_title": "Repeat降级规则缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "table",
+            "severity": "中",
+            "title": "Repeat按钮在余额不足以完全复制上一局投入时的降级交互规则缺失",
+            "current_state": "表格3说明Repeat记住上一局投入信息，余额足够则高亮，不足则置灰。但未说明如果上一局投了3个选项各1000，本局余额只有2000时，是整体置灰不可点，还是允许只投部分选项。",
+            "evidence": "tiger需求文档.docx / 表格3（档位模块-Repeat-交互&逻辑）",
+            "risk": "开发实现时可能直接置灰，导致玩家在有部分余额时无法使用Repeat，体验不佳；或允许部分投入，但缺乏规则支撑。",
+            "suggestion": "补充明确：当余额<上一局总投入时，Repeat按钮是直接置灰，还是允许按原比例/原选项顺序投入直到余额耗尽。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "TUTORIAL_ISOLATION",
+            "canonical_title": "新手引导数据隔离缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "新手指引局是否真实扣款、是否计入统计数据未定义",
+            "current_state": "段落12及图片21描述了5步新手引导，但未说明引导过程中的投入是否消耗真实货币，以及引导局的结果是否计入游戏记录、排行榜、开奖分析等统计。",
+            "evidence": "tiger需求文档.docx / 段落12、图片21",
+            "risk": "若引导局真实扣款且计入统计，会影响新用户的首局体验与数据准确性；若不计入，则需开发特殊处理，目前规则缺失将导致实现分歧。",
+            "suggestion": "明确引导局为模拟局（不扣款、不计入任何统计），或正常局但额外标记，补充相应的规则说明。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "包含兜底冲突、人群占比模糊、亏损阈值冲突，均需重新评估。",
+        "findings": [
+          {
+            "issue_id": "FATAL_FALLBACK",
+            "canonical_title": "兜底逻辑与0赔付规则冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "开奖兜底逻辑与“无人投入赔付为0”规则存在致命冲突，可能导致极端情况下的必输体验",
+            "current_state": "段落57/68/108规定，当奖池不足以赔付热门选项时，兜底逻辑为“选择赔付最少的开”。而段落73规定“若某选项无人投入，其赔付金额视为0”。；段落30说明系统初始增加300w奖池。段落43公式：收益率 = (累计收入-累计支出)/累计收入。未明确“累计收入”是否包含这300w初始资金。",
+            "evidence": "tiger需求文档.docx / 段落57、段落68、段落73、段落108；tiger需求文档.docx / 段落30、段落43、段落44",
+            "risk": "在奖池不足（或回收状态）时，只要有一个选项无人投入（赔付为0），兜底逻辑将100%开出该0赔付选项。导致玩家只要下注必输，完全违背游戏公平性预期，且与“回收状态”开赔付最小的逻辑产生死循环冲突。；若不含初始资金，游戏刚开服无玩家投入时，分母为0，按段落44进入“回收”状态，导致开局即回收，体验极差；若包含，则初始收益率计算逻辑需重新定义。",
+            "suggestion": "修改兜底逻辑：在“选择赔付最少”时，必须排除赔付为0（无人投入）的选项；或修改为“在有人投入的选项中，选择赔付最少的”。；明确“累计收入”的定义。建议将系统初始注入的300w计入“累计收入”，或增加“游戏开服天数/总投入人数”作为前置保护条件，避免空池状态误判。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "WHALE_LOSS_THRESHOLD",
+            "canonical_title": "亏损阈值数量级冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "亏损大R累计亏损阈值在正文与配置表中存在数量级冲突（50000000 vs 5000000）",
+            "current_state": "正文段落85定义亏损大R需满足“过去7日（不含今日）游戏累计亏损 ≥ {50000000}”，但表格5配置项“亏损大R-过去{x}日，累计总亏损 ≥ {y}”初始值为5000000，两者相差10倍。",
+            "evidence": "tiger需求文档.docx / 段落85、表格5",
+            "risk": "若按正文实现，亏损大R判定门槛极高，人群保护策略几乎不触发；若按配置表实现，门槛过低，成本失控。直接导致开发实现与运营预期完全背离。",
+            "suggestion": "统一累计亏损阈值，明确最终数值（50000000或5000000），并同步修改正文与配置表。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CROWD_RATIO",
+            "canonical_title": "人群保护占比口径模糊",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "人群保护策略的“特殊人群占比”计算分子分母定义不清，且未说明多重标签用户的去重规则",
+            "current_state": "段落100：“新进+预流失+亏损大R”的投入人数去重数，占本轮总投入人数的比例≥30%。未说明如果一个用户同时满足“新进”和“亏损大R”（虽然定义上可能互斥，但需防呆），算1人还是2人；“总投入人数”是指去重后的总人数还是总人次。",
+            "evidence": "tiger需求文档.docx / 段落100",
+            "risk": "开发对“去重数”和“总人数”的理解不一致，会导致人群保护策略触发率偏离预期，影响成本控制。",
+            "suggestion": "明确公式：分子 = 满足任一特殊人群标签的独立UID数；分母 = 本轮参与投入的独立UID总数。并在文档中补充说明标签互斥或叠加规则。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "包含幂等性、排序精度等，需补充异常流程验收标准。",
+        "findings": [
+          {
+            "issue_id": "RANKING_TIE",
+            "canonical_title": "排行榜同分排序精度缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "table",
+            "severity": "中",
+            "title": "排行榜积分相同时的“达到时间”排序精度与时区未明确",
+            "current_state": "表格3说明排行榜“积分相同按达到时间先后排序”。未明确“达到时间”的精度（秒/毫秒），以及使用的是客户端本地时间还是服务器时间。",
+            "evidence": "tiger需求文档.docx / 表格3（排行榜）",
+            "risk": "若精度不够或时区不一致，可能导致同分玩家排名频繁跳动或显示错误，引发争议。",
+            "suggestion": "明确：按服务器时间精确到秒/毫秒排序；若同一秒内同分，则按UID大小或随机固定排序。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "BET_IDEMPOTENT",
+            "canonical_title": "投入扣款幂等性缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "投入阶段的重复点击幂等性与扣款时序未定义",
+            "current_state": "文档描述了投入交互（点击区域、飞入动画），但未说明在20s投入阶段内，玩家快速连续点击同一选项或不同选项时，服务端的扣款幂等性校验规则，以及扣款是在点击瞬间还是倒计时结束时统一结算。",
+            "evidence": "tiger需求文档.docx / 表格3（图案区/档位模块）、段落24",
+            "risk": "弱网或玩家手抖时可能导致重复扣款；若扣款时序不清，会导致客户端余额展示与服务端实际扣款不一致。",
+            "suggestion": "补充明确：1. 投入指令需服务端做幂等校验（如基于round_id+uid+area生成唯一请求ID）；2. 明确扣款时机（建议点击时预扣款，倒计时结束时多退少补，或点击时直接真实扣款）。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "仅一条低风险热更提示。",
+        "findings": [
+          {
+            "issue_id": "HOT_UPDATE",
+            "canonical_title": "配置热更与历史数据口径",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "后台配置热更时，历史局数据计算口径与进行中的局处理规则未说明",
+            "current_state": "人群保护策略依赖近30日/7日/15日历史数据。若运营在后台修改了“抽水比例”或“人群阈值”，历史数据的计算是否随之重算？正在进行的局是否受影响？",
+            "evidence": "tiger需求文档.docx / 段落81-95、表格5",
+            "risk": "热更可能导致正在进行的局状态突变，或历史数据口径断裂，影响策略触发准确性。（按基准原则记为低风险提醒）",
+            "suggestion": "补充说明：1. 历史数据计算口径以“数据产生时”的配置为准，还是“当前”配置为准；2. 热更生效时机（下一局生效还是立即生效）。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "最大赔付上限缺失，需紧急补充。",
+        "findings": [
+          {
+            "issue_id": "MAX_PAYOUT",
+            "canonical_title": "缺乏最大赔付上限",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "全局奖池允许透支但缺乏单局/单用户最大赔付上限（MAX_PAYOUT）的安全边界定义",
+            "current_state": "段落29明确“奖池余额允许为负数（即允许透支赔付）”。但全文未定义单局最大赔付总额或单用户最大赔付上限。",
+            "evidence": "tiger需求文档.docx / 段落29",
+            "risk": "若遇极端概率或恶意刷奖池，单局赔付可能远超奖池承受力，导致奖池深度负数，且无熔断机制，引发严重资损。",
+            "suggestion": "增加安全边界：1. 设定单局全局最大赔付上限（如奖池余额的X倍或固定值）；2. 设定单用户单局最大赔付上限；3. 当赔付触及上限时，按比例折算或触发特殊兜底逻辑。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "仅UI文案错误。",
+        "findings": [
+          {
+            "issue_id": "UI_TYPO",
+            "canonical_title": "UI文案拼写错误",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "image",
+            "severity": "中",
+            "title": "规则页与记录页UI文案存在多处拼写及语法错误，影响专业度",
+            "current_state": "图片7规则页存在“Ger reward”、“..You”、“5the”等错误；图片9记录页存在“Personaj”、“fast 1 day”等错误。",
+            "evidence": "tiger需求文档.docx / 图片7、图片9",
+            "risk": "明显的拼写错误会降低游戏品质感，影响海外用户（achat平台）体验。",
+            "suggestion": "全面校对UI文案：修正为“Get reward”、“You”、“5. The”、“Personal”、“last 1 day”。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "单局/单用户最大赔付上限（MAX_PAYOUT）的具体数值或计算公式。",
+      "投入阶段断线重连后的状态恢复规则（是否保留已投入金额，是否允许继续投入）。",
+      "奖池收益率公式中“累计收入”是否包含系统初始注入的300w资金。",
+      "Repeat按钮在余额不足以完全复制上一局投入时的具体降级交互。",
+      "新手引导局是否真实扣款及是否计入各类统计。",
+      "最终确定的选项卡名称、赔率、倒计时、档位数值、统计范围、记录范围等全局参数。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证三个选项（Peacock/Draw/Tiger/Lion）的名称、赔率（2.9/3.0）在UI、配置、结算中是否完全一致。",
+        "验证奖池状态（充裕/正常/回收）的切换逻辑及对应的开奖偏移概率。",
+        "验证人群保护策略的触发条件（总人数≥50，特殊人群占比≥30%）及开奖偏移逻辑。",
+        "验证Repeat按钮在不同余额状态下的表现（足够、不足、为0）。",
+        "验证排行榜今日/昨日榜单的切换、倒计时及同分排序逻辑。",
+        "验证开奖分析胜率统计范围（7天/30天）与游戏记录展示范围（3天/30天）的最终实现。",
+        "验证亏损大R累计亏损阈值的最终取值（50000000或5000000）及相关策略触发。"
+      ],
+      "异常操作": [
+        "验证投入阶段快速连续点击同一选项的幂等性（是否重复扣款）。",
+        "验证投入阶段断网重连后，已投入金额是否保留，界面状态是否正确。",
+        "验证奖池透支为负数时，继续开奖的扣款与赔付逻辑。",
+        "验证结算弹窗5s自动收起后，界面是否正确回到投入阶段。",
+        "验证新手引导局是否产生真实扣款及是否计入记录、排行榜、开奖分析。"
+      ],
+      "兼容性": [
+        "验证半屏（room game入口）与全屏模式下的UI适配与交互。",
+        "验证不同分辨率设备下，结算弹窗、排行榜、记录页的滑动与展示。"
+      ],
+      "安全专项": [
+        "验证客户端是否无法通过修改本地内存影响开奖结果（服务端权威）。",
+        "验证极端情况下（如奖池为负且无人投入）的兜底逻辑是否会导致必输死局。",
+        "验证广播配置中的中奖区间与比例是否按服务端真实结算金额触发。",
+        "验证单局/单用户赔付上限是否生效，防止透支溢出。"
+      ],
+      "回归影响": [
+        "验证游戏记录（近3日/30日）与开奖分析（近1小时/7天/30天）的数据统计范围是否准确。",
+        "验证音乐音效开关状态在刷新/重进后的持久化。"
+      ],
+      "性能与稳定性": [
+        "验证跑马灯在大量中奖信息（>20条）排队时的展示与内存占用。",
+        "验证开奖动画与结算弹窗在连续快速对局时的资源加载与释放。"
+      ],
+      "用户体验": [
+        "验证新手引导5个步骤的流畅度与文案准确性。",
+        "验证余额不足时点击投入的Toast提示与充值页拉起逻辑。",
+        "验证UI文案中的拼写错误是否已修正。"
+      ]
+    },
+    "quality_notes": [
+      "文档中大量使用占位符（如{2}、{3000000}、{60}%），虽在表格5中有初始值对应，但正文阅读时易造成混淆，建议正文直接引用配置表字段名或明确默认值。",
+      "段落19提到“投入单词均用：spend”，但UI截图（图片1/3/18）中实际显示为“Bet”或“placing a bet”，存在术语执行不一致。",
+      "本报告已包含对主模型的首版问题保留及新增遗漏项，所有问题均基于单一需求文档，未涉及跨文档一致性问题。",
+      "图片22（流程图）右上角规则文本及暂停X分钟的具体数值因分辨率限制不可读，可能遗漏关键异常处理逻辑。"
+    ],
+    "image_analysis_gaps": [
+      "图片5、8、10、11、12、14、16仅为单一图标素材，无文档内容，无法提取规则信息。",
+      "图片22（流程图）右上角规则文本及暂停X分钟的具体数值因分辨率限制不可读，可能遗漏关键异常处理逻辑。",
+      "图片4、21包含多个UI界面缩略图，部分弹窗内的详细规则文本与具体数值不可读。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充关键遗漏问题，证据链完整，可直接交付业务方评审，但仍有部分冲突待产品确认，建议后续跟进。"
+  },
+  "review_notes": []
+}

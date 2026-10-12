@@ -1,0 +1,63 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "primary_report_hash_after": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "protected_fields_hash_before": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "protected_fields_hash_after": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 2,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-001",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+      "evidence": "Racing数值文档.docx / 段落2-3、图片1；musee游戏Racing.docx / 3.4开奖逻辑 段落36、图片13",
+      "counterevidence": "Racing数值文档.docx / 段落2“当有极端下注时，有最低赔率 odds=max(T*(1-x)/W,1.02)”及图片1公式 Odds_X = ( ( T × (1 - r) ) / W_X ) × γ 中，T与W_X（本选项下注额）相除，符合彩池赔率中 T=Total bet（总下注额）的物理意义；而需求文档图片13中 T=L/(V*K*Luck) 的 T 明确标注为“完成时间”。",
+      "rationale": "两份文档中的 T 分别属于“赔率计算公式”和“开奖时间计算公式”两个独立系统。赔率公式中的 T 结合上下文“极端下注”和分母 W_X，其物理意义应为总下注额（Total bet），而非完成时间。两者仅为变量命名重名，并非同一公式内的定义冲突，公式均可正常求值。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-002",
+      "target_issue_id": "MAX_PAYOUT_RISK",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+      "evidence": "Racing数值文档.docx / 段落2-3、图片1",
+      "counterevidence": "Racing数值文档.docx / 段落2明确给出“当有极端下注时，有最低赔率 odds=max(T*(1-x)/W,1.02)”。",
+      "rationale": "数值文档已通过最低赔率公式（如保底1.02）对极端下注情况下的赔率进行了限制。最低赔率机制本身即限制了单局的最大赔付倍数（即赔付金额 = 下注额 * 最低赔率），从而构成了对奖池负数时极端赔付风险的兜底，并非“未定义兜底机制”。",
+      "recommended_action": "drop",
+      "proposed_split": [],
+      "target_title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": []
+}

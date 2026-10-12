@@ -1,0 +1,286 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了开奖兜底0赔付、机器人机制缺失、概率配置冲突等核心阻塞问题，但在赔率冲突的严重度判定上偏保守，且将断线重连等通用问题错误混入核心数值冲突中。此外，遗漏了广播区间配置重叠这一高信号配置缺陷。",
+    "strengths": [
+      "准确定位了兜底逻辑的0赔付漏洞和图文脱节的机器人机制缺失",
+      "对奖池状态与人群保护策略的梳理较为清晰，证据引用详实"
+    ],
+    "issues": [
+      "将核心赔率冲突（CLARITY_01）降级为中风险，低估了其对结算和客诉的影响",
+      "在LOGIC_02中混入了断线重连的串台内容，导致问题焦点模糊",
+      "遗漏了图片25中广播区间重叠的配置冲突"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "候选报告已修正主模型的严重度误判与内容串台，并补充了高信号配置冲突，结构完整、证据充分，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选报告已修正主模型的严重度误判与内容串台，并补充了高信号配置冲突，结构完整、证据充分，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "断线重连与局内状态恢复（投入期、开奖期、结算期）属于通用中台能力，若平台已有规范，建议直接复用，无需在玩法需求中重复定义，除非本玩法有特殊的结算中断处理。",
+    "弱网环境下的重复点击、幂等性校验、配置热更与历史局隔离等，建议遵循平台通用安全与兼容性规范。",
+    "文档中大量使用占位符（如{2}、{3000000}），建议正文直接引用表格5的配置项名称，提升可读性。",
+    "图22的机器人流程图与正文需求脱节，需警惕文档拼凑导致的逻辑遗漏，建议策划确认图22是否为最终版。",
+    "protocol_profile=phase2",
+    "dual_pass candidate 含空 issue_id 问题项，当前仅作为对比稿，不建议默认直出。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "LOGIC_04",
+      "title": "广播中奖区间配置存在数值重叠，导致匹配歧义",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "图片25中广播中奖区间配置显示：区间1为20000-49999，区间2为50000-79999，区间3为70000-99999。区间2和区间3在70000-79999范围内存在重叠。",
+      "evidence": "tiger需求文档.docx / 图片25",
+      "risk": "当玩家中奖金额落在重叠区间时，系统无法确定应匹配哪个区间的广播比例，导致配置失效或广播逻辑异常。",
+      "suggestion": "修正区间配置，确保各区间互斥（如区间3改为80000-99999），并在后台增加区间重叠校验。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "广播区间配置数值重叠",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "无",
+        "overlap": false,
+        "reason": "主模型未识别到图片25中的区间重叠问题"
+      },
+      "severity_basis": "区间重叠会导致后台配置无法正确映射广播比例，直接阻塞广播功能的开发与配置验收。",
+      "root_cause_count": 1
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "adjustments": "提升严重度为高，因为赔率是结算核心，多处矛盾直接阻塞开发和测试。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "adjustments": "剥离断线重连的串台内容，聚焦于正常状态偏移概率的正文与配置表冲突。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "adjustments": "保持原状。"
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "adjustments": "保持原状。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "source_missed_issue_ids": [
+          "LOGIC_04"
+        ],
+        "reason": "补充主模型遗漏的广播区间配置重叠问题，该问题直接阻塞后台配置与开发。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [
+    "广播中奖区间配置存在数值重叠，导致匹配歧义"
+  ],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的严重度误判与内容串台，并补充了高信号配置冲突，结构完整、证据充分，可直接交付业务方阅读。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 1,
+    "admitted_count": 1,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [
+      {
+        "candidate_issue_id": "",
+        "title": "广播中奖区间配置存在数值重叠，导致匹配歧义",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": []
+      }
+    ]
+  },
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_missing_issue_id"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": false,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 1,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "candidate_missing_issue_id"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  }
+}

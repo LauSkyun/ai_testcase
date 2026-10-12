@@ -1,0 +1,168 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "primary_report_hash_after": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "protected_fields_hash_before": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "protected_fields_hash_after": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 3,
+  "rejected_count": 0,
+  "abstained_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-CLARITY-01",
+      "challenge_id": "CH-CLARITY-01",
+      "target_issue_id": "CLARITY_01",
+      "correction_disposition": "drop",
+      "source_provenance": "requirement_text",
+      "evidence": "小鸡.docx / 4、题材包装（中东主题），段落55",
+      "rationale": "文档已明确小鸡为初始占位形象，后续替换骆驼为规划中的迭代策略，原‘严重冲突’判断不成立，应移除该 finding。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "CLARITY_01",
+        "canonical_title": "核心角色与题材包装冲突",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "image",
+        "severity": "中",
+        "title": "核心角色与题材包装严重冲突（小鸡 vs 骆驼）",
+        "current_state": "需求文档段落55提及‘默认小鸡形象’，段落56又定义‘核心形象：卡通骆驼设计’，且世界观为中东沙漠商队。但所有UI截图（图片1-8）及游戏标题均为‘CHICKEN ROAD’（小鸡），角色均为白色小鸡。",
+        "evidence": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析",
+        "risk": "美术资源制作方向错误，UI表现与世界观设定割裂，可能导致返工。",
+        "suggestion": "明确最终核心角色（小鸡或骆驼）。若保留小鸡，需重写世界观与场景包装；若使用骆驼，需重新设计UI资源与游戏标题。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞测试用例设计"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "CLARITY_01",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "correction_id": "CR-CORE-BET-01",
+      "challenge_id": "CH-CORE-BET-01",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "correction_disposition": "drop",
+      "source_provenance": "mixed",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1；小鸡.docx / 2.2 详细规则，表格1",
+      "rationale": "数值文档已声明下注列表仅为示例，且需求文档允许业务自定义，两者为示例与配置关系，原‘严重冲突’判断不成立，应移除该 finding。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "canonical_title": "下注金额或档位配置口径不一致",
+        "primary_dimension": "清晰度与完整性",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "下注筹码数值配置冲突",
+        "current_state": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，表格1（下注值100、1000）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+        "evidence": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，表格1（下注值100、1000）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+        "risk": "需求、数值、UI三端筹码配置不一致，导致前后端无法对齐，阻塞下注系统开发与数值配置。",
+        "suggestion": "统一三端筹码配置。建议以UI和实际需求为准（3、5、10、20），修正数值文档中的下注规则表格，并明确筹码的货币单位与业务线自定义规则。",
+        "planner_role": "待定",
+        "confidence": "中",
+        "blocking": "阻塞测试用例设计",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "correction_id": "CR-LOGIC-01",
+      "challenge_id": "CH-LOGIC-01",
+      "target_issue_id": "LOGIC_01",
+      "correction_disposition": "drop",
+      "source_provenance": "numeric_config",
+      "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11",
+      "rationale": "数值文档已通过‘不超过就一直可以成功’隐含了累计倍率与爆炸倍数的比较映射逻辑，原‘完全缺失’判断不成立，应移除该 finding。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": [],
+      "correction_type": "drop",
+      "before": {
+        "issue_id": "LOGIC_01",
+        "canonical_title": "Crash算法与离散格子映射缺失",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "Crash算法与离散格子结算的映射逻辑缺失",
+        "current_state": "数值文档采用类似Crash的连续算法（随机爆炸倍数），但玩法是离散的30个格子。文档未说明‘爆炸倍数’如何映射到‘第几格撞车’。",
+        "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13",
+        "risk": "核心碰撞判定逻辑无法实现。若爆炸倍数指累计倍率，需明确当随机值介于两格累计倍率之间时的判定规则。",
+        "suggestion": "明确爆炸倍数的物理意义（是累计倍率还是当前格数）。建议补充映射规则示例：如‘随机爆炸倍率为2.5，玩家在第2格（累计1.03）安全，第3格（累计1.06）安全...直到第N格累计倍率>2.5时触发撞车’。",
+        "planner_role": "系统策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "disposition": "drop",
+        "target_issue_id": "LOGIC_01",
+        "outcome": "remove_finding_after_human_approval",
+        "protected_fields_locked": true
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": [],
+  "abstained_corrections": []
+}

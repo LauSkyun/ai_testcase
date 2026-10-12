@@ -1,0 +1,6 @@
+{
+  "source_benchmark": "D:\\project\\script\\ai_agents\\RAD\\reports\\secondary_benchmarks\\20260814_103002",
+  "derived_benchmark": "D:\\project\\script\\ai_agents\\RAD\\reports\\secondary_benchmarks\\20260814_103002_annotation_reblind_20260814_114222",
+  "model_calls": 0,
+  "mapping_path": "_private/annotation_reblind_mapping.json"
+}

@@ -1,0 +1,211 @@
+{
+  "mode": "dual_pass",
+  "status": "complete",
+  "primary_model": "deepseek-v4-pro",
+  "secondary_model": "deepseek-v4-pro",
+  "selected_report_owner": "pipeline",
+  "selected_report_path": "review_report.md",
+  "selected_source_report_path": "review_report_pipeline.md",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": false,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": false,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": false
+  },
+  "candidate_gate_failure_reasons": [
+    "normalized_candidate_not_ready",
+    "advice_candidate_structure_mismatch",
+    "candidate_materialized_missed_without_added",
+    "candidate_major_judgment_drift"
+  ],
+  "candidate_gate_failure_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch"
+    ],
+    "traceability_blockers": [
+      "candidate_materialized_missed_without_added"
+    ],
+    "quality_blockers": [
+      "candidate_major_judgment_drift"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "pipeline_report_path": "review_report_pipeline.md",
+  "candidate_report_path": "review_report_candidate.md",
+  "advice_path": "secondary_review_advice.md",
+  "primary_score": "C",
+  "pipeline_score": "C",
+  "candidate_score": "B",
+  "selected_score": "C",
+  "pipeline_finding_count": 7,
+  "candidate_finding_count": 7,
+  "selected_finding_count": 7,
+  "candidate_ready_for_direct_output": false,
+  "candidate_ready_reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。",
+  "lineage_counts": {
+    "kept": 6,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "readiness_conflict": false,
+  "candidate_structure_drift": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": true,
+  "candidate_structurally_ready": false,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "需求文档缺失推展机制、风控机制、卷轴方案选择和RESPIN乘数表，与数值文档不一致",
+    "需求文档缺失风控机制（强0倍）和卷轴方案选择，流程不完整"
+  ],
+  "advice_candidate_structure_mismatch": true,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [
+    "MISS_TEST_ACCEPTANCE"
+  ],
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "advice_candidate_structure_mismatch",
+    "candidate_materialized_missed_without_added",
+    "candidate_major_judgment_drift"
+  ],
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch"
+    ],
+    "traceability_blockers": [
+      "candidate_materialized_missed_without_added"
+    ],
+    "quality_blockers": [
+      "candidate_major_judgment_drift"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "trace_warning": "",
+  "cross_document_section_disabled": true,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 2,
+    "materially_changed_titles": [
+      "RESPIN乘数符号1倍配置及公式定义在两文档中不一致",
+      "需求文档缺失推展机制、风控机制、卷轴方案选择和RESPIN乘数表，与数值文档不一致"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CROSS_1X_CONFLICT",
+        "issue_id": "CROSS_1X_CONFLICT",
+        "title": "RESPIN乘数符号1倍配置及公式定义在两文档中不一致",
+        "change_kinds": [
+          "title_changed",
+          "severity_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:REQ_MISS_FENGKONG",
+        "issue_id": "REQ_MISS_FENGKONG",
+        "title": "需求文档缺失推展机制、风控机制、卷轴方案选择和RESPIN乘数表，与数值文档不一致",
+        "change_kinds": [
+          "title_changed",
+          "severity_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "warning": ""
+}

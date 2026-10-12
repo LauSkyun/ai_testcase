@@ -1,0 +1,184 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了核心结算流程的关键点，结构清晰，但将Respin累加公式的歧义误判为跨文档根本冲突，实际两份文档在数学上一致，仅表述需澄清；同时遗漏了展示金额倍率与结算赔率不一致的显著问题。",
+    "strengths": [
+      "结构完整，维度覆盖全面",
+      "识别到Respin累加公式的表述歧义，并给出了具体建议",
+      "指出了风控时机、持久化、交互等边界问题"
+    ],
+    "issues": [
+      "将Respin累加公式的歧义错误升级为高阻塞根本冲突，两份文档在数学上实际一致",
+      "遗漏了展示金额倍率与结算赔率不一致的问题，此问题可能导致玩家误解",
+      "部分子问题（如风控时机）在数值文档中已明确，但仍被列为冲突"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的误判，补充了遗漏的高风险问题，结构完整、证据充分、来源可追踪，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的误判，补充了遗漏的高风险问题，结构完整、证据充分、来源可追踪，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "主模型报告将Respin累加公式误判为‘相加 vs 相乘’的根本冲突，但数值文档中‘累加’一词已暗示相加，且数学上一致，因此降级为表述不清，严重度从高调为中。",
+    "风控时机在数值文档流程总结中已明确为最终结算后检查，故从LOGIC_01中移除了相关子问题。",
+    "新增了展示金额倍率与结算赔率不一致的高风险问题，该问题在原始需求文档中已存在，且影响面较大。",
+    "建议后续与产品确认展示金额的真实意图，若为装饰则需明确标注，若为真实赔付则需修改倍率表。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "CLARITY_03",
+      "canonical_title": "展示金额倍率与结算赔率不一致",
+      "primary_dimension": "清晰度与完整性",
+      "evidence": "需求文档段落30举例777*3获奖倍率为1000倍，但需求文档表格1和数值文档表格2中777的赔率均为77倍，两者相差巨大。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "严重度从中降为低，补充了数值文档示例作为证据，建议更具体"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "严重度从中降为低，明确需求文档已已有足够信息，仅补充公式建议"
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "changes": "严重度从高降为中，修正为‘表述不清’而非‘根本冲突’，移除已明确的风控时机子问题，保留持久化、交互、动画等有效子问题，并重写标题和现状描述"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "source_missed_issue_ids": [
+          "CLARITY_03"
+        ],
+        "reason": "主模型报告遗漏了展示金额倍率与结算赔率不一致的问题，该问题可能误导玩家，需补充。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 3,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 3,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 3,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的误判，补充了遗漏的高风险问题，结构完整、证据充分、来源可追踪，可直接交付业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

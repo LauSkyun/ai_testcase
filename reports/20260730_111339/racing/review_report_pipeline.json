@@ -1,0 +1,335 @@
+{
+  "report": {
+    "overall_evaluation": "文档描述了主玩法流程，但核心赔率、干预机制、假数据逻辑等模块存在多文档冲突与关键缺失，无法直接进入开发。需要统一赔率计算口径、明确干预实现细节并补充大量配置与边界规则。",
+    "document_quality_score": "C",
+    "score_reason": "存在赔率公式冲突、干预机制缺失、假赔率未说明等高风险问题，但主流程可理解，补充后可推进。",
+    "top_blockers": [
+      {
+        "severity": "中",
+        "title": "白名单干预逻辑中“最大赔付”“最小赔付”的选项无计算规则",
+        "owner": "数值策划",
+        "why_now": "自动化干预无法实现。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "干扰指数、Luck、地形概率调整如何影响完成时间T未定义",
+        "owner": "系统策划",
+        "why_now": "核心玩法无法实现，概率无法模拟，RTP不可验证。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "赔率公式冲突与假赔率机制缺失",
+        "owner": "数值策划",
+        "why_now": "该问题可能导致开发、配置或测试对“赔率公式冲突与假赔率机制缺失”采用不一致口径。；程序无法实现赔率计算，抽水无法落地，影响结算正确性。；流程中断，玩家体验不一致，测试用例无法覆盖。；前端轮询频率无法确定，影响性能测试。；UI缺失，可能导致开发遗漏。；用户可能困惑为什么没有奖励，缺少失败反馈。；可能导致按钮灰显逻辑错误，或用户误操作。；若展示假赔率但按实际赔率结算，玩家实际收益与期望不符，可能引起投诉甚至法律风险；若未隔离，假数据可能意外污染结算链路。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CLARITY_INTERVENTION",
+            "canonical_title": "干预机制实现细节缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "干扰指数、Luck、地形概率调整如何影响完成时间T未定义",
+            "current_state": "开奖逻辑中规定通过干扰指数和隐藏地形概率来干预结果，但未说明干扰指数如何参与T = L/(V*K*Luck)的计算，也未定义Luck的分布及范围。",
+            "evidence": "musee游戏Racing.docx / 段落35-36（T公式）、段落42-48（干预逻辑）",
+            "risk": "核心玩法无法实现，概率无法模拟，RTP不可验证。",
+            "suggestion": "明确干扰指数作为Luck的乘数或替代关系，给出Luck的随机分布（如均匀分布区间），并补充地形概率调整的具体算法。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "MISSED_TERRAIN_RANDOM",
+            "title": "地形随机生成规则不明确，影响T计算和开奖公平性",
+            "canonical_title": "地形随机生成规则不明确，影响T计算和开奖公平性",
+            "primary_dimension": "清晰度与完整性",
+            "current_state": "文档规定道路分3段，任意一段出现一个随机地形，开奖时随机出现另外两段地形，但未说明随机机制的具体规则：是否等概率？是否与已显示地形有依赖？是否与干预逻辑中的地形概率调整协同？这导致完成时间T无法计算。",
+            "evidence": "musee游戏Racing.docx / 段落26（3.3下注部分）",
+            "severity": "高",
+            "description": "文档规定道路分3段，任意一段出现一个随机地形，开奖时随机出现另外两段地形，但未说明随机机制的具体规则：是否等概率？是否与已显示地形有依赖？是否与干预逻辑中的地形概率调整协同？这导致完成时间T无法计算。",
+            "source_missed_issue_id": "MISSED_TERRAIN_RANDOM",
+            "source_issue_id": "MISSED_TERRAIN_RANDOM",
+            "evidence_scope": "document",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "planner_role": "待定",
+            "risk": "该问题可能导致开发、配置或测试对“地形随机生成规则不明确，影响T计算和开奖公平性”采用不一致口径。",
+            "suggestion": "补充“地形随机生成规则不明确，影响T计算和开奖公平性”的唯一规则、边界条件与验收口径。",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          },
+          {
+            "issue_id": "CLARITY_CAR_PROB_CONFIG",
+            "canonical_title": "车型出现概率配置缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "每个地形对应的高概率两个车型未给出配置表",
+            "current_state": "文档规定“每个地形都有2个车型出现的概率会高一点”，但未提供具体的地形-车型概率映射表。",
+            "evidence": "musee游戏Racing.docx / 段落26（3.3下注部分）",
+            "risk": "程序无法实现车型选择逻辑，测试无法验证。",
+            "suggestion": "提供一张配置表，列出每个地形对应的两个高概率车型及其权重，其他车型均等概率。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_MAX_PAYOUT",
+            "canonical_title": "最大赔付/最小赔付计算未定义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "白名单干预逻辑中“最大赔付”“最小赔付”的选项无计算规则",
+            "current_state": "补贴或制裁时需要侧重开最大/最小赔付的选项，但未定义如何计算每个选项的赔付总额。",
+            "evidence": "musee游戏Racing.docx / 段落58-59（3.6接入自动化和白名单干预逻辑）",
+            "risk": "自动化干预无法实现。",
+            "suggestion": "定义赔付计算规则：总赔付 = 该选项下注总额 * 实时赔率，并据此排序。",
+            "planner_role": "数值策划",
+            "confidence": "中",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_CAR_DETAIL",
+            "canonical_title": "车型能力详情页内容缺失",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "从选项问号进入的车型能力详情页面未定义",
+            "current_state": "玩家点击车型右上角问号应前往能力详情页，但页面内容未描述。",
+            "evidence": "musee游戏Racing.docx / 段落29-30（3.3下注部分）",
+            "risk": "开发无法落地，影响玩家理解车型属性。",
+            "suggestion": "补充详情页应包括：车型基础速度、各地形速度、最近30天胜率/赔率、规则说明。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "CLARITY_SOUND_TYPES",
+            "canonical_title": "音效分类未定义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "音效总共4类，但未说明具体是哪4类及其触发时机",
+            "current_state": "文档提到音效默认开启，共4类，但未列举。",
+            "evidence": "musee游戏Racing.docx / 段落8（3.1首页顶栏板块）",
+            "risk": "音效资源无法准备，缺少验收标准。",
+            "suggestion": "列出4类音效：下注音效、开奖动画音效、倒计时音效、结果弹窗音效，并说明循环/一次性播放规则。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "CLARITY_POOL_THRESHOLD",
+            "canonical_title": "奖池状态阈值占位符未填",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "奖池状态定义的[001]%和[002]%占位符未给出具体数值",
+            "current_state": "奖池状态由“（累计收入-累计支出）/累计收入”的值决定，但待补充、正常、充裕的阈值使用占位符。",
+            "evidence": "musee游戏Racing.docx / 段落38（3.4开奖逻辑）",
+            "risk": "无法配置，干预逻辑的触发条件不可控。",
+            "suggestion": "提供具体百分比，如≤10%为待补充，10%-30%为正常，≥30%为充裕，并支持可配。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+            "canonical_title": "奖金公式与赔率表口径冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "赔率公式冲突与假赔率机制缺失",
+            "current_state": "1、需求文档规定实时赔率 = 合计下注/本选项下注*[001]%，未体现抽水；2、数值文档给出Odds_X = ((T × (1 - r)) / W_X) × γ，且包含最低赔率1.02和gamma膨胀系数，同时提到“分实际赔率和假赔率”。两文档在赔率计算、抽水、gamma、假赔率方面完全不一致，无法确定最终实现方案。；3、需求文档规定实时赔率 = 三个选项合计下注 / 本选项下注 * [001]%，但未说明[001]%的具体值，也未体现文档中提到的“赔率算法上抽水”。；4、下注倒计时30秒，但结束时是否自动下注、是否跳过、是否保留上次筹码均未定义。；5、假人数和假金额每[001]秒更新一次，但占位符未替换。",
+            "evidence": "需求文档段落27；数值文档段落2-5及图片1公式；musee游戏Racing.docx / 段落27（3.3下注部分）及段落37（3.4开奖逻辑）；musee游戏Racing.docx / 段落23-24（3.3下注部分）；musee游戏Racing.docx / 段落21-22（3.3下注部分）；musee游戏Racing.docx / 段落6（3.1首页顶栏板块）；musee游戏Racing.docx / 段落33（3.3下注部分）；musee游戏Racing.docx / 段落31-32（3.3下注部分）；musee游戏Racing.docx / 段落21-22（下注人数/金额假数据）；Racing数值文档.docx / 段落5（假赔率）",
+            "risk": "1、该问题可能导致开发、配置或测试对“赔率公式冲突与假赔率机制缺失”采用不一致口径。；2、程序无法实现赔率计算，抽水无法落地，影响结算正确性。；3、流程中断，玩家体验不一致，测试用例无法覆盖。；4、前端轮询频率无法确定，影响性能测试。；5、UI缺失，可能导致开发遗漏。",
+            "suggestion": "1、统一赔率逻辑：建议以数值文档公式为基础，去掉假赔率，直接展示真实赔率，并在需求文档中明确抽水率r、gamma参数α/β、最低赔率阈值，并与实时赔率公式对齐。；2、明确[001]%的具体百分比，或改为抽水率r，使赔率 = (总下注 * (1 - r)) / 本选项下注，并公示。；3、明确倒计时结束后的行为：若玩家未手动下注，则按规则自动下注（如默认筹码投注第一个选项）或视为放弃，并给出提示。；4、填写具体秒数，如每5秒更新一次。；5、补充下注记录弹窗的UI原型，展示历史轮次、下注金额、结果等信息。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "finding_source": "",
+            "finding_source_label": "",
+            "source_model": ""
+          },
+          {
+            "issue_id": "MISSED_FAKE_DATA_ODDS",
+            "title": "假数据（人数/金额）是否参与实时赔率计算未明确",
+            "canonical_title": "假数据（人数/金额）是否参与实时赔率计算未明确",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "current_state": "1、实时赔率=合计下注/本选项下注*[001]%，但未定义合计下注是否包含假人数和假金额。若包含，假数据可能扭曲赔率，影响结算公平；2、若不包含，展示假赔率可能误导玩家。",
+            "evidence": "musee游戏Racing.docx / 段落21-22（假数据）、段落27（实时赔率公式）",
+            "severity": "高",
+            "description": "实时赔率=合计下注/本选项下注*[001]%，但未定义合计下注是否包含假人数和假金额。若包含，假数据可能扭曲赔率，影响结算公平；若不包含，展示假赔率可能误导玩家。",
+            "source_missed_issue_id": "MISSED_FAKE_DATA_ODDS",
+            "source_issue_id": "MISSED_FAKE_DATA_ODDS",
+            "evidence_scope": "document",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "planner_role": "待定",
+            "risk": "该问题可能导致开发、配置或测试对“假数据（人数/金额）是否参与实时赔率计算未明确”采用不一致口径。",
+            "suggestion": "补充“假数据（人数/金额）是否参与实时赔率计算未明确”的唯一规则、边界条件与验收口径。",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UX_GUIDE_AUTO",
+            "canonical_title": "蒙层引导倒计时自动行为不明确",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "引导中倒计时5秒后是否自动执行高亮操作未定义",
+            "current_state": "引导第二步和第三步倒计时5秒后自动进入下一步，但未说明是否自动点击高亮按钮（如100金币、超跑选项），还是仅跳过等待。",
+            "evidence": "musee游戏Racing.docx / 段落16-18（3.2蒙层引导）",
+            "risk": "用户可能误以为已自动操作，实际未下注，导致体验断裂。",
+            "suggestion": "明确倒计时结束后自动执行高亮区域的点击操作，并播放对应的成功反馈。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "建议优化"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "Luck随机扰动的分布与范围",
+      "每个地形对应的高概率两个车型配置表",
+      "奖池状态阈值具体百分比",
+      "下注假数据更新频率具体秒数",
+      "车型能力详情页内容",
+      "下注记录功能详细设计",
+      "音效4类具体定义",
+      "白名单干预的最大/最小赔付计算规则",
+      "引导倒计时自动行为规则",
+      "结果弹窗未中奖状态展示"
+    ],
+    "test_points": {
+      "功能验证": [
+        "赔率计算与展示是否一致（抽水、gamma、最低赔率）",
+        "干预机制生效时，获胜车型是否符合预期概率分布",
+        "假人数/假金额/假赔率展示与真实结算隔离验证",
+        "下注倒计时结束自动下注逻辑",
+        "不同奖池状态下干预参数切换"
+      ],
+      "异常操作": [
+        "重复点击下注按钮的幂等性",
+        "结算中退出重进，奖池状态恢复",
+        "余额为0时MAX按钮点击",
+        "单选项下注超过100万上限的提示"
+      ],
+      "兼容性": [
+        "全屏/半屏切换时游戏状态保持",
+        "语聊房缩放按钮与音频保留"
+      ],
+      "安全专项": [
+        "服务端赔付金额与客户端展示赔率一致性校验",
+        "假数据系数篡改检测",
+        "白名单强制干预结果验证"
+      ],
+      "回归影响": [],
+      "性能与稳定性": [
+        "假数据更新频率对前端性能的影响",
+        "大量并发下注时奖池计算延迟"
+      ],
+      "用户体验": [
+        "引导关键步骤的容错与回退",
+        "MAX档位余额不足时的提示",
+        "未中奖结果弹窗反馈"
+      ]
+    },
+    "quality_notes": [
+      "文档中存在大量占位符（[001]、[002]等），需在开发前全部替换为具体数值或可配默认值。",
+      "图片解析提供了UI细节，但部分文字不可读，建议补充高保真原型或文字标注。",
+      "dual_pass 复核备注：主模型报告遗漏了地形随机生成规则，已新增CLARITY_TERRAIN_RANDOM补充。",
+      "dual_pass 复核备注：赔率冲突问题中补充了假数据参与赔率计算的口径问题，并吸收了MISSED_FAKE_DATA_ODDS。",
+      "dual_pass 复核备注：白名单干预问题（CLARITY_MAX_PAYOUT）从top_blockers移除，因其严重度中，但保留在清晰度维度。",
+      "dual_pass 复核备注：赔率冲突问题现状描述改为分点，使子症状更清晰。",
+      "dual_pass 复核备注：建议后续由产品/数值确认地形随机规则与赔率公式的统一方案。",
+      "dual_pass 收敛提示：问题《赔率公式冲突与假赔率机制缺失》的现状描述原有 9 条分点，最终报告先保留前 5 条，其余 4 条保留在原始调试工件中。",
+      "dual_pass 收敛提示：问题《赔率公式冲突与假赔率机制缺失》的风险分析原有 9 条分点，最终报告先保留前 5 条，其余 4 条保留在原始调试工件中。",
+      "dual_pass 收敛提示：问题《赔率公式冲突与假赔率机制缺失》的修改建议原有 10 条分点，最终报告先保留前 5 条，其余 5 条保留在原始调试工件中。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片1-13中部分字段数值模糊，无法确认具体配置，如引导中的平台下注宝石显示值、各车型速度等，需以文档文字为准。"
+    ],
+    "review_mode": "dual_pass",
+    "primary_model": "deepseek-v4-pro",
+    "secondary_model": "deepseek-v4-pro"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 1,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 64,
+    "total_tables": 1,
+    "total_images": 16
+  },
+  "documents": [
+    {
+      "name": "musee游戏Racing.docx",
+      "kind": "mixed",
+      "paragraph_count": 59,
+      "table_count": 0,
+      "image_count": 13,
+      "errors": []
+    },
+    {
+      "name": "Racing数值文档.docx",
+      "kind": "numeric",
+      "paragraph_count": 5,
+      "table_count": 1,
+      "image_count": 3,
+      "errors": []
+    }
+  ]
+}

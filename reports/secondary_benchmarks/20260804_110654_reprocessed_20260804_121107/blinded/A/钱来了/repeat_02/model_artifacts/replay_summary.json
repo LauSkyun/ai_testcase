@@ -1,0 +1,374 @@
+{
+  "status": "completed",
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_schema_version_too_old:1:required:2"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 5,
+    "materially_changed_titles": [
+      "中奖金额计算公式与符号定义口径分裂",
+      "乘数符号ID=0的表演权重替换逻辑表述不清",
+      "底层数据生成规则与RESPIN触发条件矛盾",
+      "风控倍数基数与免费游戏封顶规则冲突",
+      "免费游戏续杯概率配置缺失"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CROSS_01",
+        "issue_id": "CROSS_01",
+        "title": "中奖金额计算公式与符号定义口径分裂",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_03",
+        "issue_id": "LOGIC_03",
+        "title": "乘数符号ID=0的表演权重替换逻辑表述不清",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "底层数据生成规则与RESPIN触发条件矛盾",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CROSS_02",
+        "issue_id": "CROSS_02",
+        "title": "风控倍数基数与免费游戏封顶规则冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CROSS_03",
+        "issue_id": "CROSS_03",
+        "title": "免费游戏续杯概率配置缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 1,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": false,
+      "results": [],
+      "coverage_ledger": {
+        "schema_version": 1,
+        "passed": false,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {},
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "cleared_redundant_candidate_ids:settlement_formula_ui_config:CROSS_01",
+          "cleared_redundant_candidate_ids:trigger_state_termination:LOGIC_02,LOGIC_03",
+          "cleared_redundant_candidate_ids:max_payout_economic_boundary:CROSS_02"
+        ],
+        "errors": [
+          "coverage_schema_version_too_old:1:required:2"
+        ],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CROSS_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "需求文档 / 3.3.1 符号分类总览、3.3.2 中间轴符号",
+              "数值文档 / 四、基础游戏・投注与中奖计算"
+            ],
+            "reason": "主模型已识别结算公式术语歧义问题，候选报告保留并优化描述",
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_02",
+              "LOGIC_03"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "数值文档 / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+              "数值文档 / 三、基础游戏・乘数符号、表格3"
+            ],
+            "reason": "主模型已识别RESPIN触发条件矛盾和乘数符号ID=0表述歧义，候选报告保留并优化描述",
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "需求文档 / 3.5.3 购买免费游戏",
+              "数值文档 / 四、基础游戏・投注与中奖计算"
+            ],
+            "reason": "文档中扣款和发奖规则基本清晰，未发现高信号缺口",
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "需求文档 / 3.4.3 免费旋转模式",
+              "数值文档 / 六、基础游戏・体验控制 & 风控"
+            ],
+            "reason": "主模型已识别风控基数与封顶规则口径冲突，候选报告保留并优化描述",
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "advice_only",
+            "primary_issue_ids": [
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "需求文档 / 3.4.3 免费旋转模式",
+              "数值文档 / 六、基础游戏・体验控制 & 风控"
+            ],
+            "reason": "统计时间窗口问题已在CROSS_02中部分涉及，无需单独新增",
+            "errors": []
+          }
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": false,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 1,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "cleared_redundant_candidate_ids:settlement_formula_ui_config:CROSS_01",
+        "cleared_redundant_candidate_ids:trigger_state_termination:LOGIC_02,LOGIC_03",
+        "cleared_redundant_candidate_ids:max_payout_economic_boundary:CROSS_02"
+      ],
+      "errors": [
+        "coverage_schema_version_too_old:1:required:2"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "需求文档 / 3.3.1 符号分类总览、3.3.2 中间轴符号",
+            "数值文档 / 四、基础游戏・投注与中奖计算"
+          ],
+          "reason": "主模型已识别结算公式术语歧义问题，候选报告保留并优化描述",
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "数值文档 / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+            "数值文档 / 三、基础游戏・乘数符号、表格3"
+          ],
+          "reason": "主模型已识别RESPIN触发条件矛盾和乘数符号ID=0表述歧义，候选报告保留并优化描述",
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "需求文档 / 3.5.3 购买免费游戏",
+            "数值文档 / 四、基础游戏・投注与中奖计算"
+          ],
+          "reason": "文档中扣款和发奖规则基本清晰，未发现高信号缺口",
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "需求文档 / 3.4.3 免费旋转模式",
+            "数值文档 / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "主模型已识别风控基数与封顶规则口径冲突，候选报告保留并优化描述",
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "需求文档 / 3.4.3 免费旋转模式",
+            "数值文档 / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "统计时间窗口问题已在CROSS_02中部分涉及，无需单独新增",
+          "errors": []
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

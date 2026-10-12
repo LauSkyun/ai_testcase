@@ -1,0 +1,134 @@
+{
+  "target_coverage_ledger": [
+    {
+      "target_issue_id": "CLARITY_01",
+      "target_order": 1,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析",
+      "rationale": "文档段落55提及先用小鸡，段落56定义骆驼，且UI截图均为小鸡，证据支持原finding关于角色与题材包装冲突的判断。"
+    },
+    {
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "target_order": 2,
+      "decision": "challenge",
+      "challenge_type": "overstated",
+      "recommended_action": "clarify",
+      "evidence_checked": "小鸡.docx / 2.2 详细规则，表格1；小鸡数值文档.docx / 2. 下注规则，段落6及表格1；图片1-7解析",
+      "rationale": "数值文档段落6明确声明下注列表‘以下仅为示例’，100/1000为占位符而非最终配置，不存在三端逻辑冲突，原定性‘严重冲突’属于过度推断。"
+    },
+    {
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "target_order": 3,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 3.1 下注系统，表格2；小鸡数值文档.docx / 4. 撞击概率计算，段落11-17",
+      "rationale": "需求文档描述固定概率，数值文档采用Crash算法，两者概率计算逻辑确实存在实质性冲突，证据支持原finding。"
+    },
+    {
+      "target_issue_id": "LOGIC_01",
+      "target_order": 4,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13；小鸡数值文档.docx / 3. 难度选择，段落9",
+      "rationale": "数值文档仅给出Crash算法的连续爆炸倍数公式，未说明如何映射到离散的30个格子，证据支持原finding关于映射逻辑缺失的判断。"
+    },
+    {
+      "target_issue_id": "LOGIC_02",
+      "target_order": 5,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡数值文档.docx / 3. 难度选择，表格2",
+      "rationale": "表格2中难度3和难度4的第30关数值（624.86和66278475.57）与表头定义的‘103倍盘’和‘176倍盘’存在巨大数量级差异，证据支持原finding。"
+    },
+    {
+      "target_issue_id": "LOGIC_03",
+      "target_order": 6,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 2.1 完整游戏流程，段落31；小鸡数值文档.docx / 3. 难度选择，段落9及表格2",
+      "rationale": "需求文档提及触发‘超级大奖’获得额外奖励，数值文档明确为30个格子且第30格已有累计倍率，两者叠加或替代关系未说明，证据支持原finding。"
+    },
+    {
+      "target_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+      "target_order": 7,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 3.3 奖金计算系统，段落44；小鸡数值文档.docx / 3. 难度选择，表格2",
+      "rationale": "需求文档公式要求单格倍率连乘，而数值表提供的是累计倍率，两者口径确实存在严重冲突，证据支持原finding。"
+    },
+    {
+      "target_issue_id": "TEST_01",
+      "target_order": 8,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 图片1-7解析；小鸡数值文档.docx / 4. 撞击概率计算",
+      "rationale": "UI截图显示‘被击中的概率’标签，但文档未说明该概率的计算公式与验收标准，证据支持原finding。"
+    },
+    {
+      "target_issue_id": "SEC_01",
+      "target_order": 9,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 3.4 提现与结算系统，段落48-49",
+      "rationale": "需求文档描述了提现流程，但未说明弱网、断线或重复点击时的幂等处理与防刷机制，证据支持原finding。"
+    },
+    {
+      "target_issue_id": "UX_01",
+      "target_order": 10,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "小鸡.docx / 3.2 移动与碰撞系统，段落41；图片1-8解析",
+      "rationale": "文档描述了失败动画，但未说明在Crash算法下如何直观感知极限风险，证据支持原finding关于体验缺失的判断。"
+    }
+  ],
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-CORE_BET_CONFIG_MISMATCH",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "challenge_type": "overstated",
+      "challenged_claim": "需求、数值、UI三端筹码配置不一致，导致前后端无法对齐，阻塞下注系统开发与数值配置。",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1",
+      "counterevidence": "小鸡数值文档.docx 段落6明确声明‘可以配置游戏的下注列表。以下仅为示例’，表明100/1000仅为占位符，并非最终配置。",
+      "rationale": "数值文档已对下注列表的示例性质进行免责说明，该问题本质是数值配置表未填入最终业务数值，而非三端规则逻辑冲突。原定性‘严重冲突’与‘阻塞开发’属于过度推断。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-CORE_BET_CONFIG_MISMATCH",
+      "challenge_id": "CH-CORE_BET_CONFIG_MISMATCH",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "correction_disposition": "clarify",
+      "source_provenance": "mixed",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1；小鸡.docx / 2.2 详细规则，表格1",
+      "rationale": "数值文档已声明下注列表为示例，不存在三端逻辑冲突，但配置表仍需更新为最终业务数值以指导开发。",
+      "residual_issue": "数值文档的下注规则表格仍保留示例数值（100/1000），需在开发前替换为最终业务配置值，并明确货币单位与业务线自定义规则。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "小鸡.docx / 2.2 详细规则，表格1（预设筹码3、5、10、20）；小鸡数值文档.docx / 2. 下注规则，段落6及表格1（明确声明100、1000仅为示例）；图片1-7解析（UI显示3$、5$、10$、20$）。",
+        "risk": "数值文档的下注规则表格仍保留示例数值，若开发前未替换为最终业务配置值，可能导致前后端配置对齐遗漏。",
+        "suggestion": "以UI和实际需求为准（3、5、10、20），在数值文档中填入最终下注配置值，并明确筹码的货币单位与业务线自定义规则。"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "protocol_profile=phase3_v1_2; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9"
+  ]
+}

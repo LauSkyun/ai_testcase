@@ -1,0 +1,221 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了三处高信号核心冲突（2000倍上限vs100倍风控、RESPIN概率矛盾、免费符号结算公式缺失），证据引用充分，问题结构清晰。但遗漏了一处明显的规则错误（3轴游戏出现'4个及以上符号'的描述），且部分finding的现状描述可进一步分点展开以增强可读性。",
+    "strengths": [
+      "准确识别2000倍封顶与100倍风控的根本冲突，证据引用完整（需求段落10/168 vs 数值段落47/51）",
+      "RESPIN概率矛盾发现准确，同时指出'必定发生'与两张概率表（0.1/0.05）的冲突",
+      "免费符号结算公式缺失问题定位精准，指出乘数符号ID12/13/14无法代入'乘数×符号值'公式",
+      "问题结构清晰，维度划分合理，test_points覆盖全面"
+    ],
+    "issues": [
+      "遗漏需求文档段落183中'4个及以上夺宝符号'的明显错误（3轴游戏不可能出现4个符号）",
+      "CROSS-02的现状描述将多个子症状揉成一段，可读性欠佳",
+      "部分finding的risk描述偏泛化，可更具体指向实现阻塞点"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型遗漏的规则错误，增强了核心finding的分点描述，证据充分且可追踪，结构完整，可直接输出给业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型遗漏的规则错误，增强了核心finding的分点描述，证据充分且可追踪，结构完整，可直接输出给业务方阅读。"
+  },
+  "review_notes": [
+    "主模型报告整体质量较高，准确识别了三处高信号核心冲突，证据引用充分。",
+    "本次复核补充了一处主模型遗漏的高信号问题：需求文档段落183中'4个及以上夺宝符号'与3轴盘面结构矛盾，该错误直接阻塞续杯机制的实现与验收。",
+    "对kept finding的改写主要体现为：将现状描述分点展开，增强可读性；补充更具体的risk描述和suggestion建议。",
+    "建议产品方优先解决四处高阻塞问题（2000倍vs100倍冲突、免费符号结算公式、RESPIN概率矛盾、续杯规则错误），这些问题不解决将导致主结算链路无法闭环。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED-01",
+      "title": "免费续杯规则中'4个及以上符号'与3轴盘面结构矛盾",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "severity": "高",
+      "evidence": "钱来了需求文档.docx / 3.5.1 基础设定, 段落183：'免费旋转期间再次出现4个及以上夺宝符号，可额外追加免费旋转次数'；钱来了需求文档.docx / 3.2.1 卷轴结构, 段落96：'3轴（左、中、右）×1行，共3个符号位'",
+      "risk": "规则描述存在明显错误，3轴游戏不可能出现4个符号，开发无法实现该逻辑，测试无法验收续杯触发条件。",
+      "suggestion": "修正为'再次出现免费旋转符号且左右轴数值匹配'，与段落166的续杯规则保持一致。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CROSS-01",
+        "primary_issue_ids": [
+          "CROSS-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS-03",
+        "primary_issue_ids": [
+          "CROSS-03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS-02",
+        "primary_issue_ids": [
+          "CROSS-02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY-01",
+        "primary_issue_ids": [
+          "CLARITY-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY-02",
+        "primary_issue_ids": [
+          "CLARITY-02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY-03",
+        "primary_issue_ids": [
+          "CLARITY-03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX-01",
+        "primary_issue_ids": [
+          "UX-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC-04",
+        "source_missed_issue_ids": [
+          "MISSED-01"
+        ],
+        "reason": "主模型遗漏了需求文档中3轴游戏出现'4个及以上符号'的明显规则错误，该错误直接阻塞续杯机制的实现与验收。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型遗漏的规则错误，增强了核心finding的分点描述，证据充分且可追踪，结构完整，可直接输出给业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

@@ -1,0 +1,297 @@
+{
+  "candidate_generation_mode": "model_authored",
+  "primary_quality_assessment": {},
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了文档中赔率冲突、兜底逻辑缺陷、概率数值矛盾及机器人机制缺失等核心问题，整体结构完整，证据引用基本准确。但在部分高信号问题的严重度判定上偏保守（如赔率冲突），且遗漏了奖池状态回退流程的致命笔误、跨天瞬间状态跳变及奖池透支时的阈值死锁等关键经济模型缺陷。",
+    "strengths": [
+      "准确抓住了开奖兜底逻辑中‘开出0赔付’的机制缺陷，并定位了具体段落。",
+      "敏锐发现了图22机器人流程图与正文需求脱节的问题，指出了冷启动阈值失效的风险。",
+      "识别了正文与后台配置表中‘正常状态偏移概率’的数值冲突。"
+    ],
+    "issues": [
+      "将核心赔率/倍数冲突（CLARITY_01）评为中风险，但该问题直接决定结算金额与RTP，多处矛盾必引发严重客诉与资损，应升为高风险。",
+      "遗漏了段落109中3.8人群保护未触发时，回退流程笔误指向3.3（充裕）的致命逻辑错误，这会导致3.4/3.5状态被完全跳过。",
+      "未考虑到奖池允许透支为负数（段落29）时，兜底阈值‘<=80%’在负数情况下的计算失效问题。",
+      "未识别出每日凌晨跨天瞬间，奖池收益率分母为0或极小导致状态频繁跳变的风险。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的严重度误判，并补充了遗漏的高信号经济模型缺陷，结构完整、证据充分、来源可追踪，可直接输出给业务方进行文档修订。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的严重度误判，并补充了遗漏的高信号经济模型缺陷，结构完整、证据充分、来源可追踪，可直接输出给业务方进行文档修订。"
+  },
+  "review_notes": [
+    "将 CLARITY_01（核心赔率冲突）的严重程度从‘中’提升为‘高’，因为赔率直接决定结算金额与RTP，多处矛盾必引发严重客诉与资损。",
+    "新增 LOGIC_04，指出段落109中3.8回退流程笔误指向3.3的致命逻辑错误。",
+    "新增 LOGIC_05，指出奖池透支为负数时，兜底阈值（80%）计算失效导致逻辑死锁的问题。",
+    "新增 LOGIC_06，指出跨天瞬间奖池收益率分母为0或极小导致状态频繁跳变的风险。",
+    "建议在后续文档修订中，将占位符（如{60}%）与表格5的配置项名称建立强映射，避免正文与配置表数值脱节。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "LOGIC_04",
+      "title": "3.8人群保护未触发时，回退流程笔误指向3.3（充裕），导致3.4/3.5状态被跳过",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence": "tiger需求文档.docx / 段落109",
+      "severity": "高",
+      "confidence": "高",
+      "reason": "段落109明确写明‘进入 3.3 奖池状态流程’，但3.3仅为充裕状态，3.4为正常，3.5为回收。此笔误会导致奖池经济模型在3.8不触发时永远只走充裕逻辑，彻底失效。"
+    },
+    {
+      "issue_id": "LOGIC_05",
+      "title": "奖池透支为负数时，兜底阈值（80%）计算失效导致逻辑死锁",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence": "tiger需求文档.docx / 段落29、段落57、段落68、段落108",
+      "severity": "高",
+      "confidence": "高",
+      "reason": "段落29允许奖池为负数，但段落57/68/108要求赔付<=实时总奖池的80%。若奖池为负，其80%仍为负，任何正赔付均大于该阈值，导致兜底逻辑死锁，永远开最小赔付。"
+    },
+    {
+      "issue_id": "LOGIC_06",
+      "title": "跨天瞬间（0点）奖池收益率分母为0或极小，导致奖池状态频繁跳变",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence": "tiger需求文档.docx / 段落42、段落43、段落44",
+      "severity": "中",
+      "confidence": "高",
+      "reason": "每日凌晨跨天瞬间，‘今日+昨日’累计收入可能瞬间为0或极小，触发分母为0进入‘回收’，或导致收益率剧烈波动，影响凌晨玩家体验与奖池稳定性。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "adjustments": "将严重程度从‘中’提升为‘高’，因为赔率冲突直接导致结算事故与资损。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "source_missed_issue_ids": [
+          "LOGIC_04"
+        ],
+        "reason": "补充3.8回退流程的致命笔误，该问题会导致奖池状态机彻底失效。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "source_missed_issue_ids": [
+          "LOGIC_05"
+        ],
+        "reason": "补充奖池透支为负数时兜底阈值计算失效的问题，防止经济模型死锁。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_06",
+        "source_missed_issue_ids": [
+          "LOGIC_06"
+        ],
+        "reason": "补充跨天瞬间奖池状态跳变的风险，完善边界条件。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的严重度误判，并补充了遗漏的高信号经济模型缺陷，结构完整、证据充分、来源可追踪，可直接输出给业务方进行文档修订。",
+  "phase2_admission": {
+    "enabled": false,
+    "claimed_count": 3,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "errors": []
+    },
+    "protocol_gate": {}
+  },
+  "candidate_block_reasons": [
+    "candidate_primary_top3_retention_below_two_thirds"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": false,
+    "phase2_candidate_inputs_sanitized": false,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {},
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.3333,
+    "primary_top3_retention_gate_passed": false,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "quality_blockers": [
+      "candidate_primary_top3_retention_below_two_thirds"
+    ]
+  }
+}

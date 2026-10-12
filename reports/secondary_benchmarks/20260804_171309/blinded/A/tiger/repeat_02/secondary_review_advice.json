@@ -1,0 +1,533 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了三个高信号核心阻塞项（0赔付兜底缺陷、机器人机制缺失、奖池正常状态概率冲突），并覆盖了赔率口径分裂、开奖分析可见性矛盾等关键问题。但在资金事务边界（扣款/派奖时机、失败补偿）和奖池透支下限方面存在明显漏检，且未发现游戏记录模块在正文与UI截图之间的时间窗口冲突。",
+    "strengths": [
+      "准确定位了0赔付兜底缺陷这一致命逻辑漏洞，证据链完整（段落57/68/108 + 段落73）",
+      "发现图22机器人流程图与正文需求脱节，指出阈值依赖人数但缺乏机器人机制支撑",
+      "识别出奖池正常状态偏移概率在正文(60%)与配置表(20%)之间的数值冲突",
+      "对赔率口径分裂（2.9 vs 3X）的多源证据收集充分（表格4、图1、图5、图7、图21）"
+    ],
+    "issues": [
+      "完全遗漏了资金事务边界：扣款时机（下注时 vs 结算时）、派奖到账时机、资金失败补偿均未覆盖",
+      "未发现奖池允许透支为负但缺乏下限定义的经济边界风险",
+      "未发现游戏记录模块正文(近3日)与UI截图(近30日)之间的时间窗口冲突",
+      "部分finding的evidence字段为空（top_blockers），影响可追踪性"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已补全资金事务边界和奖池透支下限等高信号缺口，修正了top_blockers的证据引用，lineage完整可追踪，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已补全资金事务边界和奖池透支下限等高信号缺口，修正了top_blockers的证据引用，lineage完整可追踪，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "主模型报告准确识别了三个高信号核心阻塞项，但遗漏了资金事务边界（扣款/派奖时机、失败补偿）和奖池透支下限等重要缺口。",
+    "候选稿新增5个finding（FUNDS_01/02/03、ECON_01、STATS_01），均通过phase2 coverage_ledger的confirmed_add校验。",
+    "建议后续补充：1)完整的资金流转时序图；2)奖池透支的负值下限和熔断阈值；3)断线重连后的资金补偿逻辑。",
+    "图6与表格3的时间窗口冲突（30天 vs 3天）需产品确认最终口径。",
+    "protocol_profile=phase2",
+    "phase2 准入已从 candidate 移除 rejected addition：ECON_01",
+    "phase2 准入已从 candidate 移除 rejected addition：FUNDS_01",
+    "phase2 准入已从 candidate 移除 rejected addition：FUNDS_02",
+    "phase2 准入已从 candidate 移除 rejected addition：FUNDS_03",
+    "phase2 准入已从 candidate 移除 rejected addition：STATS_01"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "primary_issue_ids": [
+          "TEST_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": false,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已补全资金事务边界和奖池透支下限等高信号缺口，修正了top_blockers的证据引用，lineage完整可追踪，可直接交付业务方阅读。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 5,
+    "admitted_count": 0,
+    "rejected_count": 5,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "FUNDS_01",
+        "title": "玩家下注本金的扣款时机未明确定义",
+        "status": "rejected",
+        "reasons": [
+          "primary_duplicate_root",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [
+          {
+            "issue_id": "SEC_01",
+            "title": "开奖兜底中‘实时计算’的判定快照时机未定义"
+          }
+        ],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "SEC_01",
+            "title": "开奖兜底中‘实时计算’的判定快照时机未定义"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落24、表格3",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "debit_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_02",
+        "title": "派奖到账用户钱包的时机未明确定义",
+        "status": "rejected",
+        "reasons": [
+          "multiroot_funds_debit_and_payout_combined",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落28、表格3",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "payout_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_03",
+        "title": "资金失败（扣款/派奖）的回滚、补偿与幂等机制完全缺失",
+        "status": "rejected",
+        "reasons": [
+          "evidence_position_unlocatable",
+          "multiroot_funds_debit_and_payout_combined",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_01",
+            "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 全文",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "funds_failure_compensation"
+      },
+      {
+        "candidate_issue_id": "ECON_01",
+        "title": "奖池允许透支为负但缺乏下限定义和熔断机制",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落29",
+        "coverage_audit_key": "max_payout_economic_boundary",
+        "coverage_control_key": "pool_negative_floor"
+      },
+      {
+        "candidate_issue_id": "STATS_01",
+        "title": "游戏记录模块的时间窗口在正文与UI截图之间存在冲突",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3、图片6",
+        "coverage_audit_key": "statistics_time_window",
+        "coverage_control_key": "ui_text_window_alignment"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 1,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "FUNDS_01": "funds_deduction_payout",
+        "FUNDS_02": "funds_deduction_payout",
+        "FUNDS_03": "funds_deduction_payout",
+        "ECON_01": "max_payout_economic_boundary",
+        "STATS_01": "statistics_time_window"
+      },
+      "unmapped_missed_issue_ids": [
+        "ECON_01",
+        "FUNDS_01",
+        "FUNDS_02",
+        "FUNDS_03",
+        "STATS_01"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [],
+      "errors": [
+        "coverage_entry_invalid:settlement_formula_ui_config:status_invalid",
+        "coverage_entry_invalid:settlement_formula_ui_config:primary_issue_ids_not_array",
+        "coverage_entry_invalid:settlement_formula_ui_config:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:settlement_formula_ui_config:evidence_checked_missing",
+        "coverage_entry_invalid:settlement_formula_ui_config:reason_missing",
+        "coverage_entry_invalid:trigger_state_termination:status_invalid",
+        "coverage_entry_invalid:trigger_state_termination:primary_issue_ids_not_array",
+        "coverage_entry_invalid:trigger_state_termination:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:trigger_state_termination:evidence_checked_missing",
+        "coverage_entry_invalid:trigger_state_termination:reason_missing",
+        "coverage_entry_invalid:funds_deduction_payout:status_invalid",
+        "coverage_entry_invalid:funds_deduction_payout:primary_issue_ids_not_array",
+        "coverage_entry_invalid:funds_deduction_payout:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:funds_deduction_payout:evidence_checked_missing",
+        "coverage_entry_invalid:funds_deduction_payout:reason_missing",
+        "coverage_entry_invalid:max_payout_economic_boundary:status_invalid",
+        "coverage_entry_invalid:max_payout_economic_boundary:primary_issue_ids_not_array",
+        "coverage_entry_invalid:max_payout_economic_boundary:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:max_payout_economic_boundary:evidence_checked_missing",
+        "coverage_entry_invalid:max_payout_economic_boundary:reason_missing",
+        "coverage_entry_invalid:statistics_time_window:status_invalid",
+        "coverage_entry_invalid:statistics_time_window:primary_issue_ids_not_array",
+        "coverage_entry_invalid:statistics_time_window:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:statistics_time_window:evidence_checked_missing",
+        "coverage_entry_invalid:statistics_time_window:reason_missing",
+        "missed_finding_not_in_confirmed_add:FUNDS_01",
+        "missed_finding_not_in_confirmed_add:FUNDS_02",
+        "missed_finding_not_in_confirmed_add:FUNDS_03",
+        "missed_finding_not_in_confirmed_add:ECON_01",
+        "missed_finding_not_in_confirmed_add:STATS_01",
+        "coverage_schema_version_too_old:1:required:2"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_invalid:settlement_formula_ui_config:status_invalid",
+      "coverage_entry_invalid:settlement_formula_ui_config:primary_issue_ids_not_array",
+      "coverage_entry_invalid:settlement_formula_ui_config:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:settlement_formula_ui_config:evidence_checked_missing",
+      "coverage_entry_invalid:settlement_formula_ui_config:reason_missing",
+      "coverage_entry_invalid:trigger_state_termination:status_invalid",
+      "coverage_entry_invalid:trigger_state_termination:primary_issue_ids_not_array",
+      "coverage_entry_invalid:trigger_state_termination:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:trigger_state_termination:evidence_checked_missing",
+      "coverage_entry_invalid:trigger_state_termination:reason_missing",
+      "coverage_entry_invalid:funds_deduction_payout:status_invalid",
+      "coverage_entry_invalid:funds_deduction_payout:primary_issue_ids_not_array",
+      "coverage_entry_invalid:funds_deduction_payout:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:funds_deduction_payout:evidence_checked_missing",
+      "coverage_entry_invalid:funds_deduction_payout:reason_missing",
+      "coverage_entry_invalid:max_payout_economic_boundary:status_invalid",
+      "coverage_entry_invalid:max_payout_economic_boundary:primary_issue_ids_not_array",
+      "coverage_entry_invalid:max_payout_economic_boundary:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:max_payout_economic_boundary:evidence_checked_missing",
+      "coverage_entry_invalid:max_payout_economic_boundary:reason_missing",
+      "coverage_entry_invalid:statistics_time_window:status_invalid",
+      "coverage_entry_invalid:statistics_time_window:primary_issue_ids_not_array",
+      "coverage_entry_invalid:statistics_time_window:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:statistics_time_window:evidence_checked_missing",
+      "coverage_entry_invalid:statistics_time_window:reason_missing",
+      "missed_finding_not_in_confirmed_add:FUNDS_01",
+      "missed_finding_not_in_confirmed_add:FUNDS_02",
+      "missed_finding_not_in_confirmed_add:FUNDS_03",
+      "missed_finding_not_in_confirmed_add:ECON_01",
+      "missed_finding_not_in_confirmed_add:STATS_01",
+      "coverage_schema_version_too_old:1:required:2"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 5,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "phase2_coverage_ledger_invalid"
+    ]
+  }
+}

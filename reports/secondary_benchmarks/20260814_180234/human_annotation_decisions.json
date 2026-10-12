@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "exported_at": "2026-08-17T10:35:59.982Z",
+  "items": [
+    {
+      "annotation_id": "A-777-R01-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-777-R01-CH002",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-777-R01-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-777-R02-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-777-R02-CH002",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-777-R02-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-racing-R02-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-tiger-R01-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-tiger-R01-CH002",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-tiger-R01-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": "图片为参考，最终要以配置为准。这里可以降低风险为中，且保证报告描述正确即可"
+    },
+    {
+      "annotation_id": "A-tiger-R01-CR002",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-tiger-R02-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-tiger-R02-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R01-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R01-CH002",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R01-CH003",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R01-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R01-CR002",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R01-CR003",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R02-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R02-CH002",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R02-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-小鸡-R02-CR002",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R01-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R01-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CH001",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CH002",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CH003",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CH004",
+      "target_correct": true,
+      "valid": true,
+      "evidence_locatable": true,
+      "actionable": true,
+      "should_split": false,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CR001",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CR002",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CR003",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    },
+    {
+      "annotation_id": "A-钱来了-R02-CR004",
+      "target_correct": true,
+      "accurate": true,
+      "supported": true,
+      "safe_to_apply": true,
+      "reviewer_notes": ""
+    }
+  ]
+}

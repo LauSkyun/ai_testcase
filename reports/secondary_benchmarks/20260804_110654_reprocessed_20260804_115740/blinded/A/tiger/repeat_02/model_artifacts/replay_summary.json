@@ -1,0 +1,324 @@
+{
+  "status": "completed",
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 3,
+    "materially_changed_titles": [
+      "奖池'正常'状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+      "开奖兜底逻辑存在导致'开出无人投注选项（0赔付）'的机制缺陷",
+      "开奖兜底中'实时计算'的判定快照时机未定义"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "奖池'正常'状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_01",
+        "issue_id": "LOGIC_01",
+        "title": "开奖兜底逻辑存在导致'开出无人投注选项（0赔付）'的机制缺陷",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:SEC_01",
+        "issue_id": "SEC_01",
+        "title": "开奖兜底中'实时计算'的判定快照时机未定义",
+        "change_kinds": [
+          "severity_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": true,
+      "results": [],
+      "coverage_ledger": {
+        "passed": true,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {},
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [],
+        "errors": [],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CLARITY_01",
+              "LOGIC_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+              "tiger需求文档.docx / 3.7.4、表格5"
+            ],
+            "reason": "主模型已覆盖赔率/倍数在正文、配置表、UI、规则、引导中的多处冲突，以及奖池正常状态偏移概率正文60%与配置表20%的数值冲突。",
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CLARITY_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22"
+            ],
+            "reason": "主模型已覆盖开奖阈值强依赖投入人数但正文缺失机器人/假人投放机制的问题，并正确关联到图22的机器人流程图。",
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3、段落29"
+            ],
+            "reason": "主模型已覆盖开奖兜底逻辑在'无人投注选项赔付=0'与'选择赔付最少'组合下会开出0赔付选项的机制缺陷。",
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "advice_only",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 表格5、表格3"
+            ],
+            "reason": "文档未明确单用户单局最大赔付上限或MAX_MUL，但通过档位配置（最高5000）和最多3个选项下注，隐含单局最大赔付约43500，远低于初始奖池3000000，实际风险可控。建议补充显式封顶说明以便验收。",
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "tiger需求文档.docx / 3.7.2、3.8.1、表格3"
+            ],
+            "reason": "文档对奖池收益率（今日+昨日）、新用户（近30日含今日）、亏损大R（过去7日不含今日）、预流失用户（过去15天不含今日）、开奖分析（最近1小时/今日/最近7天）、游戏记录（近3日）等时间窗口定义清晰，未发现冲突。",
+            "errors": []
+          }
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_01",
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+            "tiger需求文档.docx / 3.7.4、表格5"
+          ],
+          "reason": "主模型已覆盖赔率/倍数在正文、配置表、UI、规则、引导中的多处冲突，以及奖池正常状态偏移概率正文60%与配置表20%的数值冲突。",
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CLARITY_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22"
+          ],
+          "reason": "主模型已覆盖开奖阈值强依赖投入人数但正文缺失机器人/假人投放机制的问题，并正确关联到图22的机器人流程图。",
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3、段落29"
+          ],
+          "reason": "主模型已覆盖开奖兜底逻辑在'无人投注选项赔付=0'与'选择赔付最少'组合下会开出0赔付选项的机制缺陷。",
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格5、表格3"
+          ],
+          "reason": "文档未明确单用户单局最大赔付上限或MAX_MUL，但通过档位配置（最高5000）和最多3个选项下注，隐含单局最大赔付约43500，远低于初始奖池3000000，实际风险可控。建议补充显式封顶说明以便验收。",
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 3.7.2、3.8.1、表格3"
+          ],
+          "reason": "文档对奖池收益率（今日+昨日）、新用户（近30日含今日）、亏损大R（过去7日不含今日）、预流失用户（过去15天不含今日）、开奖分析（最近1小时/今日/最近7天）、游戏记录（近3日）等时间窗口定义清晰，未发现冲突。",
+          "errors": []
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

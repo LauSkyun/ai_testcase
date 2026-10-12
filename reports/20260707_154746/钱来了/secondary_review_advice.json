@@ -1,0 +1,261 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体结构完整，主流程循环理解正确，核心问题（RESPIN盘面生成矛盾、风控封顶冲突、免费符号赔付缺失）识别较为精准。但部分问题定性过于激进，例如将'表演阶段临时构造盘面'与'初始盘面生成规则'的不同层次描述定性为'根本矛盾'，实际可通过服务端-客户端分工说明消解；风控阈值与封顶规则的口径歧义被误判为无法调和的数值冲突。此外，报告遗漏了'推展触发条件与RESPIN互斥判定顺序'这一直接阻塞状态机实现的缺失，以及'展示赔率口径与结算赔率口径不一致风险'的排查。",
+    "strengths": [
+      "主玩法循环与关键数值公式的映射关系梳理清晰（总下注=基础投注×线路系数，中奖金额=乘数×符号值）",
+      "RESPIN、推展、免费游戏三大特色机制的核心矛盾点定位准确",
+      "购买免费游戏、大奖阈值、银行符号映射等配置缺失的识别全面",
+      "异常恢复验收缺失的提醒到位"
+    ],
+    "issues": [
+      "将'表演阶段临时构造盘面'与'初始盘面生成规则'的不同层次描述，错误定性为'不可调和的根本矛盾'，实际可通过服务端先决结果再构造表演盘面的流程消解",
+      "风控100倍强制0倍与免费游戏2000倍封顶，在未明确计数口径（单局/累计）和适用场景（普通/免费）的情况下，被直接判定为'数值冲突'，过度简化了问题",
+      "遗漏了'推展触发条件缺失'这一直接阻塞状态机实现的根因需求文档未定义推展的触发概率或判定逻辑",
+      "未排查展示赔率与结算赔率口径不一致的风险（盘面显示的是'投注额×倍率'的绝对金额，还是'倍率'本身）",
+      "部分问题的严重程度偏高，如RESPIN矛盾可降级为'严重歧义'，风控冲突可降级为'阈值与口径需澄清'"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型误判的定性，保留核心阻塞项，补全遗漏的推展触发条件问题，证据充分、来源可追踪，可直接交付业务方。建议值medium仅因仍有待产品拍板的阈值、口径澄清，但不影响报告本身作为工作文档的交付质量。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型误判的定性，保留核心阻塞项，补全遗漏的推展触发条件问题，证据充分、来源可追踪，可直接交付业务方。建议值medium仅因仍有待产品拍板的阈值、口径澄清，但不影响报告本身作为工作文档的交付质量。"
+  },
+  "review_notes": [
+    "主模型将'表演阶段临时构造盘面'与'初始盘面生成规则'的不同层次描述定性为'根本矛盾'，实际可通过服务端先决结果再构造表演盘面的流程消解，候选报告已调整为'严重歧义'。",
+    "主模型将风控100倍与封顶2000倍直接定性为'数值冲突'，未考虑口径差异（单局/累计、普通/免费），候选报告已调整为'阈值与口径需澄清'。",
+    "主模型LOGIC_04（推展动画与结果映射不清）已吸收至LOGIC_01的现状描述中，不再作为独立问题。",
+    "候选报告新增MISSED_01（推展触发条件缺失）作为高阻塞问题，因为数值文档虽有概率值但未绑定触发条件，直接阻塞状态机实现。",
+    "候选报告新增MISSED_02（展示赔率与结算赔率口径不一致风险）作为中风险问题，这是常见的客诉根源，需在文档中统一口径。",
+    "建议后续将RESPIN、推展、免费游戏三大机制的状态机合并为一张流程图，明确各节点的判定顺序和互斥关系。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "candidate_issue_id": "LOGIC_01",
+      "primary_issue_ids": [
+        "LOGIC_01",
+        "LOGIC_04"
+      ],
+      "reason": "LOGIC_01（RESPIN盘面生成矛盾）与LOGIC_04（推展动画与结果映射不清）本质上都是'表演逻辑与真实结果的映射关系'问题，合并后调整为'表演阶段盘面构造规则与真实结果的一致性说明缺失'，但考虑到主模型已分别定位，候选稿保留原骨架，仅将LOGIC_01降级为歧义，LOGIC_04吸收至LOGIC_01的现状描述中。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_01",
+      "canonical_title": "推展触发条件缺失",
+      "description": "需求文档仅描述推展的机制效果（中间轴向上或向下推展一次），但未定义推展的触发概率或判定逻辑。数值文档表格4给出了'推展发生几率0.15'，但未说明该概率在什么条件下判定（是否仅当1,3列匹配且中间轴为空时触发？），也未说明推展方向的选择规则（向上/向下是否随机，权重如何）。",
+      "evidence": "钱来了需求文档.docx / 3.4.2 推展模式 & 钱来了数值文档.docx / 表格4",
+      "impact": "阻塞状态机实现，程序无法确定推展的判定节点和方向选择逻辑，测试无法设计验收用例。",
+      "severity": "高",
+      "confidence": "高",
+      "blocking": "阻塞开发",
+      "planner_role": "数值策划",
+      "suggestion": "明确推展的触发条件：是否仅在'1,3列匹配且中间轴为空'时判定？推展方向（向上/向下）是否随机、权重各占多少？"
+    },
+    {
+      "issue_id": "MISSED_02",
+      "canonical_title": "展示赔率与结算赔率口径不一致风险",
+      "description": "需求文档称盘面数值符号显示'0.1倍、0.5倍、1倍、5倍、10倍投注金额'，数值文档公式为'中奖金额=乘数×符号值（即基础投注×符号赔率）'。盘面显示的是'倍率'还是'基础投注×倍率'的绝对金额，文档未统一。若客户端显示倍率（如'10'），但服务端结算使用的是绝对金额，将导致玩家看到的数字与最终到账金额不一致，引发客诉。",
+      "evidence": "钱来了需求文档.docx / 3.3.1 数值符号 & 钱来了数值文档.docx / 四、基础游戏・投注与中奖计算",
+      "impact": "客户端展示与服务端结算可能不一致，导致玩家误解中奖金额，客诉风险高。",
+      "severity": "中",
+      "confidence": "中",
+      "blocking": "阻塞测试用例设计",
+      "planner_role": "系统策划",
+      "suggestion": "统一盘面显示值与结算计算值的映射关系，明确盘面显示的是'倍率'还是'投注额×倍率后的绝对金额'，并在UI展示和结算公式中保持一致。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "将'根本矛盾'定性调整为'严重歧义'，补充表演阶段盘面构造的说明，降低严重程度为'中'，blocking级别调整为'阻塞测试用例设计'。现状描述中吸收了LOGIC_04的推展动画映射问题（分点展开）。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "将'数值冲突'定性调整为'阈值与口径需澄清'，明确当前仅存在口径歧义而非不可调和的矛盾，降低严重程度为'中'，blocking级别调整为'阻塞测试用例设计'。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "保留原骨架，微调标题为'免费旋转符号的基础赔付乘数缺失导致结算链路断裂'，补充'若等同于银行符号（乘数1）需在文档中明确映射'的建议。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "保留原骨架，重新组织现状描述为分点（价格公式缺失、断线恢复缺失、重复请求幂等缺失），补充服务端权威校验的验收建议。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "保留原骨架，降低严重程度为'低'，blocking级别调整为'不阻塞'，因为仅影响客户端表现，不影响核心结算。"
+      },
+      {
+        "candidate_issue_id": "CROSS_04",
+        "primary_issue_ids": [
+          "CROSS_04"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "保留原骨架，证据引用修正为'钱来了需求文档.docx / 3.3.2 中间轴符号'，因为共享输入中无'快钱来了需求文档'的文档名。"
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "保留原骨架，补充RESPIN表演中、推展动画中、购买结算中断线的具体验收场景描述。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "MISSED_01",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "推展触发条件缺失直接阻塞状态机实现，主模型未覆盖，须作为独立问题补充。"
+      },
+      {
+        "candidate_issue_id": "MISSED_02",
+        "source_missed_issue_ids": [
+          "MISSED_02"
+        ],
+        "reason": "展示赔率与结算赔率口径不一致风险是常见的客诉根源，主模型未排查，须作为中风险问题补充。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型误判的定性，保留核心阻塞项，补全遗漏的推展触发条件问题，证据充分、来源可追踪，可直接交付业务方。建议值medium仅因仍有待产品拍板的阈值、口径澄清，但不影响报告本身作为工作文档的交付质量。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

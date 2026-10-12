@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "review_method": "逐条对照冻结需求上下文与冻结 Primary 报告人工复核；先判断事实成立，再判断重复、证据、严重度与可执行性。",
+  "items": [
+    {"annotation_id":"A-777-R01-A001","valid":true,"duplicate":true,"unsupported":false,"overstated":true,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"段落18的“组合结果为空白”确有基础盘面/特殊轴指代歧义，但与 Primary CLARITY_02 的0与空白定义混淆属于同一空白术语根因，应吸收而非新增；标题中的“致命”及高风险定性偏重。"},
+    {"annotation_id":"A-777-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"100倍风控是否覆盖RESPIN累计结果未明确，独立的最大赔付边界成立；证据和整改口径完整。"},
+    {"annotation_id":"A-racing-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"下注时是否扣除或冻结本金未定义，属于 Primary 未覆盖的核心资金流缺口；证据和建议可执行。"},
+    {"annotation_id":"A-racing-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"与第一次复跑命中同一根因，并补充奖池注入同步时点；核心结论成立且可直接形成资金流水验收。"},
+    {"annotation_id":"A-tiger-R01-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"胜率分母未说明是否只统计已结算有效局，异常/流局边界确实影响统计验收；中风险和建议合理。"},
+    {"annotation_id":"A-tiger-R02-A001","valid":false,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"非去重投入次数与保护人群去重人数服务于不同规则，可以按各自定义同时实现；模型误把不同指标用途判成同一概念冲突，并建议强行统一口径，可能破坏原策略。"},
+    {"annotation_id":"A-tiger-R02-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"正文50000000与配置表5000000相差10倍，属于直接数值冲突，Primary 未覆盖。"},
+    {"annotation_id":"A-tiger-R02-A003","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"开奖分析正文7天与UI 30天直接冲突，证据和统一方案完整。"},
+    {"annotation_id":"A-tiger-R02-A004","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"游戏记录正文3日、UI 30日/1日确有独立模块冲突；被确定性归一化为同类时间窗口后拒收，属于准入召回损失。"},
+    {"annotation_id":"A-小鸡-R01-A001","valid":true,"duplicate":true,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"小鸡与骆驼资源方向冲突成立，但冻结 Primary 的 CORE_DIFFICULTY_CONFIG_MISMATCH 已包含同一题材症状；拒收重复正确。"},
+    {"annotation_id":"A-小鸡-R01-A002","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"开局扣款、本金与失败清零口径未定义，属于独立核心经济循环缺口；证据、风险和修订规则完整。"},
+    {"annotation_id":"A-小鸡-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"第二次复跑稳定命中同一扣款与本金根因，并补充数值文档证据；结论成立。"},
+    {"annotation_id":"A-钱来了-R01-A001","valid":true,"duplicate":true,"unsupported":false,"overstated":true,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"购买价格公式和配置序号仍不完整，但 Primary CROSS_03 已明确覆盖购买价格、初始次数和自然触发规则；重复且“整体无法实现”的高风险定性偏重。"},
+    {"annotation_id":"A-钱来了-R01-A002","valid":true,"duplicate":true,"unsupported":false,"overstated":true,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"出现权重与表演权重关系确需说明，但该项包含的ID=0替换逻辑已由 Primary LOGIC_03 覆盖，属于同根因扩写；高风险定性偏重。"},
+    {"annotation_id":"A-钱来了-R01-A003","valid":false,"duplicate":false,"unsupported":true,"overstated":true,"understated":false,"multiroot":false,"actionable":false,"reviewer_notes":"重转与推展的触发条件本来就互斥，额外写优先级不构成实现缺口；fact_check 自己也承认可兼容，仅适合作为编辑备注。"},
+    {"annotation_id":"A-钱来了-R02-A001","valid":true,"duplicate":false,"unsupported":false,"overstated":false,"understated":false,"multiroot":false,"actionable":true,"reviewer_notes":"1x3盘面不可能出现4个及以上符号，且与另一处续杯规则直接冲突；这是 Primary 仅提续杯概率配置之外的独立高价值问题。"}
+  ]
+}

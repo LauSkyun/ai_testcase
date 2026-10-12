@@ -1,0 +1,249 @@
+{
+  "target_coverage_ledger": [
+    {
+      "target_issue_id": "CLARITY_01",
+      "target_order": 1,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "疯狂777需求文档修改后.docx / 二、需求描述，段落10-13",
+      "rationale": "需求文档对any/any bar/any 7的定义确实存在逻辑不通和歧义，与赔付表ID无法对应，原finding证据充分。"
+    },
+    {
+      "target_issue_id": "CLARITY_02",
+      "target_order": 2,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "crazy777数值文档修改后.docx / 三、基础游戏・乘数符号，段落21及表格4",
+      "rationale": "数值文档表格4中乘数符号写为“0”，而段落21解释为“空白”，确实存在定义混淆，原finding成立。"
+    },
+    {
+      "target_issue_id": "CLARITY_03",
+      "target_order": 3,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "疯狂777需求文档修改后.docx / 游戏主模块展示界面，段落30",
+      "rationale": "需求文档中“向下取整”与“直接截断”混用，且未明确服务端精度，表述确实不严谨，原finding成立。"
+    },
+    {
+      "target_issue_id": "CROSS_01",
+      "target_order": 4,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "drop",
+      "evidence_checked": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "rationale": "两份文档均明确支持加法累加逻辑，数值文档中的“乘数”为名词，“累加”明确了运算方式为加法，不存在实质冲突。"
+    },
+    {
+      "target_issue_id": "LOGIC_01",
+      "target_order": 5,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "drop",
+      "evidence_checked": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、34、35、43、44、45",
+      "rationale": "数值文档多次使用“累加”、“累积”、“累计”，且明确“初始乘数值=1”，逻辑自洽且与需求文档一致，不存在严重歧义。"
+    },
+    {
+      "target_issue_id": "LOGIC_03",
+      "target_order": 6,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "drop",
+      "evidence_checked": "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落38-40",
+      "rationale": "文档已清晰界定推展机制为客户端表现激励（先得到最终结果盘面，再进行一次表演），不改变最终结算结果，逻辑自洽。"
+    },
+    {
+      "target_issue_id": "LOGIC_02",
+      "target_order": 7,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "crazy777数值文档修改后.docx / 段落42、55-56、59",
+      "rationale": "风控强制0倍需将123列变空，与RESPIN触发条件（123列均不为空）存在时序和逻辑上的潜在冲突，文档未明确风控是否豁免RESPIN，原finding成立。"
+    },
+    {
+      "target_issue_id": "LOGIC_04",
+      "target_order": 8,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "drop",
+      "evidence_checked": "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61",
+      "rationale": "文档段落61已明确RESPIN流程为“判定重转次数→确定判定每次重转值→...本次重转值必定为空”，说明服务端会预先抽取序列，不存在逻辑缺失。"
+    },
+    {
+      "target_issue_id": "TEST_01",
+      "target_order": 9,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "drop",
+      "evidence_checked": "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+      "rationale": "需求文档段落35明确“RESPIN结算完成后停止”，段落36明确快捷旋转下“快速播放累加动画”，交互规则已定义清晰，不存在缺失。"
+    },
+    {
+      "target_issue_id": "UX_01",
+      "target_order": 10,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落40",
+      "rationale": "推展机制先展示空再展示X10，确实可能引起部分玩家误解，原finding作为UX建议合理成立。"
+    }
+  ],
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-CROSS_01",
+      "target_issue_id": "CROSS_01",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "RESPIN累加算法在需求与数值文档中存在表述冲突",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "counterevidence": "数值文档段落23明确“进行累加”、“初始乘数值=1”，段落43“最终得奖= 基础赔率 × 累加乘数值”，与需求文档段落19的加法举例(1+2+1+5)完全一致。",
+      "rationale": "两份文档均明确支持加法累加逻辑，数值文档中的“乘数”为名词（Multiplier），“累加”明确了运算方式为加法，不存在实质冲突。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-LOGIC_01",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "RESPIN累加算法存在加法与乘法的严重歧义",
+      "evidence": "crazy777数值文档修改后.docx / 段落23、34、35、43、44、45",
+      "counterevidence": "数值文档多次使用“累加”、“累积”、“累计”，且明确“初始乘数值=1”，逻辑自洽且与需求文档一致。",
+      "rationale": "文档已明确使用“累加”一词，运算逻辑清晰为加法，不存在加法与乘法的严重歧义，仅为术语“乘数”可能引起的直觉误解。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-LOGIC_03",
+      "target_issue_id": "LOGIC_03",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "推展机制（激励）的触发条件与表现逻辑自相矛盾",
+      "evidence": "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落38-40",
+      "counterevidence": "段落39明确“先得到最终结果盘面，再进行一次表演”，段落40举例说明“先让盘面为5倍+空...而后必定推展X10为最终结果”。",
+      "rationale": "文档已清晰界定推展机制为客户端表现激励，不改变最终结算结果，逻辑自洽，不存在自相矛盾。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-LOGIC_04",
+      "target_issue_id": "LOGIC_04",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "RESPIN次数与每次乘数值的抽取逻辑缺失",
+      "evidence": "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61",
+      "counterevidence": "段落61明确流程为“判定重转次数→确定判定每次重转值→...本次重转值必定为空（0）”。",
+      "rationale": "文档已说明服务端会预先判定次数并确定每次重转值，以保证最后一次必定为空，抽取逻辑（预先抽取序列）已定义，不存在缺失。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-TEST_01",
+      "target_issue_id": "TEST_01",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "自动旋转/快捷旋转与RESPIN状态的交互规则缺失",
+      "evidence": "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+      "counterevidence": "段落35明确“RESPIN结算完成后停止”，段落36明确快捷旋转下“快速播放累加动画”。",
+      "rationale": "需求文档已明确定义自动旋转和快捷旋转在RESPIN状态下的交互规则，不存在缺失或自相矛盾。",
+      "recommended_action": "drop",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-CROSS_01",
+      "challenge_id": "CH-CROSS_01",
+      "target_issue_id": "CROSS_01",
+      "correction_disposition": "drop",
+      "source_provenance": "mixed",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、43-45",
+      "rationale": "原判断基于对文档术语的误读，实际两份文档均明确支持加法累加逻辑，不存在实质冲突，原finding不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-LOGIC_01",
+      "challenge_id": "CH-LOGIC_01",
+      "target_issue_id": "LOGIC_01",
+      "correction_disposition": "drop",
+      "source_provenance": "mixed",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落23、34、35、43、44、45",
+      "rationale": "数值文档多次使用“累加”等明确词汇，运算逻辑清晰为加法，不存在严重歧义，原finding不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-LOGIC_03",
+      "challenge_id": "CH-LOGIC_03",
+      "target_issue_id": "LOGIC_03",
+      "correction_disposition": "drop",
+      "source_provenance": "numeric_config",
+      "evidence": "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落38-40",
+      "rationale": "文档已清晰界定推展机制为客户端表现激励，不改变最终结算结果，逻辑自洽，原finding不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-LOGIC_04",
+      "challenge_id": "CH-LOGIC_04",
+      "target_issue_id": "LOGIC_04",
+      "correction_disposition": "drop",
+      "source_provenance": "numeric_config",
+      "evidence": "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61",
+      "rationale": "文档已说明服务端会预先判定次数并确定每次重转值，抽取逻辑已定义，原finding不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-TEST_01",
+      "challenge_id": "CH-TEST_01",
+      "target_issue_id": "TEST_01",
+      "correction_disposition": "drop",
+      "source_provenance": "requirement_text",
+      "evidence": "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35-36",
+      "rationale": "需求文档已明确定义自动旋转和快捷旋转在RESPIN状态下的交互规则，不存在缺失，原finding不成立，予以移除。",
+      "residual_issue": "",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": false,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {},
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "Primary 报告在生成时对数值文档的术语和流程描述理解不够深入，将已明确解释的加法累加逻辑、表现激励推展机制、预先抽取序列的RESPIN流程以及已定义的交互规则误判为冲突、歧义或缺失。",
+    "经影子纠错，CROSS_01、LOGIC_01、LOGIC_03、LOGIC_04、TEST_01 均因存在 compatible_interpretation 且原判断不成立，建议 drop 移除。",
+    "CLARITY_01、CLARITY_02、CLARITY_03、LOGIC_02、UX_01 证据充分，逻辑成立，予以 pass 保留。",
+    "protocol_profile=phase3_v1_2; primary_report_hash=411c816a4693f1e8cbbfac916ff89f6ceba7b79e3fcc87fea05190f54c4ab369"
+  ]
+}

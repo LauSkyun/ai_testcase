@@ -1,0 +1,692 @@
+{
+  "status": "completed",
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 1,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 0,
+    "materially_changed_titles": [],
+    "materially_changed_examples": []
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": true,
+      "results": [],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": true,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [],
+        "confirmed_control_keys": [],
+        "candidate_to_audit_key": {},
+        "candidate_to_control_key": {},
+        "finding_audit_keys": {},
+        "finding_control_keys": {},
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "inferred_coverage_schema_version:2_from_complete_control_shape"
+        ],
+        "errors": [],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CROSS_01"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算",
+              "钱来了需求文档.docx / 3.3.1 符号分类总览、3.3.2 中间轴符号",
+              "钱来了数值文档.docx / 表格2、表格3"
+            ],
+            "reason": "Primary CROSS_01已覆盖结算公式术语不一致问题，明确指出'金币赔率倍数'与'投注额乘数'的口径分裂；Primary CROSS_01已覆盖UI配置映射口径问题，指出需求文档与数值文档对符号定义的表述不一致",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算"
+                ],
+                "reason": "Primary CROSS_01已覆盖结算公式术语不一致问题，明确指出'金币赔率倍数'与'投注额乘数'的口径分裂",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.3.1 符号分类总览、3.3.2 中间轴符号",
+                  "钱来了数值文档.docx / 表格2、表格3"
+                ],
+                "reason": "Primary CROSS_01已覆盖UI配置映射口径问题，指出需求文档与数值文档对符号定义的表述不一致",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_02",
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+              "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+              "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+            ],
+            "reason": "Primary LOGIC_02已覆盖触发条件矛盾问题，指出底层数据不生成1,3均不为空的局面与RESPIN触发条件的冲突；Primary CROSS_02已覆盖终止优先级与封顶规则冲突问题，指出风控100倍与封顶2000倍的基数口径不清",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制"
+                ],
+                "reason": "Primary LOGIC_02已覆盖触发条件矛盾问题，指出底层数据不生成1,3均不为空的局面与RESPIN触发条件的冲突",
+                "errors": []
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+                  "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+                ],
+                "reason": "Primary CROSS_02已覆盖终止优先级与封顶规则冲突问题，指出风控100倍与封顶2000倍的基数口径不清",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "advice_only",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 3.2.4 基础游戏流程",
+              "钱来了需求文档.docx / 全文"
+            ],
+            "reason": "文档提及'点击旋转按钮'开始游戏，但未明确扣款时机，属低信号通用平台能力，建议补充但不阻塞；文档提及'结算当前中奖金额，更新玩家货币余额'，但未明确派奖时机，属低信号通用平台能力，建议补充但不阻塞；文档未明确资金失败补偿机制，属低信号通用平台能力，建议补充但不阻塞",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.2.4 基础游戏流程"
+                ],
+                "reason": "文档提及'点击旋转按钮'开始游戏，但未明确扣款时机，属低信号通用平台能力，建议补充但不阻塞",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.2.4 基础游戏流程"
+                ],
+                "reason": "文档提及'结算当前中奖金额，更新玩家货币余额'，但未明确派奖时机，属低信号通用平台能力，建议补充但不阻塞",
+                "errors": []
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "advice_only",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文"
+                ],
+                "reason": "文档未明确资金失败补偿机制，属低信号通用平台能力，建议补充但不阻塞",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "CROSS_02"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+              "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控",
+              "钱来了需求文档.docx / 全文",
+              "钱来了数值文档.docx / 全文"
+            ],
+            "reason": "Primary CROSS_02已覆盖相对赔付上限冲突问题，指出风控100倍与封顶2000倍的口径冲突；文档未涉及奖池机制，不适用；Primary CROSS_02已覆盖单局赔付封顶冲突问题，指出风控与封顶规则的基数口径不清",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+                  "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+                ],
+                "reason": "Primary CROSS_02已覆盖相对赔付上限冲突问题，指出风控100倍与封顶2000倍的口径冲突",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "文档未涉及奖池机制，不适用",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CROSS_02"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+                  "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+                ],
+                "reason": "Primary CROSS_02已覆盖单局赔付封顶冲突问题，指出风控与封顶规则的基数口径不清",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "not_applicable",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "钱来了需求文档.docx / 全文",
+              "钱来了数值文档.docx / 全文"
+            ],
+            "reason": "文档未涉及统计窗口，不适用；文档未涉及UI文本窗口对齐，不适用",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "文档未涉及统计窗口，不适用",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "钱来了需求文档.docx / 全文",
+                  "钱来了数值文档.docx / 全文"
+                ],
+                "reason": "文档未涉及UI文本窗口对齐，不适用",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": true
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [],
+      "confirmed_control_keys": [],
+      "candidate_to_audit_key": {},
+      "candidate_to_control_key": {},
+      "finding_audit_keys": {},
+      "finding_control_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算",
+            "钱来了需求文档.docx / 3.3.1 符号分类总览、3.3.2 中间轴符号",
+            "钱来了数值文档.docx / 表格2、表格3"
+          ],
+          "reason": "Primary CROSS_01已覆盖结算公式术语不一致问题，明确指出'金币赔率倍数'与'投注额乘数'的口径分裂；Primary CROSS_01已覆盖UI配置映射口径问题，指出需求文档与数值文档对符号定义的表述不一致",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算"
+              ],
+              "reason": "Primary CROSS_01已覆盖结算公式术语不一致问题，明确指出'金币赔率倍数'与'投注额乘数'的口径分裂",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.3.1 符号分类总览、3.3.2 中间轴符号",
+                "钱来了数值文档.docx / 表格2、表格3"
+              ],
+              "reason": "Primary CROSS_01已覆盖UI配置映射口径问题，指出需求文档与数值文档对符号定义的表述不一致",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+            "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "Primary LOGIC_02已覆盖触发条件矛盾问题，指出底层数据不生成1,3均不为空的局面与RESPIN触发条件的冲突；Primary CROSS_02已覆盖终止优先级与封顶规则冲突问题，指出风控100倍与封顶2000倍的基数口径不清",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制"
+              ],
+              "reason": "Primary LOGIC_02已覆盖触发条件矛盾问题，指出底层数据不生成1,3均不为空的局面与RESPIN触发条件的冲突",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+                "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+              ],
+              "reason": "Primary CROSS_02已覆盖终止优先级与封顶规则冲突问题，指出风控100倍与封顶2000倍的基数口径不清",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程",
+            "钱来了需求文档.docx / 全文"
+          ],
+          "reason": "文档提及'点击旋转按钮'开始游戏，但未明确扣款时机，属低信号通用平台能力，建议补充但不阻塞；文档提及'结算当前中奖金额，更新玩家货币余额'，但未明确派奖时机，属低信号通用平台能力，建议补充但不阻塞；文档未明确资金失败补偿机制，属低信号通用平台能力，建议补充但不阻塞",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.2.4 基础游戏流程"
+              ],
+              "reason": "文档提及'点击旋转按钮'开始游戏，但未明确扣款时机，属低信号通用平台能力，建议补充但不阻塞",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.2.4 基础游戏流程"
+              ],
+              "reason": "文档提及'结算当前中奖金额，更新玩家货币余额'，但未明确派奖时机，属低信号通用平台能力，建议补充但不阻塞",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文"
+              ],
+              "reason": "文档未明确资金失败补偿机制，属低信号通用平台能力，建议补充但不阻塞",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控",
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "Primary CROSS_02已覆盖相对赔付上限冲突问题，指出风控100倍与封顶2000倍的口径冲突；文档未涉及奖池机制，不适用；Primary CROSS_02已覆盖单局赔付封顶冲突问题，指出风控与封顶规则的基数口径不清",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+                "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+              ],
+              "reason": "Primary CROSS_02已覆盖相对赔付上限冲突问题，指出风控100倍与封顶2000倍的口径冲突",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及奖池机制，不适用",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CROSS_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+                "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+              ],
+              "reason": "Primary CROSS_02已覆盖单局赔付封顶冲突问题，指出风控与封顶规则的基数口径不清",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "文档未涉及统计窗口，不适用；文档未涉及UI文本窗口对齐，不适用",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及统计窗口，不适用",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "钱来了需求文档.docx / 全文",
+                "钱来了数值文档.docx / 全文"
+              ],
+              "reason": "文档未涉及UI文本窗口对齐，不适用",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

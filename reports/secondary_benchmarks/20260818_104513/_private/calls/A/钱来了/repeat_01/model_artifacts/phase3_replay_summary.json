@@ -1,0 +1,34 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "protocol_gate_passed": true,
+  "baseline_lock_passed": true,
+  "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+  "challenge_claimed_count": 3,
+  "challenge_accepted_count": 3,
+  "challenge_rejected_count": 0,
+  "correction_claimed_count": 3,
+  "correction_accepted_count": 0,
+  "correction_rejected_count": 3,
+  "correction_abstained_count": 0,
+  "correction_disposition_counts": {},
+  "challenge_keys": [
+    "CLARITY_01:compatible_interpretation:clarify",
+    "CROSS_01:overstated:clarify",
+    "LOGIC_02:compatible_interpretation:clarify"
+  ],
+  "correction_keys": [],
+  "target_coverage_ledger_complete": true,
+  "target_coverage_ledger_completeness": 1.0,
+  "target_coverage_ledger_valid": true,
+  "target_coverage_ledger_errors": [],
+  "target_decision_keys": [
+    "CLARITY_01:challenge",
+    "CLARITY_02:pass",
+    "CROSS_01:challenge",
+    "CROSS_02:pass",
+    "CROSS_03:pass",
+    "LOGIC_01:pass",
+    "LOGIC_02:challenge",
+    "LOGIC_03:pass"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "game": "racing",
+  "variant_id": "B",
+  "repeat": 2,
+  "status": "completed",
+  "output_dir": "blinded/B/racing/repeat_02",
+  "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+  "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+  "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+  "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+  "secondary_message_hash": "325704cb5e87210c372dc15c0a21d69a14c13fecaf8eaf80919103c2f48ad90d",
+  "temperature": 0,
+  "attempt_count": 0,
+  "reprocessed_saved_raw": true,
+  "secondary_response_hash": "d95a52b0f13c414c08fb5351aaca47388cd75e992ea24fbe20d54f0da00d9b9d",
+  "selected_report_owner": "candidate",
+  "candidate_gate_passed": true,
+  "candidate_recommendation_status": "recommended",
+  "traceability_status": "complete",
+  "claimed_added_count": 3,
+  "materialized_added_count": 3,
+  "added_root_keys": [
+    "issue:COMP_RECONNECT_REENTER_MISSING",
+    "title:奖池状态计算公式存在除零边界漏洞",
+    "title:数值文档赔率公式中wx与r变量未定义"
+  ],
+  "high_added_root_keys": [
+    "title:数值文档赔率公式中wx与r变量未定义"
+  ],
+  "added_severity_by_root": {
+    "issue:COMP_RECONNECT_REENTER_MISSING": "medium",
+    "title:奖池状态计算公式存在除零边界漏洞": "medium",
+    "title:数值文档赔率公式中wx与r变量未定义": "high"
+  },
+  "selected_top_blocker_keys": [
+    "cluster:formula_odds_conflict",
+    "issue:LOGIC_RTP_PROBABILITY_MAPPING_MISSING",
+    "title:实际赔率与假赔率的客户端展示与服务端结算映射缺失"
+  ],
+  "primary_top_blocker_retention": 0.6667,
+  "field_completeness": 0.4286,
+  "multiroot_finding_count": 0,
+  "unsupported_severity_change_count": 0,
+  "unsupported_blocking_change_count": 0,
+  "lineage_mismatch": false,
+  "materialization_mismatch": false,
+  "major_judgment_drift": false,
+  "selected_finding_count": 10
+}

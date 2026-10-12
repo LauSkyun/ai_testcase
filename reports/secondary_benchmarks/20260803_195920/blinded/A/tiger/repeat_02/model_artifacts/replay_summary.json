@@ -1,0 +1,382 @@
+{
+  "status": "completed",
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 0.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_count_invalid:0",
+      "coverage_audit_key_order_invalid",
+      "missed_finding_not_in_confirmed_add:LOGIC_04",
+      "missed_finding_not_in_confirmed_add:LOGIC_05",
+      "missed_finding_not_in_confirmed_add:CLARITY_04",
+      "missed_finding_not_in_confirmed_add:CLARITY_05"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 4,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 1,
+    "materially_changed_titles": [
+      "奖池'正常'状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "奖池'正常'状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 4,
+      "admitted_count": 0,
+      "rejected_count": 4,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "LOGIC_04",
+          "title": "投入人数统计口径在不同规则中不一致（非去重 vs 去重）",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "value_mismatch_same_scope_unverified",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "CLARITY_02",
+              "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制"
+            },
+            {
+              "issue_id": "CLARITY_01",
+              "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 3.7.3、3.7.5、3.8.2、3.8.3",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "LOGIC_05",
+          "title": "亏损大R累计亏损阈值在正文与配置表中存在10倍差异",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 3.8.1.2、表格5",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "CLARITY_04",
+          "title": "开奖分析模块的时间范围在正文与UI截图中存在冲突",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3、图13",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "CLARITY_05",
+          "title": "游戏记录展示范围在正文与UI截图中存在冲突",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3、图6、图8",
+          "coverage_audit_key": ""
+        }
+      ],
+      "coverage_ledger": {
+        "passed": false,
+        "completeness": 0.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {
+          "LOGIC_04": "",
+          "LOGIC_05": "",
+          "CLARITY_04": "",
+          "CLARITY_05": ""
+        },
+        "unmapped_missed_issue_ids": [
+          "CLARITY_04",
+          "CLARITY_05",
+          "LOGIC_04",
+          "LOGIC_05"
+        ],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "errors": [
+          "coverage_entry_count_invalid:0",
+          "coverage_audit_key_order_invalid",
+          "missed_finding_not_in_confirmed_add:LOGIC_04",
+          "missed_finding_not_in_confirmed_add:LOGIC_05",
+          "missed_finding_not_in_confirmed_add:CLARITY_04",
+          "missed_finding_not_in_confirmed_add:CLARITY_05"
+        ],
+        "entries": []
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 4,
+    "admitted_count": 0,
+    "rejected_count": 4,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "title": "投入人数统计口径在不同规则中不一致（非去重 vs 去重）",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "value_mismatch_same_scope_unverified",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_02",
+            "title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制"
+          },
+          {
+            "issue_id": "CLARITY_01",
+            "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 3.7.3、3.7.5、3.8.2、3.8.3",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "title": "亏损大R累计亏损阈值在正文与配置表中存在10倍差异",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 3.8.1.2、表格5",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "title": "开奖分析模块的时间范围在正文与UI截图中存在冲突",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3、图13",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "CLARITY_05",
+        "title": "游戏记录展示范围在正文与UI截图中存在冲突",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3、图6、图8",
+        "coverage_audit_key": ""
+      }
+    ],
+    "coverage_ledger": {
+      "passed": false,
+      "completeness": 0.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "LOGIC_04": "",
+        "LOGIC_05": "",
+        "CLARITY_04": "",
+        "CLARITY_05": ""
+      },
+      "unmapped_missed_issue_ids": [
+        "CLARITY_04",
+        "CLARITY_05",
+        "LOGIC_04",
+        "LOGIC_05"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [
+        "coverage_entry_count_invalid:0",
+        "coverage_audit_key_order_invalid",
+        "missed_finding_not_in_confirmed_add:LOGIC_04",
+        "missed_finding_not_in_confirmed_add:LOGIC_05",
+        "missed_finding_not_in_confirmed_add:CLARITY_04",
+        "missed_finding_not_in_confirmed_add:CLARITY_05"
+      ],
+      "entries": []
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

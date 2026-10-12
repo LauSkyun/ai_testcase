@@ -1,0 +1,8 @@
+{
+  "warning": "Do not open before annotation decisions are complete.",
+  "source_benchmark": "D:\\project\\script\\ai_agents\\RAD\\reports\\secondary_benchmarks\\20260814_103002",
+  "old_to_reblinded_variant": {
+    "A": "B",
+    "B": "A"
+  }
+}

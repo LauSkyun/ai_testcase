@@ -1,0 +1,761 @@
+{
+  "status": "completed",
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 1,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": false,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_invalid:settlement_formula_ui_config:status_invalid",
+      "coverage_entry_invalid:settlement_formula_ui_config:primary_issue_ids_not_array",
+      "coverage_entry_invalid:settlement_formula_ui_config:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:settlement_formula_ui_config:evidence_checked_missing",
+      "coverage_entry_invalid:settlement_formula_ui_config:reason_missing",
+      "coverage_entry_invalid:trigger_state_termination:status_invalid",
+      "coverage_entry_invalid:trigger_state_termination:primary_issue_ids_not_array",
+      "coverage_entry_invalid:trigger_state_termination:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:trigger_state_termination:evidence_checked_missing",
+      "coverage_entry_invalid:trigger_state_termination:reason_missing",
+      "coverage_entry_invalid:funds_deduction_payout:status_invalid",
+      "coverage_entry_invalid:funds_deduction_payout:primary_issue_ids_not_array",
+      "coverage_entry_invalid:funds_deduction_payout:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:funds_deduction_payout:evidence_checked_missing",
+      "coverage_entry_invalid:funds_deduction_payout:reason_missing",
+      "coverage_entry_invalid:max_payout_economic_boundary:status_invalid",
+      "coverage_entry_invalid:max_payout_economic_boundary:primary_issue_ids_not_array",
+      "coverage_entry_invalid:max_payout_economic_boundary:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:max_payout_economic_boundary:evidence_checked_missing",
+      "coverage_entry_invalid:max_payout_economic_boundary:reason_missing",
+      "coverage_entry_invalid:statistics_time_window:status_invalid",
+      "coverage_entry_invalid:statistics_time_window:primary_issue_ids_not_array",
+      "coverage_entry_invalid:statistics_time_window:candidate_issue_ids_not_array",
+      "coverage_entry_invalid:statistics_time_window:evidence_checked_missing",
+      "coverage_entry_invalid:statistics_time_window:reason_missing",
+      "missed_finding_not_in_confirmed_add:FUNDS_DEBIT_TIMING",
+      "missed_finding_not_in_confirmed_add:FUNDS_PAYOUT_TIMING",
+      "missed_finding_not_in_confirmed_add:FUNDS_FAILURE_COMPENSATION",
+      "missed_finding_not_in_confirmed_add:ECON_POOL_NEGATIVE_FLOOR",
+      "missed_finding_not_in_confirmed_add:ECON_SINGLE_ROUND_CAP",
+      "missed_finding_not_in_confirmed_add:STAT_WINDOW_UI_TEXT",
+      "coverage_schema_version_too_old:1:required:2"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 6,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 10,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 4,
+    "materially_changed_titles": [
+      "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾",
+      "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+      "奖池'正常'状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+      "排行榜同分排序规则与UI展示信息不匹配"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:CLARITY_03",
+        "issue_id": "CLARITY_03",
+        "title": "开奖分析模块的可见性配置在修改记录与详细说明中前后矛盾",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CLARITY_01",
+        "issue_id": "CLARITY_01",
+        "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "奖池'正常'状态下的开奖偏移概率在正文与后台配置表中数值冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_03",
+        "issue_id": "LOGIC_03",
+        "title": "排行榜同分排序规则与UI展示信息不匹配",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 6,
+      "admitted_count": 0,
+      "rejected_count": 6,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "FUNDS_DEBIT_TIMING",
+          "title": "玩家本金扣款节点未定义，重复投注/断线/结算退出场景的扣款幂等缺失",
+          "status": "rejected",
+          "reasons": [
+            "multiroot_funds_debit_and_payout_combined",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+            },
+            {
+              "issue_id": "TEST_02",
+              "title": "Repeat按钮在余额不足时的边界行为未定义"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3（图案区/档位模块/用户余额）、段落24-28、3.2、3.6",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "debit_timing"
+        },
+        {
+          "candidate_issue_id": "FUNDS_PAYOUT_TIMING",
+          "title": "派奖到账节点未定义，奖池透支回填异常时的派奖补偿策略缺失",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "CLARITY_01",
+              "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 段落28-29、表格3（结算弹窗/用户余额）",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "payout_timing"
+        },
+        {
+          "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION",
+          "title": "扣款/派奖失败的回滚、补偿与幂等机制完全缺失",
+          "status": "rejected",
+          "reasons": [
+            "multiroot_funds_debit_and_payout_combined",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "CLARITY_01",
+              "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 3.2、3.6、表格3（档位模块）、段落29",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "funds_failure_compensation"
+        },
+        {
+          "candidate_issue_id": "ECON_POOL_NEGATIVE_FLOOR",
+          "title": "奖池允许透支为负但未定义负值下限与回填失败兜底",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 段落24-29、表格5",
+          "coverage_audit_key": "max_payout_economic_boundary",
+          "coverage_control_key": "pool_negative_floor"
+        },
+        {
+          "candidate_issue_id": "ECON_SINGLE_ROUND_CAP",
+          "title": "单局/单选项/单用户赔付无绝对金额封顶，仅依赖 80% 奖池软兜底",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+            },
+            {
+              "issue_id": "LOGIC_01",
+              "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 段落57、68、108、表格5",
+          "coverage_audit_key": "max_payout_economic_boundary",
+          "coverage_control_key": "single_round_payout_cap"
+        },
+        {
+          "candidate_issue_id": "STAT_WINDOW_UI_TEXT",
+          "title": "开奖分析统计窗口正文写'最近7天'但UI截图显示'Last 30 day'，同指标窗口冲突",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_02",
+              "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "tiger需求文档.docx / 表格3（开奖分析）、图13",
+          "coverage_audit_key": "statistics_time_window",
+          "coverage_control_key": "ui_text_window_alignment"
+        }
+      ],
+      "coverage_ledger": {
+        "schema_version": 1,
+        "passed": false,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {
+          "FUNDS_DEBIT_TIMING": "funds_deduction_payout",
+          "FUNDS_PAYOUT_TIMING": "funds_deduction_payout",
+          "FUNDS_FAILURE_COMPENSATION": "funds_deduction_payout",
+          "ECON_POOL_NEGATIVE_FLOOR": "max_payout_economic_boundary",
+          "ECON_SINGLE_ROUND_CAP": "max_payout_economic_boundary",
+          "STAT_WINDOW_UI_TEXT": "statistics_time_window"
+        },
+        "unmapped_missed_issue_ids": [
+          "ECON_POOL_NEGATIVE_FLOOR",
+          "ECON_SINGLE_ROUND_CAP",
+          "FUNDS_DEBIT_TIMING",
+          "FUNDS_FAILURE_COMPENSATION",
+          "FUNDS_PAYOUT_TIMING",
+          "STAT_WINDOW_UI_TEXT"
+        ],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [],
+        "errors": [
+          "coverage_entry_invalid:settlement_formula_ui_config:status_invalid",
+          "coverage_entry_invalid:settlement_formula_ui_config:primary_issue_ids_not_array",
+          "coverage_entry_invalid:settlement_formula_ui_config:candidate_issue_ids_not_array",
+          "coverage_entry_invalid:settlement_formula_ui_config:evidence_checked_missing",
+          "coverage_entry_invalid:settlement_formula_ui_config:reason_missing",
+          "coverage_entry_invalid:trigger_state_termination:status_invalid",
+          "coverage_entry_invalid:trigger_state_termination:primary_issue_ids_not_array",
+          "coverage_entry_invalid:trigger_state_termination:candidate_issue_ids_not_array",
+          "coverage_entry_invalid:trigger_state_termination:evidence_checked_missing",
+          "coverage_entry_invalid:trigger_state_termination:reason_missing",
+          "coverage_entry_invalid:funds_deduction_payout:status_invalid",
+          "coverage_entry_invalid:funds_deduction_payout:primary_issue_ids_not_array",
+          "coverage_entry_invalid:funds_deduction_payout:candidate_issue_ids_not_array",
+          "coverage_entry_invalid:funds_deduction_payout:evidence_checked_missing",
+          "coverage_entry_invalid:funds_deduction_payout:reason_missing",
+          "coverage_entry_invalid:max_payout_economic_boundary:status_invalid",
+          "coverage_entry_invalid:max_payout_economic_boundary:primary_issue_ids_not_array",
+          "coverage_entry_invalid:max_payout_economic_boundary:candidate_issue_ids_not_array",
+          "coverage_entry_invalid:max_payout_economic_boundary:evidence_checked_missing",
+          "coverage_entry_invalid:max_payout_economic_boundary:reason_missing",
+          "coverage_entry_invalid:statistics_time_window:status_invalid",
+          "coverage_entry_invalid:statistics_time_window:primary_issue_ids_not_array",
+          "coverage_entry_invalid:statistics_time_window:candidate_issue_ids_not_array",
+          "coverage_entry_invalid:statistics_time_window:evidence_checked_missing",
+          "coverage_entry_invalid:statistics_time_window:reason_missing",
+          "missed_finding_not_in_confirmed_add:FUNDS_DEBIT_TIMING",
+          "missed_finding_not_in_confirmed_add:FUNDS_PAYOUT_TIMING",
+          "missed_finding_not_in_confirmed_add:FUNDS_FAILURE_COMPENSATION",
+          "missed_finding_not_in_confirmed_add:ECON_POOL_NEGATIVE_FLOOR",
+          "missed_finding_not_in_confirmed_add:ECON_SINGLE_ROUND_CAP",
+          "missed_finding_not_in_confirmed_add:STAT_WINDOW_UI_TEXT",
+          "coverage_schema_version_too_old:1:required:2"
+        ],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": null,
+            "reason": "",
+            "errors": [
+              "status_invalid",
+              "primary_issue_ids_not_array",
+              "candidate_issue_ids_not_array",
+              "evidence_checked_missing",
+              "reason_missing"
+            ]
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": null,
+            "reason": "",
+            "errors": [
+              "status_invalid",
+              "primary_issue_ids_not_array",
+              "candidate_issue_ids_not_array",
+              "evidence_checked_missing",
+              "reason_missing"
+            ]
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": null,
+            "reason": "",
+            "errors": [
+              "status_invalid",
+              "primary_issue_ids_not_array",
+              "candidate_issue_ids_not_array",
+              "evidence_checked_missing",
+              "reason_missing"
+            ]
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": null,
+            "reason": "",
+            "errors": [
+              "status_invalid",
+              "primary_issue_ids_not_array",
+              "candidate_issue_ids_not_array",
+              "evidence_checked_missing",
+              "reason_missing"
+            ]
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": null,
+            "reason": "",
+            "errors": [
+              "status_invalid",
+              "primary_issue_ids_not_array",
+              "candidate_issue_ids_not_array",
+              "evidence_checked_missing",
+              "reason_missing"
+            ]
+          }
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 6,
+    "admitted_count": 0,
+    "rejected_count": 6,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "FUNDS_DEBIT_TIMING",
+        "title": "玩家本金扣款节点未定义，重复投注/断线/结算退出场景的扣款幂等缺失",
+        "status": "rejected",
+        "reasons": [
+          "multiroot_funds_debit_and_payout_combined",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+          },
+          {
+            "issue_id": "TEST_02",
+            "title": "Repeat按钮在余额不足时的边界行为未定义"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3（图案区/档位模块/用户余额）、段落24-28、3.2、3.6",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "debit_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_PAYOUT_TIMING",
+        "title": "派奖到账节点未定义，奖池透支回填异常时的派奖补偿策略缺失",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_01",
+            "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落28-29、表格3（结算弹窗/用户余额）",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "payout_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION",
+        "title": "扣款/派奖失败的回滚、补偿与幂等机制完全缺失",
+        "status": "rejected",
+        "reasons": [
+          "multiroot_funds_debit_and_payout_combined",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CLARITY_01",
+            "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 3.2、3.6、表格3（档位模块）、段落29",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "funds_failure_compensation"
+      },
+      {
+        "candidate_issue_id": "ECON_POOL_NEGATIVE_FLOOR",
+        "title": "奖池允许透支为负但未定义负值下限与回填失败兜底",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落24-29、表格5",
+        "coverage_audit_key": "max_payout_economic_boundary",
+        "coverage_control_key": "pool_negative_floor"
+      },
+      {
+        "candidate_issue_id": "ECON_SINGLE_ROUND_CAP",
+        "title": "单局/单选项/单用户赔付无绝对金额封顶，仅依赖 80% 奖池软兜底",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+          },
+          {
+            "issue_id": "LOGIC_01",
+            "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 段落57、68、108、表格5",
+        "coverage_audit_key": "max_payout_economic_boundary",
+        "coverage_control_key": "single_round_payout_cap"
+      },
+      {
+        "candidate_issue_id": "STAT_WINDOW_UI_TEXT",
+        "title": "开奖分析统计窗口正文写'最近7天'但UI截图显示'Last 30 day'，同指标窗口冲突",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "tiger需求文档.docx / 表格3（开奖分析）、图13",
+        "coverage_audit_key": "statistics_time_window",
+        "coverage_control_key": "ui_text_window_alignment"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 1,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "FUNDS_DEBIT_TIMING": "funds_deduction_payout",
+        "FUNDS_PAYOUT_TIMING": "funds_deduction_payout",
+        "FUNDS_FAILURE_COMPENSATION": "funds_deduction_payout",
+        "ECON_POOL_NEGATIVE_FLOOR": "max_payout_economic_boundary",
+        "ECON_SINGLE_ROUND_CAP": "max_payout_economic_boundary",
+        "STAT_WINDOW_UI_TEXT": "statistics_time_window"
+      },
+      "unmapped_missed_issue_ids": [
+        "ECON_POOL_NEGATIVE_FLOOR",
+        "ECON_SINGLE_ROUND_CAP",
+        "FUNDS_DEBIT_TIMING",
+        "FUNDS_FAILURE_COMPENSATION",
+        "FUNDS_PAYOUT_TIMING",
+        "STAT_WINDOW_UI_TEXT"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [],
+      "errors": [
+        "coverage_entry_invalid:settlement_formula_ui_config:status_invalid",
+        "coverage_entry_invalid:settlement_formula_ui_config:primary_issue_ids_not_array",
+        "coverage_entry_invalid:settlement_formula_ui_config:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:settlement_formula_ui_config:evidence_checked_missing",
+        "coverage_entry_invalid:settlement_formula_ui_config:reason_missing",
+        "coverage_entry_invalid:trigger_state_termination:status_invalid",
+        "coverage_entry_invalid:trigger_state_termination:primary_issue_ids_not_array",
+        "coverage_entry_invalid:trigger_state_termination:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:trigger_state_termination:evidence_checked_missing",
+        "coverage_entry_invalid:trigger_state_termination:reason_missing",
+        "coverage_entry_invalid:funds_deduction_payout:status_invalid",
+        "coverage_entry_invalid:funds_deduction_payout:primary_issue_ids_not_array",
+        "coverage_entry_invalid:funds_deduction_payout:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:funds_deduction_payout:evidence_checked_missing",
+        "coverage_entry_invalid:funds_deduction_payout:reason_missing",
+        "coverage_entry_invalid:max_payout_economic_boundary:status_invalid",
+        "coverage_entry_invalid:max_payout_economic_boundary:primary_issue_ids_not_array",
+        "coverage_entry_invalid:max_payout_economic_boundary:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:max_payout_economic_boundary:evidence_checked_missing",
+        "coverage_entry_invalid:max_payout_economic_boundary:reason_missing",
+        "coverage_entry_invalid:statistics_time_window:status_invalid",
+        "coverage_entry_invalid:statistics_time_window:primary_issue_ids_not_array",
+        "coverage_entry_invalid:statistics_time_window:candidate_issue_ids_not_array",
+        "coverage_entry_invalid:statistics_time_window:evidence_checked_missing",
+        "coverage_entry_invalid:statistics_time_window:reason_missing",
+        "missed_finding_not_in_confirmed_add:FUNDS_DEBIT_TIMING",
+        "missed_finding_not_in_confirmed_add:FUNDS_PAYOUT_TIMING",
+        "missed_finding_not_in_confirmed_add:FUNDS_FAILURE_COMPENSATION",
+        "missed_finding_not_in_confirmed_add:ECON_POOL_NEGATIVE_FLOOR",
+        "missed_finding_not_in_confirmed_add:ECON_SINGLE_ROUND_CAP",
+        "missed_finding_not_in_confirmed_add:STAT_WINDOW_UI_TEXT",
+        "coverage_schema_version_too_old:1:required:2"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": null,
+          "reason": "",
+          "errors": [
+            "status_invalid",
+            "primary_issue_ids_not_array",
+            "candidate_issue_ids_not_array",
+            "evidence_checked_missing",
+            "reason_missing"
+          ]
+        }
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

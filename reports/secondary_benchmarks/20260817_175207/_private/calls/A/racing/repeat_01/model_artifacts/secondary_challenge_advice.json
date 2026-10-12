@@ -1,0 +1,36 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "primary_report_hash_after": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "protected_fields_hash_before": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "protected_fields_hash_after": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 0,
+  "accepted_challenges": [],
+  "rejected_challenges": [],
+  "review_notes": [
+    "所有 findings 证据充分，定性准确，符合 dual_pass 协议下跨文档问题回归原维度展示的规范，无需 challenge 或 correction。"
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "report": {
+    "overall_evaluation": "未完成 AI 评审：缺少文本评审模型配置：AI_BASE_URL、AI_API_KEY、AI_MODEL。已生成图片/文档解析结果和占位报告。",
+    "document_quality_score": "未评定",
+    "score_reason": "缺少文本评审模型配置：AI_BASE_URL、AI_API_KEY、AI_MODEL。已生成图片/文档解析结果和占位报告。",
+    "top_blockers": [],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未执行 AI 分析",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "缺少文本评审模型配置：AI_BASE_URL、AI_API_KEY、AI_MODEL。已生成图片/文档解析结果和占位报告。"
+    ],
+    "test_points": {
+      "功能验证": [],
+      "异常操作": [],
+      "兼容性": [],
+      "安全专项": [],
+      "回归影响": [],
+      "性能与稳定性": [],
+      "用户体验": []
+    },
+    "quality_notes": [
+      "缺少文本评审模型配置：AI_BASE_URL、AI_API_KEY、AI_MODEL。已生成图片/文档解析结果和占位报告。"
+    ],
+    "image_analysis_gaps": [
+      "疯狂世界杯.docx / 图片1：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片2：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片3：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片4：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片5：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片6：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片7：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片8：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片9：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片10：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片11：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片12：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片13：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片14：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片15：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片16：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片17：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片18：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片19：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片20：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片21：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片22：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片23：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片24：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片25：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片26：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片27：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片28：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片29：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片30：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片31：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片32：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片33：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片34：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片35：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片36：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片37：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片38：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片39：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片40：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片41：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片42：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片43：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片44：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片45：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片46：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片47：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片48：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片49：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片50：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片51：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片52：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片53：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片54：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片55：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片56：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片57：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片58：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片59：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片60：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。",
+      "疯狂世界杯.docx / 图片61：skipped_no_vision_model。缺少 AI_VISION_MODEL 或视觉模型配置。"
+    ],
+    "raw_response": ""
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 0,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 170,
+    "total_tables": 3,
+    "total_images": 61
+  },
+  "documents": [
+    {
+      "name": "疯狂世界杯.docx",
+      "kind": "mixed",
+      "paragraph_count": 170,
+      "table_count": 3,
+      "image_count": 61,
+      "errors": []
+    }
+  ]
+}

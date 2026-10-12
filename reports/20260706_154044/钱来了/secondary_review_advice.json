@@ -1,0 +1,174 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了需求文档与数值文档间最关键的底层盘面生成逻辑冲突、风控与封顶规则矛盾，以及RESPIN触发条件歧义，并对购买免费游戏、大奖阈值、推展表现等缺失给出了合理提醒。报告结构清晰，证据引用充分，问题严重度判断基本合理，但部分问题合并后略欠清晰（如CD-03混入符号定义冲突），且top_blockers未显式关联到具体finding，但不影响整体交付质量。",
+    "strengths": [
+      "准确抓住了跨文档的致命冲突：盘面生成逻辑与基础中奖规则矛盾，风控强制0倍与2000倍封顶矛盾",
+      "对RESPIN、购买免费、大奖阈值等关键缺失给出了明确阻塞判断",
+      "证据引用具体，可追溯至文档段落和表格",
+      "测试点覆盖了功能、异常、安全等主要方向"
+    ],
+    "issues": [
+      "CD-03将风控冲突与符号定义冲突合并为一个问题，虽然根因不同但表述可接受，后续可建议拆分",
+      "top_blockers未显式关联到dimensions中的finding，但可通过标题对应",
+      "缺少对免费符号替换逻辑（表演权重）的说明，但非高信号"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已对主模型进行复核，确认所有高信号问题均已覆盖且证据充分，结构完整，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已对主模型进行复核，确认所有高信号问题均已覆盖且证据充分，结构完整，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "建议后续拆分CD-03为两个独立问题：风控强制0倍与2000倍封顶的冲突，以及符号定义（银行符号与x1）的冲突，以提高清晰度。",
+    "数值文档中“表演权重随机到2个免费类别时替换为100倍”的规则未在需求文档中体现，可能影响免费触发概率，但非高阻塞，可后续澄清。",
+    "dual_pass 结构提示：candidate 仍保留多根因混合问题，建议继续拆清根因或改为分点展示。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CL-01",
+        "primary_issue_ids": [
+          "CL-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CL-02",
+        "primary_issue_ids": [
+          "CL-02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CL-03",
+        "primary_issue_ids": [
+          "CL-03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LG-01",
+        "primary_issue_ids": [
+          "LG-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CD-01",
+        "primary_issue_ids": [
+          "CD-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CD-03",
+        "primary_issue_ids": [
+          "CD-03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SC-01",
+        "primary_issue_ids": [
+          "SC-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "风控强制0倍与2000倍封顶/最高赔率存在数值模型冲突"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已对主模型进行复核，确认所有高信号问题均已覆盖且证据充分，结构完整，可直接交付业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

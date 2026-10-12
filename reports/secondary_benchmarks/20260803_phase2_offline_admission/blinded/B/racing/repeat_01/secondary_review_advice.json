@@ -1,0 +1,252 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心结算链路中的公式冲突、变量定义歧义以及数据源隔离缺失等高信号阻塞问题，整体方向正确。但部分finding的current_state和risk存在明显的文本重复拼接，且将‘假数据隔离’与‘真假赔率映射’拆分为两个独立问题，未遵循相同根因合并原则。候选稿已修复文本冗余，合并了数据源隔离相关问题，并规范了证据引用与严重度定级。",
+    "strengths": [
+      "准确抓住了赔率公式跨文档冲突和T变量定义矛盾这一致命阻塞项。",
+      "识别出干预逻辑缺乏到速度公式的具体映射，切中控盘玩法的实现痛点。",
+      "对占位符、新手引导、音频混合等问题进行了合理的风险降级，符合评审原则。"
+    ],
+    "issues": [
+      "T_VARIABLE_CONFLICT的current_state和risk存在大量重复拼接的模板化文本，阅读体验差。",
+      "将‘假人数/金额参与计算’与‘真假赔率展示结算映射’拆分为两个高优问题，本质上同属‘展示数据与结算数据的数据源隔离规则缺失’，应合并。",
+      "top_blockers中的why_now字段同样存在重复拼接问题，未提炼核心结论。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "review_notes": [
+    "主模型首版报告中 T_VARIABLE_CONFLICT 的 current_state 和 risk 存在大量重复拼接的模板化文本，候选稿已将其重构为分点描述，提升可读性。",
+    "主模型将 DATA_ISOLATION 和 FAKE_ODDS_MAPPING 拆分为两个高优问题，候选稿已根据‘相同根因合并’原则将其合并为 DATA_SOURCE_ISOLATION，并在 lineage 中记录了 merged 和 dropped 关系。",
+    "主模型 top_blockers 中的 why_now 字段同样存在重复拼接，候选稿已精简为核心结论。",
+    "建议后续进一步补充 gamma 公式中 α、β 参数的配置范围，以完善极端资金比例下的膨胀效果验证。",
+    "dual_pass trace 提示：candidate_lineage 不为空，但未完整覆盖 primary/candidate 的问题血缘；当前候选稿暂不建议默认直出。",
+    "dual_pass trace 提示：candidate 存在未被 lineage 覆盖的问题映射，需补齐 kept/added/merged/dropped 后再考虑默认直出。",
+    "dual_pass 合并落盘提示：candidate_lineage.merged 中声明的合并问题未完整落入最终 candidate。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "target_issue_id": "DATA_SOURCE_ISOLATION",
+      "source_issue_ids": [
+        "DATA_ISOLATION",
+        "FAKE_ODDS_MAPPING"
+      ],
+      "reason": "两者本质上均指向‘客户端展示/氛围数据’与‘服务端真实结算数据’的边界不清。假人数/假金额参与计算会导致赔率失真，假赔率展示与实际结算不符会导致客诉，统一合并为‘展示数据与结算数据的数据源隔离规则缺失’更符合根因归并原则。"
+    }
+  ],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [
+      {
+        "candidate_issue_id": "DATA_SOURCE_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION",
+          "FAKE_ODDS_MAPPING"
+        ],
+        "reason": "合并假数据隔离与真假赔率映射问题，统一归因为数据源隔离规则缺失。"
+      }
+    ],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 1,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 0,
+    "merged": 1,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "partial",
+  "candidate_structure_drift": true,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [
+    "DATA_ISOLATION",
+    "FAKE_ODDS_MAPPING"
+  ],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [
+    "DATA_SOURCE_ISOLATION"
+  ],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "missing",
+  "candidate_merged_materialization_missing_ids": [
+    "DATA_SOURCE_ISOLATION"
+  ],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": []
+  },
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_merged_not_materialized",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": false,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": false,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "candidate_merged_not_materialized"
+    ],
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_candidate_findings",
+      "candidate_traceability_partial"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  }
+}

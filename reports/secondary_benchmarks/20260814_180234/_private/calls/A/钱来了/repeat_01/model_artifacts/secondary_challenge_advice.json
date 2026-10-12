@@ -1,0 +1,80 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "primary_report_hash_after": "4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df",
+    "protected_fields_hash_before": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "protected_fields_hash_after": "40b82bb4d329944c2f143f6fadda59e203b674256a7bb870aa10b65dea63acfb",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 3,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "数值文档中出现了两个“RESPIN发生几率”表格，表格5配置为0.1，表格6配置为0.05，存在直接冲突。",
+      "evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制（RESPIN机制）",
+      "counterevidence": "数值文档段落35明确表格5为“必定命中时RESPIN表演概率”，段落38明确表格6为“必定不命中时RESPIN表演概率”。",
+      "rationale": "Primary 忽略了表格前后的上下文标题，将两个分别对应“命中”与“不命中”不同表演分支的概率表误判为重复冲突配置。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "RESPIN触发概率配置冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "LOGIC_02",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "数值文档称“不会生成1,3均不为空的局面”，但又规定“当1,3列金币符号不同且有值时...必定发生RESPIN”。若底层不生成1,3均不为空，则RESPIN的触发条件在底层数据中无法成立。",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+      "counterevidence": "数值文档段落12明确补充：“*不会生成 1，3均不为空的局面，仅在表演阶段出现13均不为空的respin场景”。",
+      "rationale": "Primary 将“底层最终结果盘面”与“表演阶段中间态”混淆。数值文档已明确1,3均不为空仅存在于表演阶段，底层逻辑与表演逻辑并未矛盾。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "底层数据生成规则与RESPIN触发条件矛盾",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-03",
+      "target_issue_id": "CROSS_02",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "数值文档规定“超过100倍 → 直接强制0倍”，而需求文档规定“免费模式中总赢奖达到投注额的2000倍时，自动结束”。两份文档均未明确“倍数”的基数...口径不清将导致风控逻辑与封顶逻辑互斥。",
+      "evidence": "钱来了数值文档.docx / 七、基础游戏・完整流程总结、六、基础游戏・体验控制 & 风控",
+      "counterevidence": "数值文档段落54-55明确说明：“上述流程如触发了免费 不进行 检查A和 展示结果A。整局游戏仅进行一次风控检测”。",
+      "rationale": "数值文档的流程总结已明确普通游戏风控（100倍）与免费游戏风控是流程上的分支互斥关系，触发免费后跳过普通风控检查。Primary 忽略了流程分支，错误地认为两者在同一结算层级存在互斥冲突。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "风控倍数基数与免费游戏封顶规则冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": [
+    "Primary 报告在 LOGIC_01、LOGIC_02、CROSS_02 中均因忽略了数值文档中的上下文定语或流程分支条件，导致将原本合理的配置或互斥的流程误判为逻辑冲突。",
+    "建议重新审阅数值文档的段落12、段落35、段落38以及段落54-55，修正对底层数据与表演阶段、普通风控与免费风控分支关系的理解。"
+  ]
+}

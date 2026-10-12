@@ -1,0 +1,19 @@
+{
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 1,
+  "status": "failed",
+  "output_dir": "blinded/A/钱来了/repeat_01",
+  "shared_input_hash": "2809963b3554fe2bba5e0f8c19f9859c735b108ddacce156d8a3c7761a7296f8",
+  "primary_raw_hash": "04925275042b81b9c0a790774a31e5e7b1901cff267bee3c243f5715ea095c9a",
+  "primary_messages_hash": "da7fc1f8ad638c2b19f883d783e5badee747a4d16996991e5d320b48d24d9b76",
+  "primary_report_hash": "24f4ad92bfa73bb93dfc155c37756efcce9b8950edaf67f472cd27f126f2c794",
+  "secondary_message_hash": "b94519c3b8f9aa0bf46ac19f43e5fb8819cf5f58e499bc232e60e02f9d6fd99a",
+  "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+  "protocol_profile": "phase2",
+  "processing_profile": "phase2",
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "fb2f801e7bd5658ebdcf95d2221815c93167c24713de2c8a4a90d7cad7bfb891",
+  "temperature": 0,
+  "error": "secondary_benchmark:A:钱来了:repeat_01 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

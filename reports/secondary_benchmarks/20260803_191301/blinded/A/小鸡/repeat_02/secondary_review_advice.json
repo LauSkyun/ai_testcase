@@ -1,0 +1,313 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了倍率公式口径、筹码配置、概率算法等核心冲突，但在根因归并上存在瑕疵，将美术包装冲突混入概率冲突中，且将通用中台能力（幂等）泛化为高阻塞问题。候选稿已对核心问题进行修正与聚焦，并补充了展示概率映射与扣款时机两个高信号缺口。",
+    "strengths": [
+      "准确识别了需求公式（连乘）与数值表（累计倍率）的严重口径冲突。",
+      "发现了下注筹码在需求、数值、UI三端的配置不一致。",
+      "指出了需求文档固定概率与数值文档Crash算法的根本冲突。"
+    ],
+    "issues": [
+      "将‘小鸡/骆驼’的美术包装冲突与‘概率算法冲突’揉在同一个finding中，违反单根因原则。",
+      "将‘提现幂等’等通用中台能力泛化为高阻塞安全问题，未遵循弱网/幂等默认低风险的基准原则。",
+      "遗漏了UI展示概率与Crash算法的映射验收缺口，以及开局扣款时机的资金流转缺口。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "候选稿已修正主模型的根因混合问题，剥离了低信号的美术与幂等提醒，补充了直接影响结算验收与资金安全的高信号缺口，结构完整、证据充分，可直接输出给业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选稿已修正主模型的根因混合问题，剥离了低信号的美术与幂等提醒，补充了直接影响结算验收与资金安全的高信号缺口，结构完整、证据充分，可直接输出给业务方阅读。"
+  },
+  "review_notes": [
+    "主模型将‘小鸡/骆驼’的美术包装冲突与‘概率算法冲突’揉在同一个finding中，候选稿已将其剥离。美术包装不一致通常为低风险，除非影响核心规则或付费内容，建议统一术语后在美术资源制作阶段解决。",
+    "主模型将‘提现幂等’泛化为高阻塞安全问题。根据基准原则，弱网、断线重连、重复点击等默认按低风险处理，只有当文档明确让扣款/赔付依赖客户端时才升高。候选稿已将其降级并移入quality_notes。",
+    "建议数值策划在修正倍率公式时，同步提供一份包含30个格子的‘累计倍率’与‘单格倍率’对照表，避免开发在实现时再次产生歧义。",
+    "protocol_profile=phase2",
+    "dual_pass 协议提示：系统已对缺失 issue_id 的 finding 做稳定修复，并按修复后的 issue_id 参与 lineage 与 candidate 门槛判断。",
+    "dual_pass candidate 含空 issue_id 问题项，当前仅作为对比稿，不建议默认直出。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "UI_PROBABILITY_DISPLAY_MISMATCH",
+      "title": "UI“被击中概率”展示口径与Crash算法映射缺失",
+      "primary_dimension": "可测试性与验收标准",
+      "current_state": "1. 小鸡.docx 图片1-7解析中，UI界面均显示“被击中的概率”标签及具体数值（或占位）。\n2. 小鸡数值文档.docx / 4. 撞击概率计算 采用Crash算法（标准爆炸倍数+首次/非首次必撞概率），文档未说明UI上展示的“被击中概率”是单格期望概率、当前局剩余格子的综合存活概率，还是固定配置值。",
+      "evidence": "小鸡.docx / 图片1-7解析（UI显示“被击中的概率”）；小鸡数值文档.docx / 4. 撞击概率计算（段落11-17，Crash算法）。",
+      "risk": "若UI展示概率与底层Crash算法推算的真实概率不一致，将导致玩家对风险感知错误，引发“暗箱操作”客诉；测试无法制定验收标准。",
+      "suggestion": "明确UI“被击中概率”的计算公式（如：当前格撞车概率 = 1 - 下一格存活期望 / 当前格存活期望），并确保服务端下发或客户端计算的值与底层Crash算法严格对齐。补充测试验收用例。",
+      "severity": "高",
+      "blocking": "block_test",
+      "confidence": "高",
+      "independent_root_cause": "UI展示概率口径与底层Crash算法映射规则缺失。",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "overlap": false,
+        "reason": "CORE_DIFFICULTY_CONFIG_MISMATCH 关注的是需求文档的固定概率表与数值文档Crash算法的冲突，而本问题关注的是UI界面实际展示的‘被击中概率’标签如何与Crash算法对齐，属于展示层与结算层的映射缺口，根因独立。"
+      },
+      "severity_basis": "直接影响玩家风险感知与测试验收标准制定，易引发客诉。"
+    },
+    {
+      "candidate_issue_id": "DEDUCTION_TIMING_MISSING",
+      "title": "开局扣款时机与本金结算口径缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "1. 小鸡.docx / 2.1 完整游戏流程 描述“点击‘开始’进入游戏”，3.4 提现与结算系统 描述“失败：被车撞则奖金清零”。\n2. 文档未明确下注金额（本金）是在点击“开始”时从钱包预扣，还是在“提现”时统一结算。若点击开始时预扣，失败时本金是否扣除？若提现时结算，局内余额如何展示？",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程（段落19-23）；3.4 提现与结算系统（段落48-51）。",
+      "risk": "扣款时机不明确会导致前后端钱包流水对账失败，或在断线重连、弱网重复点击时出现重复扣款/发奖的资损风险。",
+      "suggestion": "明确本金扣除时机（建议：点击“开始”时预扣下注金额，提现时发放“总奖金”，失败时预扣金额不退还）。补充钱包流水的扣款与发奖接口调用时序。",
+      "severity": "高",
+      "blocking": "block_dev",
+      "confidence": "高",
+      "independent_root_cause": "玩法核心资金流转（预扣与发奖）的时机与口径未定义。",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_03",
+        "overlap": false,
+        "reason": "LOGIC_03 关注第30格超级大奖的结算边界，而本问题关注开局本金的扣除时机与失败时的本金处理，属于资金流转前置链路的缺口，根因独立。"
+      },
+      "severity_basis": "涉及真实资金/筹码流转，时机不明确直接导致对账失败或资损。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_DIFFICULTY_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "adjustment_note": "剥离了原finding中关于‘小鸡/骆驼’美术包装冲突的内容，聚焦于概率算法冲突，符合单根因原则。"
+      },
+      {
+        "candidate_issue_id": "CORE_BET_CONFIG_MISMATCH",
+        "primary_issue_ids": [
+          "CORE_BET_CONFIG_MISMATCH"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "adjustment_note": "保持原样，筹码配置冲突为高信号阻塞项。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "primary_issue_ids": [
+          "LOGIC_PAYOUT_FORMULA_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "adjustment_note": "修正描述，明确指出数值表提供的是‘累计倍率’，需求公式‘Π(已通过马路倍率)’极易被误解为‘单格倍率连乘’，给出可兼容实现的修正建议。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "adjustment_note": "保持原样，超级大奖与第30格结算边界为高信号阻塞项。"
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "primary_issue_ids": [
+          "SEC_01"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "UI_PROBABILITY_DISPLAY_MISMATCH",
+        "source_missed_issue_ids": [
+          "UI_PROBABILITY_DISPLAY_MISMATCH"
+        ],
+        "reason": "补充UI展示概率与Crash算法的映射缺口，直接影响测试验收与玩家体验。"
+      },
+      {
+        "candidate_issue_id": "DEDUCTION_TIMING_MISSING",
+        "source_missed_issue_ids": [
+          "DEDUCTION_TIMING_MISSING"
+        ],
+        "reason": "补充开局扣款时机与本金结算口径缺口，直接影响资金流转与对账安全。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 3,
+  "candidate_issue_id_repair_count": 3,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [
+    "开局扣款时机与本金结算口径缺失",
+    "UI“被击中概率”展示口径与Crash算法映射缺失"
+  ],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "候选稿已修正主模型的根因混合问题，剥离了低信号的美术与幂等提醒，补充了直接影响结算验收与资金安全的高信号缺口，结构完整、证据充分，可直接输出给业务方阅读。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 2,
+    "admitted_count": 0,
+    "rejected_count": 2,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "",
+        "title": "UI“被击中概率”展示口径与Crash算法映射缺失",
+        "status": "rejected",
+        "reasons": [
+          "multiroot_or_root_count_invalid",
+          "primary_duplicate_root"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [
+          {
+            "issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+            "title": "难度系统概率计算逻辑冲突"
+          }
+        ],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+            "title": "难度系统概率计算逻辑冲突"
+          },
+          {
+            "issue_id": "CORE_BET_CONFIG_MISMATCH",
+            "title": "下注筹码数值配置冲突"
+          }
+        ]
+      },
+      {
+        "candidate_issue_id": "",
+        "title": "开局扣款时机与本金结算口径缺失",
+        "status": "rejected",
+        "reasons": [
+          "multiroot_or_root_count_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": []
+      }
+    ]
+  },
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_missing_issue_id",
+    "phase2_added_admission_rejected"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 3,
+    "candidate_issue_id_repair_count": 3,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": false,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": false,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 2,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "candidate_missing_issue_id"
+    ],
+    "quality_blockers": [
+      "phase2_added_admission_rejected"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  }
+}

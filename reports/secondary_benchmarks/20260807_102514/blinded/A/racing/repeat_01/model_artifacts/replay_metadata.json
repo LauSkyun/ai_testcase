@@ -1,0 +1,73 @@
+{
+  "game": "racing",
+  "variant_id": "A",
+  "repeat": 1,
+  "status": "completed",
+  "output_dir": "blinded/A/racing/repeat_01",
+  "shared_input_hash": "c9aa2e3914ae21db67f6af64560734ba15dd0841370d6ccce43ee652e8bc3307",
+  "primary_raw_hash": "db62d8a2d5db6642f6ff2848aceeb3e2fd06fc36067b549dc267407b2cf845c8",
+  "primary_messages_hash": "97bba56debc203d8bae44a94b339dbc133162679f08dd11e83848e314bd464ca",
+  "primary_report_hash": "e87798e723e755f17b283402cb665df77b63eff30827ae9f8e727b836d8607b5",
+  "secondary_message_hash": "9a714dea6f45bbf6a35d38f95b0bac80e8bdd6e649170a7f80ef21bda4b18983",
+  "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+  "protocol_profile": "phase2",
+  "processing_profile": "phase2",
+  "coverage_protocol_revision": "phase2_v2_1",
+  "coverage_evidence_packet_id": "fc5be3da5ba2faca28df1a181e31830827c20be97eaa561c3c4ef6d336697933",
+  "temperature": 0,
+  "attempt_count": 1,
+  "reprocessed_saved_raw": false,
+  "secondary_response_hash": "a4dd5f647b3396d0af426f56b12b350c6c4fe2b3a6d400524b582b0e5824e3d7",
+  "selected_report_owner": "candidate",
+  "candidate_gate_passed": true,
+  "candidate_recommendation_status": "recommended",
+  "traceability_status": "complete",
+  "claimed_added_count": 2,
+  "admitted_added_count": 2,
+  "rejected_added_count": 0,
+  "added_rejection_reasons": [],
+  "materialized_added_count": 2,
+  "added_root_keys": [
+    "control:funds_deduction_payout:debit_timing",
+    "control:funds_deduction_payout:payout_timing"
+  ],
+  "high_added_root_keys": [
+    "control:funds_deduction_payout:debit_timing",
+    "control:funds_deduction_payout:payout_timing"
+  ],
+  "added_severity_by_root": {
+    "control:funds_deduction_payout:debit_timing": "high",
+    "control:funds_deduction_payout:payout_timing": "high"
+  },
+  "coverage_ledger_completeness": 1.0,
+  "coverage_schema_version": 2,
+  "coverage_ledger_valid": true,
+  "coverage_evidence_packet_echoed": true,
+  "coverage_ledger_errors": [],
+  "coverage_confirmed_audit_keys": [
+    "funds_deduction_payout"
+  ],
+  "coverage_confirmed_control_keys": [
+    "debit_timing",
+    "payout_timing"
+  ],
+  "selected_top_blocker_keys": [
+    "cluster:display_real_data_isolation",
+    "cluster:formula_odds_conflict",
+    "title:实际赔率与假赔率的客户端展示与服务端结算映射缺失"
+  ],
+  "primary_top_blocker_retention": 1.0,
+  "field_completeness": 1.0,
+  "admitted_field_completeness": 1.0,
+  "phase2_admission_all_passed": true,
+  "primary_top3_retention_gate_passed": true,
+  "candidate_score_locked_to_primary": true,
+  "multiroot_finding_count": 0,
+  "preserved_primary_multiroot_finding_count": 0,
+  "unsupported_severity_change_count": 0,
+  "unsupported_blocking_change_count": 0,
+  "lineage_mismatch": false,
+  "materialization_mismatch": false,
+  "major_judgment_drift": false,
+  "selected_finding_count": 10
+}

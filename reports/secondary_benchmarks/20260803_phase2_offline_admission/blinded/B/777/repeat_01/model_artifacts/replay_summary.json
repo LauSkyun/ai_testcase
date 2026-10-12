@@ -1,0 +1,229 @@
+{
+  "status": "completed",
+  "game": "777",
+  "variant_id": "B",
+  "repeat": 1,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": false,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 2,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_added_admission_rejected"
+  ],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 2,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [
+      "UI赔付表与数值配置表赔率严重不一致",
+      "缺乏单局最大赔付/封顶限制"
+    ],
+    "materially_changed_count": 3,
+    "materially_changed_titles": [
+      "RESPIN累加算法存在加法与乘法的严重歧义",
+      "风控强制0倍逻辑与RESPIN触发条件存在致命冲突",
+      "快捷旋转与RESPIN状态的交互规则存在矛盾"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:LOGIC_01",
+        "issue_id": "LOGIC_01",
+        "title": "RESPIN累加算法存在加法与乘法的严重歧义",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:TEST_01",
+        "issue_id": "TEST_01",
+        "title": "快捷旋转与RESPIN状态的交互规则存在矛盾",
+        "change_kinds": [
+          "title_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 2,
+      "admitted_count": 0,
+      "rejected_count": 2,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "MISSED_01",
+          "title": "UI赔付表与数值配置表赔率严重不一致",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:candidate_issue_id,current_state,risk,suggestion,blocking,confidence,independent_root_cause,primary_overlap_check",
+            "primary_overlap_check_invalid",
+            "multiroot_or_root_count_invalid",
+            "severity_basis_missing"
+          ],
+          "missing_fields": [
+            "candidate_issue_id",
+            "current_state",
+            "risk",
+            "suggestion",
+            "blocking",
+            "confidence",
+            "independent_root_cause",
+            "primary_overlap_check"
+          ]
+        },
+        {
+          "candidate_issue_id": "MISSED_02",
+          "title": "缺乏单局最大赔付/封顶限制",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:candidate_issue_id,current_state,risk,suggestion,blocking,confidence,independent_root_cause,primary_overlap_check",
+            "primary_overlap_check_invalid",
+            "multiroot_or_root_count_invalid",
+            "severity_basis_missing"
+          ],
+          "missing_fields": [
+            "candidate_issue_id",
+            "current_state",
+            "risk",
+            "suggestion",
+            "blocking",
+            "confidence",
+            "independent_root_cause",
+            "primary_overlap_check"
+          ]
+        }
+      ]
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 2,
+    "admitted_count": 0,
+    "rejected_count": 2,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "MISSED_01",
+        "title": "UI赔付表与数值配置表赔率严重不一致",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,current_state,risk,suggestion,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid",
+          "severity_basis_missing"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "current_state",
+          "risk",
+          "suggestion",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      },
+      {
+        "candidate_issue_id": "MISSED_02",
+        "title": "缺乏单局最大赔付/封顶限制",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,current_state,risk,suggestion,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid",
+          "severity_basis_missing"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "current_state",
+          "risk",
+          "suggestion",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      }
+    ]
+  }
+}

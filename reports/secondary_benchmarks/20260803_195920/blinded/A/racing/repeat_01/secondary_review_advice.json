@@ -1,0 +1,285 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心赔率公式冲突、T变量定义歧义、假数据隔离及真假赔率映射等致命阻塞项，问题定位精准。但在扣款/冻结时机、干预逻辑边界条件等经济安全与测试验收细节上存在遗漏，部分高阻塞问题的证据引用格式略显混乱，需进一步结构化整理。",
+    "strengths": [
+      "准确抓住了需求文档与数值文档在赔率计算模型上的根本性冲突（资金池模式 vs 权重膨胀模式）。",
+      "敏锐发现了T变量在时间公式与赔率公式中的物理意义矛盾，避免了开发阶段的严重逻辑错误。",
+      "对假数据参与真实计算、真假赔率展示与结算映射等经济安全边界问题识别到位。"
+    ],
+    "issues": [
+      "T_VARIABLE_CONFLICT 问题的证据引用格式混乱，包含重复和嵌套数组，不利于业务方追踪。",
+      "遗漏了对赌游戏核心的‘下注本金扣除/冻结时机’规则，存在经济漏洞风险。",
+      "干预逻辑的触发边界（如选项下注人数不满足条件时的降级处理）未做深入挖掘，影响测试验收。",
+      "MAX_PAYOUT_RISK 未结合‘单选项限注100万’的具体规则进行量化风险分析。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的证据格式问题，补充了扣款时机与干预边界等关键遗漏，结构完整、证据充分、追踪清晰，可直接作为评审终稿交付业务方进行需求修订。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的证据格式问题，补充了扣款时机与干预边界等关键遗漏，结构完整、证据充分、追踪清晰，可直接作为评审终稿交付业务方进行需求修订。"
+  },
+  "review_notes": [
+    "主模型在 T_VARIABLE_CONFLICT 中的证据引用存在嵌套数组和重复字符串，已在候选稿中整理为清晰的字符串列表，提升可读性。",
+    "主模型未识别出对赌游戏核心的‘下注本金扣除/冻结时机’规则，已在候选稿中作为高信号安全问题补充（SECURITY_BET_DEDUCTION_TIMING）。",
+    "干预逻辑的触发边界（如选项下注人数不满足条件时的降级处理）在主模型中未做深入挖掘，已将其吸收至 INTERVENTION_MAPPING 的现状描述中，避免问题碎片化。",
+    "MAX_PAYOUT_RISK 已结合‘单选项限注100万’的具体规则进行量化风险分析，使资损风险更具说服力。",
+    "protocol_profile=phase2",
+    "phase2 准入已从 candidate 移除 rejected addition：SECURITY_BET_DEDUCTION_TIMING"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DATA_ISOLATION",
+        "primary_issue_ids": [
+          "DATA_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "primary_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "INTERVENTION_MAPPING",
+        "primary_issue_ids": [
+          "INTERVENTION_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "T_VARIABLE_CONFLICT",
+        "primary_issue_ids": [
+          "T_VARIABLE_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "PLACEHOLDER_MISSING",
+        "primary_issue_ids": [
+          "PLACEHOLDER_MISSING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "AUDIO_MIXING",
+        "primary_issue_ids": [
+          "AUDIO_MIXING"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT_RISK",
+        "primary_issue_ids": [
+          "MAX_PAYOUT_RISK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FAKE_ODDS_MAPPING",
+        "primary_issue_ids": [
+          "FAKE_ODDS_MAPPING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的证据格式问题，补充了扣款时机与干预边界等关键遗漏，结构完整、证据充分、追踪清晰，可直接作为评审终稿交付业务方进行需求修订。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 1,
+    "admitted_count": 0,
+    "rejected_count": 1,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "SECURITY_BET_DEDUCTION_TIMING",
+        "title": "下注本金扣除/冻结时机缺失，存在经济漏洞风险",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "musee游戏Racing.docx / 3.3下注部分 段落25、段落32",
+        "coverage_audit_key": ""
+      }
+    ],
+    "coverage_ledger": {
+      "passed": false,
+      "completeness": 0.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "SECURITY_BET_DEDUCTION_TIMING": ""
+      },
+      "unmapped_missed_issue_ids": [
+        "SECURITY_BET_DEDUCTION_TIMING"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [
+        "coverage_entry_count_invalid:0",
+        "coverage_audit_key_order_invalid",
+        "missed_finding_not_in_confirmed_add:SECURITY_BET_DEDUCTION_TIMING"
+      ],
+      "entries": []
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 0.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_count_invalid:0",
+      "coverage_audit_key_order_invalid",
+      "missed_finding_not_in_confirmed_add:SECURITY_BET_DEDUCTION_TIMING"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 1,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "phase2_coverage_ledger_invalid"
+    ]
+  }
+}

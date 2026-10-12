@@ -1,0 +1,281 @@
+model: deepseek-v4-pro
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "主模型报告成功识别了概率权重未定义导致RTP无法核算、RESPIN边界缺失等核心风险，但错误地将RESPIN公式判定为不一致，且未覆盖RESPIN阶段权重概率问题。候选报告修正了这些偏差，并补充了遗漏项，整体结构完整，建议直接输出。",
+    "strengths": [
+      "抓住了概率权重和RESPIN边界两大高风险阻塞点",
+      "提供了清晰的改进建议和测试点",
+      "维度覆盖较全面"
+    ],
+    "issues": [
+      "误判RESPIN公式在需求与数值文档间不一致，该公式实际一致",
+      "未覆盖RESPIN次数与乘数符号的权重概率问题",
+      "RESPIN问题中混合了多个子问题，但未充分展开"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告修正了主模型对公式一致性的误判，并补充了RESPIN阶段权重缺失，报告结构完整，可直接交付业务方。"
+  },
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_RESPIN_WEIGHTS_PROB",
+      "title": "RESPIN次数与乘数符号权重概率未定义，影响RTP核算",
+      "description": "数值文档中表6（RESPIN次数权重）和表7（RESPIN乘数符号权重）所有出现权重均为100，未说明是全局概率还是条件概率，无法计算RTP。",
+      "evidence": "crazy777数值文档修改后.docx / 表格6、表格7",
+      "severity": "高",
+      "suggestion": "明确RESPIN阶段所有权重是全局概率还是条件概率，并补充完整的概率分布表，确保RTP可核算。"
+    },
+    {
+      "issue_id": "MISSED_RESPIN_BOUNDARY",
+      "title": "RESPIN结算规则缺失最大赔付、断线恢复、自动旋转停止等边界条件",
+      "description": "文档未定义单局最大赔付上限、RESPIN中断线重连恢复规则、自动旋转在RESPIN阶段的停止时机，以及风控‘超过100倍强制0倍’的作用域。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19、35-36；crazy777数值文档修改后.docx / 段落55",
+      "severity": "高",
+      "suggestion": "补充MAX_WIN绝对值上限及超限处理规则；明确RESPIN断线重连后直接结算；明确自动旋转在RESPIN结算完成后停止；明确风控100倍的作用域为最终结算倍数。"
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "AMOUNT_FORMATTING_EDGE_CASES",
+        "primary_issue_ids": [
+          "AMOUNT_FORMATTING_EDGE_CASES"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_DOC_RESPIN_FORMULA",
+        "primary_issue_ids": [
+          "CROSS_DOC_RESPIN_FORMULA"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSED_RESPIN_BOUNDARY"
+        ]
+      },
+      {
+        "candidate_issue_id": "PROBABILITY_WEIGHT_SCOPE",
+        "primary_issue_ids": [
+          "PROBABILITY_WEIGHT_SCOPE"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSED_RESPIN_WEIGHTS_PROB"
+        ]
+      },
+      {
+        "candidate_issue_id": "PUSH_MECHANISM_BOUNDARY",
+        "primary_issue_ids": [
+          "PUSH_MECHANISM_BOUNDARY"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UI_AMOUNT_UPDATE_TIMING",
+        "primary_issue_ids": [
+          "UI_AMOUNT_UPDATE_TIMING"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档描述了3x3+1x3单线SLOTS与RESPIN累加机制，主流程可理解。但概率权重未区分全局/条件导致RTP无法核算，RESPIN结算规则缺失最大赔付、断线恢复等关键边界，存在资损风险。需补充数值模型与结算规则后方可开工。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但存在RTP无法核算、RESPIN边界缺失两个高风险阻断项，需补充后再开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "概率权重未区分全局/条件，RTP无法核算（含基础盘面、乘数轴、RESPIN次数与乘数符号）",
+        "owner": "数值策划",
+        "why_now": "数值模型无法成立，RTP无法核算，上线后必然导致严重资损或玩家体验极差。"
+      },
+      {
+        "severity": "高",
+        "title": "RESPIN结算规则与边界条件缺失（含最大赔付、断线恢复、自动旋转停止规则）",
+        "owner": "系统策划",
+        "why_now": "缺乏最大赔付兜底可能导致极端赔付超出预算，断线重连规则缺失影响玩家体验和经济安全，自动旋转停止规则不明确可能导致交互异常。"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CROSS_DOC_RESPIN_FORMULA",
+            "canonical_title": "RESPIN结算规则与边界条件缺失（含最大赔付、断线恢复、自动旋转停止规则）",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "RESPIN结算规则与边界条件缺失（含最大赔付、断线恢复、自动旋转停止规则）",
+            "current_state": "需求文档和数值文档对RESPIN的累加公式表述一致：最终乘数=1+Σ每次转到的乘数值，奖金=基础投注×基础赔率×最终乘数。但文档未定义单局最大赔付（MAX_WIN）上限，未明确RESPIN中断线重连时的恢复规则（是播完动画还是直接结算），未明确自动旋转在RESPIN阶段停止的具体时机，以及风控‘超过100倍强制0倍’的作用域（基础赔率还是最终结算倍数）。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落19、35-36；crazy777数值文档修改后.docx / 段落43-44、55",
+            "risk": "缺少MAX_WIN可能导致极端赔付超出预算；断线重连规则缺失导致测试无法设计用例，玩家可能看到错误状态；自动旋转停止时机不明确导致交互异常。",
+            "suggestion": "补充MAX_WIN绝对值上限及超限处理规则；明确RESPIN断线重连后直接展示最终结算结果；明确自动旋转在RESPIN结算完成后停止；明确风控100倍的作用域，建议作用于最终结算倍数，并在RESPIN累加中实时检查。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "AMOUNT_FORMATTING_EDGE_CASES",
+            "canonical_title": "金额缩位展示的边界条件未定义",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "金额缩位展示的边界条件未定义",
+            "current_state": "文档规定了“多于4位数缩减为K...缩位后保留两位小数向下取整展示...直接截断”，但未定义金额为0、极小值（如0.5）、或刚好为整数（如1000）时的展示格式。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落30",
+            "risk": "前端实现时可能因边界条件未定义而出现显示异常（如0显示为0.00K，或1000显示为1.00K）。",
+            "suggestion": "补充缩位展示的边界规则：0值直接显示“0”；小于1000的值不缩位；整数缩位时是否保留小数（如1000显示为1K还是1.00K）。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "PROBABILITY_WEIGHT_SCOPE",
+            "canonical_title": "概率权重未区分全局/条件，RTP无法核算（含基础盘面、乘数轴、RESPIN次数与乘数符号）",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "table",
+            "severity": "高",
+            "title": "概率权重未区分全局/条件，RTP无法核算（含基础盘面、乘数轴、RESPIN次数与乘数符号）",
+            "current_state": "基础盘面（表2）、乘数轴（表4）、RESPIN次数（表6）和RESPIN乘数符号（表7）的所有出现权重均配置为100。若此为全局概率，则基础中奖率、RESPIN触发率等将远超100%，RTP失控；若为条件概率，则未说明前置条件及概率分布。",
+            "evidence": "crazy777数值文档修改后.docx / 表格2、表格4、表格6、表格7",
+            "risk": "数值模型无法成立，RTP无法核算，上线后必然导致严重资损或玩家体验极差。",
+            "suggestion": "明确所有权重是全局掉落权重还是条件概率，并补充完整的概率分布表，确保RTP可核算。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "PUSH_MECHANISM_BOUNDARY",
+            "canonical_title": "推展机制的结算边界模糊",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "推展机制的“表演”与“真实结算”边界模糊，与风控规则存在潜在冲突",
+            "current_state": "文档描述推展机制为“先得到最终结果盘面，再进行一次表演”，但举例中“先让盘面为5倍+空...而后必定推展X10为最终结果”暗示推展改变了真实结果。未明确推展是纯客户端表现，还是服务端真实修改了结算数据。",
+            "evidence": "crazy777数值文档修改后.docx / 段落38-40",
+            "risk": "若推展改变真实结果，可能与“超过100倍强制0”的风控规则产生冲突；若为纯表现，则举例描述会误导程序实现。",
+            "suggestion": "明确推展机制是“纯客户端表演（不影响服务端结算数据）”还是“服务端真实修改结果”。若是前者，需补充客户端表现与真实结算不一致时的处理逻辑（如断线重连）。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UI_AMOUNT_UPDATE_TIMING",
+            "canonical_title": "UI金额字段更新时机与展示口径未对齐",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "UI各金额字段（基础、乘数、总奖金）的更新时机与展示口径未对齐",
+            "current_state": "文档提到了“中奖金额展示区域”、“奖金结算栏”、“累计结算金额”、“总倍率效果变化展示”，但未明确在RESPIN累加过程中，这些UI字段是实时更新，还是等RESPIN结束后一次性更新。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落30、32、43、45",
+            "risk": "UI表现与真实结算节奏脱节，玩家可能看到错误的中间金额，或动画播放时金额不跳动，影响体验。",
+            "suggestion": "明确各金额字段的更新时机：基础奖金在基础轴停止时更新；RESPIN过程中的“累计乘数”和“当前预计总奖金”需随每次乘数轴停止实时更新；最终总奖金在RESPIN结束后定格。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "单局最大赔付（MAX_WIN）的绝对值上限配置及超限处理规则。",
+      "基础盘面、乘数轴、RESPIN次数与乘数符号的全局概率分布表或条件概率触发规则，以支撑RTP核算。",
+      "推展机制的具体作用域（纯客户端表演还是服务端真实修改结果）。",
+      "RESPIN中途断线重连的专属恢复规则（展示动画还是直接结算）。",
+      "自动旋转在RESPIN阶段的停止时机。",
+      "风控‘超过100倍强制0倍’的作用域（基础赔率还是最终结算倍数）。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证基础盘面3x3单线中奖逻辑及赔率计算是否正确。",
+        "验证RESPIN触发条件（第4列停在respin且123列均不为空）及累加乘数计算公式。",
+        "验证推展机制的触发概率及表现效果。",
+        "验证自动旋转、快捷旋转、注码切换等基础功能。"
+      ],
+      "异常操作": [
+        "验证RESPIN播放中途断线、杀进程后的重连恢复表现。",
+        "验证RESPIN播放中途点击自动旋转停止按钮的交互逻辑。",
+        "验证余额不足时的充值弹窗拉起及返回后的状态恢复。"
+      ],
+      "兼容性": [
+        "验证不同分辨率下的UI适配，特别是金额缩位展示（K/M）的截断与对齐。",
+        "验证低端机型下RESPIN累加动画的帧率与内存占用。"
+      ],
+      "安全专项": [
+        "验证单局赔付金额是否严格受MAX_WIN上限控制，无溢出风险。",
+        "验证风控规则（超过100倍强制0倍）的触发条件及作用域是否正确。",
+        "验证服务端对投注、扣款、派奖的幂等性及防篡改校验。"
+      ],
+      "回归影响": [
+        "验证中台通用SLOTS风控和断线异常处理流程在本玩法中的兼容性。",
+        "验证排行榜、中奖记录等公共模块的数据统计口径是否准确。"
+      ],
+      "性能与稳定性": [
+        "验证连续快速点击旋转按钮的防抖及幂等处理。",
+        "验证RESPIN连续触发高倍累加时的服务端计算耗时及客户端渲染性能。"
+      ],
+      "用户体验": [
+        "验证RESPIN累加过程中UI金额字段的更新节奏是否与动画同步。",
+        "验证新手玩家对RESPIN触发条件及累加规则的理解成本（引导/弹窗说明）。"
+      ]
+    },
+    "quality_notes": [
+      "经复核，需求文档与数值文档对RESPIN公式描述一致，不存在根本冲突。",
+      "文档中多处引用图片作为UI示例，但图片解析显示大量占位符、不可读区域及截断内容，需补充最终高保真UI稿及完整交互说明。",
+      "数值文档中的表格权重配置过于简单（全为100），缺乏实际数值推演过程，建议补充RTP计算表及概率分布推导过程。"
+    ],
+    "image_analysis_gaps": [
+      "规则弹窗内容（图片8、9）仅显示占位符或不可读，缺失具体规则文案。",
+      "排行榜界面（图片10、11）具体排名字段、筛选条件及奖励规则不可读。",
+      "赔付表（图片14、18、21）部分数值被截断或遮挡，无法确认完整的符号组合与赔率映射。",
+      "部分UI按钮（图片1、16、17）缺失点击态、禁用态等交互状态说明。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告修正了主模型对公式一致性的误判，并补充了RESPIN阶段权重缺失，报告结构完整，可直接交付业务方。"
+  },
+  "review_notes": [
+    "将主模型中对RESPIN公式不一致的误判修正为公式一致，并将严重度从高调整为高（因其他边界问题），保持高严重度但聚焦于边界缺失。",
+    "吸收了missed findings：RESPIN次数与乘数符号权重概率缺失、RESPIN边界条件缺失，分别归入PROBABILITY_WEIGHT_SCOPE和CROSS_DOC_RESPIN_FORMULA。",
+    "在PROBABILITY_WEIGHT_SCOPE中扩展了证据范围，包含了RESPIN阶段的权重表。",
+    "在CROSS_DOC_RESPIN_FORMULA中增加了自动旋转停止时机和风控作用域的说明。",
+    "整体保持主模型的问题结构，仅对内容进行修正和补充，未引入新的独立问题。"
+  ]
+}

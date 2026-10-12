@@ -1,0 +1,19 @@
+{
+  "game": "777",
+  "variant_id": "A",
+  "repeat": 2,
+  "status": "failed",
+  "output_dir": "blinded/A/777/repeat_02",
+  "shared_input_hash": "b5b78a503d4086150c20b50f3d3f5235e471ecbd77f5a28b007595bf73523bfd",
+  "primary_raw_hash": "9884005df9dbbc0e8586f017965a34ff74ac1cefbcff86b6e14b68ad1e6bbd19",
+  "primary_messages_hash": "f3dcff6335ce9d174294e1fc197850ee718c3a504daaea225e173901fa4e076e",
+  "primary_report_hash": "7e652a59d9de58f6c78e112712114a5c47e93a52160195e94791b1976168577c",
+  "secondary_message_hash": "4c995d24e8f1c660d29fb151981139d635c985f9b38fa7aa02eb608778380395",
+  "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52",
+  "protocol_profile": "phase2",
+  "processing_profile": "phase2",
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02",
+  "temperature": 0,
+  "error": "secondary_benchmark:A:777:repeat_02 failed after 4 attempt(s): Model API request failed: <urlopen error [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。>"
+}

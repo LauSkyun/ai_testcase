@@ -1,0 +1,193 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了核心结算模型冲突、概率冲突及关键配置矛盾，并对资金链路、异常恢复、最大赔付等关键控制面进行了有效覆盖，整体质量较高。",
+    "strengths": [
+      "跨文档冲突定位准确，核心结算模型互斥问题定性准确。",
+      "资金与异常恢复链路缺失识别到位，覆盖了 debit_timing 和 funds_failure_compensation 的核心诉求。",
+      "单局最大赔付风控边界缺失的识别有效，覆盖了 single_round_payout_cap。"
+    ],
+    "issues": [
+      "部分 finding 的 evidence 字段堆砌了过多不相关的证据（如 bonus_prob_conflict 中混入了倒计时交互和筹码档位），导致单根因闭环不够纯粹。",
+      "image_analysis_gaps 中的符号映射问题（苹果 vs 李子/番茄）未提升为正式 finding，但其根因已被 bonus_prob_conflict 覆盖，不影响最终结论。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "Primary 已覆盖所有关键控制面，无重大遗漏，但部分 finding 的证据链存在冗余，需在 Candidate 生成时进行清洗。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 基础转盘配置, 表格2",
+            "LUCKY77 转盘投注游戏设计方案.md / 4. 结算示例, 表格3-6"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "bonus_prob_conflict"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 基础转盘配置, 表格2",
+            "LUCKT 77 数值文档.md / 二、赔付规则, 表格2",
+            "LUCKY77 转盘投注游戏设计方案.md / 图片解析, 图片1"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 2. 额外奖励模式 > 2.1 触发条件, 段落27-28"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 通用投注逻辑, 段落13",
+            "LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程, 表格7"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "settlement_flow"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 通用投注逻辑, 段落8-14",
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明, 段落73"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程, 表格7"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "settlement_flow",
+            "exception_recovery"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 基础转盘配置, 表格2"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、水位线规则, 表格5",
+            "LUCKT 77 数值文档.md / 二、水位线规则, 段落18-19"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "max_win_limit"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、水位线规则 & 三、开奖逻辑"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明, 段落71"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明, 段落71",
+            "LUCKY77 转盘投注游戏设计方案.md / 图片解析, 图片1"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "数值文档中“投入规则”正文段落（默认100X/500X最高挡位）与表格8（单项100，全局200）存在严重自相矛盾，需数值策划重新核对。",
+    "需求文档中“复用的投注筹码按钮”描述为“按上一次投注结果+金额进行记录”，表述存在歧义，建议明确为“复制上一局的投注分布与金额”。",
+    "图片1中历史开奖记录栏显示“苹果”，而需求文档中定义为“李子”或数值文档中的“番茄”，需确认最终美术资源命名规范（该问题根因已被 Primary 的 bonus_prob_conflict 覆盖）。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=6f76d31b6a6d68c8d2e6e5d9378bd5a41e1af9c3ef9fca82e6c2efc831249e3c"
+  ]
+}

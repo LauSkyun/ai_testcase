@@ -1,0 +1,244 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告识别了多数关键问题，但存在合并问题混乱、严重度标注错误、缺少可测试性维度问题等不足。",
+    "strengths": [
+      "覆盖了需求文档与数值文档的主要冲突点（如推展、风控、卷轴方案缺失）",
+      "指出了RESPIN乘数符号1倍矛盾",
+      "提供了测试点建议和缺失信息清单"
+    ],
+    "issues": [
+      "REQ_MISS_FENGKONG问题混合了多个不同根因，标题与内容不匹配",
+      "该问题severity标注为“低”但实际应为高阻塞，与top_blockers矛盾",
+      "CROSS_1X_CONFLICT严重度可能低估，且与REQ_MISS_FENGKONG部分内容重复",
+      "可测试性与验收标准维度未指出任何问题，但实际验收标准缺失",
+      "部分问题描述不够清晰，建议不够具体"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。"
+  },
+  "review_notes": [
+    "主模型报告REQ_MISS_FENGKONG问题混合了多个根因，候选已分点重写，但未拆分issue_id，以保持追踪。",
+    "CROSS_1X_CONFLICT的严重度从主模型的中级调整为高级，因为1倍配置矛盾直接阻塞实现和测试。",
+    "新增MISS_TEST_ACCEPTANCE问题，补充可测试性维度的缺失，但风险较低，不影响核心结论。",
+    "所有问题均基于共享输入中的事实推导，未引入外部背景。",
+    "dual_pass 协议提示：部分 missed finding 已在 candidate 中独立落盘，但 lineage.added/kept 未解释其来源。",
+    "dual_pass 结构提示：candidate 仍保留多根因混合问题，建议继续拆清根因或改为分点展示。",
+    "dual_pass 一致性提示：candidate 与 primary 存在较大结论漂移，但副评审未给出足够改判依据。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_TEST_ACCEPTANCE",
+      "canonical_title": "缺失明确的验收标准，测试设计缺乏依据",
+      "primary_dimension": "可测试性与验收标准",
+      "evidence_scope": "document",
+      "severity": "低",
+      "title": "文档未提供任何验收用例，测试设计缺乏依据",
+      "current_state": "需求文档和数值文档均未定义验收标准，如主流程、异常流程、重复点击、并发、弱网、重进恢复的具体预期行为。",
+      "evidence": "疯狂777需求文档修改后.docx / 全文；crazy777数值文档修改后.docx / 全文",
+      "risk": "测试设计缺乏依据，可能导致关键场景漏测，上线后出现结算异常或体验问题。",
+      "suggestion": "补充验收标准文档，至少覆盖主流程、RESPIN重进、断线恢复、风控触发、推展表演、快速模式等场景的预期结果。",
+      "planner_role": "测试",
+      "confidence": "高",
+      "blocking": "建议优化"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "REQ_MISS_FENGKONG",
+        "primary_issue_ids": [
+          "REQ_MISS_FENGKONG"
+        ],
+        "change_description": "重写标题和内容，分点描述缺失的推展、风控、卷轴方案和RESPIN乘数表，移除与CROSS_1X_CONFLICT重复的1倍配置部分，并修正严重度至“高”。"
+      },
+      {
+        "candidate_issue_id": "CROSS_1X_CONFLICT",
+        "primary_issue_ids": [
+          "CROSS_1X_CONFLICT"
+        ],
+        "change_description": "调整标题和描述，聚焦RESPIN乘数1倍配置矛盾及公式歧义，提升严重度至“高”，补充证据。"
+      },
+      {
+        "candidate_issue_id": "MISS_RTP_MAX",
+        "primary_issue_ids": [
+          "MISS_RTP_MAX"
+        ],
+        "change_description": "保留原内容，未做实质修改。"
+      },
+      {
+        "candidate_issue_id": "HISTORY_GAME_COMPAT",
+        "primary_issue_ids": [
+          "HISTORY_GAME_COMPAT"
+        ],
+        "change_description": "保留原内容，未做实质修改。"
+      },
+      {
+        "candidate_issue_id": "SERVER_AUTH_MISS",
+        "primary_issue_ids": [
+          "SERVER_AUTH_MISS"
+        ],
+        "change_description": "保留原内容，补充证据说明。"
+      },
+      {
+        "candidate_issue_id": "RULE_PAGE_PLACEHOLDER",
+        "primary_issue_ids": [
+          "RULE_PAGE_PLACEHOLDER"
+        ],
+        "change_description": "保留原内容，未做实质修改。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "MISS_TEST_ACCEPTANCE",
+        "source_missed_issue_ids": [],
+        "reason": "主模型在可测试性维度未发现任何问题，但文档确实缺失验收标准，补充此低风险发现。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": true,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [
+    "MISS_TEST_ACCEPTANCE"
+  ],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": true,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "需求文档缺失推展机制、风控机制、卷轴方案选择和RESPIN乘数表，与数值文档不一致",
+    "需求文档缺失风控机制（强0倍）和卷轴方案选择，流程不完整"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 对 candidate 结构的说明与最终落盘结果不一致，当前候选稿不可作为默认最终输出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "advice_candidate_structure_mismatch",
+    "candidate_materialized_missed_without_added",
+    "candidate_major_judgment_drift"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": false,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": false,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": false
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "advice_candidate_structure_mismatch"
+    ],
+    "traceability_blockers": [
+      "candidate_materialized_missed_without_added"
+    ],
+    "quality_blockers": [
+      "candidate_major_judgment_drift"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

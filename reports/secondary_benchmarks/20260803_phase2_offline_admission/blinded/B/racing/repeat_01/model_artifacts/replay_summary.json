@@ -1,0 +1,142 @@
+{
+  "status": "completed",
+  "game": "racing",
+  "variant_id": "B",
+  "repeat": 1,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": false,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": false,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_merged_not_materialized",
+    "candidate_traceability_partial"
+  ],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 1,
+    "dropped": 0
+  },
+  "traceability_status": "partial",
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 3,
+    "materially_changed_titles": [
+      "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+      "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，干预逻辑无法落地",
+      "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:T_VARIABLE_CONFLICT",
+        "issue_id": "T_VARIABLE_CONFLICT",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:INTERVENTION_MAPPING",
+        "issue_id": "INTERVENTION_MAPPING",
+        "title": "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，干预逻辑无法落地",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:MAX_PAYOUT_RISK",
+        "issue_id": "MAX_PAYOUT_RISK",
+        "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险",
+        "change_kinds": [
+          "current_state_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 1,
+    "absorbed_primary_findings": 2,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 1,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 0,
+      "admitted_count": 0,
+      "rejected_count": 0,
+      "all_passed": true,
+      "results": []
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": []
+  }
+}

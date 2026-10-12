@@ -1,0 +1,143 @@
+{
+  "status": "completed",
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 1,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [
+      "免费符号乘数缺失导致结算公式不完整"
+    ],
+    "candidate_only_titles": [],
+    "materially_changed_count": 5,
+    "materially_changed_titles": [
+      "Big Win/Mega Win/Super Win弹窗的触发倍数阈值未定义",
+      "免费游戏重复触发条件中的“夺宝符号”笔误",
+      "中奖金额计算口径分裂且免费符号乘数缺失",
+      "底层数据生成规则与RESPIN表演逻辑需澄清",
+      "风控倍数基数与免费游戏封顶规则需澄清"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "secondary-origin:MF_02",
+        "issue_id": "UX_01",
+        "title": "Big Win/Mega Win/Super Win弹窗的触发倍数阈值未定义",
+        "change_kinds": [
+          "title_changed",
+          "dimension_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MF_03",
+        "issue_id": "CLARITY_02",
+        "title": "免费游戏重复触发条件中的“夺宝符号”笔误",
+        "change_kinds": [
+          "title_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CROSS_01",
+        "issue_id": "CROSS_01",
+        "title": "中奖金额计算口径分裂且免费符号乘数缺失",
+        "change_kinds": [
+          "title_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "底层数据生成规则与RESPIN表演逻辑需澄清",
+        "change_kinds": [
+          "title_changed",
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CROSS_02",
+        "issue_id": "CROSS_02",
+        "title": "风控倍数基数与免费游戏封顶规则需澄清",
+        "change_kinds": [
+          "title_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 3,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "game": "tiger",
+  "variant_id": "A",
+  "repeat": 1,
+  "status": "completed",
+  "output_dir": "blinded/A/tiger/repeat_01",
+  "shared_input_hash": "7c2486e50b817e30bd189f00638deb616cd426a2865b195141fafa30e10387a3",
+  "primary_raw_hash": "9c2b6db82d3325ceff157b4b3ef16162f046b78a6c3f2dd9414518dcab6a84fc",
+  "primary_messages_hash": "5e1462ccdb136079b213cc7b784c1edeccbd661daef33dbbaefae2be90254f62",
+  "primary_report_hash": "4433f70e5573ed3953fafd166b75e4620635fbc3ab3d7d1fac26ef475a637ff8",
+  "secondary_message_hash": "1722ed508c9fbee496d95e482050334c5ebe07684441b1ddbb2823b657af42d8",
+  "temperature": 0,
+  "attempt_count": 0,
+  "reprocessed_saved_raw": true,
+  "secondary_response_hash": "408fb3f97e1e50a8460c357f725f434cbf10a5e7148107ae2d6b12d243763c06",
+  "selected_report_owner": "candidate",
+  "candidate_gate_passed": true,
+  "candidate_recommendation_status": "recommended",
+  "traceability_status": "complete",
+  "claimed_added_count": 3,
+  "materialized_added_count": 3,
+  "added_root_keys": [
+    "issue:UX_FAILURE_GUIDANCE_MISSING",
+    "title:不抽水触发条件中最小选项投入金额为0时的边界行为未定义",
+    "title:玩家投入扣款时机未明确影响结算流程与充值交互"
+  ],
+  "high_added_root_keys": [],
+  "added_severity_by_root": {
+    "title:玩家投入扣款时机未明确影响结算流程与充值交互": "",
+    "issue:UX_FAILURE_GUIDANCE_MISSING": "",
+    "title:不抽水触发条件中最小选项投入金额为0时的边界行为未定义": ""
+  },
+  "selected_top_blocker_keys": [
+    "issue:COMP_RECONNECT_REENTER_MISSING",
+    "issue:CORE_DIFFICULTY_CONFIG_MISMATCH",
+    "title:开奖兜底逻辑存在导致开出无人投注选项（0赔付）的机制缺陷"
+  ],
+  "primary_top_blocker_retention": 0.6667,
+  "field_completeness": 0.2857,
+  "multiroot_finding_count": 0,
+  "unsupported_severity_change_count": 0,
+  "unsupported_blocking_change_count": 0,
+  "lineage_mismatch": false,
+  "materialization_mismatch": false,
+  "major_judgment_drift": false,
+  "selected_finding_count": 13
+}

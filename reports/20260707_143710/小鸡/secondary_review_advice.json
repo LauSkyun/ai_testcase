@@ -1,0 +1,227 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告结构清晰，识别了跨文档映射断裂、胜负判定边界、UI概率展示、异常恢复等关键问题，但遗漏了核心结算公式歧义，且对胜负判定冲突的严重度标注在维度中与top_blockers矛盾，需修正补充。",
+    "strengths": [
+      "覆盖了结算、异常恢复、UI展示、安全性等多个维度，问题定位较全面",
+      "提供了可测试的验收点和缺失信息清单，有助于后续测试设计",
+      "指出了需求文档与数值文档在难度、倍率、概率上的不一致，并给出了统一建议"
+    ],
+    "issues": [
+      "遗漏了总奖金计算公式中倍率定义（单格倍率连乘 vs 累积倍率）的歧义，将直接阻塞结算实现",
+      "安全性与反作弊维度中胜负判定边界冲突的严重度标注为“低”，与top_blockers中的“高”矛盾，且实际应属高阻塞",
+      "未深入分析数值文档中倍率表（表格2）的数学性质与需求文档公式的兼容性"
+    ],
+    "suggestion_level": "high",
+    "ready_for_direct_output": false,
+    "reason": "candidate 与 primary 存在较大结论漂移，但副评审未给出足够改判依据，当前不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate 与 primary 存在较大结论漂移，但副评审未给出足够改判依据，当前不建议默认直出。"
+  },
+  "review_notes": [
+    "新增finding 'formula_ambiguity' 解决总奖金公式歧义，该问题为高阻塞，主模型遗漏。",
+    "将 'client_server_boundary' 的严重度从低提升为高，并统一top_blockers，修正了主模型报告中的矛盾。",
+    "在 'cross_doc_mapping' 中明确指出了超级大奖缺失，并强化了建议。",
+    "所有kept finding均沿用主模型issue_id，未做拆分或合并。",
+    "candidate_report 整体结构保持与主模型一致，仅在必要处补充和修正。",
+    "dual_pass 一致性提示：candidate 与 primary 存在较大结论漂移，但副评审未给出足够改判依据。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "missed_id": "MISSED_01",
+      "title": "总奖金计算公式中的倍率定义不明确",
+      "description": "需求文档公式为“总奖金 = 下注金额 × Π(已通过马路倍率)”，暗示每个格子的倍率需要连乘；但数值文档中倍率表数值（如难度1：1.01, 1.03, 1.06... 23.9）增长特征符合累积倍率，且UI中提现金额显示为20×1.03=20.6，也支持累积倍率。文档未明确说明倍率是每格独立倍率还是累积总倍率，将导致结算逻辑实现错误。",
+      "evidence": "小鸡.docx / 3.3 奖金计算系统；小鸡数值文档 / 表格2；小鸡.docx / 图片解析（提现20.6 USD）",
+      "risk": "若按连乘实现，总奖金将指数爆炸，与数值文档设计不符；若按累积倍率，需求文档公式需修正，测试验收无法进行。",
+      "suggestion": "统一定义为：'总奖金 = 下注金额 × 当前所在格子的累积倍率'，并在数值文档中明确标注表格内的倍率为累积倍率。需求文档公式应同步更新。",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "bet_config",
+        "primary_issue_ids": [
+          "bet_config"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "cross_doc_mapping",
+        "primary_issue_ids": [
+          "cross_doc_mapping"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "rtp_validation",
+        "primary_issue_ids": [
+          "rtp_validation"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "ui_probability",
+        "primary_issue_ids": [
+          "ui_probability"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "exception_recovery",
+        "primary_issue_ids": [
+          "exception_recovery"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "client_server_boundary",
+        "primary_issue_ids": [
+          "client_server_boundary"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "art_acceptance",
+        "primary_issue_ids": [
+          "art_acceptance"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "formula_ambiguity",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "主模型遗漏了总奖金公式的倍率定义歧义，该问题阻塞结算实现。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": true,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate 与 primary 存在较大结论漂移，但副评审未给出足够改判依据，当前不建议默认直出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "suggestion_level_high",
+    "candidate_major_judgment_drift"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": false,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": false
+  },
+  "candidate_block_reason_categories": {
+    "quality_blockers": [
+      "suggestion_level_high",
+      "candidate_major_judgment_drift"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

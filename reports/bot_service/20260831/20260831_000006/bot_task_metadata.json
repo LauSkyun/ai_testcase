@@ -1,0 +1,20 @@
+{
+  "task_id": "20260831_000006",
+  "game_name": "lucky 77",
+  "source": "bot_service",
+  "snapshot_dir": "D:\\project\\script\\mid_prototest\\bot_service\\.runtime\\yuque_snapshots\\20260831\\20260831_000006",
+  "review_mode": "dual_pass",
+  "extract_only": false,
+  "analyze_images": true,
+  "documents": [
+    {
+      "name": "Teenpatti PVE版本.md",
+      "kind": "mixed",
+      "paragraph_count": 62,
+      "table_count": 0,
+      "image_count": 12,
+      "unresolved_image_count": 0,
+      "errors": []
+    }
+  ]
+}

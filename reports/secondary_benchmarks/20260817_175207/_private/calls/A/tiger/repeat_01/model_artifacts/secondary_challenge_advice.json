@@ -1,0 +1,65 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 2,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "图21引导写孔雀X3/其他X2.9",
+      "evidence": "tiger需求文档.docx / 图片21解析",
+      "counterevidence": "图片21解析明确显示三个选项卡分别为蓝色Peacock Win (X3)、绿色Draw (Win:3X)、红色Lion Win (X3)，并未出现其他选项为X2.9的描述。",
+      "rationale": "Primary 对图21的赔率描述与图片实际解析结果不符。图21中三个选项均显示为X3，而非孔雀X3/其他X2.9。虽然图1、图5、图7与表格4的2.9倍率仍存在冲突，但对图21的证据引用错误，需修正以保证报告准确性。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "段落73明确‘若某选项无人投入，其赔付金额视为0’作为兜底逻辑的依据",
+      "evidence": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+      "counterevidence": "段落73属于3.7.5奖池状态-回收的主开奖规则，而非3.7.3/3.7.4的兜底逻辑。3.7.3/3.7.4的兜底逻辑（段落57/68）中并未显式引用段落73的0赔付规则。",
+      "rationale": "Primary 将3.7.5的主逻辑与3.7.3/3.7.4的兜底逻辑混淆引用。虽然两者都存在开出0赔付选项的风险，但证据归属章节错误，需修正证据引用以准确定位问题。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": [
+    "仅对证据引用存在章节错位或描述与图片解析不符的 finding 进行 clarify 修正，核心风险定性保持不变。"
+  ]
+}

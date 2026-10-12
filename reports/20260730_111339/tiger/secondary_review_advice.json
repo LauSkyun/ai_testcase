@@ -1,0 +1,195 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了赔率冲突、数值模型缺失、机器人规则缺失等核心高阻塞问题，但组织上存在部分问题混杂（如CLARITY-002混入多个根因），且可测试性维度空白，遗漏了异常流程验收标准。",
+    "strengths": [
+      "精准识别了UI赔率与配置赔率不一致这一直接阻塞点",
+      "指出了开奖策略概率模型缺失，无法验证RTP",
+      "发现了机器人流程图缺失正文定义",
+      "测试点覆盖较全面"
+    ],
+    "issues": [
+      "CLARITY-002将机器人、扣款时机、异常恢复等多个独立缺口混在一起，降低了可读性",
+      "可测试性维度未给出任何问题，而文档明显缺少异常流程、弱网、幂等验收标准",
+      "部分建议的针对性可进一步加强"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的组织问题，补充了异常流程验收标准，结构完整，证据充分，可直接给业务方评审。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的组织问题，补充了异常流程验收标准，结构完整，证据充分，可直接给业务方评审。"
+  },
+  "review_notes": [
+    "主模型CLARITY-002原问题将机器人、扣款、异常恢复等多个缺口混在一起，候选稿通过分点描述进行了结构化整理，未改变问题本质，但提升了可读性。",
+    "可测试性维度新增TEST-001，补充了异常流程验收标准缺失的问题，弥补了主模型空白。",
+    "主模型其他维度虽未发现明显问题，但若后续需要，可补充低风险提醒，如奖池状态时间口径、失败反馈细节等，但当前不阻塞。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS-001",
+      "description": "主模型可测试性维度空白，文档缺少投入阶段异常流程（重复点击、断网重连、倒计时超时、结算弹窗退出等）的验收标准，导致测试无法设计完整用例。",
+      "severity": "中",
+      "reason": "文档未提供任何异常场景规则，测试设计将严重依赖猜测，容易遗漏关键边界。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY-001",
+        "primary_issue_ids": [
+          "CLARITY-001"
+        ],
+        "modifications": "无修改，沿用原问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY-002",
+        "primary_issue_ids": [
+          "CLARITY-002"
+        ],
+        "modifications": "标题改为“机器人投放、扣款时机与异常恢复规则缺失”，现状描述扩展为分点说明机器人、扣款、异常恢复三个缺口，原描述仅为机器人，但实际已包含扣款等，本次仅做结构化整理，未改变根因。"
+      },
+      {
+        "candidate_issue_id": "CLARITY-004",
+        "primary_issue_ids": [
+          "CLARITY-004"
+        ],
+        "modifications": "无修改"
+      },
+      {
+        "candidate_issue_id": "LOGIC-002",
+        "primary_issue_ids": [
+          "LOGIC-002"
+        ],
+        "modifications": "标题微调为“未定义奖池策略下的实际开奖概率分布，RTP、最大赔付不可验证”，描述补充了兜底规则强制性的疑问，未改变核心问题。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "TEST-001",
+        "source_missed_issue_ids": [
+          "MISS-001"
+        ],
+        "reason": "主模型可测试性维度无问题，但文档明显缺少异常流程验收标准，需补充。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的组织问题，补充了异常流程验收标准，结构完整，证据充分，可直接给业务方评审。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

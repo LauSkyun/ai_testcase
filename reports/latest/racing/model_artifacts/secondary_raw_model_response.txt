@@ -1,0 +1,241 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 已覆盖赔率双轨制冲突、干预逻辑优先级、奖池负值无硬兜底、扣款时机与幂等性等高风险问题，但遗漏了派奖时机（payout_timing）这一关键资金事务节点，导致资金链路不完整。",
+    "strengths": [
+      "准确识别彩池赔率公式与期望赔率公式并存且未统一的结算冲突",
+      "覆盖奖池状态干预与特殊用户干预优先级仲裁缺失",
+      "识别奖池可负无硬兜底的经济边界风险",
+      "覆盖下注扣款时机、重复点击幂等性及断线恢复缺失"
+    ],
+    "issues": [
+      "DIM3-02 将扣款时机、幂等性和断线恢复合并，但未单独覆盖中奖金额计入钱包的派奖时机",
+      "派奖事务节点缺失直接阻塞结算链路实现与测试验收"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "Primary 遗漏派奖时机（payout_timing），需补充后才能完整覆盖资金事务链路闭环。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM2-01"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 / 段落28",
+            "Racing数值文档.docx / 图片1 / 段落2-5",
+            "Racing数值文档.docx / 段落2-5"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。DIM2-01 已覆盖彩池赔率公式与期望赔率公式并存且未统一的问题。"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.1首页顶栏板块 / 段落10",
+            "musee游戏Racing.docx / 3.1首页顶栏板块 / 段落11",
+            "musee游戏Racing.docx / 3.4开奖逻辑 / 段落36",
+            "musee游戏Racing.docx / 图片13"
+          ],
+          "reason": "source_state=partial; counterevidence=有，UI展示基础速度v*k，结算时叠加干扰指数Luck，可解释为表现层与结算层分离设计; primary_coverage=not_covered; final=advice_only。UI展示基础速度，结算叠加干预因子，存在兼容解释，建议补充说明。"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 / 段落21-34",
+            "musee游戏Racing.docx / 3.1首页顶栏板块 / 段落8",
+            "musee游戏Racing.docx / 3.2蒙层引导 / 段落14"
+          ],
+          "reason": "source_state=explicit; counterevidence=有，3.3下注部分完整描述了下注流程入口与前置条件; primary_coverage=not_covered; final=no_issue。游戏玩法入口和下注流程已明确定义。"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM2-03"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 / 段落51",
+            "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 / 段落56-57",
+            "musee游戏Racing.docx / 3.4开奖逻辑 / 段落39-49"
+          ],
+          "reason": "source_state=partial; counterevidence=有，段落51明确'优先看本逻辑 其次进入奖池状态判断'，已定义优先级顺序; primary_coverage=same_control; final=covered_by_primary。DIM2-03 已覆盖干预逻辑优先级与互斥仲裁缺失的问题。"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM3-02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 / 段落25",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落32"
+          ],
+          "reason": "source_state=missing; counterevidence=无，文档仅描述下注操作和唤起收银台，未定义余额扣款事务节点; primary_coverage=same_control; final=covered_by_primary。DIM3-02 已覆盖下注扣款时机未定义的问题。"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": ["MF-001"],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.2蒙层引导 / 段落20",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落34",
+            "musee游戏Racing.docx / 3.4开奖逻辑 / 全文",
+            "Racing数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无，文档仅展示返奖数值，未定义钱包入账事务节点; primary_coverage=not_covered; final=confirmed_add。派奖时机缺失，需新增。"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM3-02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 / 段落25, 32",
+            "musee游戏Racing.docx / 3.1首页顶栏板块 / 段落7"
+          ],
+          "reason": "source_state=missing; counterevidence=无，文档未定义资金事务失败后的回滚、补发、重试机制; primary_coverage=same_control; final=covered_by_primary。DIM3-02 已覆盖重复点击幂等性及断线恢复未定义的问题。"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM2-02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 / 段落28",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落32",
+            "Racing数值文档.docx / 段落2-5"
+          ],
+          "reason": "source_state=partial; counterevidence=有，段落28的赔率公式本身限制了赔率上限（总注/本注*[001]%），且单选项下注上限100万宝石间接限制了最大赔付倍数; primary_coverage=same_control; final=covered_by_primary。DIM2-02 已覆盖缺乏最大赔付上限的问题。"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM2-02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 / 段落37",
+            "musee游戏Racing.docx / 3.4开奖逻辑 / 段落39"
+          ],
+          "reason": "source_state=missing; counterevidence=有，段落39定义了奖池状态（待补充、正常、充裕），并通过干预逻辑间接控制奖池风险; primary_coverage=same_control; final=covered_by_primary。DIM2-02 已覆盖奖池可负无硬兜底的问题。"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["DIM2-02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.6接入自动化和白名单干预逻辑 / 段落59",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落28, 32"
+          ],
+          "reason": "source_state=partial; counterevidence=有，段落28的赔率公式和段落32的单选项下注上限100万宝石共同限制了单局最大赔付金额; primary_coverage=same_control; final=covered_by_primary。DIM2-02 已覆盖缺乏单局最大赔付上限的问题。"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.1首页顶栏板块 / 段落9",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落28",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落29"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue。段落9、28、29均使用'最近30天'作为统计窗口，时间窗口一致。"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.1首页顶栏板块 / 段落9",
+            "musee游戏Racing.docx / 3.3下注部分 / 段落28",
+            "musee游戏Racing.docx / 图片3",
+            "musee游戏Racing.docx / 图片4"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue。正文定义'最近30天'统计窗口，UI截图未显示具体时间窗口，无冲突。"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "MF-001",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额计入玩家钱包的产品节点未定义",
+      "primary_dimension": "可测试性与验收标准",
+      "current_state": "文档仅在结果弹窗中展示返奖数值（段落20、34），未定义中奖金额实际计入玩家钱包或可用余额的产品触发节点（如开奖结算完成后立即入账、还是手动领取后入账）。",
+      "evidence": "musee游戏Racing.docx / 3.2蒙层引导 / 段落20；musee游戏Racing.docx / 3.3下注部分 / 段落34",
+      "risk": "开发无法确定派奖事务节点，可能导致结算后金额未及时到账、断线重连后派奖丢失、或重复发奖等资金事故。",
+      "suggestion": "明确中奖金额的入账时机（建议开奖结算完成后由服务端自动计入玩家钱包），并补充断线重连后的派奖恢复机制。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "派奖事务节点缺失",
+      "root_causes": ["派奖事务节点缺失"],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "DIM3-02",
+        "overlap": false,
+        "reason": "DIM3-02 仅覆盖下注扣款时机与断线恢复，未涉及中奖金额计入钱包的派奖时机"
+      },
+      "severity_basis": "high/block_dev：派奖节点缺失直接阻塞结算链路实现，可能导致资金事故",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索未找到中奖金额入账时机的定义，段落20和34仅展示返奖数值，未说明钱包入账事务节点",
+        "searched_locations": [
+          "musee游戏Racing.docx / 全文",
+          "musee游戏Racing.docx / 3.2蒙层引导",
+          "musee游戏Racing.docx / 3.3下注部分",
+          "musee游戏Racing.docx / 3.4开奖逻辑",
+          "Racing数值文档.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "UI展示基础速度v*k与结算使用V*K*Luck存在表现层与结算层分离设计，建议补充说明以避免用户误解。",
+    "文档中存在大量占位符（如[001]、[002]、[003]），需在开发前替换为具体数值或明确配置表字段。",
+    "部分图片（如图片8、9、10）解析出的数值格式（如4.1/2.8）在正文中未明确说明其业务含义，需补充图例说明。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=0074330469a0955cf8ec46106a27bbdfbb6433661ad7ac35bce5665331540b68"
+  ]
+}

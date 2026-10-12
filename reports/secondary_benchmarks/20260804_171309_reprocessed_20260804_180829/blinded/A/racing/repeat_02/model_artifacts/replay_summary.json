@@ -1,0 +1,872 @@
+{
+  "status": "completed",
+  "game": "racing",
+  "variant_id": "A",
+  "repeat": 2,
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 3,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 2,
+    "materially_changed_titles": [
+      "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+      "\"实际赔率\"与\"假赔率\"的客户端展示与服务端结算映射缺失"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:T_VARIABLE_CONFLICT",
+        "issue_id": "T_VARIABLE_CONFLICT",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:FAKE_ODDS_MAPPING",
+        "issue_id": "FAKE_ODDS_MAPPING",
+        "title": "\"实际赔率\"与\"假赔率\"的客户端展示与服务端结算映射缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 3,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 3,
+      "admitted_count": 3,
+      "rejected_count": 0,
+      "all_passed": true,
+      "results": [
+        {
+          "candidate_issue_id": "DEBIT_TIMING_MISSING",
+          "title": "玩家本金扣款时机未明确，影响结算事务实现",
+          "status": "admitted",
+          "reasons": [],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "musee游戏Racing.docx / 3.3下注部分 段落25,32；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "debit_timing"
+        },
+        {
+          "candidate_issue_id": "PAYOUT_TIMING_MISSING",
+          "title": "派奖到账时机未明确，影响结算事务实现",
+          "status": "admitted",
+          "reasons": [],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "musee游戏Racing.docx / 3.3下注部分 段落28,34；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "payout_timing"
+        },
+        {
+          "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION_MISSING",
+          "title": "资金失败补偿机制未明确，包括扣款失败、派奖失败、奖池不足等场景",
+          "status": "admitted",
+          "reasons": [],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "TUTORIAL_ISOLATION",
+              "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "musee游戏Racing.docx / 全文；Racing数值文档.docx / 全文",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "funds_failure_compensation"
+        }
+      ],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": true,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [
+          "funds_deduction_payout"
+        ],
+        "confirmed_control_keys": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "candidate_to_audit_key": {
+          "DEBIT_TIMING_MISSING": "funds_deduction_payout",
+          "PAYOUT_TIMING_MISSING": "funds_deduction_payout",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+        },
+        "candidate_to_control_key": {
+          "DEBIT_TIMING_MISSING": "debit_timing",
+          "PAYOUT_TIMING_MISSING": "payout_timing",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+        },
+        "finding_audit_keys": {
+          "DEBIT_TIMING_MISSING": "funds_deduction_payout",
+          "PAYOUT_TIMING_MISSING": "funds_deduction_payout",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+        },
+        "finding_control_keys": {
+          "DEBIT_TIMING_MISSING": "debit_timing",
+          "PAYOUT_TIMING_MISSING": "payout_timing",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+        },
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "inferred_coverage_schema_version:2_from_complete_control_shape"
+        ],
+        "errors": [],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "T_VARIABLE_CONFLICT",
+              "DATA_ISOLATION",
+              "FAKE_ODDS_MAPPING"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+              "Racing数值文档.docx / 图片1",
+              "musee游戏Racing.docx / 3.3下注部分 段落22-23,28",
+              "Racing数值文档.docx / 段落5"
+            ],
+            "reason": "主模型已识别T变量定义冲突和赔率公式冲突；主模型已识别假数据隔离和真假赔率映射问题",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "T_VARIABLE_CONFLICT"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+                  "Racing数值文档.docx / 图片1"
+                ],
+                "reason": "主模型已识别T变量定义冲突和赔率公式冲突",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "DATA_ISOLATION",
+                  "FAKE_ODDS_MAPPING"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.3下注部分 段落22-23,28",
+                  "Racing数值文档.docx / 段落5"
+                ],
+                "reason": "主模型已识别假数据隔离和真假赔率映射问题",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "PLACEHOLDER_MISSING"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49",
+              "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 段落51"
+            ],
+            "reason": "主模型已识别干预触发条件占位符缺失；段落51明确说明'优先看本逻辑 其次进入奖池状态判断'，优先级已定义",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "PLACEHOLDER_MISSING"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49"
+                ],
+                "reason": "主模型已识别干预触发条件占位符缺失",
+                "errors": []
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 段落51"
+                ],
+                "reason": "段落51明确说明'优先看本逻辑 其次进入奖池状态判断'，优先级已定义",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "confirmed_add",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [
+              "DEBIT_TIMING_MISSING",
+              "PAYOUT_TIMING_MISSING",
+              "FUNDS_FAILURE_COMPENSATION_MISSING"
+            ],
+            "evidence_checked": [
+              "musee游戏Racing.docx / 3.3下注部分 段落25,32",
+              "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+              "musee游戏Racing.docx / 3.3下注部分 段落28,34",
+              "musee游戏Racing.docx / 全文",
+              "Racing数值文档.docx / 全文"
+            ],
+            "reason": "文档描述了投注动作和余额显示，但未明确扣款发生在投注确认时还是开奖后；文档描述了结果弹窗和赔付计算，但未明确派奖到账的具体时机；文档未说明扣款失败、派奖失败或奖池不足时的回滚、补偿或重试机制",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "DEBIT_TIMING_MISSING"
+                ],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.3下注部分 段落25,32",
+                  "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+                ],
+                "reason": "文档描述了投注动作和余额显示，但未明确扣款发生在投注确认时还是开奖后",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "PAYOUT_TIMING_MISSING"
+                ],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.3下注部分 段落28,34",
+                  "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+                ],
+                "reason": "文档描述了结果弹窗和赔付计算，但未明确派奖到账的具体时机",
+                "errors": []
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "FUNDS_FAILURE_COMPENSATION_MISSING"
+                ],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 全文",
+                  "Racing数值文档.docx / 全文"
+                ],
+                "reason": "文档未说明扣款失败、派奖失败或奖池不足时的回滚、补偿或重试机制",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "MAX_PAYOUT_RISK"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "Racing数值文档.docx / 段落2-3",
+              "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+            ],
+            "reason": "数值文档明确最低赔率1.02，提供了相对赔付下限；段落37明确'奖池可以接受是负数'，已定义奖池透支规则；主模型已识别奖池负数时缺乏单局最大赔付兜底机制",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "Racing数值文档.docx / 段落2-3"
+                ],
+                "reason": "数值文档明确最低赔率1.02，提供了相对赔付下限",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+                ],
+                "reason": "段落37明确'奖池可以接受是负数'，已定义奖池透支规则",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "MAX_PAYOUT_RISK"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+                ],
+                "reason": "主模型已识别奖池负数时缺乏单局最大赔付兜底机制",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12,29",
+              "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12",
+              "图片3",
+              "图片4"
+            ],
+            "reason": "胜率/赔率统计（30天）与下注金额榜（今日/本周）属于不同指标，不构成冲突；UI展示的统计窗口与文档描述一致",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12,29"
+                ],
+                "reason": "胜率/赔率统计（30天）与下注金额榜（今日/本周）属于不同指标，不构成冲突",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12",
+                  "图片3",
+                  "图片4"
+                ],
+                "reason": "UI展示的统计窗口与文档描述一致",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": true
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 3,
+    "admitted_count": 3,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [
+      {
+        "candidate_issue_id": "DEBIT_TIMING_MISSING",
+        "title": "玩家本金扣款时机未明确，影响结算事务实现",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "musee游戏Racing.docx / 3.3下注部分 段落25,32；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "debit_timing"
+      },
+      {
+        "candidate_issue_id": "PAYOUT_TIMING_MISSING",
+        "title": "派奖到账时机未明确，影响结算事务实现",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "musee游戏Racing.docx / 3.3下注部分 段落28,34；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "payout_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION_MISSING",
+        "title": "资金失败补偿机制未明确，包括扣款失败、派奖失败、奖池不足等场景",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "TUTORIAL_ISOLATION",
+            "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "musee游戏Racing.docx / 全文；Racing数值文档.docx / 全文",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "funds_failure_compensation"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [
+        "funds_deduction_payout"
+      ],
+      "confirmed_control_keys": [
+        "debit_timing",
+        "payout_timing",
+        "funds_failure_compensation"
+      ],
+      "candidate_to_audit_key": {
+        "DEBIT_TIMING_MISSING": "funds_deduction_payout",
+        "PAYOUT_TIMING_MISSING": "funds_deduction_payout",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+      },
+      "candidate_to_control_key": {
+        "DEBIT_TIMING_MISSING": "debit_timing",
+        "PAYOUT_TIMING_MISSING": "payout_timing",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+      },
+      "finding_audit_keys": {
+        "DEBIT_TIMING_MISSING": "funds_deduction_payout",
+        "PAYOUT_TIMING_MISSING": "funds_deduction_payout",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+      },
+      "finding_control_keys": {
+        "DEBIT_TIMING_MISSING": "debit_timing",
+        "PAYOUT_TIMING_MISSING": "payout_timing",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "T_VARIABLE_CONFLICT",
+            "DATA_ISOLATION",
+            "FAKE_ODDS_MAPPING"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+            "Racing数值文档.docx / 图片1",
+            "musee游戏Racing.docx / 3.3下注部分 段落22-23,28",
+            "Racing数值文档.docx / 段落5"
+          ],
+          "reason": "主模型已识别T变量定义冲突和赔率公式冲突；主模型已识别假数据隔离和真假赔率映射问题",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "T_VARIABLE_CONFLICT"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13",
+                "Racing数值文档.docx / 图片1"
+              ],
+              "reason": "主模型已识别T变量定义冲突和赔率公式冲突",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "DATA_ISOLATION",
+                "FAKE_ODDS_MAPPING"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.3下注部分 段落22-23,28",
+                "Racing数值文档.docx / 段落5"
+              ],
+              "reason": "主模型已识别假数据隔离和真假赔率映射问题",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "PLACEHOLDER_MISSING"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49",
+            "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 段落51"
+          ],
+          "reason": "主模型已识别干预触发条件占位符缺失；段落51明确说明'优先看本逻辑 其次进入奖池状态判断'，优先级已定义",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "PLACEHOLDER_MISSING"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落39-49"
+              ],
+              "reason": "主模型已识别干预触发条件占位符缺失",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.5新用户和预流失用户体验优化 段落51"
+              ],
+              "reason": "段落51明确说明'优先看本逻辑 其次进入奖池状态判断'，优先级已定义",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "DEBIT_TIMING_MISSING",
+            "PAYOUT_TIMING_MISSING",
+            "FUNDS_FAILURE_COMPENSATION_MISSING"
+          ],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.3下注部分 段落25,32",
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+            "musee游戏Racing.docx / 3.3下注部分 段落28,34",
+            "musee游戏Racing.docx / 全文",
+            "Racing数值文档.docx / 全文"
+          ],
+          "reason": "文档描述了投注动作和余额显示，但未明确扣款发生在投注确认时还是开奖后；文档描述了结果弹窗和赔付计算，但未明确派奖到账的具体时机；文档未说明扣款失败、派奖失败或奖池不足时的回滚、补偿或重试机制",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "DEBIT_TIMING_MISSING"
+              ],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.3下注部分 段落25,32",
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+              ],
+              "reason": "文档描述了投注动作和余额显示，但未明确扣款发生在投注确认时还是开奖后",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "PAYOUT_TIMING_MISSING"
+              ],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.3下注部分 段落28,34",
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+              ],
+              "reason": "文档描述了结果弹窗和赔付计算，但未明确派奖到账的具体时机",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUNDS_FAILURE_COMPENSATION_MISSING"
+              ],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 全文",
+                "Racing数值文档.docx / 全文"
+              ],
+              "reason": "文档未说明扣款失败、派奖失败或奖池不足时的回滚、补偿或重试机制",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "MAX_PAYOUT_RISK"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "Racing数值文档.docx / 段落2-3",
+            "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+          ],
+          "reason": "数值文档明确最低赔率1.02，提供了相对赔付下限；段落37明确'奖池可以接受是负数'，已定义奖池透支规则；主模型已识别奖池负数时缺乏单局最大赔付兜底机制",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "Racing数值文档.docx / 段落2-3"
+              ],
+              "reason": "数值文档明确最低赔率1.02，提供了相对赔付下限",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+              ],
+              "reason": "段落37明确'奖池可以接受是负数'，已定义奖池透支规则",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "MAX_PAYOUT_RISK"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+              ],
+              "reason": "主模型已识别奖池负数时缺乏单局最大赔付兜底机制",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12,29",
+            "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12",
+            "图片3",
+            "图片4"
+          ],
+          "reason": "胜率/赔率统计（30天）与下注金额榜（今日/本周）属于不同指标，不构成冲突；UI展示的统计窗口与文档描述一致",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12,29"
+              ],
+              "reason": "胜率/赔率统计（30天）与下注金额榜（今日/本周）属于不同指标，不构成冲突",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "musee游戏Racing.docx / 3.1首页顶栏板块 段落9,12",
+                "图片3",
+                "图片4"
+              ],
+              "reason": "UI展示的统计窗口与文档描述一致",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

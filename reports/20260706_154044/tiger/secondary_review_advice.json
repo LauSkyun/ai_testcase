@@ -1,0 +1,264 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告基本捕捉了核心玩法参数冲突、兜底逻辑缺陷和最大赔付缺失等关键问题，结构清晰，但遗漏了多个重要数值冲突（如亏损大R累计亏损阈值、开奖分析和游戏记录范围冲突、档位配置冲突）以及新手引导数据隔离问题，且部分问题描述不够精确。",
+    "strengths": [
+      "识别了核心参数冲突和兜底逻辑致命缺陷",
+      "结构合理，维度完整",
+      "提供了测试点建议"
+    ],
+    "issues": [
+      "遗漏了亏损大R累计亏损阈值50000000 vs 5000000的严重冲突",
+      "未发现开奖分析胜率范围、游戏记录范围、档位配置等多处UI与文档不一致",
+      "未覆盖新手引导局是否真实扣款及计入统计的问题",
+      "部分问题描述过于泛化，缺少具体证据定位"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充关键遗漏问题，证据链完整，可直接交付业务方评审，但仍有部分冲突待产品确认，建议后续跟进。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充关键遗漏问题，证据链完整，可直接交付业务方评审，但仍有部分冲突待产品确认，建议后续跟进。"
+  },
+  "review_notes": [],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "WHALE_LOSS_THRESHOLD",
+      "title": "亏损大R累计亏损阈值在正文与配置表中存在数量级冲突（50000000 vs 5000000）",
+      "description": "正文段落85定义亏损大R需满足“过去7日（不含今日）游戏累计亏损 ≥ {50000000}”，但表格5配置项“亏损大R-过去{x}日，累计总亏损 ≥ {y}”初始值为5000000，两者相差10倍。",
+      "severity": "高",
+      "evidence": "tiger需求文档.docx / 段落85、表格5",
+      "impact": "若按正文实现，亏损大R判定门槛极高，人群保护策略几乎不触发；若按配置表实现，门槛过低，成本失控。直接导致开发实现与运营预期完全背离。",
+      "suggestion": "统一累计亏损阈值，明确最终数值（50000000或5000000），并同步修改正文与配置表。"
+    },
+    {
+      "issue_id": "STATS_RANGE_CONFLICT",
+      "title": "开奖分析胜率计算范围在文档与UI截图中不一致（7天 vs 30天）",
+      "description": "表格3说明开奖分析胜率计算范围为“最近1小时、今日、最近7天”，而图片13界面显示为“Last 1 hour, Today, Last 30 day”。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（开奖分析）、图片13",
+      "impact": "前端开发与后端数据统计口径不一致，导致交付后界面与需求不符，引发返工。",
+      "suggestion": "明确最终胜率统计范围，统一为7天或30天，并更新所有相关描述与UI设计。"
+    },
+    {
+      "issue_id": "RECORD_RANGE_CONFLICT",
+      "title": "游戏记录展示范围在文档与UI截图中不一致（3天 vs 30天）",
+      "description": "表格3说明个人记录最多展示近3日（包括今日），但图片9界面显示“Show your betting records in the last 30 days”。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（游戏记录）、图片9",
+      "impact": "开发按文档实现3天，但UI设计为30天，导致数据拉取与展示逻辑错误，需重新适配。",
+      "suggestion": "统一游戏记录展示范围，明确为3天或30天，并同步更新文档与UI设计。"
+    },
+    {
+      "issue_id": "BET_DENOM_CONFLICT",
+      "title": "投入档位数值在文档说明、配置表与UI原型中存在多处不一致",
+      "description": "表格3档位模块说明初始值为10/100/1k/10k，表格5配置初始值为10/100/1000/5000，而UI截图（图片1/18）显示按钮为100/1000/10000/100000。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 表格3（档位模块）、表格5、图片1、图片18",
+      "impact": "前后端开发与UI设计参考不同源，导致投入金额单位、档位数量与数值全线混乱，严重影响接入。",
+      "suggestion": "确定最终档位数值与数量，更新所有文档、配置表及UI设计稿，确保唯一源头。"
+    },
+    {
+      "issue_id": "TUTORIAL_ISOLATION",
+      "title": "新手指引局是否真实扣款、是否计入统计数据未定义",
+      "description": "段落12及图片21描述了5步新手引导，但未说明引导过程中的投入是否消耗真实货币，以及引导局的结果是否计入游戏记录、排行榜、开奖分析等统计。",
+      "severity": "中",
+      "evidence": "tiger需求文档.docx / 段落12、图片21",
+      "impact": "若引导局真实扣款且计入统计，会影响新用户的首局体验与数据准确性；若不计入，则需开发特殊处理，目前规则缺失将导致实现分歧。",
+      "suggestion": "明确引导局为模拟局（不扣款、不计入任何统计），或正常局但额外标记，补充相应的规则说明。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "PARAM_CONFLICT",
+        "primary_issue_ids": [
+          "PARAM_CONFLICT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "REPEAT_DEGRADE",
+        "primary_issue_ids": [
+          "REPEAT_DEGRADE"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "FATAL_FALLBACK",
+        "primary_issue_ids": [
+          "FATAL_FALLBACK"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROWD_RATIO",
+        "primary_issue_ids": [
+          "CROWD_RATIO"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "RANKING_TIE",
+        "primary_issue_ids": [
+          "RANKING_TIE"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "BET_IDEMPOTENT",
+        "primary_issue_ids": [
+          "BET_IDEMPOTENT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "HOT_UPDATE",
+        "primary_issue_ids": [
+          "HOT_UPDATE"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "MAX_PAYOUT",
+        "primary_issue_ids": [
+          "MAX_PAYOUT"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UI_TYPO",
+        "primary_issue_ids": [
+          "UI_TYPO"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "WHALE_LOSS_THRESHOLD",
+        "source_missed_issue_ids": [
+          "WHALE_LOSS_THRESHOLD"
+        ],
+        "reason": "主模型遗漏了正文与配置表之间亏损大R累计亏损阈值的数量级冲突，直接影响成本控制与策略触发。"
+      },
+      {
+        "candidate_issue_id": "STATS_RANGE_CONFLICT",
+        "source_missed_issue_ids": [
+          "STATS_RANGE_CONFLICT"
+        ],
+        "reason": "主模型未发现开奖分析胜率时间范围在文档与UI截图中的不一致，导致数据统计口径分裂。"
+      },
+      {
+        "candidate_issue_id": "RECORD_RANGE_CONFLICT",
+        "source_missed_issue_ids": [
+          "RECORD_RANGE_CONFLICT"
+        ],
+        "reason": "主模型未发现游戏记录展示范围在文档与UI截图中的不一致，影响数据拉取逻辑。"
+      },
+      {
+        "candidate_issue_id": "BET_DENOM_CONFLICT",
+        "source_missed_issue_ids": [
+          "BET_DENOM_CONFLICT"
+        ],
+        "reason": "主模型未覆盖投入档位数值在文档、配置表、UI原型间的多处冲突，会导致开发实现混乱。"
+      },
+      {
+        "candidate_issue_id": "TUTORIAL_ISOLATION",
+        "source_missed_issue_ids": [
+          "TUTORIAL_ISOLATION"
+        ],
+        "reason": "主模型未涉及新手引导局的数据隔离规则，遗漏了引导局是否扣款及计入统计的关键问题。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 9,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 9,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充关键遗漏问题，证据链完整，可直接交付业务方评审，但仍有部分冲突待产品确认，建议后续跟进。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

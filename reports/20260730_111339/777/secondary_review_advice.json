@@ -1,0 +1,290 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了核心阻塞点，但将多个高风险问题压缩为一个 top_blocker，未在维度中独立展开，导致结构不完整、问题追踪粒度不足。部分维度（如可测试性）未提取专属问题，同时也遗漏了低风险但可补充的验收点。",
+    "strengths": [
+      "准确识别了推展机制缺失、respin次数冲突、风控时序等关键矛盾",
+      "对需求与数值文档的冲突有清晰的感知",
+      "用户体验风险点（自动旋转停止反馈、不中奖反馈）的发现合理"
+    ],
+    "issues": [
+      "top_blockers 将 4 个独立的高风险根因合并为一条，无法直接转换为开发任务",
+      "缺失的推展机制、1倍乘数符号、respin次数冲突、风控时序等未在维度中作为独立 finding 落位",
+      "可测试性维度未提取断线重连状态恢复的专属验收规则",
+      "部分 finding 的描述混杂了多个子症状（如 UX_002 同时包含不中奖反馈和异常恢复）"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "review_notes": [
+    "主模型报告将4个高风险问题打包为一个top_blocker，建议在后续版本中保持独立条目以方便追踪。",
+    "CLARITY_005 的展示缩位截断风险较低，但建议保留以提醒前端实现。",
+    "UX_002 原描述包含异常处理内容，已拆分至 TEST_001，保持 UX_002 聚焦不中奖反馈。",
+    "虽然文档中仍存在待产品拍板的问题（如respin次数最终方案），但不影响候选报告作为需求评审交付物的可读性和完整性。",
+    "dual_pass trace 提示：candidate_lineage 不为空，但未完整覆盖 primary/candidate 的问题血缘；当前候选稿暂不建议默认直出。",
+    "dual_pass trace 提示：candidate 存在未被 lineage 覆盖的问题映射，需补齐 kept/added/merged/dropped 后再考虑默认直出。",
+    "dual_pass 结构提示：candidate 仍保留多根因混合问题，建议继续拆清根因或改为分点展示。",
+    "dual_pass 协议提示：quality_assessment.ready_for_direct_output 与 candidate_readiness.ready_for_direct_output 不一致，已统一降为 false。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "recommendation": "将主模型 top_blockers 中的四个根因拆分为独立 finding，并分别归入对应维度",
+      "target_issues": [
+        "top_blockers 中的推展机制缺失 -> CLARITY_001",
+        "top_blockers 中的1倍符号缺失 -> CLARITY_003",
+        "top_blockers 中的respin次数冲突 -> LOGIC_001",
+        "top_blockers 中的风控时序冲突 -> LOGIC_002"
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "missed_issue_id": "MISSED_001",
+      "title": "推展机制在需求文档中未作为功能需求描述，仅动效暗示，导致功能范围不明确",
+      "primary_dimension": "清晰度与完整性",
+      "evidence": "需求文档段落44；数值文档段落37-40、表格5",
+      "severity": "高",
+      "reason": "需求文档仅在美术动效中提及‘有几率触发’的回推/下拉效果，未定义功能逻辑、触发条件与配置；数值文档则详细定义了推展机制，但缺乏需求侧的功能描述，可能导致开发遗漏或实现错误。"
+    },
+    {
+      "missed_issue_id": "MISSED_002",
+      "title": "respin次数限制：需求文档与数值文档描述根本冲突",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence": "需求文档段落19；数值文档段落61、表格6",
+      "severity": "高",
+      "reason": "需求文档描述为无限重转直到空；数值文档定义固定次数随机（1-10次），次数达到后强制为空。两种机制无法同时实现，必须统一。"
+    },
+    {
+      "missed_issue_id": "MISSED_003",
+      "title": "1倍乘数符号在需求文档中缺失，UI资源未定义",
+      "primary_dimension": "清晰度与完整性",
+      "evidence": "需求文档表格3；数值文档表格7；需求文档段落19举例",
+      "severity": "中",
+      "reason": "数值文档定义respin时引入1倍乘数符号，需求文档仅列出0,2,3,5,10,respin，且举例中使用了1倍，缺少1倍符号的UI配置与美术规格。"
+    },
+    {
+      "missed_issue_id": "MISSED_004",
+      "title": "风控检查与推展机制的时序冲突，可能导致推展后的高倍率绕过风控",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence": "数值文档段落59、62，表格9",
+      "severity": "高",
+      "reason": "流程定义为 计算第4列乘数→计算中奖→风控检查→展示结果，推展发生在展示结果时。若推展将原本低于100倍的结果提升至100倍以上，风控已过，无法拦截，存在经济风险。"
+    },
+    {
+      "missed_issue_id": "MISSED_005",
+      "title": "respin中断恢复/重进的玩法专属状态规则缺失",
+      "primary_dimension": "可测试性与验收标准",
+      "evidence": "需求文档段落20",
+      "severity": "中",
+      "reason": "需求文档仅说明复用中台异常处理流程，但未定义respin中需要持久化的状态字段（如已累加乘数、当前次数、剩余次数等），测试无法验证重进后恢复的正确性。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_002",
+        "primary_issue_ids": [
+          "CLARITY_002"
+        ],
+        "notes": "保留原问题，仅微调描述以更清晰。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_005",
+        "primary_issue_ids": [
+          "CLARITY_005"
+        ],
+        "notes": "保留原问题，确认展示与结算不一致风险。"
+      },
+      {
+        "candidate_issue_id": "UX_001",
+        "primary_issue_ids": [
+          "UX_001"
+        ],
+        "notes": "保留原问题，未做修改。"
+      },
+      {
+        "candidate_issue_id": "UX_002",
+        "primary_issue_ids": [
+          "UX_002"
+        ],
+        "notes": "修改了现状描述，移除了异常处理相关内容（已独立为 TEST_001），仅聚焦不中奖反馈。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_001",
+        "source_missed_issue_ids": [
+          "MISSED_001"
+        ],
+        "reason": "补充推展机制需求缺失问题。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_003",
+        "source_missed_issue_ids": [
+          "MISSED_003"
+        ],
+        "reason": "补充1倍乘数符号缺失问题。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_001",
+        "source_missed_issue_ids": [
+          "MISSED_002"
+        ],
+        "reason": "补充respin次数限制冲突问题。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_002",
+        "source_missed_issue_ids": [
+          "MISSED_004"
+        ],
+        "reason": "补充风控时序冲突问题。"
+      },
+      {
+        "candidate_issue_id": "TEST_001",
+        "source_missed_issue_ids": [
+          "MISSED_005"
+        ],
+        "reason": "补充respin中断恢复状态规则缺失问题。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 4,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 4,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 4,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": true,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "partial",
+  "candidate_structure_drift": true,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": true,
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [
+    "CLARITY_001"
+  ],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "需求文档未描述不中奖时的任何动效或反馈，可能造成体验空白"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_primary_findings",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": true,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": false,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": false,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_primary_findings",
+      "candidate_traceability_partial"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

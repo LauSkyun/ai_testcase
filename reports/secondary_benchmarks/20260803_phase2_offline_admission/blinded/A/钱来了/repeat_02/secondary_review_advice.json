@@ -1,0 +1,314 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确抓住了多数核心矛盾，但部分描述不够精确（如RESPIN概率表解释为冲突），且遗漏了免费符号结算、大奖阈值等关键缺失。",
+    "strengths": [
+      "明确指出了推展方向与盘面结构的矛盾",
+      "正确识别了底层数据与RESPIN触发条件的逻辑不清",
+      "抓住了结算公式术语不一致的核心风险"
+    ],
+    "issues": [
+      "将RESPIN两个概率表误判为直接冲突，需更精确描述",
+      "遗漏了免费符号乘数缺失导致结算公式不完整",
+      "遗漏了大奖弹窗触发阈值缺失",
+      "遗漏了夺宝符号笔误"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型描述不准确之处，并补充了关键遗漏，结构完整，证据可追溯，可直接输出给业务方。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型描述不准确之处，并补充了关键遗漏，结构完整，证据可追溯，可直接输出给业务方。"
+  },
+  "review_notes": [
+    "主模型报告中将RESPIN两个概率表判为直接冲突不够精确，已在候选报告中修正为未区分场景，但保留高严重度。",
+    "免费游戏中断恢复规则属于通用能力，但玩法的状态管理（如剩余次数、累计奖金）可能影响测试，已作为低风险提醒写入quality_notes。",
+    "夺宝符号笔误和免费游戏旋转速度未明确等问题已作为低风险补充，未提升为高阻塞。",
+    "建议主模型报告在后续版本中更谨慎地使用“冲突”一词，优先考虑表述歧义。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "id": "MF_01",
+      "title": "免费符号乘数缺失导致结算公式不完整",
+      "description": "需求文档中免费旋转符号触发时支付基础奖金，但数值文档的结算公式'中奖金额 = 乘数符号 × 符号值'仅适用于乘数符号，未定义免费符号的乘数值，导致公式无法直接计算免费符号的奖金。"
+    },
+    {
+      "id": "MF_02",
+      "title": "大奖弹窗（Big Win/Mega Win/Super Win）触发阈值缺失",
+      "description": "需求文档仅说明'根据通用倍数，显示big win\\mega win\\super win'，但未定义各等级对应的倍数阈值，程序无法实现。"
+    },
+    {
+      "id": "MF_03",
+      "title": "夺宝符号笔误",
+      "description": "需求文档中免费游戏重复触发条件提到'4个及以上夺宝符号'，但符号表中并无夺宝符号，应为免费旋转符号，可能造成混淆。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": [
+          "CROSS_01"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MF_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_02",
+        "primary_issue_ids": [
+          "CROSS_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CROSS_03",
+        "primary_issue_ids": [
+          "CROSS_03"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "UX_01",
+        "source_missed_issue_ids": [
+          "MF_02"
+        ],
+        "reason": "主模型遗漏，大奖弹窗触发阈值缺失直接影响程序实现和验收。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "source_missed_issue_ids": [
+          "MF_03"
+        ],
+        "reason": "主模型遗漏，术语笔误可能造成歧义，需澄清。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MF_01"
+  ],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 6,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 6,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型描述不准确之处，并补充了关键遗漏，结构完整，证据可追溯，可直接输出给业务方。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 3,
+    "admitted_count": 0,
+    "rejected_count": 3,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "MF_01",
+        "title": "免费符号乘数缺失导致结算公式不完整",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,primary_dimension,current_state,evidence,risk,suggestion,severity,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid",
+          "primary_duplicate_root"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "primary_dimension",
+          "current_state",
+          "evidence",
+          "risk",
+          "suggestion",
+          "severity",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      },
+      {
+        "candidate_issue_id": "MF_02",
+        "title": "大奖弹窗（Big Win/Mega Win/Super Win）触发阈值缺失",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,primary_dimension,current_state,evidence,risk,suggestion,severity,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "primary_dimension",
+          "current_state",
+          "evidence",
+          "risk",
+          "suggestion",
+          "severity",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      },
+      {
+        "candidate_issue_id": "MF_03",
+        "title": "夺宝符号笔误",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:candidate_issue_id,primary_dimension,current_state,evidence,risk,suggestion,severity,blocking,confidence,independent_root_cause,primary_overlap_check",
+          "primary_overlap_check_invalid",
+          "multiroot_or_root_count_invalid"
+        ],
+        "missing_fields": [
+          "candidate_issue_id",
+          "primary_dimension",
+          "current_state",
+          "evidence",
+          "risk",
+          "suggestion",
+          "severity",
+          "blocking",
+          "confidence",
+          "independent_root_cause",
+          "primary_overlap_check"
+        ]
+      }
+    ]
+  },
+  "candidate_block_reasons": [
+    "phase2_added_admission_rejected"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": false,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 3,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "quality_blockers": [
+      "phase2_added_admission_rejected"
+    ]
+  }
+}

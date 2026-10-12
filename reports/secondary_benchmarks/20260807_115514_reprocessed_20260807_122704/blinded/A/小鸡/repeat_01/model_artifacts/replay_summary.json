@@ -1,0 +1,936 @@
+{
+  "status": "completed",
+  "game": "小鸡",
+  "variant_id": "A",
+  "repeat": 1,
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 3,
+    "candidate_issue_id_repair_count": 3,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_protocol_gate_passed": false,
+    "phase2_protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_2",
+      "evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+      "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+      "echo_required": true,
+      "echo_matched": false,
+      "delta_only_required": true,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [],
+      "unexpected_fields_present": [],
+      "passed": false,
+      "errors": [
+        "phase2_protocol_echo_missing_or_mismatch"
+      ]
+    },
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_control_invalid:trigger_state_termination:trigger_entry:decision_primary_coverage_status_mismatch",
+      "phase2_protocol_gate:phase2_protocol_echo_missing_or_mismatch"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 2,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_protocol_gate_invalid",
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 0,
+    "materially_changed_titles": [],
+    "materially_changed_examples": []
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 2,
+      "admitted_count": 0,
+      "rejected_count": 2,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "FUNDS_DEBIT_TIMING_MISSING",
+          "title": "本金扣除/冻结时机缺失",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "debit_timing"
+        },
+        {
+          "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION_MISSING",
+          "title": "提现失败的资金回滚与补偿机制缺失",
+          "status": "rejected",
+          "reasons": [
+            "coverage_ledger_invalid"
+          ],
+          "missing_fields": [],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "小鸡.docx / 3.4 提现与结算系统 / 段落49",
+          "coverage_audit_key": "funds_deduction_payout",
+          "coverage_control_key": "funds_failure_compensation"
+        }
+      ],
+      "coverage_ledger": {
+        "schema_version": 2,
+        "passed": false,
+        "completeness": 1.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "expected_control_keys": {
+          "settlement_formula_ui_config": [
+            "settlement_formula",
+            "ui_config_mapping"
+          ],
+          "trigger_state_termination": [
+            "trigger_entry",
+            "termination_priority"
+          ],
+          "funds_deduction_payout": [
+            "debit_timing",
+            "payout_timing",
+            "funds_failure_compensation"
+          ],
+          "max_payout_economic_boundary": [
+            "relative_payout_cap",
+            "pool_negative_floor",
+            "single_round_payout_cap"
+          ],
+          "statistics_time_window": [
+            "same_metric_window",
+            "ui_text_window_alignment"
+          ]
+        },
+        "confirmed_audit_keys": [
+          "funds_deduction_payout"
+        ],
+        "confirmed_control_keys": [
+          "debit_timing",
+          "funds_failure_compensation"
+        ],
+        "candidate_to_audit_key": {
+          "FUNDS_DEBIT_TIMING_MISSING": "funds_deduction_payout",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+        },
+        "candidate_to_control_key": {
+          "FUNDS_DEBIT_TIMING_MISSING": "debit_timing",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+        },
+        "finding_audit_keys": {
+          "FUNDS_DEBIT_TIMING_MISSING": "funds_deduction_payout",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+        },
+        "finding_control_keys": {
+          "FUNDS_DEBIT_TIMING_MISSING": "debit_timing",
+          "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+        },
+        "unmapped_missed_issue_ids": [],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "protocol_repairs": [
+          "normalized_same_control_status:settlement_formula_ui_config:settlement_formula:no_issue->covered_by_primary",
+          "normalized_same_control_status:settlement_formula_ui_config:ui_config_mapping:no_issue->covered_by_primary",
+          "normalized_same_control_status:trigger_state_termination:termination_priority:no_issue->covered_by_primary"
+        ],
+        "errors": [
+          "coverage_control_invalid:trigger_state_termination:trigger_entry:decision_primary_coverage_status_mismatch",
+          "phase2_protocol_gate:phase2_protocol_echo_missing_or_mismatch"
+        ],
+        "entries": [
+          {
+            "audit_key": "settlement_formula_ui_config",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "LOGIC_PAYOUT_FORMULA_CONFLICT",
+              "LOGIC_03",
+              "CORE_BET_CONFIG_MISMATCH",
+              "CORE_DIFFICULTY_CONFIG_MISMATCH"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡.docx / 3.3 奖金计算系统 / 段落44-45",
+              "小鸡数值文档.docx / 3. 难度选择 / 表格2",
+              "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+              "小鸡.docx / 图片解析 / 图片1-8"
+            ],
+            "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+            "controls": [
+              {
+                "control_key": "settlement_formula",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_PAYOUT_FORMULA_CONFLICT",
+                  "LOGIC_03"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 3.3 奖金计算系统 / 段落44-45",
+                  "小鸡数值文档.docx / 3. 难度选择 / 表格2"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              },
+              {
+                "control_key": "ui_config_mapping",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "CORE_BET_CONFIG_MISMATCH",
+                  "CORE_DIFFICULTY_CONFIG_MISMATCH"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+                  "小鸡.docx / 图片解析 / 图片1-8"
+                ],
+                "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "trigger_state_termination",
+            "status": "covered_by_primary",
+            "primary_issue_ids": [
+              "SEC_01",
+              "LOGIC_03"
+            ],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+              "小鸡数值文档.docx / 图片解析 / 图片4",
+              "小鸡.docx / 2.1 完整游戏流程 / 段落26,28",
+              "小鸡数值文档.docx / 3. 难度选择 / 段落9"
+            ],
+            "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue；source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+            "controls": [
+              {
+                "control_key": "trigger_entry",
+                "status": "no_issue",
+                "primary_issue_ids": [
+                  "SEC_01"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+                  "小鸡数值文档.docx / 图片解析 / 图片4"
+                ],
+                "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue",
+                "errors": [
+                  "decision_primary_coverage_status_mismatch"
+                ]
+              },
+              {
+                "control_key": "termination_priority",
+                "status": "covered_by_primary",
+                "primary_issue_ids": [
+                  "LOGIC_03"
+                ],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 2.1 完整游戏流程 / 段落26,28",
+                  "小鸡数值文档.docx / 3. 难度选择 / 段落9"
+                ],
+                "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "funds_deduction_payout",
+            "status": "confirmed_add",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [
+              "FUNDS_DEBIT_TIMING_MISSING",
+              "FUNDS_FAILURE_COMPENSATION_MISSING"
+            ],
+            "evidence_checked": [
+              "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+              "小鸡.docx / 2.1 完整游戏流程 / 段落19-22",
+              "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+            ],
+            "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+            "controls": [
+              {
+                "control_key": "debit_timing",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "FUNDS_DEBIT_TIMING_MISSING"
+                ],
+                "evidence_checked": [
+                  "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+                  "小鸡.docx / 2.1 完整游戏流程 / 段落19-22"
+                ],
+                "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              },
+              {
+                "control_key": "payout_timing",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              },
+              {
+                "control_key": "funds_failure_compensation",
+                "status": "confirmed_add",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [
+                  "FUNDS_FAILURE_COMPENSATION_MISSING"
+                ],
+                "evidence_checked": [
+                  "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+                ],
+                "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "max_payout_economic_boundary",
+            "status": "no_issue",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14",
+              "小鸡数值文档.docx / 4. 撞击概率计算 / 表格3",
+              "小鸡.docx / 全文",
+              "小鸡数值文档.docx / 全文"
+            ],
+            "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable；source_state=explicit; counterevidence=MAX_MUL已限制最大赔付倍数; primary_coverage=not_covered; final=no_issue",
+            "controls": [
+              {
+                "control_key": "relative_payout_cap",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14",
+                  "小鸡数值文档.docx / 4. 撞击概率计算 / 表格3"
+                ],
+                "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              },
+              {
+                "control_key": "pool_negative_floor",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 全文",
+                  "小鸡数值文档.docx / 全文"
+                ],
+                "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+                "errors": []
+              },
+              {
+                "control_key": "single_round_payout_cap",
+                "status": "no_issue",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14"
+                ],
+                "reason": "source_state=explicit; counterevidence=MAX_MUL已限制最大赔付倍数; primary_coverage=not_covered; final=no_issue",
+                "errors": []
+              }
+            ],
+            "errors": []
+          },
+          {
+            "audit_key": "statistics_time_window",
+            "status": "not_applicable",
+            "primary_issue_ids": [],
+            "candidate_issue_ids": [],
+            "evidence_checked": [
+              "小鸡.docx / 全文",
+              "小鸡数值文档.docx / 全文",
+              "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+              "小鸡.docx / 图片解析 / 图片1-8"
+            ],
+            "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+            "controls": [
+              {
+                "control_key": "same_metric_window",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 全文",
+                  "小鸡数值文档.docx / 全文"
+                ],
+                "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+                "errors": []
+              },
+              {
+                "control_key": "ui_text_window_alignment",
+                "status": "not_applicable",
+                "primary_issue_ids": [],
+                "candidate_issue_ids": [],
+                "evidence_checked": [
+                  "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+                  "小鸡.docx / 图片解析 / 图片1-8"
+                ],
+                "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+                "errors": []
+              }
+            ],
+            "errors": []
+          }
+        ],
+        "schema_version_inferred": false,
+        "protocol_gate": {
+          "required": true,
+          "protocol_revision": "phase2_v2_2",
+          "evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+          "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+          "echo_required": true,
+          "echo_matched": false,
+          "delta_only_required": true,
+          "delta_only_compliant": true,
+          "forbidden_fields_present": [],
+          "unexpected_fields_present": [],
+          "passed": false,
+          "errors": [
+            "phase2_protocol_echo_missing_or_mismatch"
+          ]
+        }
+      },
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_2",
+        "evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+        "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+        "echo_required": true,
+        "echo_matched": false,
+        "delta_only_required": true,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [],
+        "unexpected_fields_present": [],
+        "passed": false,
+        "errors": [
+          "phase2_protocol_echo_missing_or_mismatch"
+        ]
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 2,
+    "admitted_count": 0,
+    "rejected_count": 2,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "FUNDS_DEBIT_TIMING_MISSING",
+        "title": "本金扣除/冻结时机缺失",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "debit_timing"
+      },
+      {
+        "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION_MISSING",
+        "title": "提现失败的资金回滚与补偿机制缺失",
+        "status": "rejected",
+        "reasons": [
+          "coverage_ledger_invalid"
+        ],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "小鸡.docx / 3.4 提现与结算系统 / 段落49",
+        "coverage_audit_key": "funds_deduction_payout",
+        "coverage_control_key": "funds_failure_compensation"
+      }
+    ],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": false,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [
+        "funds_deduction_payout"
+      ],
+      "confirmed_control_keys": [
+        "debit_timing",
+        "funds_failure_compensation"
+      ],
+      "candidate_to_audit_key": {
+        "FUNDS_DEBIT_TIMING_MISSING": "funds_deduction_payout",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+      },
+      "candidate_to_control_key": {
+        "FUNDS_DEBIT_TIMING_MISSING": "debit_timing",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+      },
+      "finding_audit_keys": {
+        "FUNDS_DEBIT_TIMING_MISSING": "funds_deduction_payout",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_deduction_payout"
+      },
+      "finding_control_keys": {
+        "FUNDS_DEBIT_TIMING_MISSING": "debit_timing",
+        "FUNDS_FAILURE_COMPENSATION_MISSING": "funds_failure_compensation"
+      },
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "normalized_same_control_status:settlement_formula_ui_config:settlement_formula:no_issue->covered_by_primary",
+        "normalized_same_control_status:settlement_formula_ui_config:ui_config_mapping:no_issue->covered_by_primary",
+        "normalized_same_control_status:trigger_state_termination:termination_priority:no_issue->covered_by_primary"
+      ],
+      "errors": [
+        "coverage_control_invalid:trigger_state_termination:trigger_entry:decision_primary_coverage_status_mismatch",
+        "phase2_protocol_gate:phase2_protocol_echo_missing_or_mismatch"
+      ],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_PAYOUT_FORMULA_CONFLICT",
+            "LOGIC_03",
+            "CORE_BET_CONFIG_MISMATCH",
+            "CORE_DIFFICULTY_CONFIG_MISMATCH"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 3.3 奖金计算系统 / 段落44-45",
+            "小鸡数值文档.docx / 3. 难度选择 / 表格2",
+            "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+            "小鸡.docx / 图片解析 / 图片1-8"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary；source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_PAYOUT_FORMULA_CONFLICT",
+                "LOGIC_03"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 3.3 奖金计算系统 / 段落44-45",
+                "小鸡数值文档.docx / 3. 难度选择 / 表格2"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CORE_BET_CONFIG_MISMATCH",
+                "CORE_DIFFICULTY_CONFIG_MISMATCH"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+                "小鸡.docx / 图片解析 / 图片1-8"
+              ],
+              "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "SEC_01",
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+            "小鸡数值文档.docx / 图片解析 / 图片4",
+            "小鸡.docx / 2.1 完整游戏流程 / 段落26,28",
+            "小鸡数值文档.docx / 3. 难度选择 / 段落9"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue；source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "no_issue",
+              "primary_issue_ids": [
+                "SEC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+                "小鸡数值文档.docx / 图片解析 / 图片4"
+              ],
+              "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue",
+              "errors": [
+                "decision_primary_coverage_status_mismatch"
+              ]
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_03"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 2.1 完整游戏流程 / 段落26,28",
+                "小鸡数值文档.docx / 3. 难度选择 / 段落9"
+              ],
+              "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUNDS_DEBIT_TIMING_MISSING",
+            "FUNDS_FAILURE_COMPENSATION_MISSING"
+          ],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+            "小鸡.docx / 2.1 完整游戏流程 / 段落19-22",
+            "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add；source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUNDS_DEBIT_TIMING_MISSING"
+              ],
+              "evidence_checked": [
+                "小鸡数值文档.docx / 1. 游戏简介 / 段落3",
+                "小鸡.docx / 2.1 完整游戏流程 / 段落19-22"
+              ],
+              "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "confirmed_add",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [
+                "FUNDS_FAILURE_COMPENSATION_MISSING"
+              ],
+              "evidence_checked": [
+                "小鸡.docx / 3.4 提现与结算系统 / 段落49"
+              ],
+              "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14",
+            "小鸡数值文档.docx / 4. 撞击概率计算 / 表格3",
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable；source_state=explicit; counterevidence=MAX_MUL已限制最大赔付倍数; primary_coverage=not_covered; final=no_issue",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14",
+                "小鸡数值文档.docx / 4. 撞击概率计算 / 表格3"
+              ],
+              "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 全文",
+                "小鸡数值文档.docx / 全文"
+              ],
+              "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "no_issue",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡数值文档.docx / 4. 撞击概率计算 / 段落13-14"
+              ],
+              "reason": "source_state=explicit; counterevidence=MAX_MUL已限制最大赔付倍数; primary_coverage=not_covered; final=no_issue",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文",
+            "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+            "小鸡.docx / 图片解析 / 图片1-8"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable；source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 全文",
+                "小鸡数值文档.docx / 全文"
+              ],
+              "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "小鸡.docx / 4.3 UI 与交互设计 / 段落70-73",
+                "小鸡.docx / 图片解析 / 图片1-8"
+              ],
+              "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": false,
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_2",
+        "evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+        "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+        "echo_required": true,
+        "echo_matched": false,
+        "delta_only_required": true,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [],
+        "unexpected_fields_present": [],
+        "passed": false,
+        "errors": [
+          "phase2_protocol_echo_missing_or_mismatch"
+        ]
+      }
+    },
+    "protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_2",
+      "evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+      "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+      "echo_required": true,
+      "echo_matched": false,
+      "delta_only_required": true,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [],
+      "unexpected_fields_present": [],
+      "passed": false,
+      "errors": [
+        "phase2_protocol_echo_missing_or_mismatch"
+      ]
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "coverage_protocol_revision": "phase2_v2_2",
+  "coverage_evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+  "coverage_evidence_packet_echoed": false,
+  "phase2_delta_only_compliant": true,
+  "phase2_protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase2_v2_2",
+    "evidence_packet_id": "a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+    "expected_echo": "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81",
+    "echo_required": true,
+    "echo_matched": false,
+    "delta_only_required": true,
+    "delta_only_compliant": true,
+    "forbidden_fields_present": [],
+    "unexpected_fields_present": [],
+    "passed": false,
+    "errors": [
+      "phase2_protocol_echo_missing_or_mismatch"
+    ]
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "status": "completed",
+  "game": "钱来了",
+  "variant_id": "A",
+  "repeat": 1,
+  "selected_report_owner": "pipeline",
+  "candidate_recommendation_status": "fallback_pipeline",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_coverage_ledger_passed": false,
+    "phase2_coverage_ledger_completeness": 0.0,
+    "phase2_coverage_ledger_errors": [
+      "coverage_entry_count_invalid:0",
+      "coverage_audit_key_order_invalid",
+      "missed_finding_not_in_confirmed_add:CLARITY_02",
+      "missed_finding_not_in_confirmed_add:LOGIC_04",
+      "missed_finding_not_in_confirmed_add:LOGIC_05"
+    ],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 3,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_gate_failure_reasons": [
+    "phase2_coverage_ledger_invalid"
+  ],
+  "lineage_counts": {
+    "kept": 6,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_overcompressed": false,
+  "candidate_major_judgment_drift": false,
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 2,
+    "materially_changed_titles": [
+      "底层数据生成规则与RESPIN触发条件矛盾",
+      "免费游戏续杯概率配置缺失"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:LOGIC_02",
+        "issue_id": "LOGIC_02",
+        "title": "底层数据生成规则与RESPIN触发条件矛盾",
+        "change_kinds": [
+          "current_state_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:CROSS_03",
+        "issue_id": "CROSS_03",
+        "title": "免费游戏续杯概率配置缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  },
+  "pipeline_merge_summary": {
+    "added_findings": 0,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0,
+    "phase2_admission": {
+      "enabled": true,
+      "claimed_count": 3,
+      "admitted_count": 0,
+      "rejected_count": 3,
+      "all_passed": false,
+      "results": [
+        {
+          "candidate_issue_id": "CLARITY_02",
+          "title": "购买免费游戏功能缺少核心配置",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "primary_duplicate_declared_nearest",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "CROSS_03",
+              "title": "免费游戏续杯概率配置缺失"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "钱来了需求文档.docx / 3.5.3 购买免费游戏",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "LOGIC_04",
+          "title": "表演权重与出现权重的使用场景关系不清",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "primary_duplicate_declared_nearest",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [
+            {
+              "issue_id": "LOGIC_03",
+              "title": "乘数符号ID=0的表演权重替换逻辑表述不清"
+            }
+          ],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "钱来了数值文档.docx / 三、基础游戏・乘数符号、表格3",
+          "coverage_audit_key": ""
+        },
+        {
+          "candidate_issue_id": "LOGIC_05",
+          "title": "重转与推展互斥逻辑的必要性疑问",
+          "status": "rejected",
+          "reasons": [
+            "missing_fields:audit_key",
+            "evidence_position_unlocatable",
+            "fact_check_inconclusive_compatible_interpretation",
+            "coverage_ledger_invalid",
+            "coverage_confirmed_add_link_missing"
+          ],
+          "missing_fields": [
+            "audit_key"
+          ],
+          "primary_duplicate_matches": [],
+          "broad_primary_duplicate_matches": [],
+          "evidence_alias_resolved": false,
+          "normalized_evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制",
+          "coverage_audit_key": ""
+        }
+      ],
+      "coverage_ledger": {
+        "passed": false,
+        "completeness": 0.0,
+        "expected_audit_keys": [
+          "settlement_formula_ui_config",
+          "trigger_state_termination",
+          "funds_deduction_payout",
+          "max_payout_economic_boundary",
+          "statistics_time_window"
+        ],
+        "observed_audit_keys": [],
+        "confirmed_audit_keys": [],
+        "candidate_to_audit_key": {},
+        "finding_audit_keys": {
+          "CLARITY_02": "",
+          "LOGIC_04": "",
+          "LOGIC_05": ""
+        },
+        "unmapped_missed_issue_ids": [
+          "CLARITY_02",
+          "LOGIC_04",
+          "LOGIC_05"
+        ],
+        "orphan_confirmed_issue_ids": [],
+        "duplicate_confirmed_issue_ids": [],
+        "errors": [
+          "coverage_entry_count_invalid:0",
+          "coverage_audit_key_order_invalid",
+          "missed_finding_not_in_confirmed_add:CLARITY_02",
+          "missed_finding_not_in_confirmed_add:LOGIC_04",
+          "missed_finding_not_in_confirmed_add:LOGIC_05"
+        ],
+        "entries": []
+      },
+      "candidate_inputs_sanitized": true
+    }
+  },
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 3,
+    "admitted_count": 0,
+    "rejected_count": 3,
+    "all_passed": false,
+    "results": [
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "title": "购买免费游戏功能缺少核心配置",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "primary_duplicate_declared_nearest",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "CROSS_03",
+            "title": "免费游戏续杯概率配置缺失"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了需求文档.docx / 3.5.3 购买免费游戏",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "title": "表演权重与出现权重的使用场景关系不清",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "primary_duplicate_declared_nearest",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_03",
+            "title": "乘数符号ID=0的表演权重替换逻辑表述不清"
+          }
+        ],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了数值文档.docx / 三、基础游戏・乘数符号、表格3",
+        "coverage_audit_key": ""
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "title": "重转与推展互斥逻辑的必要性疑问",
+        "status": "rejected",
+        "reasons": [
+          "missing_fields:audit_key",
+          "evidence_position_unlocatable",
+          "fact_check_inconclusive_compatible_interpretation",
+          "coverage_ledger_invalid",
+          "coverage_confirmed_add_link_missing"
+        ],
+        "missing_fields": [
+          "audit_key"
+        ],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [],
+        "evidence_alias_resolved": false,
+        "normalized_evidence": "钱来了数值文档.docx / 五、基础游戏・核心机制",
+        "coverage_audit_key": ""
+      }
+    ],
+    "coverage_ledger": {
+      "passed": false,
+      "completeness": 0.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [],
+      "confirmed_audit_keys": [],
+      "candidate_to_audit_key": {},
+      "finding_audit_keys": {
+        "CLARITY_02": "",
+        "LOGIC_04": "",
+        "LOGIC_05": ""
+      },
+      "unmapped_missed_issue_ids": [
+        "CLARITY_02",
+        "LOGIC_04",
+        "LOGIC_05"
+      ],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "errors": [
+        "coverage_entry_count_invalid:0",
+        "coverage_audit_key_order_invalid",
+        "missed_finding_not_in_confirmed_add:CLARITY_02",
+        "missed_finding_not_in_confirmed_add:LOGIC_04",
+        "missed_finding_not_in_confirmed_add:LOGIC_05"
+      ],
+      "entries": []
+    },
+    "candidate_inputs_sanitized": true
+  }
+}

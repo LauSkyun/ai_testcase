@@ -1,0 +1,213 @@
+{
+  "items": [
+    {
+      "annotation_id": "A-777-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "原文描述中奖计算与金额展示，但没有定义RESPIN结束或单局结算后玩家钱包实际入账节点；独立资金时序缺口成立，medium/block_test定性适当。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "下注动作和收银台均有描述，但本金实际扣除或冻结节点未定义；与既有Primary不同根因，证据和阻塞开发定性成立。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "结果弹窗只描述返奖展示，没有定义玩家钱包实际到账节点；该独立时序缺口成立，可直接形成余额变动验收用例。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A003",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "文档存在真实下注、扣款与发奖事务，但相关章节没有定义失败回滚、补发、重试和幂等边界，也未引用统一承接模块；资金一致性缺口成立。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A004",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "赔率公式仅定义1.02最低值，选项下注额趋近零时缺少MAX_MUL或等价相对上限；极端赔率不可控的独立边界问题成立。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A005",
+      "valid": true,
+      "duplicate": true,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "奖池允许为负却没有负值下限与熔断条件，事实成立；但Primary的MAX_PAYOUT_RISK已覆盖同一经济边界根因，因此应判重复并保持拒绝准入。"
+    },
+    {
+      "annotation_id": "A-racing-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "第二次回放再次确认下注动作不等于余额扣除或冻结节点；证据、独立根因和修订方案均成立。"
+    },
+    {
+      "annotation_id": "A-racing-R02-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "第二次回放稳定命中返奖展示与钱包实际入账节点之间的缺口；属于可定位、可验收的独立资金时序问题。"
+    },
+    {
+      "annotation_id": "A-tiger-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "段落29允许奖池透支为负，但没有负值下限、回填边界或熔断条件；属于独立经济边界缺口。"
+    },
+    {
+      "annotation_id": "A-tiger-R01-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "开奖分析正文最近7天与图片13 Last 30 day针对同一胜率窗口直接冲突；证据、严重度和统一方案完整。"
+    },
+    {
+      "annotation_id": "A-tiger-R01-A003",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "游戏记录正文和固定文案定义近3日，图片9显示last 30 days，比较对象与展示位置一致，属于直接且可验收的UI口径冲突。"
+    },
+    {
+      "annotation_id": "A-tiger-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "第二次回放再次命中奖池负值下限与熔断缺口，事实、独立根因和高风险定性均成立。"
+    },
+    {
+      "annotation_id": "A-tiger-R02-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "第二次回放稳定确认开奖分析7天与UI 30天的同对象窗口冲突；属于可定位、可验收的独立问题。"
+    },
+    {
+      "annotation_id": "A-tiger-R02-A003",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "第二次回放稳定确认游戏记录正文3日与UI 30日的同指标展示冲突，根因、证据和验收口径一致。"
+    },
+    {
+      "annotation_id": "A-小鸡-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "开局、失败清零和局内累计均有描述，但开局本金何时冻结或扣除未定义；属于Primary未覆盖的核心资金流缺口。"
+    },
+    {
+      "annotation_id": "A-小鸡-R01-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "提现明确对接真实支付，但未定义网关失败、超时后的资金回滚、补发、重试和幂等策略；资金失败补偿缺口成立。"
+    },
+    {
+      "annotation_id": "A-小鸡-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "第二次回放稳定命中选择筹码、点击开始与实际本金扣除/冻结节点之间的缺口，事实与风险成立。"
+    },
+    {
+      "annotation_id": "A-钱来了-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "免费游戏结束条件写3次，而触发档位明确为5/10/20次，属于同一状态机结束条件的直接冲突，会阻塞开发与测试。"
+    },
+    {
+      "annotation_id": "A-钱来了-R02-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "免费续杯规则出现全文未定义的‘夺宝符号’，且符号表与数值文档均无对应定义；疑似残留文案会直接阻塞触发条件实现。"
+    }
+  ]
+}

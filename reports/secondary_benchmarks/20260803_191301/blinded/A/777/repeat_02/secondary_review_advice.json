@@ -1,0 +1,371 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了核心结算冲突（风控与RESPIN互斥、累加算法歧义、盘面生成规则混乱），证据定位清晰，严重度判定合理。但遗漏了赔付表UI与配置表数值不匹配、RESPIN结束条件自相矛盾、缺少RTP/MAX_MUL/最大赔付封顶等高信号问题，需补充后方可完整交付。",
+    "strengths": [
+      "准确识别风控强制0倍与RESPIN触发条件的致命冲突",
+      "正确指出RESPIN累加算法的加法/乘法歧义",
+      "证据引用完整，定位到具体段落和表格",
+      "严重度判定合理，未过度降级核心问题"
+    ],
+    "issues": [
+      "遗漏赔付表UI展示与配置表数值不匹配的关键问题",
+      "未发现RESPIN结束条件存在两种互相矛盾的描述",
+      "缺少RTP目标、MAX_MUL、最大赔付封顶等关键数值边界",
+      "部分finding的suggestion可进一步具体化"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "候选报告已补充主模型遗漏的高信号核心问题，证据充分、来源可追踪、结构完整，可直接给业务方阅读并推动文档修订"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选报告已补充主模型遗漏的高信号核心问题，证据充分、来源可追踪、结构完整，可直接给业务方阅读并推动文档修订"
+  },
+  "review_notes": [
+    "主模型报告整体质量良好，准确识别了核心结算冲突，但遗漏了3个高信号问题：赔付表UI与配置表不匹配、RESPIN结束条件矛盾、缺少RTP/MAX_MUL specification",
+    "建议优先解决LOGIC_02（风控与RESPIN冲突）、LOGIC_01（累加算法歧义）、LOGIC_05（RESPIN结束条件矛盾）这3个核心逻辑问题",
+    "CLARITY_04（赔付表不匹配）需要策划与美术、前端共同确认最终数值来源",
+    "LOGIC_06（缺少RTP/MAX_MUL）需要数值策划补充完整数值边界定义",
+    "建议增加一份'数值验证清单'，包含RTP计算示例、最大赔付场景、RESPIN极端情况测试用例",
+    "protocol_profile=phase2",
+    "dual_pass candidate 含空 issue_id 问题项，当前仅作为对比稿，不建议默认直出。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "CLARITY_04",
+      "title": "赔付表UI展示与配置表数值不匹配",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "需求文档中的赔付表图片（图片14、18、21）展示的倍率数值与数值文档配置表（表格2）的数值不一致。例如：图片21显示3*777=1000，但配置表显示777=77；图片显示any=4，但配置表显示any=0.5。倍率比例关系也不一致（如图片中3*777/any 777=25，配置表中777/any 7=11）。",
+      "evidence": "疯狂777需求文档修改后.docx / 图片14、18、21；crazy777数值文档修改后.docx / 表格2",
+      "risk": "玩家看到的赔付表与实际结算不符，可能引发客诉和信任危机；开发无法确定以哪个为准，可能导致实现错误。",
+      "suggestion": "统一赔付表UI展示与配置表数值，明确各注码档位下的赔付表展示规则，确保UI展示倍率=配置表倍率×注码；若图片为占位符，需明确标注并说明最终数值来源。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "赔付表UI设计与配置表数值定义由不同角色负责，缺乏交叉验证机制",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_01",
+        "overlap": false,
+        "reason": "CLARITY_01关注基础符号盘面生成规则，CLARITY_04关注赔付表UI与配置表数值一致性，两者是独立的根因"
+      },
+      "severity_basis": "赔付表是玩家理解游戏的核心界面，与实际结算不符会直接导致客诉和信任危机，且开发无法确定实现标准",
+      "root_cause_count": 1
+    },
+    {
+      "candidate_issue_id": "LOGIC_05",
+      "title": "RESPIN结束条件存在两种互相矛盾的描述",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "数值文档段落46描述'一旦随机到空，则不再进入重转'，即RESPIN在随机到空时结束；但段落61描述'重转次数达到→本次重转值必定为空（0）→respin结束'，即RESPIN在达到预定次数后强制以空结束。两种机制无法同时实现。",
+      "evidence": "crazy777数值文档修改后.docx / 段落46、61",
+      "risk": "开发无法确定RESPIN的正确结束逻辑，可能导致实现与预期不符，影响RTP和玩家体验；若采用随机结束，可能出现极端长序列；若采用强制结束，可能破坏随机性。",
+      "suggestion": "明确RESPIN结束条件：1）若为'随机到空即结束'，需补充最大次数限制防止极端情况；2）若为'达到预定次数后强制以空结束'，需说明预定次数如何确定（是否从表格6抽取）；3）若为两者结合，需明确优先级和触发逻辑。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "independent_root_cause": "RESPIN流程描述由不同段落分别撰写，缺乏统一的流程定义和交叉校验",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_04",
+        "overlap": false,
+        "reason": "LOGIC_04关注RESPIN次数与乘数值的抽取逻辑，LOGIC_05关注RESPIN结束条件的矛盾，两者是独立的根因"
+      },
+      "severity_basis": "RESPIN结束条件直接影响核心游戏流程和RTP计算，两种矛盾描述会导致开发无法实现或实现错误",
+      "root_cause_count": 1
+    },
+    {
+      "candidate_issue_id": "LOGIC_06",
+      "title": "缺少RTP目标、MAX_MUL和最大赔付封顶 specification",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "文档未明确游戏的RTP目标、最大倍率（MAX_MUL）和最大赔付封顶。风控仅提到'超过100倍强制0倍'（段落55），但未说明这是单线倍率还是总倍率（含RESPIN累加），也未说明RESPIN累加后的最大赔付限制。",
+      "evidence": "crazy777数值文档修改后.docx / 段落55-56",
+      "risk": "缺少关键数值边界，可能导致RTP偏离预期、赔付失控或经济事故；测试无法设计边界用例；运营无法评估游戏健康度。",
+      "suggestion": "补充：1）RTP目标（如96%）；2）MAX_MUL定义（如单线最大500倍，含RESPIN累加）；3）最大赔付封顶（如单局最大10000倍注码）；4）明确风控的100倍限制是指基础倍率还是包含RESPIN累加后的总倍率；5）补充RTP计算示例和验证方法。",
+      "severity": "高",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "中",
+      "independent_root_cause": "数值设计文档缺少关键边界定义，可能因为依赖中台默认配置或未完成数值平衡",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "LOGIC_02关注风控与RESPIN的逻辑冲突，LOGIC_06关注缺少RTP/MAX_MUL等数值边界定义，两者是独立的根因"
+      },
+      "severity_basis": "RTP和最大赔付是SLOTS游戏的核心数值边界，缺失会导致无法验收游戏健康度和经济安全性",
+      "root_cause_count": 1
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [
+          "CLARITY_04"
+        ],
+        "reason": "主模型遗漏赔付表UI与配置表数值不匹配的关键问题"
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "source_missed_issue_ids": [
+          "LOGIC_05"
+        ],
+        "reason": "主模型遗漏RESPIN结束条件存在两种互相矛盾的描述"
+      },
+      {
+        "candidate_issue_id": "LOGIC_06",
+        "source_missed_issue_ids": [
+          "LOGIC_06"
+        ],
+        "reason": "主模型遗漏缺少RTP目标、MAX_MUL和最大赔付封顶 specification"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 9,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 9,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [
+    "赔付表UI展示与配置表数值不匹配",
+    "RESPIN结束条件存在两种互相矛盾的描述",
+    "缺少RTP目标、MAX_MUL和最大赔付封顶 specification"
+  ],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "候选报告已补充主模型遗漏的高信号核心问题，证据充分、来源可追踪、结构完整，可直接给业务方阅读并推动文档修订",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 3,
+    "admitted_count": 3,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [
+      {
+        "candidate_issue_id": "",
+        "title": "赔付表UI展示与配置表数值不匹配",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": []
+      },
+      {
+        "candidate_issue_id": "",
+        "title": "RESPIN结束条件存在两种互相矛盾的描述",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_02",
+            "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突"
+          },
+          {
+            "issue_id": "LOGIC_04",
+            "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+          }
+        ]
+      },
+      {
+        "candidate_issue_id": "",
+        "title": "缺少RTP目标、MAX_MUL和最大赔付封顶 specification",
+        "status": "admitted",
+        "reasons": [],
+        "missing_fields": [],
+        "primary_duplicate_matches": [],
+        "broad_primary_duplicate_matches": [
+          {
+            "issue_id": "LOGIC_04",
+            "title": "RESPIN次数与每次乘数值的抽取逻辑缺失"
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready",
+    "candidate_missing_issue_id"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": false,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 3,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.6667,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "protocol_blockers": [
+      "candidate_missing_issue_id"
+    ],
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告较好地识别了核心玩法循环中的关键缺口，结构清晰，基本覆盖了主要维度。但对赔率公式冲突的定性过高，且遗漏了干扰指数与速度公式映射等关键细节，部分严重度评定可优化。",
+    "strengths": [
+      "主流程循环识别准确，问题分类合理",
+      "对多重干预优先级、假数据展示等风险点有敏锐发现",
+      "测试要点和缺失信息列表较为完整"
+    ],
+    "issues": [
+      "将赔率公式差异定为“根本冲突”过于严重，实际可兼容",
+      "物理时间与动画时长矛盾被高估为高阻塞",
+      "遗漏了干扰指数如何影响速度/胜负的映射规则",
+      "白名单赔付定义等边缘规则缺失"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。"
+  },
+  "review_notes": [
+    "将赔率公式冲突由“根本冲突”降级为“描述不一致”，因两个公式在数学上可兼容（令T=合计下注，W_X=本选项下注，[001]%=(1-r)，γ=1），严重度由高降为中。",
+    "将物理时间与动画冲突由高风险降为中风险，并调整为映射规则缺失，因动画时长为表现层，可独立于物理时间，无功能冲突。",
+    "新增干扰指数映射缺失问题，填补主模型遗漏。",
+    "新增白名单赔付定义缺失问题，补充运营自动化所需口径。",
+    "调整后整体评分由C提升至B，因高风险项已消除，主流程可落地。",
+    "dual_pass 协议提示：quality_assessment.ready_for_direct_output 与 candidate_readiness.ready_for_direct_output 不一致，已统一降为 false。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "干扰指数映射缺失",
+      "canonical_title": "干扰指数与速度/胜负的映射规则未定义",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "document",
+      "severity": "中",
+      "title": "干扰指数如何影响开奖逻辑未明确",
+      "current_state": "需求文档（段落43）提到干预时给车型设置干扰指数区间（如1.01-1.1），但未说明干扰指数如何作用于速度计算或胜负判定。是直接乘以速度，还是作为额外系数加入T公式？",
+      "evidence": "musee游戏Racing.docx / 段落36、段落43",
+      "risk": "开发无法实现干预逻辑，干预效果不可控，数值验收无依据。",
+      "suggestion": "明确干扰指数与速度/完成时间的关系，如：最终速度 = V * K * 干扰指数，或作为Luck的组成部分。提供完整公式与示例。",
+      "planner_role": "数值策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    },
+    {
+      "issue_id": "白名单赔付定义缺失",
+      "canonical_title": "白名单干预中最大/最小赔付的计算口径未定义",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "document",
+      "severity": "中",
+      "title": "白名单补贴/制裁的“最大赔付”与“最小赔付”无明确算法",
+      "current_state": "需求文档（段落59）提到自动化补贴时侧重开最大赔付的选项，制裁时侧重开最小赔付的选项，但未定义如何计算每个选项的赔付金额（是下注额×赔率？还是奖池消耗？），也未说明在多种下注组合下如何比较。",
+      "evidence": "musee游戏Racing.docx / 段落59",
+      "risk": "运营自动化无法实现，白名单干预可能失效或产生错误导向。",
+      "suggestion": "补充最大赔付/最小赔付的定义与计算公式，明确与实时赔率、下注金额的关系。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "隐藏地形生成规则歧义",
+        "primary_issue_ids": [
+          "隐藏地形生成规则歧义"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "物理时间与动画冲突",
+        "primary_issue_ids": [
+          "物理时间与动画冲突"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "干预优先级冲突",
+        "primary_issue_ids": [
+          "干预优先级冲突"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "赔率公式冲突",
+        "primary_issue_ids": [
+          "赔率公式冲突"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "资金链路规则缺失",
+        "primary_issue_ids": [
+          "资金链路规则缺失"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "干预阈值占位符",
+        "primary_issue_ids": [
+          "干预阈值占位符"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "引导局数值来源",
+        "primary_issue_ids": [
+          "引导局数值来源"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "假数据展示边界",
+        "primary_issue_ids": [
+          "假数据展示边界"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "干扰指数映射缺失",
+        "source_missed_issue_ids": [
+          "干扰指数映射缺失"
+        ],
+        "reason": "主模型遗漏了干预指数如何影响速度/胜负的映射规则，导致开发无法实现干预逻辑。"
+      },
+      {
+        "candidate_issue_id": "白名单赔付定义缺失",
+        "source_missed_issue_ids": [
+          "白名单赔付定义缺失"
+        ],
+        "reason": "主模型未覆盖白名单自动化中最大/最小赔付的计算口径，可能阻塞运营功能。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 8,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": true,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": true,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "副模型 readiness 标记冲突，系统已统一降为 false；当前候选稿仅保留为可比较版本，不建议默认直出。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": true,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": false,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

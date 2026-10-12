@@ -1,0 +1,290 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了核心的赔率不一致、结算公式缺失、金钱链路不明确等高信号问题，但部分严重度判定偏高（如异常流程缺失、RTP 映射缺失），且遗漏了文档内部多处时间范围不一致、排行榜分数口径不清等细节问题。整体结构较完整，但需修正严重度并补充遗漏后方可作为最终报告。",
+    "strengths": [
+      "准确识别了 UI 赔率与配置表赔率的不一致，并指出其可能引发结算事故",
+      "抓住了无人投入选项赔付为 0 的逻辑矛盾，属于高阻塞问题",
+      "点明了金钱链路（扣款/赔付时机）和结算公式缺失，直接影响实现",
+      "对投入人数定义、新进用户判定条件等歧义进行了有效分析"
+    ],
+    "issues": [
+      "将异常流程/弱网/断线重连的缺失列为高严重度，不符合评审规则中默认低风险的原则",
+      "将 RTP/MAX_MUL 映射缺失列为高严重度，但基础概率和赔率已给出，实际阻塞程度较低",
+      "遗漏了开奖分析/游戏记录的时间范围在文字与 UI 中的不一致",
+      "未指出排行榜分数统计口径（Win 金额是否为净赢）的模糊性",
+      "未指出 Repeat 功能在余额不足部分投入时的边界处理缺失",
+      "用户赔付公式、奖池变动公式等缺失虽已提及，但未与奖池正常状态概率冲突合并为同一根因"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型部分过高的严重度，补充了遗漏的关键不一致和边界条件，整体结构清晰、证据充分，可直接交付业务方阅读和跟进。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型部分过高的严重度，补充了遗漏的关键不一致和边界条件，整体结构清晰、证据充分，可直接交付业务方阅读和跟进。"
+  },
+  "review_notes": [
+    "将主模型中的 CLARITY_001 严重度从高降为中，因为文档已明确结算倍率为2.9，UI 设计稿的 3X 属于展示不一致，不会导致根本性结算错误，但需统一。",
+    "将 TEST_001 严重度从高降为中，并明确指出弱网/断线重连等异常处理在缺乏客户端权威性暗示时，按规则默认为低风险，仅因缺失验收标准保留中风险。",
+    "将 LOGIC_003 严重度从高降为中，因为基础概率和赔率已给出，RTP 可通过简单计算得出，缺失最大赔付映射虽影响数值验证，但不立刻阻塞主流程实现。",
+    "新增了 CLARITY_007、CLARITY_008、CLARITY_009 以覆盖文档内部的时间范围不一致、排行榜口径模糊、Repeat 边界缺失等问题。",
+    "本次未拆分或合并主模型问题，保持原有 issue_id 结构，仅调整严重度和补充描述。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_001",
+      "canonical_title": "开奖分析和游戏记录时间范围不一致",
+      "primary_dimension": "清晰度与完整性",
+      "description": "表格3中开奖分析描述为“最近7天”，但图片13显示为“Last 30 day”；游戏记录描述为“最多展示近3日”，但图片9显示“最近30天”。",
+      "evidence": "tiger需求文档.docx / 表格3（开奖分析、游戏记录）、图片13、图片9",
+      "risk": "开发人员可能实现错误的时间范围，导致用户看到的统计与预期不符，影响功能验收。",
+      "suggestion": "统一所有模块的时间范围口径，明确以文字描述还是UI原型为准，并更新对应的文档和设计稿。",
+      "severity": "低",
+      "confidence": "高"
+    },
+    {
+      "issue_id": "MISSED_002",
+      "canonical_title": "排行榜分数统计口径未明确",
+      "primary_dimension": "清晰度与完整性",
+      "description": "表格3中排行榜分数逻辑为“win的钻石金额，1钻=1分”，但未说明是否扣除投入成本（即净赢）还是毛赢金额。",
+      "evidence": "tiger需求文档.docx / 表格3（排行榜）",
+      "risk": "若按毛赢计算，可能导致用户频繁小额投入制造高排名，影响公平性；若按净赢，需明确计算方式。",
+      "suggestion": "明确分数统计口径：例如，净赢 = 总赢取 - 总投入，或仅统计当局 Win 的金额（不含本金）。",
+      "severity": "中",
+      "confidence": "高"
+    },
+    {
+      "issue_id": "MISSED_003",
+      "canonical_title": "Repeat 功能边界条件未定义",
+      "primary_dimension": "清晰度与完整性",
+      "description": "表格3描述 Repeat 按钮“自动判断若当前余额足够，则高亮，点击则按上一局用户投入信息投入”，但未说明若上一局投入了多个选项，而当前余额仅够部分选项时，应如何处理（全部投入失败，还是按比例部分投入，或仅投入最大可承担部分）。",
+      "evidence": "tiger需求文档.docx / 表格3（Repeat）",
+      "risk": "开发实现时可能产生歧义，导致用户操作预期与实际不符，引发投诉。",
+      "suggestion": "补充规则：若余额不足以覆盖上一局所有投入，Repeat 按钮置灰，或明确部分投入的优先级算法。",
+      "severity": "中",
+      "confidence": "高"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_001",
+        "primary_issue_ids": [
+          "CLARITY_001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_002",
+        "primary_issue_ids": [
+          "CLARITY_002"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_005",
+        "primary_issue_ids": [
+          "CLARITY_005"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_004",
+        "primary_issue_ids": [
+          "CLARITY_004"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_006",
+        "primary_issue_ids": [
+          "CLARITY_006"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_003",
+        "primary_issue_ids": [
+          "CLARITY_003"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_001",
+        "primary_issue_ids": [
+          "LOGIC_001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_003",
+        "primary_issue_ids": [
+          "LOGIC_003"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_001",
+        "primary_issue_ids": [
+          "TEST_001"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_002",
+        "primary_issue_ids": [
+          "SEC_002"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "SEC_001",
+        "primary_issue_ids": [
+          "SEC_001"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_007",
+        "source_missed_issue_ids": [
+          "MISSED_001"
+        ],
+        "reason": "补充文档内部时间范围不一致的问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY_008",
+        "source_missed_issue_ids": [
+          "MISSED_002"
+        ],
+        "reason": "补充排行榜分数口径模糊的问题"
+      },
+      {
+        "candidate_issue_id": "CLARITY_009",
+        "source_missed_issue_ids": [
+          "MISSED_003"
+        ],
+        "reason": "补充 Repeat 边界条件缺失的问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 11,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 11,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 11,
+    "added": 3,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型部分过高的严重度，补充了遗漏的关键不一致和边界条件，整体结构清晰、证据充分，可直接交付业务方阅读和跟进。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

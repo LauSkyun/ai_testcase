@@ -1,0 +1,119 @@
+{
+  "application_mode": "human_approved_deterministic_phase3_v1_2",
+  "applied": true,
+  "applied_correction_count": 5,
+  "skipped_correction_count": 0,
+  "applied_corrections": [
+    {
+      "correction_id": "CR-CROSS_01",
+      "target_issue_id": "CROSS_01",
+      "disposition": "drop",
+      "severity_before": "中",
+      "severity_after": "removed",
+      "blocking_before": "阻塞测试用例设计"
+    },
+    {
+      "correction_id": "CR-LOGIC_01",
+      "target_issue_id": "LOGIC_01",
+      "disposition": "drop",
+      "severity_before": "高",
+      "severity_after": "removed",
+      "blocking_before": "阻塞开发"
+    },
+    {
+      "correction_id": "CR-LOGIC_03",
+      "target_issue_id": "LOGIC_03",
+      "disposition": "drop",
+      "severity_before": "高",
+      "severity_after": "removed",
+      "blocking_before": "阻塞开发"
+    },
+    {
+      "correction_id": "CR-LOGIC_04",
+      "target_issue_id": "LOGIC_04",
+      "disposition": "drop",
+      "severity_before": "中",
+      "severity_after": "removed",
+      "blocking_before": "阻塞测试用例设计"
+    },
+    {
+      "correction_id": "CR-TEST_01",
+      "target_issue_id": "TEST_01",
+      "disposition": "drop",
+      "severity_before": "中",
+      "severity_after": "removed",
+      "blocking_before": "阻塞测试用例设计"
+    }
+  ],
+  "skipped_corrections": [],
+  "score_recalculation": {
+    "owner": "system_deterministic_scoring",
+    "trigger": "after_human_approved_corrections",
+    "score_before": "C",
+    "score_after": "B",
+    "score_changed": true,
+    "score_reason_before": "主流程可理解，但存在风控与RESPIN触发条件致命冲突、累加算法歧义、盘面生成规则无法实现等多处高风险缺口，关键边界与验收标准不足，需补充后再完整开工。",
+    "score_reason_after": "主流程和关键数值基本可落地，当前仅剩少量高风险问题，补齐后即可推进完整开发与测试。",
+    "risk_counts_before": {
+      "finding_count": 10,
+      "high_or_block_dev_count": 4,
+      "fatal_core_conflict_count": 0,
+      "medium_count": 6
+    },
+    "risk_counts_after": {
+      "finding_count": 5,
+      "high_or_block_dev_count": 2,
+      "fatal_core_conflict_count": 0,
+      "medium_count": 3
+    },
+    "top_blockers_before": [
+      {
+        "severity": "高",
+        "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突",
+        "owner": "数值策划",
+        "why_now": "玩家看到123列中奖进入RESPIN，累加后突然某一列变空奖金清零，体验极差且逻辑上RESPIN触发条件被破坏。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "RESPIN累加算法存在加法与乘法的严重歧义",
+        "owner": "系统策划",
+        "why_now": "极易导致程序实现为乘法，造成赔付指数级爆炸或RTP严重偏离，引发重大经济事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "基础符号盘面生成规则描述混乱，开发无法实现",
+        "owner": "系统策划",
+        "why_now": "开发无法根据现有描述编写正确的盘面生成逻辑，可能导致实际出奖概率与配置表严重不符。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "top_blockers_after": [
+      {
+        "severity": "高",
+        "title": "基础符号盘面生成规则描述混乱，开发无法实现",
+        "owner": "系统策划",
+        "why_now": "开发无法根据现有描述编写正确的盘面生成逻辑，可能导致实际出奖概率与配置表严重不符。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "风控强制0倍逻辑与RESPIN触发条件存在致命冲突",
+        "owner": "数值策划",
+        "why_now": "玩家看到123列中奖进入RESPIN，累加后突然某一列变空奖金清零，体验极差且逻辑上RESPIN触发条件被破坏。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ]
+  }
+}

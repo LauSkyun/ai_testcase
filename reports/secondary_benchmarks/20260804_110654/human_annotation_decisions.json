@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "review_method": "逐条对照冻结需求上下文与冻结 Primary 报告人工复核；准入状态不替代事实质量判断。",
+  "reviewer": "Codex blind evidence review",
+  "blinded": true,
+  "provider_mapping_opened": false,
+  "items": [
+    {
+      "annotation_id": "A-777-R02-A001",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "原文已用超过100倍强制0倍定义了相对投注额的赔付边界；模型又把77倍符号赔率与100倍风控阈值相乘推导7700倍，未证明该组合符合原结算公式，因此不能据此断言绝对赔付边界完全缺失。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true,
+      "reviewer_notes": "文档确实未定义实际扣款与派奖到账节点，Primary也未覆盖；但扣款事务和派奖事务具有不同触发点、失败补偿及验收闭环，应拆成两个独立问题，而不是声称只有一个根因。"
+    },
+    {
+      "annotation_id": "A-racing-R01-A002",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "近30天胜率/平均赔率统计车辆表现，今日/本周榜统计用户下注金额；对象、范围和用途均不同，采用不同时间窗口是可兼容设计，模型错误填写same_subject_and_scope=true。"
+    },
+    {
+      "annotation_id": "A-tiger-R01-A001",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true,
+      "reviewer_notes": "文档描述下注表现和每轮结束后的奖池抽水，但没有定义玩家钱包实际扣款节点、失败回滚及重试口径；这是Primary未覆盖的独立资金流缺口。"
+    },
+    {
+      "annotation_id": "A-tiger-R01-A002",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true,
+      "reviewer_notes": "奖池允许持续透支却没有负值下限，且缺少独立的单局赔付封顶，两项边界缺口均成立且未被Primary覆盖；但它们的触发条件、修复参数和验收闭环不同，应拆成两个根因。"
+    }
+  ]
+}

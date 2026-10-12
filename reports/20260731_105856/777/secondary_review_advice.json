@@ -1,0 +1,236 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告整体结构完整，准确识别了盘面生成规则混乱、风控与RESPIN冲突、推展机制矛盾等核心高信号问题。但在部分问题的严重度判定上存在过度升级（如将已有明确举例的累加算法术语歧义判为根本冲突），且遗漏了最大赔付封顶、BET档位等关键经济边界。",
+    "strengths": [
+      "准确识别了基础盘面生成规则、风控与RESPIN触发条件、推展机制等核心逻辑冲突。",
+      "问题分类清晰，证据引用准确，闭环建议具有可操作性。"
+    ],
+    "issues": [
+      "将RESPIN累加算法的术语歧义误判为高阻塞的根本冲突，未充分考虑需求文档举例已明确为加法的事实。",
+      "遗漏了SLOTS游戏关键的经济安全边界（最大赔付/封顶限制）和基础配置（BET档位）。"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的严重度误判，补充了最大赔付封顶和BET档位等关键遗漏，结构完整、证据充分、追踪清晰，可直接交付业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的严重度误判，补充了最大赔付封顶和BET档位等关键遗漏，结构完整、证据充分、追踪清晰，可直接交付业务方阅读。"
+  },
+  "review_notes": [
+    "将 LOGIC_01 从“高”降级为“中”，因为需求文档段落19的举例已明确为加法累加，数值文档的“乘法计算”指代的是整体公式，属于可兼容实现下的术语歧义，非根本冲突。",
+    "新增 LOGIC_05（最大赔付/封顶限制缺失）和 CLARITY_04（BET档位缺失），以补全SLOTS游戏关键的经济安全边界和基础配置。",
+    "根据规则，本期不输出 cross_document_issues，相关跨文档术语不一致问题已整合至对应维度的 findings 中。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISS_01",
+      "title": "单局最大赔付/封顶限制缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "severity": "高",
+      "evidence": "crazy777数值文档修改后.docx / 全文；疯狂777需求文档修改后.docx / 全文",
+      "reason": "两份文档均未提及单局最大赔付上限（MAX_MUL）或最大中奖金额。若RESPIN连续抽到高倍率，可能导致单局赔付无上限，引发重大经济事故。"
+    },
+    {
+      "issue_id": "MISS_02",
+      "title": "基础投注(BET)可选档位与范围缺失",
+      "primary_dimension": "清晰度与完整性",
+      "severity": "中",
+      "evidence": "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落34、37",
+      "reason": "需求文档提及注码选择，但未说明BET的具体可选档位、最小/最大值，影响赔付金额的计算、UI展示及风控区间的映射。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "adjustment_note": "严重度从'高'降级为'中'。需求文档段落19的举例已明确为加法累加，数值文档的'乘法计算'指代的是整体公式，属于可兼容实现下的术语歧义，非根本冲突。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ]
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "补充SLOTS游戏关键的经济安全边界，防止极端情况导致无上限赔付。"
+      },
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "补充基础投注配置，确保赔付计算和UI展示有明确的数值依据。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 9,
+    "added": 2,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的严重度误判，补充了最大赔付封顶和BET档位等关键遗漏，结构完整、证据充分、追踪清晰，可直接交付业务方阅读。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

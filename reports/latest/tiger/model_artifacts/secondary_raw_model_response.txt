@@ -1,0 +1,272 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了赔率数值冲突、奖池兜底数学矛盾及机器人逻辑缺失等核心高风险问题，但在资金事务节点（扣款时机）和局部统计窗口（开奖分析7天vs30天）的审查上存在遗漏。",
+    "strengths": [
+      "准确识别核心赔率数值在配置、规则与UI间的严重冲突",
+      "敏锐发现奖池允许透支与80%兜底规则之间的数学死锁",
+      "指出机器人匹配逻辑在正文中完全缺失的关键缺口"
+    ],
+    "issues": [
+      "遗漏了玩家本金扣除与冻结的事务触发节点定义",
+      "未覆盖开奖分析模块统计时间窗口在正文与UI间的直接冲突"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "存在资金事务节点缺失和统计窗口冲突等未覆盖的增量问题，需补充 missed_findings 后由系统生成最终 Candidate。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落72"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "赔率数值冲突"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格4",
+            "tiger需求文档.docx / 图片7",
+            "tiger需求文档.docx / 图片1"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落78",
+            "tiger需求文档.docx / 段落98-100"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落24",
+            "tiger需求文档.docx / 段落32",
+            "tiger需求文档.docx / 段落78"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "debit_timing_missing"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 图片24"
+          ],
+          "reason": "source_state=missing; counterevidence=图片24提及中台游戏配置可能存在公共流程; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格4",
+            "tiger需求文档.docx / 表格3"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "奖池兜底数学冲突"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落29",
+            "tiger需求文档.docx / 段落57"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 段落57",
+            "tiger需求文档.docx / 表格4"
+          ],
+          "reason": "source_state=missing; counterevidence=已有2.9倍率上限及余额限制隐式封顶; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "statistics_window_conflict"
+          ],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3",
+            "tiger需求文档.docx / 图片13"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "模块配置矛盾"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "tiger需求文档.docx / 表格3",
+            "tiger需求文档.docx / 图片9"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "debit_timing_missing",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家本金扣除与冻结的事务触发节点未定义",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "文档表格3说明了“点击投入”、“余额不足”等交互，但未明确玩家本金实际扣除或冻结的具体事务节点（如：是点击瞬间实时扣除，还是20秒投入阶段结束后统一结算扣除）。",
+      "evidence": "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）",
+      "risk": "若未明确扣款时机，可能导致投入阶段玩家余额已扣但开奖前断线引发退款纠纷，或投入阶段余额未冻结导致玩家重复下注超额透支。",
+      "suggestion": "明确玩家投入本金的扣除时机（如：点击投入按钮时实时扣除并冻结，或投入倒计时结束时统一扣除），并补充断线重连时的资金状态恢复规则。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "资金事务节点定义缺失",
+      "root_causes": [
+        "资金事务节点定义缺失"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "Repeat边界缺失",
+        "overlap": false,
+        "reason": "Primary的Repeat边界缺失仅讨论余额不足时的UI置灰交互，未涉及本金扣除的底层事务时机。"
+      },
+      "severity_basis": "high/block_dev: 资金扣除时机是核心交易链路，缺失将导致服务端无法设计正确的扣款与回滚事务，直接阻塞开发。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索投入、扣款、余额等关键词，仅发现UI交互层面的余额判断，无任何关于资金事务节点（如冻结、扣除、结算）的定义。",
+        "searched_locations": [
+          "tiger需求文档.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "statistics_window_conflict",
+      "audit_key": "statistics_time_window",
+      "control_key": "same_metric_window",
+      "title": "开奖分析模块的胜率统计时间窗口在正文与UI间存在冲突",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "表格3规定开奖分析的胜率计算范围为“最近1小时、今日、最近7天”，但图片13的UI截图中统计表格展示的时间维度为“Last 1 hour、Today、Last 30 day”，两者对第三项时间窗口的定义不一致。",
+      "evidence": "tiger需求文档.docx / 表格3（章节：3. 需求详情 > 3.3. 各模块功能说明）；tiger需求文档.docx / 图片13",
+      "risk": "开发按正文实现7天，测试按UI验收30天，导致验收不通过及反复返工；玩家对统计周期的预期产生混淆。",
+      "suggestion": "统一开奖分析模块的第三项时间窗口（7天或30天），同步修正正文表格3与UI原型图片13。",
+      "severity": "medium",
+      "blocking": "block_test",
+      "confidence": "high",
+      "independent_root_cause": "统计时间窗口配置不一致",
+      "root_causes": [
+        "统计时间窗口配置不一致"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "模块配置矛盾",
+        "overlap": false,
+        "reason": "Primary的模块配置矛盾仅覆盖了开奖分析的可见性（白名单vs全开）及游戏记录的时间窗口（3日vs30日），未覆盖开奖分析自身7天与30天的窗口冲突。"
+      },
+      "severity_basis": "medium/block_test: 统计窗口不一致会导致测试用例预期与开发实现冲突，阻塞测试验收。",
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "正文表格3明确写为“最近7天”，图片13明确写为“Last 30 day”，同对象同指标下数值直接冲突，无兼容解释。",
+        "searched_locations": [
+          "tiger需求文档.docx / 表格3",
+          "tiger需求文档.docx / 图片13"
+        ],
+        "same_subject_and_scope": true
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "funds_failure_compensation 判定为 advice_only，因文档提及中台游戏配置，可能存在公共资金流程兜底，无直接证据证明玩法特殊冲突。",
+    "single_round_payout_cap 判定为 advice_only，因已有2.9倍率上限及玩家余额/档位限制，隐式存在单局绝对赔付上限，无直接证据证明相对边界失效。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=35145b139ef84f9f655ab6646dcf0df9e01b1b572a404e0d504860bda6055ffd"
+  ]
+}

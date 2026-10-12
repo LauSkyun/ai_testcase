@@ -1,0 +1,95 @@
+{
+  "applied": true,
+  "applied_correction_count": 1,
+  "skipped_correction_count": 0,
+  "applied_corrections": [
+    {
+      "correction_id": "CR-LOGIC_02",
+      "target_issue_id": "LOGIC_02",
+      "disposition": "drop",
+      "severity_before": "高",
+      "severity_after": "removed",
+      "blocking_before": "阻塞开发"
+    }
+  ],
+  "skipped_corrections": [],
+  "score_recalculation": {
+    "owner": "system_deterministic_scoring",
+    "trigger": "after_human_approved_corrections",
+    "score_before": "C",
+    "score_after": "C",
+    "score_changed": false,
+    "score_reason_before": "主流程可理解，但核心机制的底层逻辑与表演逻辑存在矛盾，风控与封顶规则口径冲突，且存在数值配置重复与关键规则缺失，需补充澄清后方可完整开工。",
+    "score_reason_after": "主流程可理解，但仍存在高风险缺口或关键边界缺失，需要补充后再完整开工。",
+    "risk_counts_before": {
+      "finding_count": 8,
+      "high_or_block_dev_count": 7,
+      "fatal_core_conflict_count": 0,
+      "medium_count": 3
+    },
+    "risk_counts_after": {
+      "finding_count": 7,
+      "high_or_block_dev_count": 6,
+      "fatal_core_conflict_count": 0,
+      "medium_count": 3
+    },
+    "top_blockers_before": [
+      {
+        "severity": "高",
+        "title": "RESPIN触发概率配置冲突",
+        "owner": "数值策划",
+        "why_now": "程序无法确定最终配置，测试无法验收触发概率。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "中奖金额计算公式与符号定义口径分裂",
+        "owner": "系统策划",
+        "why_now": "程序在实现结算公式时可能因术语歧义导致乘区错误，引发严重的资金结算事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "乘数符号ID=0的表演权重替换逻辑表述不清",
+        "owner": "数值策划",
+        "why_now": "程序无法将此自然语言转化为代码逻辑，阻塞开发。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "top_blockers_after": [
+      {
+        "severity": "高",
+        "title": "RESPIN触发概率配置冲突",
+        "owner": "数值策划",
+        "why_now": "程序无法确定最终配置，测试无法验收触发概率。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "中奖金额计算公式与符号定义口径分裂",
+        "owner": "系统策划",
+        "why_now": "程序在实现结算公式时可能因术语歧义导致乘区错误，引发严重的资金结算事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "乘数符号ID=0的表演权重替换逻辑表述不清",
+        "owner": "数值策划",
+        "why_now": "程序无法将此自然语言转化为代码逻辑，阻塞开发。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ]
+  }
+}

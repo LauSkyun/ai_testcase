@@ -1,0 +1,49 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_02",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "图22中存在详细的机器人匹配与投放流程图，但正文需求中完全未提及机器人机制",
+      "evidence": "tiger需求文档.docx / 图22",
+      "counterevidence": "图22解析显示流程包含‘场次中位次’、‘单局进入人数占当期总投入人数比例’、‘开始(开服当天)’等特征，这与本文档定义的20s轮次公共竞猜玩法（无凑桌概念、无场次位次、全服统一奖池）严重不符。图22极大概率是混入的其他系统（如活动/赛事/其他游戏）的流程图，不能作为本游戏存在机器人机制的证据。",
+      "rationale": "Primary 错误地将疑似其他系统的流程图（图22）作为本游戏机器人机制的证据。虽然正文确实缺失人数阈值未达标时的降级策略，但证据引用存在张冠李戴的 mismatch。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "开奖阈值强依赖‘投入人数’，但正文缺失机器人/假人投放机制",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": []
+}

@@ -1,0 +1,1443 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "completed_at": "2026-08-04T18:10:55+08:00",
+  "blinded": true,
+  "decision_source": "human_annotation_decisions.json",
+  "metrics": {
+    "status": "completed",
+    "annotated_item_count": 25,
+    "valid_added_finding_count": 18,
+    "added_finding_precision": 0.72,
+    "high_value_added_count": 15,
+    "duplicate_add_rate": 0.08,
+    "admitted_added_finding_count": 23,
+    "admitted_valid_added_finding_count": 18,
+    "admitted_added_finding_precision": 0.7826,
+    "admitted_high_value_added_count": 15,
+    "admitted_duplicate_count": 1,
+    "admitted_duplicate_add_rate": 0.0435,
+    "admitted_unsupported_count": 4,
+    "admitted_overstated_count": 5,
+    "admitted_multiroot_count": 5,
+    "valid_recall_after_admission": 1.0,
+    "variants": [
+      {
+        "variant_id": "A",
+        "annotated_added_finding_count": 25,
+        "valid_added_finding_count": 18,
+        "added_finding_precision": 0.72,
+        "high_value_added_count": 15,
+        "duplicate_add_rate": 0.08,
+        "unsupported_count": 5,
+        "overstated_count": 6,
+        "understated_count": 0,
+        "multiroot_count": 5,
+        "actionable_rate": 1.0,
+        "admitted_added_finding_count": 23,
+        "admitted_valid_added_finding_count": 18,
+        "admitted_added_finding_precision": 0.7826,
+        "admitted_high_value_added_count": 15,
+        "admitted_duplicate_count": 1,
+        "admitted_duplicate_add_rate": 0.0435,
+        "admitted_unsupported_count": 4,
+        "admitted_overstated_count": 5,
+        "admitted_multiroot_count": 5,
+        "valid_recall_after_admission": 1.0,
+        "high_value_recall_after_admission": 1.0
+      }
+    ]
+  },
+  "items": [
+    {
+      "annotation_id": "A-777-R01-A001",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "ECONOMIC_01",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "title": "缺少单局最大赔付绝对金额封顶",
+      "current_state": "数值文档段落55-56规定'超过100倍→直接强制0倍'，这是相对倍率上限，但未规定单局最大赔付的绝对金额上限。若基础投注极高（如10000），100倍赔付可达1000000，缺少绝对封顶可能导致极端赔付事故。",
+      "evidence": "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55-56",
+      "risk": "缺少绝对金额封顶，极端情况下单局赔付可能超出业务承受范围，引发资损事故。",
+      "suggestion": "补充单局最大赔付绝对金额封顶规则，例如：'单局最大赔付不超过X万'，并与相对倍率上限（100倍）取较小值生效。",
+      "severity": "高",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "LOGIC_02讨论的是风控强制0倍与RESPIN触发条件的逻辑冲突，属于相对倍率上限的实现矛盾；本问题是绝对金额封顶的缺失，属于经济边界设计缺口，两者根因不同"
+      },
+      "independent_root_cause": "经济边界设计缺失：仅有相对倍率上限，缺少绝对金额封顶",
+      "root_cause_count": 1,
+      "root_causes": [
+        "经济边界设计缺失：仅有相对倍率上限，缺少绝对金额封顶"
+      ],
+      "fact_check": {
+        "claim_type": "boundary_gap",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档仅有100倍相对上限（段落55），全文未提及任何绝对金额封顶规则，不存在兼容解释"
+      },
+      "severity_basis": "缺少绝对金额封顶可能导致极端赔付，直接引发资损事故，阻塞测试用例设计中的边界验证",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "existing_multiplier_boundary_requires_advice_only"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "文档已有超过100倍强制0倍的相对边界，且示例下注档位可形成有限赔付范围；在RESPIN公式仍冲突的前提下，不能据此确认还必须存在独立绝对金额封顶，高风险结论证据不足。",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-777-R02-A001",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_DEBIT_01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家下注扣款时机未明确",
+      "current_state": "两份文档均未明确说明玩家下注金额的扣款时机：是点击旋转按钮时立即扣除，还是开奖前扣除，或是开奖后结算时扣除。需求文档段落37仅提到'点击单次投注按钮后消耗对应的货币进行投注开奖'，但未明确扣款与开奖的时序关系。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落37；crazy777数值文档修改后.docx / 段落25-27",
+      "risk": "扣款时机不明确会导致：1）客户端与服务端资金状态不一致；2）异常断线时无法确定是否应回滚扣款；3）重复点击时可能出现重复扣款或漏扣款。这是资金事务的起点，直接影响经济安全。",
+      "suggestion": "明确扣款时机：建议在点击旋转按钮且服务端确认扣款成功后，才启动转轮动画。补充说明：1）扣款失败时的UI反馈；2）扣款成功但游戏异常时的回滚机制；3）重复点击的幂等处理。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "Primary LOGIC_01关注结算公式歧义，未涉及扣款时机这一资金事务起点问题"
+      },
+      "independent_root_cause": "资金事务起点未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "资金事务起点未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "两份文档全文搜索均未找到扣款时机的明确定义，段落37的表述'消耗对应的货币进行投注开奖'无法确定是同时发生还是有时序先后",
+        "searched_locations": [
+          "疯狂777需求文档修改后.docx / 全文",
+          "crazy777数值文档修改后.docx / 全文"
+        ]
+      },
+      "severity_basis": "扣款时机是资金事务的起点，不明确会导致客户端与服务端资金状态不一致，异常断线时无法确定回滚策略，重复点击时可能出现重复扣款或漏扣款，直接影响经济安全",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "需求段落37已说明点击单次投注按钮后消耗对应货币进行开奖，足以给出产品层扣款触发点；把它判为完全未定义并上升为阻塞开发不成立。",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-777-R02-A002",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_PAYOUT_01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额派奖时机未明确",
+      "current_state": "两份文档均未明确说明中奖金额的派奖时机：是基础游戏结算后立即派奖，还是RESPIN结束后派奖，或是推展表现完成后派奖。需求文档段落18-19描述了奖金计算逻辑，但未说明派奖节点。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落18-19；crazy777数值文档修改后.docx / 段落30-35",
+      "risk": "派奖时机不明确会导致：1）RESPIN过程中玩家看到奖金但实际未到账；2）推展表现与真实派奖不同步引发客诉；3）异常断线时无法确定应派奖金额。这是资金事务的终点，直接影响玩家体验和经济安全。",
+      "suggestion": "明确派奖时机：建议在RESPIN结束且最终乘数确定后，一次性派奖到玩家账户。补充说明：1）基础游戏未触发RESPIN时的派奖时机；2）推展表现与真实派奖的同步机制；3）派奖失败时的补偿策略。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "Primary LOGIC_01关注结算公式歧义，未涉及派奖时机这一资金事务终点问题"
+      },
+      "independent_root_cause": "资金事务终点未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "资金事务终点未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "两份文档全文搜索均未找到派奖时机的明确定义，段落18-19仅描述奖金计算逻辑，未说明何时将奖金计入玩家账户",
+        "searched_locations": [
+          "疯狂777需求文档修改后.docx / 全文",
+          "crazy777数值文档修改后.docx / 全文"
+        ]
+      },
+      "severity_basis": "派奖时机是资金事务的终点，不明确会导致RESPIN过程中玩家看到奖金但未到账，推展表现与真实派奖不同步引发客诉，异常断线时无法确定应派奖金额，直接影响玩家体验和经济安全",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "文档描述奖金计算与表现结束，但未定义何时计入玩家钱包，Primary也未覆盖；到账节点、重连恢复和验收建议完整。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-777-R02-A003",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_FAILURE_01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "资金事务失败补偿机制未定义",
+      "current_state": "两份文档均未说明资金事务失败时的补偿机制：1）扣款成功但游戏异常（如服务端崩溃）时是否回滚扣款；2）派奖失败时是否重试或补偿；3）网络中断时如何保证资金一致性。需求文档段落20仅提到'复用中台统一处理流程'，但未说明具体补偿策略。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落20；crazy777数值文档修改后.docx / 全文",
+      "risk": "缺少失败补偿机制会导致：1）扣款成功但游戏异常时玩家资金损失；2）派奖失败时玩家无法获得应得奖金；3）网络中断时资金状态不一致。这是经济安全的底线，直接影响玩家信任和合规性。",
+      "suggestion": "明确失败补偿机制：1）扣款成功但游戏异常时，服务端应记录事务日志，重连后恢复游戏状态或回滚扣款；2）派奖失败时，服务端应重试派奖或记录待派奖列表；3）网络中断时，客户端应显示'恢复中'状态，服务端保证资金一致性。建议补充资金事务的幂等设计和对账机制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "Primary LOGIC_02关注风控与RESPIN的逻辑冲突，未涉及资金事务失败时的补偿机制"
+      },
+      "independent_root_cause": "资金事务失败处理未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "资金事务失败处理未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "两份文档全文搜索均未找到资金事务失败补偿的明确定义，段落20仅提到'复用中台统一处理流程'，但未说明具体补偿策略",
+        "searched_locations": [
+          "疯狂777需求文档修改后.docx / 全文",
+          "crazy777数值文档修改后.docx / 全文"
+        ]
+      },
+      "severity_basis": "缺少失败补偿机制会导致扣款成功但游戏异常时玩家资金损失，派奖失败时玩家无法获得应得奖金，网络中断时资金状态不一致，这是经济安全的底线，直接影响玩家信任和合规性",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "仅写复用中台流程而没有版本、接口或可验收补偿口径，追踪缺口成立；但已有统一处理能力，直接定为阻塞开发和合规底线偏重。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-777-R02-A004",
+      "variant_id": "A",
+      "game": "777",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "MAX_PAYOUT_01",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "title": "单局最大赔付绝对金额封顶未定义",
+      "current_state": "数值文档段落55-56提到'超过100倍→直接强制0倍'的风控规则，但这仅是相对倍率上限，未定义单局最大赔付的绝对金额封顶。考虑到RESPIN累加机制（段落43-46），理论上可以累加到极高倍率，若无绝对金额封顶，可能导致极端赔付。",
+      "evidence": "crazy777数值文档修改后.docx / 段落43-46、55-56",
+      "risk": "缺少绝对金额封顶会导致：1）RESPIN累加可能产生极端赔付（如连续多次10倍）；2）风控100倍上限与RESPIN累加存在冲突（已被Primary LOGIC_02覆盖），但即使解决冲突，仍需绝对金额封顶兜底；3）可能超出业务承受能力，造成经济损失。",
+      "suggestion": "定义单局最大赔付绝对金额封顶：1）根据业务承受能力设定最大赔付金额（如100万金币）；2）当RESPIN累加结果超过封顶时，按封顶金额派奖；3）在规则说明中告知玩家最大赔付限制。建议同时评估RTP和最大赔付的关系，确保数值平衡。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_02",
+        "overlap": false,
+        "reason": "Primary LOGIC_02关注风控100倍相对上限与RESPIN的逻辑冲突，未涉及单局最大赔付的绝对金额封顶"
+      },
+      "independent_root_cause": "单局最大赔付绝对金额封顶未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "单局最大赔付绝对金额封顶未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "数值文档仅提到100倍相对上限用于风控，未定义单局最大赔付的绝对金额封顶，RESPIN累加机制可能导致极端赔付",
+        "searched_locations": [
+          "crazy777数值文档修改后.docx / 段落43-46、55-56"
+        ]
+      },
+      "severity_basis": "缺少绝对金额封顶会导致RESPIN累加可能产生极端赔付，可能超出业务承受能力造成经济损失，即使解决风控与RESPIN的冲突，仍需绝对金额封顶兜底",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "已有100倍相对边界，RESPIN累加与风控关系又正是Primary指出的未决冲突；不能先假定倍率可无限累加，再确认绝对金额封顶缺失。",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R01-A001",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_DEBIT_TIMING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "下注扣款时机未明确，存在重复扣款或漏扣风险",
+      "current_state": "需求文档段落25提到'下注余额，点击前往按钮唤起收银台'，但未明确扣款是在下注确认时立即扣除，还是在开奖时扣除，或是在下注阶段结束时统一扣除。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落25",
+      "risk": "若扣款时机不清，可能导致重复扣款（用户多次点击下注）或漏扣（用户余额不足但仍下注成功），造成资金事故。",
+      "suggestion": "明确下注扣款时机：建议在下注确认时立即扣除，并增加余额校验和幂等控制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是赔付上限，而本问题关注的是扣款时机，两者是独立的资金控制面"
+      },
+      "independent_root_cause": "下注扣款时机未明确定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "下注扣款时机未明确定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文未找到扣款时机的明确定义，段落25仅提到唤起收银台，未说明扣款节点",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落25"
+        ]
+      },
+      "severity_basis": "扣款时机不清可能导致重复扣款或漏扣，直接造成资金事故",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "下注动作、余额与奖池注入均有描述，但实际扣除或冻结本金的事务节点未定义；属于Primary未覆盖的独立资金流缺口。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R01-A002",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_PAYOUT_TIMING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "派奖到账时机未明确，影响用户体验与信任",
+      "current_state": "需求文档段落34提到'下注结果弹窗...展示用户本人的下注和返奖'，但未明确派奖是在开奖结果确定后立即到账，还是在结果弹窗展示后到账，或是在下一轮开始时到账。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落34",
+      "risk": "若派奖时机不清，可能导致用户看不到即时到账，影响用户体验和信任，甚至引发客诉。",
+      "suggestion": "明确派奖到账时机：建议在开奖结果确定后立即到账，并在结果弹窗中展示到账动画。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是赔付上限，而本问题关注的是派奖时机，两者是独立的资金控制面"
+      },
+      "independent_root_cause": "派奖到账时机未明确定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "派奖到账时机未明确定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文未找到派奖时机的明确定义，段落34仅提到展示返奖，未说明到账节点",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落34"
+        ]
+      },
+      "severity_basis": "派奖时机不清可能导致用户看不到即时到账，影响用户体验和信任",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "结果弹窗只展示返奖，没有说明钱包实际到账节点；中风险定性和到账时序建议可直接形成验收用例。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R01-A003",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "资金失败回滚与补偿机制未明确，存在资损风险",
+      "current_state": "需求文档全文未提及当派奖失败（如奖池不足、网络错误、服务端异常）时的回滚或补偿机制。",
+      "evidence": "musee游戏Racing.docx / 全文",
+      "risk": "若派奖失败无补偿机制，可能导致用户资金损失或平台资损，引发严重客诉和资金事故。",
+      "suggestion": "补充资金失败回滚与补偿机制：建议增加派奖失败时的自动回滚、人工补偿或延迟到账通知。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是赔付上限，而本问题关注的是派奖失败时的补偿机制，两者是独立的资金控制面"
+      },
+      "independent_root_cause": "资金失败回滚与补偿机制未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "资金失败回滚与补偿机制未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文未找到资金失败回滚与补偿机制的定义",
+        "searched_locations": [
+          "musee游戏Racing.docx / 全文"
+        ]
+      },
+      "severity_basis": "派奖失败无补偿机制可能导致用户资金损失或平台资损",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "TUTORIAL_ISOLATION",
+          "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+        },
+        {
+          "issue_id": "MAX_PAYOUT_RISK",
+          "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险"
+        }
+      ],
+      "reviewer_notes": "冻结两份文档均未定义派奖失败后的回滚、补发或延迟通知；这是资金失败补偿控制的独立缺口，建议可执行。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R01-A004",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "ODDS_RELATIVE_PAYOUT_CAP",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "relative_payout_cap",
+      "title": "赔率倍率上限未定义，存在极端赔付风险",
+      "current_state": "需求文档段落28定义实时赔率公式为'三个选项的合计下注/本选项下注*[001]%'，但未定义赔率的上限。若某选项下注极少（如1宝石），而合计下注很大（如100万宝石），赔率可能达到极高值。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落28",
+      "risk": "若赔率无上限，可能导致极端赔付，造成平台资损。",
+      "suggestion": "定义赔率倍率上限（如MAX_MUL），并在赔率计算时进行封顶。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是绝对金额封顶，而本问题关注的是相对倍率封顶，两者是独立的经济边界控制面"
+      },
+      "independent_root_cause": "赔率倍率上限未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "赔率倍率上限未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文未找到赔率倍率上限的定义，段落28仅定义了赔率计算公式，未定义上限",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落28"
+        ]
+      },
+      "severity_basis": "赔率无上限可能导致极端赔付，造成平台资损",
+      "added_admission_status": "rejected",
+      "added_admission_reasons": [
+        "primary_duplicate_declared_nearest"
+      ],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "MAX_PAYOUT_RISK",
+          "title": "奖池允许为负数但未定义单局最大赔付兜底机制，存在极端赔付风险"
+        }
+      ],
+      "reviewer_notes": "赔率公式缺少上限的事实成立，但Primary MAX_PAYOUT_RISK已经指出单局最大赔付兜底缺失并建议MAX_MUL，属于同一极端赔付边界根因。",
+      "valid": true,
+      "duplicate": true,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R02-A001",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "DEBIT_TIMING_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家本金扣款时机未明确，影响结算事务实现",
+      "current_state": "文档描述了投注动作（段落32：选中档位后点击下注）和余额显示（段落25：下注余额），但未明确扣款发生在投注确认时还是开奖后。段落37提到'下注宝石数注入奖池'，但未说明注入时机。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落25,32；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+      "risk": "扣款时机不明确会导致结算事务无法实现，可能出现重复扣款、扣款失败未回滚、或用户余额与服务端不一致等问题，直接影响资金安全。",
+      "suggestion": "明确扣款时机：建议在投注确认时立即扣款（预扣模式），并在开奖后根据结果进行派奖或退款。需补充扣款失败时的回滚机制和幂等性保证。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是奖池负数时的赔付上限，而debit_timing关注的是扣款时机，两者属于不同的结算控制面"
+      },
+      "independent_root_cause": "结算链路中扣款事务的触发时机和失败处理规则缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "结算链路中扣款事务的触发时机和失败处理规则缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档描述了投注动作和余额显示，但未明确扣款发生在投注确认时还是开奖后，无兼容解释",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落25,32",
+          "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+        ]
+      },
+      "severity_basis": "扣款时机不明确直接阻塞结算事务实现，可能导致资金安全事故",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "第二次复跑稳定命中扣款事务节点缺口，并补充奖池注入时点证据；与Primary不同根因。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R02-A002",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "PAYOUT_TIMING_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "派奖到账时机未明确，影响结算事务实现",
+      "current_state": "文档描述了结果弹窗（段落34：下注结果弹窗展示中奖结果）和赔付计算（段落28：实际赔率时也按这个赔率去赔付），但未明确派奖到账的具体时机。段落37提到'赔付的金额从奖池扣'，但未说明扣款和派奖的先后顺序。",
+      "evidence": "musee游戏Racing.docx / 3.3下注部分 段落28,34；musee游戏Racing.docx / 3.4开奖逻辑 段落37",
+      "risk": "派奖时机不明确会导致结算事务无法实现，可能出现派奖延迟、派奖失败未补偿、或用户预期与实际到账不符等问题，影响用户体验和资金安全。",
+      "suggestion": "明确派奖时机：建议在开奖结果确定后立即派奖（同步模式），或在结果弹窗展示后异步派奖。需补充派奖失败时的重试机制和补偿策略。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是奖池负数时的赔付上限，而payout_timing关注的是派奖时机，两者属于不同的结算控制面"
+      },
+      "independent_root_cause": "结算链路中派奖事务的触发时机和失败处理规则缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "结算链路中派奖事务的触发时机和失败处理规则缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档描述了结果弹窗和赔付计算，但未明确派奖到账的具体时机，无兼容解释",
+        "searched_locations": [
+          "musee游戏Racing.docx / 3.3下注部分 段落28,34",
+          "musee游戏Racing.docx / 3.4开奖逻辑 段落37"
+        ]
+      },
+      "severity_basis": "派奖时机不明确直接阻塞结算事务实现，可能导致用户体验问题和资金安全事故",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "第二次复跑仍确认结果展示、奖池扣除与玩家到账之间缺少明确时序，独立且可验收。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-racing-R02-A003",
+      "variant_id": "A",
+      "game": "racing",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "资金失败补偿机制未明确，包括扣款失败、派奖失败、奖池不足等场景",
+      "current_state": "文档未说明扣款失败（如用户余额不足、网络超时）、派奖失败（如系统故障、奖池不足）时的回滚、补偿或重试机制。段落37提到奖池可以为负数，但未说明负数时的派奖策略。",
+      "evidence": "musee游戏Racing.docx / 全文；Racing数值文档.docx / 全文",
+      "risk": "缺乏资金失败补偿机制会导致：1）扣款失败时用户可能重复下注或余额不一致；2）派奖失败时用户 winnings 丢失，引发严重客诉；3）奖池不足时平台可能无法履行赔付义务，造成资金事故。",
+      "suggestion": "补充资金失败补偿机制：1）扣款失败时立即回滚并提示用户；2）派奖失败时记录待派奖队列并自动重试；3）奖池不足时启用平台兜底资金或延迟派奖并通知用户。需明确各场景的幂等性保证和对账机制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "MAX_PAYOUT_RISK",
+        "overlap": false,
+        "reason": "MAX_PAYOUT_RISK关注的是奖池负数时的赔付上限，而funds_failure_compensation关注的是资金失败场景的补偿机制，两者属于不同的结算控制面"
+      },
+      "independent_root_cause": "结算链路中资金失败场景的回滚、补偿和重试规则缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "结算链路中资金失败场景的回滚、补偿和重试规则缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "文档未说明扣款失败、派奖失败或奖池不足时的回滚、补偿或重试机制，无兼容解释",
+        "searched_locations": [
+          "musee游戏Racing.docx / 全文",
+          "Racing数值文档.docx / 全文"
+        ]
+      },
+      "severity_basis": "缺乏资金失败补偿机制直接阻塞结算事务实现，可能导致资金安全事故和严重客诉",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "TUTORIAL_ISOLATION",
+          "title": "新手引导流程使用固定假数据，未说明是否走真实服务端链路及是否污染真实统计"
+        }
+      ],
+      "reviewer_notes": "扣款失败、派奖失败及重试补偿在需求和数值文档中均无定义，属于同一资金失败补偿控制；回滚和重试建议明确。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R01-A001",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_DEBIT_TIMING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家本金扣款节点未定义，重复投注/断线/结算退出场景的扣款幂等缺失",
+      "current_state": "1. 表格3 图案区/档位模块仅描述'点击投入区域飞入钻石'与'余额不足 toast'交互，未说明钻石是在点击瞬间扣除、冻结，还是在 20s 投入截止后统一结算扣除。\n2. 段落24-28 仅描述'每轮投入结束后执行前置抽水'，未说明玩家本金流转时机。\n3. Repeat 按钮（表格3）支持一键复投上一局多选项投注，弱网下重复点击的幂等性未定义。\n4. 投入阶段断线重连、结算中退出等场景的扣款回滚/补扣规则完全缺失。",
+      "evidence": "tiger需求文档.docx / 表格3（图案区/档位模块/用户余额）、段落24-28、3.2、3.6",
+      "risk": "扣款节点不清将导致：①开发无法确定事务边界；②弱网重复点击可能重复扣款；③断线重连可能出现'已扣款但未记录投注'或'未扣款但投注生效'的资损；④测试无法设计资金链路验收用例。",
+      "suggestion": "在 3.2 主流程或新增'资金链路'章节明确：①扣款时机（建议：点击投入瞬间预冻结，20s 截止后正式扣除，未中投注退还冻结）；②Repeat 按钮点击幂等（服务端 round_id + uid + area 去重）；③断线重连时已冻结资金的处理（保留投注资格或退还）；④结算中退出时派奖异步到账机制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 仅讨论开奖兜底'实时计算'的快照时机，不涉及玩家本金扣款节点与重复投注幂等，两者控制面完全不同。"
+      },
+      "independent_root_cause": "玩家本金扣款节点与幂等机制在全文中完全缺失，构成独立资金安全缺口",
+      "root_cause_count": 1,
+      "root_causes": [
+        "玩家本金扣款节点与幂等机制在全文中完全缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文搜索'扣款/扣除/冻结/幂等/预扣'等关键词，仅在段落28出现'本轮所有中奖赔付金额从奖池扣除'（指奖池侧），玩家侧本金扣款节点无任何描述，不存在兼容解释。",
+        "searched_locations": [
+          "3.2 游戏主流程",
+          "3.6 开奖部分流程图",
+          "表格3 各模块功能说明",
+          "段落24-28 奖池基础规则"
+        ]
+      },
+      "severity_basis": "扣款节点不清将直接导致重复扣款、断线资损等资金事故，且测试无法设计资金链路验收用例，阻塞开发与测试设计。",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        },
+        {
+          "issue_id": "TEST_02",
+          "title": "Repeat按钮在余额不足时的边界行为未定义"
+        }
+      ],
+      "reviewer_notes": "玩家本金实际扣款节点确实缺失；但该项同时混入Repeat防重、断线资金恢复和结算退出派奖，超过单一debit_timing根因。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R01-A002",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_PAYOUT_TIMING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "派奖到账节点未定义，奖池透支回填异常时的派奖补偿策略缺失",
+      "current_state": "1. 段落28 仅说明'本轮所有中奖赔付金额从奖池扣除'，未说明派奖是在开奖动画结束瞬间、结算弹窗拉起时、还是结算弹窗收起后到账。\n2. 表格3 用户余额模块描述'若当前局赢的钻石≥1，则在结束弹窗消失回到投入阶段时，余额增加对应数值同时底部冒一下win的具体数值'，仅为UI表现，非资金到账节点。\n3. 段落29 允许奖池透支为负，但未说明透支后派奖是否延迟、回填失败时玩家派奖是否受影响。",
+      "evidence": "tiger需求文档.docx / 段落28-29、表格3（结算弹窗/用户余额）",
+      "risk": "派奖节点不清将导致：①客户端余额展示与服务端实际到账不同步；②奖池透支时玩家可能无法及时收到派奖；③测试无法验收派奖正确性。",
+      "suggestion": "明确派奖到账节点（建议：服务端开奖结果落库后立即异步派奖，客户端结算弹窗仅做展示）；补充奖池透支时的派奖保障策略（如：透支不影响玩家派奖，由系统资金池兜底回填）。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 仅讨论开奖兜底计算的快照时机，不涉及派奖到账节点与透支回填补偿，两者控制面不同。"
+      },
+      "independent_root_cause": "派奖到账节点与奖池透支时的派奖保障策略在全文中完全缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "派奖到账节点与奖池透支时的派奖保障策略在全文中完全缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文搜索'派奖/到账/发放/结算'等关键词，仅在表格3 出现UI表现描述，无资金到账节点定义，不存在兼容解释。",
+        "searched_locations": [
+          "段落28-29 奖池基础规则",
+          "表格3 结算弹窗/用户余额"
+        ]
+      },
+      "severity_basis": "派奖节点不清将导致客户端展示与服务端到账不同步，透支场景下可能引发玩家客诉与资损，阻塞开发与测试设计。",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "reviewer_notes": "表格3已写明结束弹窗消失回到投入阶段时余额增加，模型没有证据证明这仅是表现而非到账口径；同时又混入奖池透支保障，整体不能作为单一高风险到账缺口。",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R01-A003",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_FAILURE_COMPENSATION",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "扣款/派奖失败的回滚、补偿与幂等机制完全缺失",
+      "current_state": "1. 3.2 主流程与 3.6 开奖流程图均未描述：扣款成功但开奖失败、派奖成功但余额回写失败、弱网下重复点击 Repeat 导致重复扣款等异常场景的处理。\n2. 表格3 Repeat 按钮描述'自动判断若当前余额足够，则高亮，点击则按上一局用户投入信息投入'，未说明服务端如何防重。\n3. 段落29 允许奖池透支，但未说明透支后抽水回填失败时的兜底策略。",
+      "evidence": "tiger需求文档.docx / 3.2、3.6、表格3（档位模块）、段落29",
+      "risk": "资金失败补偿缺失将导致：①弱网重复点击可能重复扣款；②开奖异常时玩家已扣款但未获得派奖；③奖池透支回填失败时系统资金缺口无法弥补；④测试无法设计异常恢复用例。",
+      "suggestion": "新增'异常恢复'章节，明确：①扣款幂等（round_id + uid + area 唯一键）；②扣款成功但开奖失败的退还策略；③派奖失败的补发机制；④奖池透支回填失败的兜底（如系统资金池垫付）。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "FUNDS_DEBIT_TIMING",
+        "overlap": false,
+        "reason": "FUNDS_DEBIT_TIMING 聚焦扣款节点定义，本项聚焦失败场景的回滚/补偿/幂等，两者控制面不同，需分别验收。"
+      },
+      "independent_root_cause": "扣款/派奖失败的回滚、补偿与幂等机制在全文中完全缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "扣款/派奖失败的回滚、补偿与幂等机制在全文中完全缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文搜索'回滚/补偿/幂等/异常/失败'等关键词，仅在表格1 修改记录出现'补充投入时余额不足交互效果'，无资金失败补偿机制描述，不存在兼容解释。",
+        "searched_locations": [
+          "3.2 游戏主流程",
+          "3.6 开奖部分流程图",
+          "表格3 各模块功能说明",
+          "段落29 奖池基础规则"
+        ]
+      },
+      "severity_basis": "资金失败补偿缺失将直接导致重复扣款、派奖丢失等资损事故，且测试无法设计异常恢复用例，阻塞开发与测试设计。",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "reviewer_notes": "资金失败回滚、补发和幂等口径确实缺失；但又把奖池透支回填失败兜底并入同项，跨到了独立经济边界控制。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R01-A004",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "ECON_POOL_NEGATIVE_FLOOR",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "title": "奖池允许透支为负但未定义负值下限与回填失败兜底",
+      "current_state": "1. 段落29 明确'奖池余额允许为负数（即允许透支赔付，后续抽水回填）'。\n2. 段落24-28 描述抽水注入规则，但未说明透支后是否限制开奖、抽水回填失败时的兜底策略。\n3. 表格5 后台配置中无奖池负值下限配置项。",
+      "evidence": "tiger需求文档.docx / 段落24-29、表格5",
+      "risk": "奖池无负值下限将导致：①极端情况下奖池可无限透支，系统资金风险不可控；②透支后若持续无抽水回填，奖池永远无法回正；③数值策划无法评估 RTP 与奖池健康度。",
+      "suggestion": "在表格5 新增'奖池负值下限'配置项（如 -3000000），并明确：①透支达到下限时是否暂停开奖或降低赔付；②抽水回填失败的兜底策略（如系统资金池垫付）；③奖池回正后的恢复机制。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "LOGIC_01 聚焦开奖兜底逻辑的0赔付缺陷，不涉及奖池负值下限与回填兜底，两者控制面不同。"
+      },
+      "independent_root_cause": "奖池透支负值下限与回填失败兜底在全文中完全缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "奖池透支负值下限与回填失败兜底在全文中完全缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落29 仅说明'允许为负数'，全文无负值下限定义，表格5 后台配置也无相关字段，不存在兼容解释。",
+        "searched_locations": [
+          "段落24-29 奖池基础规则",
+          "表格5 游戏基础配置"
+        ]
+      },
+      "severity_basis": "奖池无负值下限将导致系统资金风险不可控，极端情况下可无限透支，阻塞数值验收与线上经济安全评估。",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        }
+      ],
+      "reviewer_notes": "段落29允许奖池为负，全文和后台配置均没有负值下限或熔断条件；与Primary开奖兜底缺陷不同根因。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R01-A005",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "ECON_SINGLE_ROUND_CAP",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "title": "单局/单选项/单用户赔付无绝对金额封顶，仅依赖 80% 奖池软兜底",
+      "current_state": "1. 段落57/68/108 描述兜底逻辑：'实时计算该选项赔付的总金额是否≤实时总奖池的80%'，不符合则改开其他选项。\n2. 该兜底仅为软约束（改开其他选项），未定义单局/单选项/单用户的绝对赔付封顶（MAX_PAYOUT）。\n3. 表格5 后台配置中无单局赔付封顶配置项。",
+      "evidence": "tiger需求文档.docx / 段落57、68、108、表格5",
+      "risk": "无绝对赔付封顶将导致：①当奖池极大时，单局赔付可无限放大（如某选项被大额投注且奖池充裕）；②极端情况下单局赔付可超过系统承受能力；③数值策划无法评估最大赔付风险。",
+      "suggestion": "在表格5 新增'单局赔付封顶'配置项（如 MAX_PAYOUT = 10000000），并明确：①单选项赔付超过封顶时的处理（如按比例折算或仅赔付封顶金额）；②单用户单局赔付超过封顶时的处理。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "LOGIC_01 聚焦开奖兜底逻辑的0赔付缺陷，不涉及单局赔付绝对封顶，两者控制面不同。"
+      },
+      "independent_root_cause": "单局/单选项/单用户赔付绝对金额封顶在全文中完全缺失",
+      "root_cause_count": 1,
+      "root_causes": [
+        "单局/单选项/单用户赔付绝对金额封顶在全文中完全缺失"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落57/68/108 的 80% 兜底仅为软约束（改开其他选项），全文无绝对赔付封顶定义，表格5 后台配置也无相关字段，不存在兼容解释。",
+        "searched_locations": [
+          "段落57、68、108 开奖兜底逻辑",
+          "表格5 游戏基础配置"
+        ]
+      },
+      "severity_basis": "无绝对赔付封顶将导致极端情况下单局赔付无限放大，系统资金风险不可控，阻塞数值验收与线上经济安全评估。",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        },
+        {
+          "issue_id": "LOGIC_01",
+          "title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷"
+        }
+      ],
+      "reviewer_notes": "80%奖池规则只会改开其他选项，未定义单局、单选项或单用户的绝对金额封顶；独立经济边界及配置建议成立。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R01-A006",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 1,
+      "change_type": "added",
+      "candidate_issue_id": "STAT_WINDOW_UI_TEXT",
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "title": "开奖分析统计窗口正文写'最近7天'但UI截图显示'Last 30 day'，同指标窗口冲突",
+      "current_state": "1. 表格3 开奖分析模块明确写'胜率计算范围：最近1小时（Last 1 hour），今日（Today），最近7天（Last 7 days）'。\n2. 图13 UI 截图中，统计弹窗第三列显示为'Last 30 day'，与正文'最近7天'直接冲突。\n3. 该冲突涉及同指标（胜率）的统计窗口，开发无法确定最终生效的时间范围。",
+      "evidence": "tiger需求文档.docx / 表格3（开奖分析）、图13",
+      "risk": "统计窗口冲突将导致：①开发实现与验收口径分裂；②玩家看到的胜率数据与策划预期不符；③测试无法设计验收用例。",
+      "suggestion": "统一口径：若实际为7天，修改图13 UI 截图；若实际为30天，修改表格3 正文描述。建议以表格3 为准（7天），同步更新UI稿。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_01",
+        "overlap": false,
+        "reason": "CLARITY_01 聚焦赔率/倍率冲突，不涉及统计窗口冲突，两者控制面不同。"
+      },
+      "independent_root_cause": "开奖分析统计窗口在正文与UI之间存在直接冲突",
+      "root_cause_count": 1,
+      "root_causes": [
+        "开奖分析统计窗口在正文与UI之间存在直接冲突"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "表格3 明确写'最近7天（Last 7 days）'，图13 UI 显示'Last 30 day'，同指标（胜率）的统计窗口在正文与UI之间直接冲突，不存在兼容解释。",
+        "same_subject_and_scope": true
+      },
+      "severity_basis": "统计窗口冲突将导致开发实现与验收口径分裂，测试无法设计验收用例，阻塞测试设计。",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "LOGIC_02",
+          "title": "奖池‘正常’状态下的开奖偏移概率在正文与后台配置表中数值冲突"
+        }
+      ],
+      "reviewer_notes": "开奖分析正文最近7天与图13 Last 30 day针对同一胜率窗口直接冲突；证据、严重度和统一方案完整。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R02-A001",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家下注本金的扣款时机未明确定义",
+      "current_state": "段落24仅说明'每轮投入结束后，先执行前置抽水'，但未明确玩家下注本金是在下注时立即扣除还是结算时统一扣除。表格3提到'若用户余额不足，点击投入时toast提示'暗示下注时校验余额，但未明确实际扣款节点。",
+      "evidence": "tiger需求文档.docx / 段落24、表格3",
+      "risk": "若扣款时机不明确，并发场景下（用户在下注后、结算前通过其他系统消耗余额）可能导致扣款失败或超扣。测试无法设计扣款正确性验收用例，开发可能实现为'下注时预扣'或'结算时实扣'两种不同方案，导致数据不一致。",
+      "suggestion": "明确扣款时机：建议定义为'下注时立即扣除并冻结，结算时根据结果解冻或划转'。补充说明：1)下注时余额不足的处理（已覆盖）；2)下注后余额被其他系统变动时的处理；3)重复下注/幂等的扣款保护。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "Primary SEC_01讨论的是开奖兜底中'实时计算'的判定快照时机（下注截止 vs 开奖动画期间），属于开奖逻辑的数据快照问题。本finding讨论的是玩家本金的扣款时机，属于资金事务边界问题，两者控制面不同。"
+      },
+      "independent_root_cause": "玩家下注本金的扣款节点（下注时 vs 结算时）未定义，导致并发场景下的资金一致性风险",
+      "root_cause_count": 1,
+      "root_causes": [
+        "玩家下注本金的扣款节点（下注时 vs 结算时）未定义，导致并发场景下的资金一致性风险"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文搜索'扣款''扣除''余额'等关键词，段落24仅说明抽水时机，表格3仅说明余额不足时的UI提示，均未明确玩家下注本金的实际扣款节点。不存在兼容解释。",
+        "searched_locations": [
+          "段落24",
+          "段落28",
+          "表格3",
+          "表格5"
+        ]
+      },
+      "severity_basis": "扣款时机不明确将导致开发实现分歧，并发场景下可能出现扣款失败或超扣，直接影响资金安全和结算正确性",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "SEC_01",
+          "title": "开奖兜底中‘实时计算’的判定快照时机未定义"
+        }
+      ],
+      "reviewer_notes": "该版本聚焦玩家本金在下注时还是结算时扣除，未再混入独立异常处理根因；事实成立且Primary未覆盖。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R02-A002",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_02",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "派奖到账用户钱包的时机未明确定义",
+      "current_state": "段落28说明'本轮所有中奖赔付金额，从奖池扣除'，但未明确派奖到账用户钱包的具体时机。表格3提到'若当前局赢的钻石≥1，则在结束弹窗消失回到投入阶段时，余额增加'，但这是UI表现时机还是实际到账时机未明确。",
+      "evidence": "tiger需求文档.docx / 段落28、表格3",
+      "risk": "若派奖时机不明确，可能导致：1)UI显示已中奖但实际未到账，用户重复下注；2)断线重连后派奖丢失或重复；3)测试无法设计派奖正确性验收用例。",
+      "suggestion": "明确派奖时机：建议定义为'开奖结果确定后立即到账，UI表现为结算弹窗展示时余额已更新'。补充说明：1)断线重连后的派奖补发逻辑；2)派奖失败的重试机制；3)派奖与扣款的事务一致性保证。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "Primary SEC_01讨论的是开奖兜底中'实时计算'的判定快照时机，属于开奖逻辑的数据快照问题。本finding讨论的是派奖到账时机，属于资金事务边界问题，两者控制面不同。"
+      },
+      "independent_root_cause": "派奖到账用户钱包的时机（开奖结果确定时 vs 结算弹窗展示时 vs 结算弹窗收起后）未定义，导致断线重连和并发场景下的资金一致性风险",
+      "root_cause_count": 1,
+      "root_causes": [
+        "派奖到账用户钱包的时机（开奖结果确定时 vs 结算弹窗展示时 vs 结算弹窗收起后）未定义，导致断线重连和并发场景下的资金一致性风险"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落28仅说明奖池扣除时机，表格3的'余额增加'描述模糊，无法确定是UI表现还是实际到账。不存在兼容解释。",
+        "searched_locations": [
+          "段落28",
+          "表格3"
+        ]
+      },
+      "severity_basis": "派奖时机不明确将导致断线重连后派奖丢失或重复，直接影响用户资产安全和游戏体验",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "需求已经给出结算弹窗消失时余额增加的可观察节点，模型仅凭‘可能只是UI表现’否定该规则，无法支撑阻塞开发和资损定性。",
+      "valid": false,
+      "duplicate": false,
+      "unsupported": true,
+      "overstated": true,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R02-A003",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_03",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "funds_failure_compensation",
+      "title": "资金失败（扣款/派奖）的回滚、补偿与幂等机制完全缺失",
+      "current_state": "文档未说明：1)若扣款失败（如并发下余额不足）如何处理已下注；2)若派奖失败（如系统异常）如何补偿；3)奖池透支为负后若持续无法回填是否有熔断机制。",
+      "evidence": "tiger需求文档.docx / 全文",
+      "risk": "资金失败无补偿机制将导致：1)用户下注后扣款失败但注单保留，产生资损；2)派奖失败后用户资产丢失，引发客诉；3)奖池持续透支无熔断，可能导致经济系统崩溃。",
+      "suggestion": "补充资金失败处理机制：1)扣款失败时自动撤销注单并通知用户；2)派奖失败时记录待补偿队列，重试至成功；3)奖池透支达到阈值（如-100万）时触发熔断，暂停开奖或降低赔付比例；4)所有资金操作保证幂等性，防止重复扣款/派奖。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "Primary LOGIC_01讨论的是开奖兜底逻辑可能开出0赔付选项的问题，属于开奖规则设计缺陷。本finding讨论的是资金事务的失败处理机制，属于系统容错和经济安全边界问题，两者控制面不同。"
+      },
+      "independent_root_cause": "资金事务的失败回滚、补偿与幂等机制完全缺失，导致异常场景下的资金安全风险",
+      "root_cause_count": 1,
+      "root_causes": [
+        "资金事务的失败回滚、补偿与幂等机制完全缺失，导致异常场景下的资金安全风险"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文搜索'失败''回滚''补偿''幂等''熔断'等关键词，均未找到相关说明。不存在兼容解释。",
+        "searched_locations": [
+          "全文"
+        ]
+      },
+      "severity_basis": "资金失败无补偿机制将直接导致资损和客诉，且奖池透支无熔断可能导致经济系统崩溃",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "CLARITY_01",
+          "title": "核心赔率/倍数在正文、配置表、UI与规则说明中存在严重冲突"
+        }
+      ],
+      "reviewer_notes": "资金失败补偿与幂等规则缺失成立；但该项又要求奖池达到负阈值后熔断，混入pool_negative_floor的独立经济边界。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R02-A004",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "ECON_01",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "title": "奖池允许透支为负但缺乏下限定义和熔断机制",
+      "current_state": "段落29明确'奖池余额允许为负数（即允许透支赔付，后续抽水回填）'，但未定义负值下限。极端场景下（如大额赔付连续发生且抽水回填不足），奖池可能持续下探至不可控负值。",
+      "evidence": "tiger需求文档.docx / 段落29",
+      "risk": "奖池无下限将导致：1)极端情况下奖池负值过大，后续抽水无法回填，平台承担巨额损失；2)奖池负值过大时，80%阈值兜底逻辑失效（如奖池-100万，80%为-80万，任何赔付都'符合'条件）；3)缺乏熔断机制，无法在异常情况下保护平台。",
+      "suggestion": "定义奖池负值下限（如-100万或-初始奖池的50%），并补充熔断机制：1)奖池达到下限时，暂停高额赔付或降低赔付比例；2)奖池恢复至安全水位后自动解除熔断；3)补充说明奖池负值时的80%阈值计算口径（是否取绝对值）。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_01",
+        "overlap": false,
+        "reason": "Primary LOGIC_01讨论的是开奖兜底逻辑可能开出0赔付选项的问题，属于开奖规则设计缺陷。本finding讨论的是奖池透支的经济边界和熔断机制，属于经济安全边界问题，两者控制面不同。"
+      },
+      "independent_root_cause": "奖池透支缺乏负值下限和熔断机制，导致极端场景下的经济安全风险",
+      "root_cause_count": 1,
+      "root_causes": [
+        "奖池透支缺乏负值下限和熔断机制，导致极端场景下的经济安全风险"
+      ],
+      "fact_check": {
+        "claim_type": "boundary_gap",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "段落29明确允许负值但未定义下限。80%阈值在负值场景下的计算口径也未说明。不存在兼容解释。",
+        "searched_locations": [
+          "段落29",
+          "段落57",
+          "段落68",
+          "段落108"
+        ]
+      },
+      "severity_basis": "奖池无下限将导致极端场景下的巨额损失，且80%阈值兜底逻辑在负值场景下失效",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "第二次复跑稳定命中奖池负值下限与熔断缺口，证据直接、与Primary不同根因。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-tiger-R02-A005",
+      "variant_id": "A",
+      "game": "tiger",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "STATS_01",
+      "audit_key": "statistics_time_window",
+      "control_key": "ui_text_window_alignment",
+      "title": "游戏记录模块的时间窗口在正文与UI截图之间存在冲突",
+      "current_state": "表格3'游戏记录'模块明确写'最多展示近3日的游戏记录（包括今日，按自然日）'，但图片6的Personal Record UI显示'Show your betting records in the last 30 days'。同一模块的时间窗口在正文与UI之间存在直接冲突。",
+      "evidence": "tiger需求文档.docx / 表格3、图片6",
+      "risk": "时间窗口冲突将导致开发实现与验收标准不一致。若按正文实现为3日，UI文案需修改；若按UI实现为30日，需修改正文并评估数据存储和查询性能。测试无法确定验收标准。",
+      "suggestion": "统一时间窗口：1)若为3日，修改图片6的UI文案为'last 3 days'；2)若为30日，修改表格3的说明并评估30日数据量对查询性能的影响；3)明确'自然日'的计算口径（本地时间 vs 服务器时间）。",
+      "severity": "中",
+      "blocking": "阻塞测试用例设计",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_03",
+        "overlap": false,
+        "reason": "Primary CLARITY_03讨论的是开奖分析模块的可见性配置矛盾（默认全开 vs 白名单可见）。本finding讨论的是游戏记录模块的时间窗口冲突，两者模块不同、问题类型不同。"
+      },
+      "independent_root_cause": "游戏记录模块的时间窗口在正文规格(近3日)与UI截图(last 30 days)之间存在直接冲突",
+      "root_cause_count": 1,
+      "root_causes": [
+        "游戏记录模块的时间窗口在正文规格(近3日)与UI截图(last 30 days)之间存在直接冲突"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "表格3和图片6均指'Personal Record'模块，统计对象（用户个人游戏记录）和指标（展示时间范围）完全一致，但窗口值分别为3日和30日，属于同一对象同一指标的值冲突。不存在兼容解释。",
+        "same_subject_and_scope": true
+      },
+      "severity_basis": "时间窗口冲突将导致实现与验收标准不一致，测试无法确定验收口径",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "游戏记录正文近3日与图片6 last 30 days针对同一Personal Record模块直接冲突；与开奖分析窗口是不同模块。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-小鸡-R02-A001",
+      "variant_id": "A",
+      "game": "小鸡",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_DEBIT_TIMING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "下注扣款时机与事务边界缺失",
+      "current_state": "1. 小鸡.docx 描述了准备阶段选择筹码、点击开始，以及提现和失败结算，但未明确下注金额（本金）的具体扣除时机（是点击“开始”时立即冻结/扣除，还是结算时扣除）。\n2. 缺乏明确的扣款事务边界，未说明弱网或断线重连时的资金状态恢复规则。",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程，段落19-23；3.4 提现与结算系统，段落48-51。",
+      "risk": "若点击“开始”不扣款，玩家可在弱网或断线时利用时间差进行无风险套利或重复点击；若结算时扣款，需处理余额不足时的回滚。缺乏明确的扣款事务边界将导致资损或客诉。",
+      "suggestion": "明确本金扣除时机，建议采用“点击开始时立即扣除/冻结本金，结算时多退少补（失败扣全款，提现/通关发奖金）”的事务模型，并补充断线重连时的资金状态恢复规则。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 关注提现幂等与防重复点击，未涉及开局扣款时机与本金冻结事务"
+      },
+      "independent_root_cause": "下注本金扣除时机与事务边界未定义",
+      "root_cause_count": 1,
+      "root_causes": [
+        "下注本金扣除时机与事务边界未定义"
+      ],
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "searched_locations": [
+          "小鸡.docx / 2.1 完整游戏流程",
+          "小鸡.docx / 3.4 提现与结算系统"
+        ],
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文未提及扣款时机或资金冻结规则"
+      },
+      "severity_basis": "缺乏扣款时机定义将导致弱网套利或余额不足时的状态异常，直接引发资损",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [
+        {
+          "issue_id": "SEC_01",
+          "title": "提现与结算的幂等/防重复点击边界缺失"
+        }
+      ],
+      "reviewer_notes": "开始、局内累计、提现与失败清零均有描述，但开局本金何时冻结或扣除未定义；属于Primary未覆盖的核心经济循环缺口。",
+      "valid": true,
+      "duplicate": false,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": false,
+      "actionable": true
+    },
+    {
+      "annotation_id": "A-小鸡-R02-A002",
+      "variant_id": "A",
+      "game": "小鸡",
+      "repeat": 2,
+      "change_type": "added",
+      "candidate_issue_id": "FUNDS_MAX_PAYOUT_CAP",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "single_round_payout_cap",
+      "title": "单局最大赔付金额封顶（Max Payout）缺失",
+      "current_state": "1. 小鸡数值文档.docx 表格2中，难度4（176倍盘）第30关的累计倍率高达 66,278,475.57。若结合下注金额（如数值文档示例的1000），单局理论赔付将超过660亿。\n2. 文档未定义任何单局最大赔付金额上限（Max Payout）或奖池兜底机制。\n3. 数值表本身存在“176倍盘”命名与“6600万倍率”的严重数量级冲突。",
+      "evidence": "小鸡数值文档.docx / 3. 难度选择，表格2（难度4第30关 66278475.57）；小鸡数值文档.docx / 2. 下注规则，表格1。",
+      "risk": "极端情况下（高难度+高倍率+大筹码），理论赔付金额将远超平台承受能力，且数值表本身存在严重数量级冲突，若无绝对金额封顶，将引发灾难性资损。",
+      "suggestion": "1. 数值策划需立即修正难度3、难度4的赔率推导公式，使其与“103倍盘”、“176倍盘”的命名对齐；2. 必须引入单局最大赔付封顶（Max Payout）配置，当计算奖金超过封顶值时，按封顶值结算或触发特殊规则。",
+      "severity": "高",
+      "blocking": "阻塞开发",
+      "confidence": "高",
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "LOGIC_PAYOUT_FORMULA_CONFLICT",
+        "overlap": false,
+        "reason": "LOGIC_PAYOUT_FORMULA_CONFLICT 关注连乘与累计的公式口径，未涉及绝对金额封顶与数值表数量级错误"
+      },
+      "independent_root_cause": "单局绝对金额封顶缺失且数值表存在数量级推导错误",
+      "root_cause_count": 1,
+      "root_causes": [
+        "单局绝对金额封顶缺失且数值表存在数量级推导错误"
+      ],
+      "fact_check": {
+        "claim_type": "value_mismatch",
+        "same_subject_and_scope": true,
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "数值表命名（176倍盘）与最终数值（6600万倍）存在数量级差异，且全文无绝对金额封顶规则"
+      },
+      "severity_basis": "理论赔付可达数百亿，无封顶将导致平台面临无限资损风险",
+      "added_admission_status": "admitted",
+      "added_admission_reasons": [],
+      "primary_duplicate_matches": [],
+      "broad_primary_duplicate_matches": [],
+      "reviewer_notes": "极端倍率和绝对金额边界值得处理，但该项同时要求修复176倍盘与6600万倍率的数量级冲突；后者已由Primary LOGIC_PAYOUT_FORMULA_CONFLICT覆盖，形成重复且多根因。",
+      "valid": true,
+      "duplicate": true,
+      "unsupported": false,
+      "overstated": false,
+      "understated": false,
+      "multiroot": true,
+      "actionable": true
+    }
+  ]
+}

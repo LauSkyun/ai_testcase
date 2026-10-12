@@ -1,0 +1,292 @@
+{
+  "candidate_generation_mode": "model_authored",
+  "primary_quality_assessment": {},
+  "quality_assessment": {
+    "summary": "主模型报告整体质量较好，准确识别了风控与RESPIN触发条件的致命冲突、推展机制定义模糊以及基础盘面生成规则混乱等核心阻塞项。但对RESPIN累加算法的定性存在误判（需求文档已有明确加法举例），且遗漏了最大赔付封顶、扣款时机、服务端随机序列权威边界等必查专项中的高信号经济与安全缺口。",
+    "strengths": [
+      "准确识别了风控强制0倍与RESPIN触发条件的致命逻辑冲突",
+      "发现了推展机制在结果干预与表现激励之间的定义模糊",
+      "指出了基础符号盘面生成规则描述混乱导致开发无法实现的问题"
+    ],
+    "issues": [
+      "将RESPIN累加算法误判为根本冲突，忽略了需求文档段落19已提供明确的加法累加举例",
+      "遗漏了SLOTS游戏核心的最大赔付（MAX_WIN）与单局封顶规则",
+      "未检查开局扣款时机、幂等性及服务端随机序列的权威边界等必查专项"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正主模型对RESPIN累加算法的误判，并补充了最大赔付、扣款时机、服务端权威等必查专项的高信号缺口，结构完整、证据充分，可直接输出给业务方阅读。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选稿已修正主模型对RESPIN累加算法的误判，并补充了最大赔付、扣款时机、服务端权威等必查专项的高信号缺口，结构完整、证据充分，可直接输出给业务方阅读。"
+  },
+  "review_notes": [
+    "对 LOGIC_01 进行降级处理：需求文档段落19已提供明确的加法累加举例(1+2+1+5)，并非根本冲突，仅为数值文档公式表述不严谨导致的术语歧义，故降级为中风险。",
+    "新增 CLARITY_04、LOGIC_05、TEST_02、SEC_01 四个问题，均基于必查专项要求及共享输入中的明确证据缺口。",
+    "主模型报告整体质量较好，核心冲突识别准确，候选稿在此基础上进行了修正与补全，已达到可直接输出标准。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED_01",
+      "title": "赔付表UI展示与配置表数值口径冲突",
+      "dimension": "清晰度与完整性",
+      "reason": "需求文档举例与配置表、UI图片中的赔率数值不一致，需明确以哪份配置为准"
+    },
+    {
+      "issue_id": "MISSED_02",
+      "title": "缺失最大赔付（MAX_WIN）与单局封顶规则",
+      "dimension": "逻辑一致性与数值平衡",
+      "reason": "RESPIN累加可能产生极高倍数，若无最大赔付兜底，存在严重经济风险"
+    },
+    {
+      "issue_id": "MISSED_03",
+      "title": "扣款时机与幂等性说明缺失",
+      "dimension": "可测试性与验收标准",
+      "reason": "未明确是点击旋转时预扣款还是结算后扣款，缺乏弱网/重复点击下的防重扣款机制说明"
+    },
+    {
+      "issue_id": "MISSED_04",
+      "title": "服务端权威边界与随机序列下发机制不足",
+      "dimension": "安全性与反作弊",
+      "reason": "未明确特殊轴重转的随机序列是由服务端一次性生成下发，还是客户端每次请求"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "adjustment_note": "降级为中风险。需求文档段落19已提供明确的加法累加举例(1+2+1+5)，并非根本冲突，仅为数值文档公式表述不严谨导致的术语歧义。"
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ]
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ]
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ]
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ]
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "CLARITY_04",
+        "source_missed_issue_ids": [
+          "MISSED_01"
+        ],
+        "reason": "补充赔付表UI展示与配置表数值口径冲突的高信号问题"
+      },
+      {
+        "candidate_issue_id": "LOGIC_05",
+        "source_missed_issue_ids": [
+          "MISSED_02"
+        ],
+        "reason": "补充缺失最大赔付与单局封顶规则的经济安全兜底问题"
+      },
+      {
+        "candidate_issue_id": "TEST_02",
+        "source_missed_issue_ids": [
+          "MISSED_03"
+        ],
+        "reason": "补充扣款时机与幂等性说明缺失问题"
+      },
+      {
+        "candidate_issue_id": "SEC_01",
+        "source_missed_issue_ids": [
+          "MISSED_04"
+        ],
+        "reason": "补充服务端权威边界与随机序列下发机制不足问题"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 9,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 9,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选稿已修正主模型对RESPIN累加算法的误判，并补充了最大赔付、扣款时机、服务端权威等必查专项的高信号缺口，结构完整、证据充分，可直接输出给业务方阅读。",
+  "phase2_admission": {
+    "enabled": false,
+    "claimed_count": 4,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "passed": true,
+      "completeness": 1.0,
+      "errors": []
+    },
+    "protocol_gate": {}
+  },
+  "candidate_block_reasons": [
+    "candidate_primary_top3_retention_below_two_thirds"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": false,
+    "phase2_candidate_inputs_sanitized": false,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {},
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 0.3333,
+    "primary_top3_retention_gate_passed": false,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {
+    "quality_blockers": [
+      "candidate_primary_top3_retention_below_two_thirds"
+    ]
+  }
+}

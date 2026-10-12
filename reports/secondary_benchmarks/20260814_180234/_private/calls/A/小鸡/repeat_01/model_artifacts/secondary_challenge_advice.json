@@ -1,0 +1,77 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "primary_report_hash_after": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "protected_fields_hash_before": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "protected_fields_hash_after": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 3,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "challenge_type": "overstated",
+      "challenged_claim": "需求文档描述的‘固定概率’与数值文档的‘Crash动态概率算法’完全冲突。",
+      "evidence": "小鸡.docx / 3.1 下注系统，表格2及段落37",
+      "counterevidence": "小鸡.docx / 3.1 下注系统，段落37‘具体数值配置由数值策划确定’",
+      "rationale": "需求文档中的固定概率表格下方已明确声明‘具体数值配置由数值策划确定’，表明该表格仅为早期示意或占位，最终规则以数值文档的Crash算法为准。这属于正常的‘需求留白+数值补充’流程，定性为‘完全冲突’过重。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "难度系统概率计算逻辑冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "核心角色与题材包装严重冲突（小鸡 vs 骆驼），美术资源制作方向错误，UI表现与世界观设定割裂。",
+      "evidence": "小鸡.docx / 4、题材包装，段落55-56；图片1-8解析",
+      "counterevidence": "小鸡.docx / 4、题材包装，段落55‘一开始美术可以先用默认的小鸡形象，等到时候业务有需求了再替换’",
+      "rationale": "文档已明确说明小鸡是MVP阶段的默认占位形象，骆驼是后续业务需求时的替换目标。两者在开发阶段上是兼容的递进关系，并非‘严重冲突’或‘割裂’，定性为严重冲突会误导开发认为文档存在致命逻辑错误。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "核心角色与题材包装严重冲突（小鸡 vs 骆驼）",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-03",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "文档未说明‘爆炸倍数’如何映射到‘第几格撞车’，核心碰撞判定逻辑无法实现。",
+      "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11-13",
+      "counterevidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11‘先随机随机一个本次被撞倍数...不超过就一直可以成功’；表格2提供了每关的倍率。",
+      "rationale": "数值文档已给出映射的核心逻辑（随机爆炸倍数与关卡倍率比对，不超过即成功），并非‘完全缺失’。问题在于未明确‘关卡倍率’是单格倍率还是累计倍率（这已在LOGIC_PAYOUT_FORMULA_CONFLICT中解决），而非映射逻辑本身缺失。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "Crash算法与离散格子结算的映射逻辑缺失",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": []
+}

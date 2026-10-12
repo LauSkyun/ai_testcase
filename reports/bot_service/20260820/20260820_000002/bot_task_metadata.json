@@ -1,0 +1,20 @@
+{
+  "task_id": "20260820_000002",
+  "game_name": "",
+  "source": "bot_service",
+  "snapshot_dir": "D:\\project\\script\\mid_prototest\\bot_service\\.runtime\\yuque_snapshots\\20260820\\20260820_000002",
+  "review_mode": "dual_pass",
+  "extract_only": false,
+  "analyze_images": true,
+  "documents": [
+    {
+      "name": "未付费用户单机版游戏.md",
+      "kind": "mixed",
+      "paragraph_count": 19,
+      "table_count": 0,
+      "image_count": 1,
+      "unresolved_image_count": 0,
+      "errors": []
+    }
+  ]
+}

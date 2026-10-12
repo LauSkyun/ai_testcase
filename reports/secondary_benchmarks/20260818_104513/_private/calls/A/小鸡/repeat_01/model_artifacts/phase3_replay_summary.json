@@ -1,0 +1,34 @@
+{
+  "protocol_revision": "phase3_v1_2",
+  "protocol_gate_passed": true,
+  "baseline_lock_passed": true,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "challenge_claimed_count": 1,
+  "challenge_accepted_count": 1,
+  "challenge_rejected_count": 0,
+  "correction_claimed_count": 1,
+  "correction_accepted_count": 0,
+  "correction_rejected_count": 1,
+  "correction_abstained_count": 0,
+  "correction_disposition_counts": {},
+  "challenge_keys": [
+    "CORE_BET_CONFIG_MISMATCH:overstated:clarify"
+  ],
+  "correction_keys": [],
+  "target_coverage_ledger_complete": true,
+  "target_coverage_ledger_completeness": 1.0,
+  "target_coverage_ledger_valid": true,
+  "target_coverage_ledger_errors": [],
+  "target_decision_keys": [
+    "CLARITY_01:pass",
+    "CORE_BET_CONFIG_MISMATCH:challenge",
+    "CORE_DIFFICULTY_CONFIG_MISMATCH:pass",
+    "LOGIC_01:pass",
+    "LOGIC_02:pass",
+    "LOGIC_03:pass",
+    "LOGIC_PAYOUT_FORMULA_CONFLICT:pass",
+    "SEC_01:pass",
+    "TEST_01:pass",
+    "UX_01:pass"
+  ]
+}

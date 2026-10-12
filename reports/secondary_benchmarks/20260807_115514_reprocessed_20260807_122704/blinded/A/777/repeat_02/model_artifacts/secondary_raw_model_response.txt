@@ -1,0 +1,231 @@
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了结算公式歧义、风控与RESPIN冲突、盘面生成规则混乱等核心高风险问题，覆盖度高。但在资金事务节点（中奖入账时机）上存在遗漏，需补充后方可完整指导开发与测试。",
+    "strengths": [
+      "准确识别RESPIN累加算法的加法/乘法歧义",
+      "发现风控强制0倍与RESPIN触发条件的致命冲突",
+      "指出基础盘面生成规则描述混乱无法实现"
+    ],
+    "issues": [
+      "遗漏中奖金额计入玩家钱包的事务节点定义",
+      "未明确断线重连时RESPIN状态恢复的具体资金结算逻辑"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "Primary 存在资金入账时机的事务节点遗漏，需补充 payout_timing 的 finding 后方可完整指导开发与测试。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "LOGIC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落18-19",
+            "crazy777数值文档修改后.docx / 四、基础游戏・投注与中奖计算，段落30、43"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "CLARITY_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 三、基础游戏・乘数符号，段落21及表格4"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落17-18",
+            "crazy777数值文档修改后.docx / 五、基础游戏・推展机制，段落42"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "TEST_01",
+            "LOGIC_04"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落35",
+            "crazy777数值文档修改后.docx / 七、基础游戏・完整流程总结，段落61"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 游戏投注操作区域，段落37-38"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUNDS_01"
+          ],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落19、30、32"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 二、需求描述，段落20"
+          ],
+          "reason": "source_state=partial; counterevidence=引用中台统一处理流程; primary_coverage=not_covered; final=advice_only"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=no_issue"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=SLOTS单局玩法通常不涉及全局奖池; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 六、基础游戏・体验控制 & 风控，段落55及表格9"
+          ],
+          "reason": "source_state=explicit; counterevidence=已有100倍强制0倍的相对边界; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=未涉及统计指标; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=未涉及统计指标; primary_coverage=not_covered; final=not_applicable"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "FUNDS_01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额入账钱包的时机与事务节点缺失",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "文档仅描述了中奖金额的展示（如奖金结算栏展示、缩位展示）和计算公式，但未明确中奖金额实际计入玩家钱包余额的具体事务节点（如RESPIN结束后立即入账，或单局结算完成后统一入账）。",
+      "evidence": "疯狂777需求文档修改后.docx / 二、需求描述，段落19、30、32",
+      "risk": "前后端对奖金到账时机理解不一致，可能导致玩家在RESPIN过程中尝试提现或再次下注时出现余额校验异常、重复派奖或客诉。",
+      "suggestion": "明确中奖金额入账钱包的事务节点：基础局中奖在单局结算完成后入账；RESPIN玩法在累加结束且最终乘数值确定后，将最终总奖金一次性计入玩家钱包。",
+      "severity": "medium",
+      "blocking": "block_test",
+      "confidence": "high",
+      "independent_root_cause": "未定义中奖金额计入玩家钱包的事务节点",
+      "root_causes": [
+        "未定义中奖金额计入玩家钱包的事务节点"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "CLARITY_03",
+        "overlap": false,
+        "reason": "CLARITY_03 仅涉及前端金额缩位展示规则，未涉及钱包入账的事务时机"
+      },
+      "severity_basis": "medium/block_test：缺失资金入账节点会导致测试无法设计余额变动的断言用例，存在资损或客诉风险",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索‘入账’、‘钱包增加’、‘余额更新’等词，均未找到中奖金额实际计入钱包的事务节点描述，仅有展示和计算描述。",
+        "searched_locations": [
+          "疯狂777需求文档修改后.docx / 全文",
+          "crazy777数值文档修改后.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "通用平台能力（如奖池、统计时间窗口）在当前单局SLOTS玩法文档中未体现，属于中台公共模块范畴，不强制要求在本需求文档中定义。",
+    "资金失败补偿已明确复用中台统一处理流程，无需在玩法文档中重复定义，建议测试时关注中台流程与RESPIN断线恢复的兼容性。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=8e0da672cf5b111a8037b391519192483e42dc166a2ebcef5c045cef81585f02"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "protocol_revision": "phase3_v1_1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1_1",
+    "expected_primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "expected_echo": "protocol_profile=phase3_v1_1; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "primary_report_hash_after": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "protected_fields_hash_before": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "protected_fields_hash_after": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 3,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-CLARITY-01",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "核心角色与题材包装严重冲突（小鸡 vs 骆驼），美术资源制作方向错误，UI表现与世界观设定割裂。",
+      "evidence": "小鸡.docx / 4、题材包装（中东主题），段落55",
+      "counterevidence": "小鸡.docx / 4、题材包装（中东主题），段落55：‘※ 一开始美术可以先用默认的小鸡形象，等到时候业务有需求了再替换’",
+      "rationale": "需求文档已明确说明小鸡为初始默认/占位形象，后续替换为骆驼是已规划的迭代策略，并非未解决的‘严重冲突’或‘割裂’。",
+      "recommended_action": "drop",
+      "proposed_split": [],
+      "target_title": "核心角色与题材包装严重冲突（小鸡 vs 骆驼）",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-CORE-BET-01",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "下注筹码数值配置冲突，需求、数值、UI三端筹码配置不一致，导致前后端无法对齐。",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6及表格1；小鸡.docx / 2.2 详细规则，表格1",
+      "counterevidence": "小鸡数值文档.docx / 2. 下注规则，段落6：‘可以配置游戏的下注列表。以下仅为示例’；小鸡.docx / 2.2 详细规则，表格1：‘筹码额度可各个业务自定义’",
+      "rationale": "数值文档已声明下注列表‘仅为示例’，且需求文档允许‘各个业务自定义’。数值文档中的100、1000仅为示例值或内部单位，与需求及UI的3、5、10、20不构成实质性冲突，而是示例与自定义配置的关系。",
+      "recommended_action": "drop",
+      "proposed_split": [],
+      "target_title": "下注筹码数值配置冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-LOGIC-01",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "Crash算法与离散格子结算的映射逻辑缺失，文档未说明‘爆炸倍数’如何映射到‘第几格撞车’。",
+      "evidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11",
+      "counterevidence": "小鸡数值文档.docx / 4. 撞击概率计算，段落11：‘先随机随机一个本次被撞倍数...如果没有发生必定被撞。则，不超过就一直可以成功。’",
+      "rationale": "数值文档已隐含说明映射逻辑：随机一个爆炸倍数（即累计倍率上限），玩家每次前进一格，只要当前格累计倍率‘不超过’该爆炸倍数即安全，超过则撞车。并非‘完全缺失’，而是表述较为简略。",
+      "recommended_action": "drop",
+      "proposed_split": [],
+      "target_title": "Crash算法与离散格子结算的映射逻辑缺失",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": []
+}

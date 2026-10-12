@@ -1,0 +1,53 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "primary_report_hash_after": "17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581",
+    "protected_fields_hash_before": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "protected_fields_hash_after": "59c5179f8af2c43cdf5623aaeffe94e3400121bbac0b87b68742e30400649139",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 0,
+  "rejected_count": 1,
+  "accepted_challenges": [],
+  "rejected_challenges": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "LOGIC_01",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷，引用了3.7.5回收状态的规则作为缺陷证据。",
+      "evidence": "tiger需求文档.docx / 3.7.5 段落73",
+      "counterevidence": "段落73明确说明“若某选项无人投入，其赔付金额视为 0（可能成为“赔付最小”）”，且3.7.5章节名为“奖池状态-回收（开奖逻辑）”，其核心目的即为回收资金。",
+      "rationale": "3.7.5 回收状态下开出0赔付是符合“回收”设计意图的正常机制，而非“缺陷”。Primary 将回收状态的正常机制与 3.7.3/3.7.4 的兜底漏洞混为一谈，属于证据引用错误和定性 overstated。真正的缺陷仅存在于 3.7.3/3.7.4/3.8.3 的兜底逻辑中。",
+      "recommended_action": "narrow_claim",
+      "proposed_split": [],
+      "target_title": "开奖兜底逻辑存在导致‘开出无人投注选项（0赔付）’的机制缺陷",
+      "validation_status": "rejected",
+      "validation_reasons": [
+        "invalid_recommended_action"
+      ]
+    }
+  ],
+  "review_notes": [
+    "LOGIC_01 原证据混入了 3.7.5 回收状态的正常机制，导致定性 overstated。已通过 CH-01 质疑并生成 CR-01 影子修正，将问题收窄至 3.7.3/3.7.4/3.8.3 的兜底漏洞。"
+  ]
+}

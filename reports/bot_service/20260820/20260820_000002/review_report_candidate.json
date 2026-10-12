@@ -1,0 +1,344 @@
+{
+  "report": {
+    "overall_evaluation": "文档明确了单机版改造的业务目标与主流程框架，但在核心数值定义、状态机流转、配置占位符及异常边界上存在较多模糊与冲突。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但存在累计倍数定义冲突、配置占位符缺失、1800硬顶与最大赔付死锁、连败状态机持久化缺失等高风险缺口，需补充完整后再开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "图片配置表存在大量占位符且核心赔付极值未定义",
+        "owner": "数值策划",
+        "why_now": "核心概率与赔付极值缺失，导致后端无法实现开奖逻辑，测试无法验收。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "LOGIC_02",
+        "canonical_title": "图片配置表存在大量占位符且核心赔付极值未定义",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "1800宝石硬顶与“最大赔付”逻辑存在死锁风险",
+        "owner": "数值策划",
+        "why_now": "前15局高概率最大赔付与1800硬顶冲突，可能导致玩家首局即被锁死在最小赔付，且“不计入累计数据”会导致概率表推进混乱，玩家体验极差。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "LOGIC_01",
+        "canonical_title": "1800宝石硬顶与最大赔付逻辑死锁",
+        "blocking": "阻塞开发"
+      },
+      {
+        "severity": "高",
+        "title": "X局指代不明与局数推进逻辑矛盾",
+        "owner": "系统策划",
+        "why_now": "开发无法确定X局的具体数值，且“不计入累计数据”与“局数+1”在代码实现上会产生状态机冲突，导致局数统计和概率推进混乱。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": "",
+        "issue_id": "CLARITY_01",
+        "canonical_title": "X局指代与局数推进逻辑矛盾",
+        "blocking": "阻塞开发"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CLARITY_01",
+            "canonical_title": "X局指代与局数推进逻辑矛盾",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "X局指代不明与局数推进逻辑矛盾",
+            "current_state": "1、段落16提到“1~X局（即非X局之后）”，但前文定义的是“15局以前”和“16局之后”，X指代不明；2、且“此局不计入累计数据”与“下局按第六局走”存在逻辑冲突。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落16",
+            "risk": "开发无法确定X局的具体数值，且“不计入累计数据”与“局数+1”在代码实现上会产生状态机冲突，导致局数统计和概率推进混乱。",
+            "suggestion": "1、明确X局的具体数值（如15或16）；2、明确“不计入累计数据”的具体含义（是不计入今日总对局数，还是不计入中奖次数），并统一局数推进规则。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_02",
+            "canonical_title": "累计中奖倍数定义自相矛盾",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "累计中奖倍数定义自相矛盾",
+            "current_state": "段落15称“累计中奖2倍就是需要总共中奖100宝石”，紧接着又说“5线的中奖倍数随机总和是5倍即可”，2倍和5倍在数值口径上直接冲突。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落15",
+            "risk": "数值口径冲突导致后端开奖公式无法编写，测试无法验收中奖结果。",
+            "suggestion": "统一“累计中奖X倍”的定义，明确是单线倍数、总下注倍数还是总中奖金额倍数，并给出计算公式与示例。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_03",
+            "canonical_title": "新游戏房peacock入口优先级冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "新游戏房peacock入口优先级冲突",
+            "current_state": "段落9规定首充前在“指定房间”打开单机版，段落10提到新游戏房peacock不受影响。若新游戏房属于指定房间，入口路由规则不明。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落9、段落10",
+            "risk": "若新游戏房属于“指定房间”，peacock的入口路由将产生冲突，用户可能进错主端或单机版，影响首充转化链路。",
+            "suggestion": "明确新游戏房是否属于“指定房间”，并补充入口路由的优先级规则（如：新游戏房peacock强制进主端，其他指定房间进单机版）。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "LOGIC_01",
+            "canonical_title": "1800宝石硬顶与最大赔付逻辑死锁",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "1800宝石硬顶与“最大赔付”逻辑存在死锁风险",
+            "current_state": "图片1规定前15局Peacock/Fruitmachine开“最大赔付”，段落16规定余额达1800走不中奖。若最大赔付数值较大，极易首局触发1800上限，导致后续全走不中奖。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落16；图片1",
+            "risk": "前15局高概率最大赔付与1800硬顶冲突，可能导致玩家首局即被锁死在最小赔付，且“不计入累计数据”会导致概率表推进混乱，玩家体验极差。",
+            "suggestion": "1、重新评估前15局“最大赔付”的数值上限，确保与1800硬顶匹配；2、明确触发1800上限后的局数推进与概率表切换规则。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "LOGIC_02",
+            "canonical_title": "图片配置表存在大量占位符且核心赔付极值未定义",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "image",
+            "severity": "高",
+            "title": "图片配置表存在大量占位符且核心赔付极值未定义",
+            "current_state": "图片1中16局后的概率配置均为`[001]%`等占位符，且“最大赔付”、“最小赔付”无具体数值或计算公式。",
+            "evidence": "未付费用户单机版游戏.md / 图片1",
+            "risk": "核心概率与赔付极值缺失，导致后端无法实现开奖逻辑，测试无法验收。",
+            "suggestion": "1、补充图片1中所有`[001]%`等占位符的具体数值；2、补充“最大赔付”与“最小赔付”的具体数值或计算公式。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TEST_01",
+            "canonical_title": "方案切换机制与连败状态机持久化缺失",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "方案切换机制与连败状态机持久化缺失",
+            "current_state": "1、段落17提到方案1和2可支持切换，但未说明切换条件；2、图片1方案2中“下一局必不中”等连败状态在断线重连、跨局时的记录与恢复规则缺失。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落17；图片1",
+            "risk": "1、方案切换条件不明导致测试无法覆盖；2、连败状态机缺乏持久化，断线重连可能导致状态丢失或重复扣款/发奖。",
+            "suggestion": "1、明确方案切换的条件与生效时机（如后台热更/每日重置）；2、补充连败状态机的持久化方案，并说明断线重连后的恢复逻辑。",
+            "planner_role": "程序",
+            "confidence": "高",
+            "blocking": "建议优化"
+          },
+          {
+            "issue_id": "TEST_02",
+            "canonical_title": "首充强制刷新的局内边界与资产安全未定义",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "首充强制刷新的局内边界与资产安全未定义",
+            "current_state": "段落18提到充值成功后帮用户刷新游戏页面进入主端，但未说明若用户正处于局内结算动画、弱网延迟或弹窗交互中时的处理逻辑。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落18",
+            "risk": "局内强制刷新可能导致资产结算中断、重复发奖或客户端崩溃。",
+            "suggestion": "1、补充首充强制刷新的边界条件（如：等待当前局结算完成后再刷新）；2、明确弱网或异常状态下的资产对账与恢复机制。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CROSS_01",
+            "canonical_title": "fishing star局数统计口径与改造范围脱节",
+            "primary_dimension": "跨系统影响与兼容性",
+            "evidence_scope": "document",
+            "severity": "低",
+            "title": "fishing star局数统计口径与改造范围脱节",
+            "current_state": "段落14要求统计fishing star的局数，但段落12明确仅对yummy、peacock、fruitmachine进行改造，fishing star的局数数据来源及是否区分主/单机端未说明。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.2单机版逻辑，段落12、段落14",
+            "risk": "fishing star未改造但需统计其局数，数据来源不明可能导致局数统计错误或跨系统耦合过深。",
+            "suggestion": "1、明确fishing star局数的数据来源接口；2、明确是否只统计主端fishing star局数，或单机版fishing star（若有）的局数。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "建议优化"
+          }
+        ]
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "SEC_01",
+            "canonical_title": "单机版资产结算的服务端权威边界未明确",
+            "primary_dimension": "安全性与反作弊",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "单机版资产结算的服务端权威边界未明确",
+            "current_state": "段落8提到重构后端逻辑，但未明确1800余额上限、中奖结果、扣款派奖是否完全由服务端校验并做幂等处理。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落8",
+            "risk": "虽为单机版，但涉及宝石资产，若服务端边界不清，存在客户端篡改赔付倍率或绕过1800上限的潜在风险。",
+            "suggestion": "明确单机版资产结算的服务端权威边界，强调1800上限、中奖结果、扣款派奖必须由服务端校验并做幂等处理。",
+            "planner_role": "程序",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          },
+          {
+            "issue_id": "FUNDS_COMP_01",
+            "title": "单机版资金事务失败补偿机制未定义",
+            "canonical_title": "单机版资金事务失败补偿机制未定义",
+            "primary_dimension": "安全性与反作弊",
+            "current_state": "文档提到\"钱进钱出不影响主端游戏\"，但未说明资金事务（扣款、派奖）失败后的回滚、补发、重试与幂等处理机制。",
+            "evidence": "未付费用户单机版游戏.md / 二、具体方案 > 2.1 3款自研游戏另设单机版，段落8",
+            "risk": "若资金事务失败（如网络中断、服务端异常），可能导致资产丢失、重复扣款或重复派奖，影响用户资产安全。",
+            "suggestion": "1、明确单机版资金事务失败后的处理机制，包括回滚、补发、重试与幂等；2、说明是否由平台/中台统一承接，或需要游戏侧特殊处理。",
+            "severity": "中",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "source_missed_issue_id": "FUNDS_COMP_01",
+            "source_issue_id": "FUNDS_COMP_01",
+            "evidence_scope": "document",
+            "planner_role": "待定",
+            "audit_key": "funds_deduction_payout",
+            "control_key": "funds_failure_compensation",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "gpt-5.6-sol"
+          }
+        ]
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "1800宝石余额上限的初始宝石基数说明。",
+      "“最大赔付”与“最小赔付”的具体数值或计算公式。",
+      "方案1与方案2的切换条件（实时热更/每日重置/用户维度）。",
+      "fishing star局数统计的具体接口或数据源。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证前15局概率递减与最大赔付触发逻辑。",
+        "验证余额达到1800时的重置与不中奖逻辑。",
+        "验证首充后游戏列表与局内强制刷新逻辑。"
+      ],
+      "异常操作": [
+        "验证局内结算时首充强制刷新的资产安全性。",
+        "验证断线重连后连败状态机（如方案2的必不中局数）的恢复。",
+        "验证跨游戏（fishing star）局数累计的边界。"
+      ],
+      "兼容性": [
+        "验证新游戏房peacock的入口路由优先级。",
+        "验证不同房间（秀场、语聊、大厅）的单机版入口展示。"
+      ],
+      "安全专项": [
+        "验证1800余额上限、中奖结果、扣款派奖是否完全由服务端校验。",
+        "验证客户端篡改赔付倍率的防护。"
+      ],
+      "回归影响": [
+        "验证主端游戏（peacock、fruitmachine、yummy）的开奖逻辑与资产结算未受单机版影响。",
+        "验证新游戏房peacock配置不受影响。"
+      ],
+      "性能与稳定性": [
+        "验证局数统计跨游戏查询的性能。",
+        "验证首充强制刷新时的WebSocket断开重连稳定性。"
+      ],
+      "用户体验": [
+        "验证接近1800余额时连续不中奖的视觉与文案反馈，避免“吞币”感。"
+      ]
+    },
+    "quality_notes": [
+      "图片1中的概率配置均为`[001]%`等占位符，无法进行实际数值验收。",
+      "文档未提供配置表结构、字段说明及默认值。",
+      "dual_pass 复核备注：debit_timing 和 payout_timing 存在平台统一处理的兼容解释，标记为 advice_only",
+      "dual_pass 复核备注：relative_payout_cap 因 1800 余额硬顶提供等价有限边界，标记为 advice_only",
+      "dual_pass 复核备注：pool_negative_floor 因文档未提及奖池机制，标记为 not_applicable",
+      "dual_pass 复核备注：ui_text_window_alignment 因前端所有不变且无新UI截图，标记为 not_applicable",
+      "dual_pass 复核备注：protocol_profile=phase2_v2_2; evidence_packet_id=3cf4e5dce0ae6b24cbc5ff43af2b56ae23f4bf50a6b34e15b0f6997a9312ed87",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片1中的表格数据为OCR识别或人工提取的占位符格式（如`[001]%`），无法确认原始设计稿中的具体概率数值与赔付倍率。"
+    ],
+    "atomicity_transform_diagnostics": {
+      "split_source_count": 0,
+      "split_finding_count": 0,
+      "suppressed_fully_covered_umbrella_count": 0,
+      "quarantined_count": 0,
+      "actions": []
+    },
+    "dedupe_diagnostics": {
+      "auto_merge_count": 0,
+      "auto_merge_rejected_count": 1,
+      "possible_duplicate_pair_count": 1,
+      "distinct_issue_id_merge_blocked_count": 1,
+      "decisions": [
+        {
+          "action": "kept_separate",
+          "reason": "weak_semantic_similarity_requires_review",
+          "left_issue_id": "LOGIC_01",
+          "right_issue_id": "CROSS_01",
+          "left_title": "1800宝石硬顶与“最大赔付”逻辑存在死锁风险",
+          "right_title": "fishing star局数统计口径与改造范围脱节"
+        }
+      ]
+    },
+    "finding_atomicity_status": "pass",
+    "finding_atomicity_suspect_count": 0,
+    "finding_atomicity_suspects": [],
+    "review_mode": "dual_pass_candidate",
+    "primary_model": "gpt-5.6-sol",
+    "secondary_model": "gpt-5.6-sol"
+  },
+  "input_summary": {
+    "document_count": 1,
+    "kinds": {
+      "requirement": 0,
+      "numeric": 0,
+      "mixed": 1,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 19,
+    "total_tables": 0,
+    "total_images": 1
+  },
+  "documents": [
+    {
+      "name": "未付费用户单机版游戏.md",
+      "kind": "mixed",
+      "paragraph_count": 19,
+      "table_count": 0,
+      "image_count": 1,
+      "errors": []
+    }
+  ]
+}

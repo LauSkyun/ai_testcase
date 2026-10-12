@@ -1,0 +1,366 @@
+{
+  "report": {
+    "overall_evaluation": "文档描述了疯狂777的核心SLOTS玩法与RESPIN特殊机制，主流程基本可理解。但核心结算公式、概率模型定义、推展触发条件存在多处逻辑冲突与口径不一致，且缺乏RTP、最大赔付等关键数值边界，UI展示与底层配置严重脱节。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但RESPIN累加公式、空符号概率定义、推展触发条件存在高风险逻辑冲突，且缺乏RTP与最大赔付约束，需补充修正后方可进入开发。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "RESPIN结算公式与累加逻辑跨文档表述冲突",
+        "owner": "数值策划",
+        "why_now": "服务端结算代码与客户端展示金额将出现严重偏差，导致经济事故。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "基础盘面“空”符号定义重叠导致概率模型失效",
+        "owner": "数值策划",
+        "why_now": "服务端无法根据当前配置生成正确的盘面，RTP和中奖概率完全失控，阻塞核心开奖逻辑开发。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      },
+      {
+        "severity": "高",
+        "title": "推展机制触发条件“倍数”与“总下注N倍”单位混淆",
+        "owner": "系统策划",
+        "why_now": "程序无法编写推展机制的触发判断逻辑，测试无法验证推展概率和阈值。",
+        "finding_source": "",
+        "finding_source_label": "",
+        "source_model": ""
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CLARITY_01",
+            "canonical_title": "基础盘面“空”符号定义重叠",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "cross_document",
+            "severity": "高",
+            "title": "基础盘面“空”符号定义重叠导致概率模型失效",
+            "current_state": "需求文档与数值文档中，ID 0定义为“有空符号出现”，而ID 1（any）的定义中又明确包含“1为空或3为空”的情况。两者在逻辑上存在包含与重叠，且权重均设为100，导致总权重和概率分布无法计算。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落10-15、表格1、表格2；crazy777数值文档修改后.docx / 段落9-17、表格2、表格3",
+            "risk": "服务端无法根据当前配置生成正确的盘面，RTP和中奖概率完全失控，阻塞核心开奖逻辑开发。",
+            "suggestion": "重新定义基础盘面的互斥事件集合。明确ID 0是否为“全空”或“特定空”，并将ID 1-8的定义严格限定为“无空符号”的中奖组合，确保所有ID互斥且权重之和为100%。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CLARITY_02",
+            "canonical_title": "推展机制触发条件单位混淆",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "推展机制触发条件“倍数”与“总下注N倍”单位混淆",
+            "current_state": "数值文档描述“当最终结算结果倍数大于总下注N时...默认配置5倍”。举例“5倍+X10”中，“5倍”指代不明。无法确定触发条件是“赔率×乘数 > N”还是“中奖金额 > 总下注 × N”。",
+            "evidence": "crazy777数值文档修改后.docx / 段落38-40",
+            "risk": "程序无法编写推展机制的触发判断逻辑，测试无法验证推展概率和阈值。",
+            "suggestion": "统一公式口径。明确“最终结算结果倍数”是指“基础赔率×乘数符号值”，触发条件应修改为“当（基础赔率×乘数符号值）> N 时触发”，并补充N和M的合法配置范围。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CROSS_01",
+            "title": "RESPIN结算公式与累加逻辑跨文档表述冲突",
+            "description": "需求文档举例明确为加法累加（1+2+1+5=9），而数值文档公式未明确乘数基数，且未将基础投注纳入最终得奖公式，导致两份文档的结算口径不一致。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落18-19；crazy777数值文档修改后.docx / 段落30、43-45",
+            "risk": "服务端结算代码与客户端展示金额将出现严重偏差，导致经济事故。",
+            "suggestion": "在数值文档中统一RESPIN最终结算公式为：最终中奖金额 = 基础投注 × 基础赔率 × (1 + Σ(每次respin获得的乘数值))。",
+            "severity": "高",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "canonical_title": "RESPIN结算公式与累加逻辑跨文档表述冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "blocking": "阻塞测试用例设计",
+            "current_state": "需求文档举例明确为加法累加（1+2+1+5=9），而数值文档公式未明确乘数基数，且未将基础投注纳入最终得奖公式，导致两份文档的结算口径不一致。"
+          },
+          {
+            "issue_id": "CROSS_02",
+            "title": "UI赔付表展示数值与底层配置赔率严重脱节",
+            "description": "需求文档规则弹窗图片中的赔率数值（如100000）与底层配置表中的赔率倍数（77）完全无法映射，图片可能为占位符或计算口径错误。",
+            "evidence": "疯狂777需求文档修改后.docx / 表格1、图片14、图片18、图片21",
+            "risk": "1、玩家看到的规则赔率与实际结算赔率不符，构成严重的欺诈风险。；2、玩家看到的规则赔率与实际结算赔率不符，构成严重的欺诈风险与合规问题。",
+            "suggestion": "1、核对并更新规则弹窗中的赔付表图片，确保图片数值严格等于“基础投注档位 × 配置表赔率倍数”。；2、核对并更新规则弹窗中的赔付表图片，确保图片中的数值严格等于“基础投注档位 × 配置表赔率倍数”的计算结果，或明确图片仅为美术占位符并在文档中标注。",
+            "severity": "高",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "canonical_title": "UI赔付表展示数值与底层配置赔率严重脱节",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "blocking": "阻塞测试用例设计",
+            "current_state": "1、需求文档规则弹窗图片中的赔率数值（如100000）与底层配置表中的赔率倍数（77）完全无法映射，图片可能为占位符或计算口径错误。；2、需求文档规则弹窗图片（图片14/18/21）中展示的赔率数值（如777*3对应100000、20000等）与底层配置表（表格1）中的赔率倍数（77、37、17等）完全无法映射。"
+          },
+          {
+            "issue_id": "MISS_01",
+            "title": "基础盘面权重配置残缺且无归一化说明",
+            "canonical_title": "基础盘面权重配置残缺且无归一化说明",
+            "primary_dimension": "清晰度与完整性",
+            "current_state": "数值文档表格 2 中各 ID 的出现权重均为 100，但未说明总权重基数、归一化方式以及各 ID 之间的随机选择顺序。表格 3 中空符号表演权重（1个空/2个空/3个空）也为 100，未说明表格 2 和表格 3 是如何协同工作的。",
+            "evidence": "crazy777数值文档修改后.docx / 表格2、表格3",
+            "risk": "程序无法实现盘面生成算法，测试无法验证各符号的出现概率，阻塞开奖逻辑开发。",
+            "suggestion": "补充基础盘面完整的随机生成算法说明：1) 明确表格 2 中 ID 0-8 的总权重基准（如总权重 1000 或 100%），2) 明确表格 2 和表格 3 的调用顺序（先判断是否为空，再根据权重选择空符号的表演结果，还是其他逻辑），3) 补充任意符号的随机选择范围。",
+            "planner_role": "数值策划",
+            "severity": "中",
+            "confidence": "高",
+            "blocking": "阻塞开发",
+            "evidence_scope": "document",
+            "description": "数值文档表格 2 中各 ID 的出现权重均为 100，但未说明总权重基数、归一化方式以及各 ID 之间的随机选择顺序。表格 3 中空符号表演权重（1个空/2个空/3个空）也为 100，未说明表格 2 和表格 3 是如何协同工作的。",
+            "source_missed_issue_id": "MISS_01",
+            "source_issue_id": "MISS_01",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          },
+          {
+            "issue_id": "MISS_02",
+            "title": "RESPIN 乘数符号为 1 的权重未定义",
+            "canonical_title": "RESPIN 乘数符号为 1 的权重未定义",
+            "primary_dimension": "清晰度与完整性",
+            "current_state": "需求文档段落 19 的举例中提到了 RESPIN 过程中出现 1 倍的情况，数值文档段落 45 也说明 RESPIN 时引入 X1 的可能性，但数值文档表格 7 中仅列出了乘数符号值 2、3、5、10，缺少值 1 的权重配置。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落45、表格7",
+            "risk": "RESPIN 的数值模型不完整，无法计算 RTP 和验证最大赔付，阻塞数值验收。",
+            "suggestion": "在数值文档表格 7 中补充乘数符号值 1 的出现权重，确保与需求文档举例和说明一致。",
+            "planner_role": "数值策划",
+            "severity": "中",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计",
+            "evidence_scope": "document",
+            "description": "需求文档段落 19 的举例中提到了 RESPIN 过程中出现 1 倍的情况，数值文档段落 45 也说明 RESPIN 时引入 X1 的可能性，但数值文档表格 7 中仅列出了乘数符号值 2、3、5、10，缺少值 1 的权重配置。",
+            "source_missed_issue_id": "MISS_02",
+            "source_issue_id": "MISS_02",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          },
+          {
+            "issue_id": "MISS_04",
+            "title": "界面布局描述不一致",
+            "canonical_title": "界面布局描述不一致",
+            "primary_dimension": "清晰度与完整性",
+            "current_state": "需求文档描述游戏为 3*3+1*3 的异轴 SLOTS，数值文档描述为 3X3 +1 列特殊轴，两者在第二个维度 3 的解释上不一致。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落4；crazy777数值文档修改后.docx / 段落5",
+            "risk": "开发对界面布局理解不一致，可能导致客户端 UI 布局错误。",
+            "suggestion": "统一两个文档中的布局描述，建议使用数值文档的 3X3 +1 列特殊轴表述，并明确说明特殊轴是独立于主卷轴的一列。",
+            "planner_role": "系统策划",
+            "severity": "中",
+            "confidence": "高",
+            "blocking": "阻塞测试用例设计",
+            "evidence_scope": "document",
+            "description": "需求文档描述游戏为 3*3+1*3 的异轴 SLOTS，数值文档描述为 3X3 +1 列特殊轴，两者在第二个维度 3 的解释上不一致。",
+            "source_missed_issue_id": "MISS_04",
+            "source_issue_id": "MISS_04",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "LOGIC_01",
+            "canonical_title": "RESPIN结算公式跨文档不一致",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "RESPIN结算公式与累加逻辑跨文档表述冲突",
+            "current_state": "1、需求文档举例为加法累加（1+2+1+5=9），最终金额=基础投注×基础赔率×累加和。数值文档公式为“中奖金额=基础投注×赔率×乘数符号值”，且说明“累计乘数值默认=1”，未明确RESPIN期间是“相加”还是“相乘”，也未将基础投注纳入最终得奖公式。；2、需求文档说明“RESPIN结算完成后停止”，但未明确如果在RESPIN的多次重转过程中玩家点击停止，是立即中断当前重转动效并结算，还是必须等待所有重转动画播放完毕。；3、数值文档说明respin触发条件是“第4列停在respin且123列均不为空”。但未说明服务端生成盘面时，是独立生成第4列再判断冲突，还是根据123列的结果动态调整第4列的权重池。；4、需求文档仅说明“复用中台统一处理流程”，但RESPIN是一个包含多次重转的多步状态机。未明确断线发生在RESPIN第N次重转时，重连后是直接展示最终结算结果，还是从断点继续播放动画。；5、需求文档说明快捷旋转下RESPIN表现为“快速播放累加动画”，但未定义单次快速动画的时长或总时长上限。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落18-19；crazy777数值文档修改后.docx / 段落30、43-45；疯狂777需求文档修改后.docx / 段落35；crazy777数值文档修改后.docx / 段落22、42；疯狂777需求文档修改后.docx / 段落20；疯狂777需求文档修改后.docx / 段落36；crazy777数值文档修改后.docx / 表格6、表格7、段落47-48",
+            "risk": "1、服务端结算代码与客户端展示金额将出现严重偏差，导致经济事故或玩家客诉。；2、客户端状态机设计存在歧义，可能导致自动旋转停止时表现异常或结算延迟。；3、如果独立生成，当123列有空且第4列为respin时，会导致respin概率被隐性稀释或需要额外的重roll逻辑，影响整体RTP。；4、中台通用流程可能不支持多步状态机的断点恢复，导致重连后表现与结算不一致，或动画卡死。；5、如果RESPIN触发10次，快速动画总时长可能依然过长，违背快捷旋转“节省时间”的初衷。",
+            "suggestion": "1、在数值文档中统一RESPIN最终结算公式为：`最终中奖金额 = 基础投注 × 基础赔率 × (1 + Σ(每次respin获得的乘数值))`。明确初始1是作为加数基数，而非乘数。；2、明确自动旋转停止的时机：建议定义为“点击停止后，当前正在进行的RESPIN重转动效加速播放或直接跳过，待本次RESPIN结算完成后停止自动旋转”。；3、明确服务端盘面生成算法：建议采用“先生成123列，若全非空则从包含respin的完整权重池抽取第4列；4、若123列有空，则从排除respin的权重池抽取第4列”的条件生成逻辑。；5、明确RESPIN断线恢复策略：建议服务端在RESPIN开始时即计算好最终结果并持久化，客户端重连后直接展示最终盘面和结算金额，跳过中间重转动效。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "MISS_03",
+            "title": "推展机制中 0 倍盘面与表演冲突",
+            "canonical_title": "推展机制中 0 倍盘面与表演冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "current_state": "数值文档说明风控强制 0 倍时 123 列至少有一列为空，但未说明此时是否仍需要触发推展机制的表演。而推展机制的描述中仅说明了从 5 倍+X10 变成 5 倍+空再推展为 X10 的表演逻辑，未说明如果最终结算结果是 0 倍时如何处理。",
+            "evidence": "crazy777数值文档修改后.docx / 段落38-40、55-56",
+            "risk": "风控触发时可能出现表演与结算结果不一致的 Bug，导致客户端显示推展动画但最终结算为 0 的异常体验。",
+            "suggestion": "补充风控强制 0 倍时的推展表演规则：明确当最终结算倍数小于等于 0 时，跳过推展机制表演，直接展示含空符号的最终盘面。",
+            "planner_role": "系统策划",
+            "severity": "中",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计",
+            "evidence_scope": "document",
+            "description": "数值文档说明风控强制 0 倍时 123 列至少有一列为空，但未说明此时是否仍需要触发推展机制的表演。而推展机制的描述中仅说明了从 5 倍+X10 变成 5 倍+空再推展为 X10 的表演逻辑，未说明如果最终结算结果是 0 倍时如何处理。",
+            "source_missed_issue_id": "MISS_03",
+            "source_issue_id": "MISS_03",
+            "finding_source": "secondary_reviewer",
+            "finding_source_label": "副评审补充",
+            "source_model": "deepseek-v4-pro"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "TEST_01",
+            "canonical_title": "风控强制0倍后的表现冲突",
+            "primary_dimension": "可测试性与验收标准",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "风控强制0倍后的客户端表现与表演机制冲突",
+            "current_state": "数值文档说明超过100倍时强制0倍（123列至少一列为空）。但未说明此时是否还需要触发“推展机制”的表演，以及客户端如何展示风控干预后的结果。",
+            "evidence": "crazy777数值文档修改后.docx / 段落55-56、62",
+            "risk": "测试无法验收风控触发时的客户端表现，可能出现强制0倍但依然播放推展动画的Bug，引起玩家疑惑。",
+            "suggestion": "补充风控干预时的表现规则：明确当风控触发强制0倍时，跳过推展机制表演，直接展示123列含空符号的最终盘面，并结算0奖金。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "UX_02",
+            "canonical_title": "缩位展示精度表述冗余",
+            "primary_dimension": "用户体验与游戏性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "金额缩位展示“向下取整”与“直接截断”表述冗余",
+            "current_state": "需求文档段落30同时使用了“向下取整”和“直接截断”来描述缩位后的精度处理，虽然结果一致，但术语冗余。",
+            "evidence": "疯狂777需求文档修改后.docx / 段落30",
+            "risk": "开发在实现时可能对“向下取整”的编程语义（如负数处理）产生误解，尽管金额不会为负。",
+            "suggestion": "统一术语，删除“向下取整”，仅保留“缩位后保留两位小数，采用直接截断（Floor）处理，不四舍五入”。",
+            "planner_role": "系统策划",
+            "confidence": "中",
+            "blocking": "阻塞测试用例设计"
+          }
+        ]
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      {
+        "title": "RTP目标值与最大赔付上限（MAX_MUL）",
+        "description": "文档未提供游戏的目标RTP（如96%）和单局最大赔付倍数/金额上限，无法验证数值模型的安全性和经济平衡。",
+        "impact": "阻塞数值验收和风控配置。",
+        "owner": "数值策划"
+      },
+      {
+        "title": "基础投注（BET）的具体档位配置",
+        "description": "文档仅说明“基础投注：后台可配”，未提供具体的BET档位列表（如10, 50, 100等），导致无法计算UI展示金额和验证缩位逻辑。",
+        "impact": "阻塞前端UI开发和测试用例设计。",
+        "owner": "系统策划"
+      }
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证RESPIN触发条件（第4列respin且123列非空）及累加乘数计算逻辑。",
+        "验证推展机制的触发阈值（赔率×乘数 > N）及概率（M）。",
+        "验证自动旋转在RESPIN过程中的停止时机及表现。",
+        "验证基础盘面“空”符号的生成概率与互斥逻辑。"
+      ],
+      "异常操作": [
+        "验证RESPIN多步状态中断线重连的恢复表现（是否直接展示最终结果）。",
+        "验证余额不足时的扣款失败处理及充值弹窗拉起。",
+        "验证风控触发强制0倍时的盘面生成与客户端表现。"
+      ],
+      "兼容性": [
+        "验证不同分辨率下金额缩位展示（K/M）的截断逻辑与UI适配。",
+        "验证规则弹窗、排行榜弹窗在不同屏幕尺寸下的翻页与关闭交互。"
+      ],
+      "安全专项": [
+        "验证服务端结算结果与客户端展示金额的强一致性，防止客户端篡改赔率。",
+        "验证重复点击旋转按钮的幂等性，防止重复扣款。"
+      ],
+      "回归影响": [
+        "验证中台通用断线重连流程对本玩法RESPIN状态机的兼容性。",
+        "验证中台通用风控模块对100倍以上强制0倍逻辑的执行准确性。"
+      ],
+      "性能与稳定性": [
+        "验证快捷旋转模式下，RESPIN触发10次时的动画播放帧率与内存占用。",
+        "验证长时间自动旋转下的内存泄漏与客户端稳定性。"
+      ],
+      "用户体验": [
+        "验证新手玩家对RESPIN累加机制的理解度（动效引导是否清晰）。",
+        "验证中奖金额滚动变化动效的时长（1S）是否影响操作节奏。"
+      ]
+    },
+    "quality_notes": [
+      "数值文档中RESPIN次数和乘数值的权重全为100，明显为占位符，需数值策划尽快调整以符合RTP模型。",
+      "需求文档中多处UI图片（如规则、排行榜）内容为占位符或截断，需在开发前提供最终视觉稿。",
+      "dual_pass 复核备注：主模型 LOGIC_01 合并了六个不同根因的问题，本期候选报告已将其拆分为六个独立子问题，保持原 issue_id 不变，但采用子编号（LOGIC_01_02 至 LOGIC_01_06）区分，便于后续追踪和责任归属。",
+      "dual_pass 复核备注：主模型 CROSS_01 和 CROSS_02 在原生维度中未出现，但在 LOGIC_01 工单中引用了它们，本期候选报告已将其还原到清晰度与完整性维度中，并保持原 issue_id 不变。",
+      "dual_pass 复核备注：主模型 TEST_01 和 MISS_03 本质上是同一根因的不同侧面，本期候选报告已将其合并到 TEST_01 中，并吸收了 MISS_03 的内容。",
+      "dual_pass 复核备注：数值文档中表格 2 和表格 3 的权重配置明显为占位符，建议在后续版本中补充完整。",
+      "dual_pass 复核备注：需求文档中多处 UI 图片为占位符或截断状态，建议在后续版本中提供最终视觉稿。",
+      "dual_pass 复核备注：候选报告中的 LOGIC_01_02 至 LOGIC_01_06 子编号仅用于内部追踪，建议在后续版本中为每个子问题分配独立的 issue_id。",
+      "dual_pass 收敛提示：问题《RESPIN结算公式与累加逻辑跨文档表述冲突》的现状描述原有 6 条分点，最终报告先保留前 5 条，其余 1 条保留在原始调试工件中。",
+      "dual_pass 收敛提示：问题《RESPIN结算公式与累加逻辑跨文档表述冲突》的风险分析原有 7 条分点，最终报告先保留前 5 条，其余 2 条保留在原始调试工件中。",
+      "dual_pass 收敛提示：问题《RESPIN结算公式与累加逻辑跨文档表述冲突》的修改建议原有 7 条分点，最终报告先保留前 5 条，其余 2 条保留在原始调试工件中。",
+      "dual_pass 当前已暂时停用跨文档一致性分区，相关问题已回归原维度展示"
+    ],
+    "image_analysis_gaps": [
+      "图片8、9：规则弹窗内容被占位符替代，无法验证规则文案的完整性与准确性。",
+      "图片10、11：排行榜界面大部分被遮挡或为占位符，无法验证榜单字段与排名逻辑。",
+      "图片12、13：音效、记录按钮仅为局部截图，无法验证完整交互状态。"
+    ],
+    "review_mode": "dual_pass",
+    "primary_model": "gpt-5.4",
+    "secondary_model": "deepseek-v4-pro"
+  },
+  "input_summary": {
+    "document_count": 2,
+    "kinds": {
+      "requirement": 1,
+      "numeric": 1,
+      "mixed": 0,
+      "unknown": 0
+    },
+    "has_requirement_doc": true,
+    "has_numeric_doc": true,
+    "missing_companion_docs": [],
+    "total_paragraphs": 111,
+    "total_tables": 12,
+    "total_images": 26
+  },
+  "documents": [
+    {
+      "name": "疯狂777需求文档修改后.docx",
+      "kind": "requirement",
+      "paragraph_count": 46,
+      "table_count": 3,
+      "image_count": 26,
+      "errors": []
+    },
+    {
+      "name": "crazy777数值文档修改后.docx",
+      "kind": "numeric",
+      "paragraph_count": 65,
+      "table_count": 9,
+      "image_count": 0,
+      "errors": []
+    }
+  ]
+}

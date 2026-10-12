@@ -1,0 +1,79 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "advice_only",
+  "applied_to_report": false,
+  "primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "primary_report_hash_after": "f6da8ba492587fec4cb574c7056e469dc3b5a38c80b977c09caf4697480debd9",
+    "protected_fields_hash_before": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "protected_fields_hash_after": "2ca309ce8973136803e8a0878d9e89bf3a58cae271cc2e18e2a8d7dddc372841",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 3,
+  "rejected_count": 0,
+  "accepted_challenges": [
+    {
+      "challenge_id": "CH-01",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "核心角色与题材包装严重冲突（小鸡 vs 骆驼），美术资源制作方向错误，UI表现与世界观设定割裂。",
+      "evidence": "小鸡.docx / 4、题材包装（中东主题），段落55：‘※ 一开始美术可以先用默认的小鸡形象，等到时候业务有需求了再替换’；段落56：‘4.1 核心形象：卡通骆驼设计’。",
+      "counterevidence": "段落55已明确说明小鸡为初期默认/占位形象，骆驼为最终题材包装目标，属于明确的过渡策略而非文档冲突。",
+      "rationale": "需求文档已主动声明了形象替换的过渡计划，并非‘严重冲突’或‘割裂’，而是分阶段的美术资源制作策略。定性为‘严重冲突’属于过度解读。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "核心角色与题材包装严重冲突（小鸡 vs 骆驼）",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-02",
+      "target_issue_id": "CORE_DIFFICULTY_CONFIG_MISMATCH",
+      "challenge_type": "overstated",
+      "challenged_claim": "需求文档描述的‘固定概率’与数值文档的‘Crash动态概率算法’完全冲突，缺失中等、困难、极限难度的具体概率配置。",
+      "evidence": "小鸡.docx / 3.1 下注系统，表格2 下方段落37：‘具体数值配置由数值策划确定’；表格2 标题为‘难度数值参考’。",
+      "counterevidence": "需求文档已明确该表格仅为‘参考’，且将具体数值的决定权移交给了数值策划（即数值文档）。",
+      "rationale": "需求文档中的固定概率表已自我声明为‘参考’并指向数值策划，并非与数值文档‘完全冲突’，而是需求与数值分工的正常体现。将其列为高风险阻塞项属于定性 overstated。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "难度系统概率计算逻辑冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    },
+    {
+      "challenge_id": "CH-03",
+      "target_issue_id": "CORE_BET_CONFIG_MISMATCH",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "需求、数值、UI三端筹码配置不一致，导致前后端无法对齐，阻塞下注系统开发与数值配置。",
+      "evidence": "小鸡数值文档.docx / 2. 下注规则，段落6：‘可以配置游戏的下注列表。以下仅为示例’；表格1（下注值100, 1000）。小鸡.docx / 2.2 详细规则，表格1（3, 5, 10, 20）。",
+      "counterevidence": "数值文档明确标注下注列表‘仅为示例’，且数值100/1000可能为内部最小精度单位（如分），而需求与UI的3/5/10/20为展示单位（如元）。",
+      "rationale": "数值文档已声明其筹码表为示例，且存在内部精度单位与前端展示单位换算的合理兼容解释。直接定性为‘三端配置不一致导致阻塞’缺乏对数值配置示例性质及单位换算的考量。",
+      "recommended_action": "clarify",
+      "proposed_split": [],
+      "target_title": "下注筹码数值配置冲突",
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_challenges": [],
+  "review_notes": [
+    "对 CLARITY_01、CORE_DIFFICULTY_CONFIG_MISMATCH、CORE_BET_CONFIG_MISMATCH 的定性提出 overstated/compatible_interpretation 质疑，因需求文档已包含过渡说明、参考声明及示例标注。"
+  ]
+}

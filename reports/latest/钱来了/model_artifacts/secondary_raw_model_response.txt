@@ -1,0 +1,187 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了数值配置冲突、逻辑冲突及核心规则缺失，完整覆盖了所有固定 control 的审查面，未发现需要补充的结构化增量。",
+    "strengths": [
+      "准确捕捉到免费封顶与风控规则的致命逻辑冲突",
+      "识别出 Feature Buy 核心商业规则及资金补偿机制的缺失",
+      "发现数值符号 0 倍在 UI 与配置表之间的映射断层"
+    ],
+    "issues": [
+      "文档本身存在多处高风险 Blocker，需策划修订后方可进入开发"
+    ],
+    "suggestion_level": "high",
+    "ready_for_direct_output": true,
+    "reason": "Primary 已完整覆盖 12 个 control 的审查面，无遗漏的 missed_findings，报告自身结构完整。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 四、基础游戏・投注与中奖计算"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "symbol_zero_mapping"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.3.1 符号分类总览",
+            "钱来了数值文档.docx / 二、基础游戏・金币符号"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.4 特色机制"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程",
+            "钱来了数值文档.docx / 五、基础游戏・核心机制"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 2.4.7 余额变化",
+            "钱来了需求文档.docx / 3.5.3 购买免费游戏"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.2.4 基础游戏流程"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "feature_buy_missing"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.5.3 购买免费游戏"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "free_spin_cap_vs_risk_control"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 全文",
+            "钱来了数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 3.4.3 免费旋转模式",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控"
+          ],
+          "reason": "source_state=explicit; counterevidence=已有100倍强制0和2000倍封顶形成相对边界; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 2.5.2 记录"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "数值文档中表5和表6同名且数值不同，属于明显的文档编辑失误，需数值策划确认。",
+    "需求文档中多次引用“竞品体验”和“通用模块”，但未提供通用模块的具体链接内容或验收标准，测试时需依赖平台通用规范。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=3528548398226f1f7426cf7041c44240d6a7f726b1b840e21cb22005fcd68494"
+  ]
+}

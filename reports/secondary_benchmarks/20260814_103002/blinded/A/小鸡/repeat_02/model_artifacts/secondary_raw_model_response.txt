@@ -1,0 +1,282 @@
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了核心数值模型、结算公式与配置表的严重冲突，以及UI表现与世界观的割裂。但在资金事务节点（扣款与入账时机）的定义上存在遗漏，可能导致真实支付对接时的资损风险。",
+    "strengths": [
+      "准确识别连乘公式与累计倍率表的致命冲突",
+      "敏锐发现UI截图与世界观设定的角色割裂",
+      "有效指出Crash算法与离散格子映射的逻辑缺失"
+    ],
+    "issues": [
+      "遗漏下注本金扣除的事务触发节点",
+      "遗漏中奖金额计入钱包的入账时机定义"
+    ],
+    "suggestion_level": "high",
+    "ready_for_direct_output": false,
+    "reason": "资金事务节点缺失属于高风险阻塞项，需补充扣款与入账时机后方可进入开发。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_PAYOUT_FORMULA_CONFLICT",
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 3.3 奖金计算系统，段落44-45",
+            "小鸡数值文档.docx / 3. 难度选择，表格2"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 已覆盖连乘公式与累计倍率表的口径冲突及第30格结算歧义。"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CORE_DIFFICULTY_CONFIG_MISMATCH",
+            "CORE_BET_CONFIG_MISMATCH"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 图片解析",
+            "小鸡数值文档.docx / 图片解析"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 已覆盖 UI 展示概率/筹码与底层配置/结算的映射冲突。"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 1. 游戏简介，段落3",
+            "小鸡数值文档.docx / 图片解析"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 的 LOGIC_03 已覆盖爆炸倍数到离散格子的映射及触发条件缺失。"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 2.1 完整游戏流程，段落26-28"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 的 LOGIC_03 已覆盖第30格通关与撞车结算的边界及优先级歧义。"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUND_DEBIT_TIMING_MISSING"
+          ],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 1. 游戏简介，段落3",
+            "小鸡.docx / 2.1 完整游戏流程，段落20-22"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add。原文仅描述业务动作，未定义本金扣除/冻结的事务节点，Primary 未覆盖。"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUND_PAYOUT_TIMING_MISSING"
+          ],
+          "evidence_checked": [
+            "小鸡.docx / 3.4 提现与结算系统，段落48-49",
+            "小鸡.docx / 3.3 奖金计算系统，段落44-45"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add。原文未定义局内奖金计入真实钱包的入账时机，Primary 未覆盖。"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "SEC_01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 3.4 提现与结算系统，段落48-49"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 的 SEC_01 已覆盖提现与结算的幂等、防重入及弱网异常处理。"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CORE_DIFFICULTY_CONFIG_MISMATCH",
+            "LOGIC_PAYOUT_FORMULA_CONFLICT"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 4. 撞击概率计算，段落13-14"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 已覆盖 MAX_MUL 配置及倍率上限的数值冲突。"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable。文档未涉及公共奖池、透支或熔断机制，属于休闲博弈单局玩法，不适用该控制面。"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_PAYOUT_FORMULA_CONFLICT"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡数值文档.docx / 4. 撞击概率计算，段落13-14",
+            "小鸡.docx / 3.3 奖金计算系统，段落44"
+          ],
+          "reason": "source_state=explicit; counterevidence=有MAX_MUL; primary_coverage=same_control; final=covered_by_primary。Primary 已指出数值表可能导致最高赔付失控，覆盖了单局赔付上限的风险。"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 全文",
+            "小鸡数值文档.docx / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=not_applicable。文档未涉及历史统计、排行榜或时间窗口维度的指标定义，不适用该控制面。"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CORE_DIFFICULTY_CONFIG_MISMATCH",
+            "CORE_BET_CONFIG_MISMATCH"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "小鸡.docx / 4.3 UI 与交互设计，段落70-71"
+          ],
+          "reason": "source_state=partial; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 已覆盖 UI 界面元素与正文/配置表的一致性校验。"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "FUND_DEBIT_TIMING_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家本金扣除/冻结的事务触发节点缺失",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "文档描述了‘选择下注筹码’、‘点击开始’以及失败时‘扣除本次积累的全部金币’，但未明确玩家本金（下注金额）是在点击‘开始’时从余额扣除/冻结，还是在结算时统一扣除。",
+      "evidence": "小鸡数值文档.docx / 1. 游戏简介，段落3；小鸡.docx / 2.1 完整游戏流程，段落20-22",
+      "risk": "资金事务节点不明确，可能导致前后端对扣款时机理解不一致，引发余额显示异常或重复扣款/漏扣款的资损风险。",
+      "suggestion": "明确下注本金的扣除时机。建议定义为：‘点击开始按钮时，服务端校验余额并冻结/扣除对应下注金额，若余额不足则拦截’。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "资金事务节点定义缺失",
+      "root_causes": [
+        "资金事务节点定义缺失"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 关注的是提现/结算的幂等与防刷，未覆盖下注本金的扣除时机。"
+      },
+      "severity_basis": "涉及真实资金结算，扣款时机缺失直接阻塞核心资金流开发。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索‘扣除’、‘冻结’、‘余额’，仅在失败结算时提及扣除积累金币，未定义初始下注本金的扣除事务节点。",
+        "searched_locations": [
+          "小鸡.docx / 全文",
+          "小鸡数值文档.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "FUND_PAYOUT_TIMING_MISSING",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额计入玩家钱包的入账时机缺失",
+      "primary_dimension": "清晰度与完整性",
+      "current_state": "文档描述了‘提现’流程（点击提现->确认->模拟到账），但未明确游戏内‘当前总奖金’是仅作为局内虚拟数值展示，还是在每次通过马路时实时计入玩家可用余额，亦或是仅在点击‘提现’后才触发真实资金入账。",
+      "evidence": "小鸡.docx / 3.4 提现与结算系统，段落48-49；小鸡.docx / 3.3 奖金计算系统，段落44-45",
+      "risk": "入账时机不明确会导致局内余额展示与真实钱包余额脱节，若对接真实支付，可能引发玩家对‘已中奖但未到账’的客诉与信任危机。",
+      "suggestion": "明确奖金入账时机。建议定义为：‘局内总奖金仅为虚拟数值展示，点击提现并确认后，服务端将对应金额计入玩家真实钱包/余额’。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "资金入账事务节点定义缺失",
+      "root_causes": [
+        "资金入账事务节点定义缺失"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "SEC_01",
+        "overlap": false,
+        "reason": "SEC_01 关注提现的幂等与防重复点击，未覆盖奖金计入钱包的具体时机定义。"
+      },
+      "severity_basis": "涉及真实资金结算，入账时机缺失直接阻塞钱包对接与余额展示逻辑开发。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索‘到账’、‘入账’、‘钱包’，仅在提现流程提及‘模拟到账’，未定义局内奖金与真实钱包的映射与入账触发节点。",
+        "searched_locations": [
+          "小鸡.docx / 全文",
+          "小鸡数值文档.docx / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "资金事务节点（debit_timing, payout_timing）在原文中仅描述了业务动作，未定义底层钱包/余额的冻结与入账时机，需补充。",
+    "pool_negative_floor 和 same_metric_window 因文档未涉及公共奖池与历史统计窗口，判定为 not_applicable。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=a20f9e4592a1fdb636f71d8a9c8dfcd5ba3c1e79e37a3cbeee1da6fe71081f81"
+  ]
+}

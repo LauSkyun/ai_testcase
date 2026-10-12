@@ -1,0 +1,274 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告抓住了核心冲突（数值模型不一致、最大赔付缺失、超级大奖规则缺失），并指出了部分边界条件缺失，整体结构清晰，证据定位较准确。但报告将一些可拆分的症状合并为同一问题，且对下注筹码冲突的严重度评估略高，同时在可测试性、服务端权威性等维度存在少量遗漏，建议补充低风险提醒。",
+    "strengths": [
+      "准确识别了数值文档中Crash算法与30步累乘表的根本冲突，以及MAX_PAYOUT缺失的经济风险",
+      "证据引用具体（文档名/章节/表格），问题描述与风险分析有闭环",
+      "维度覆盖较全面，测试点设计针对性强"
+    ],
+    "issues": [
+      "将下注筹码配置不一致（示例冲突）与难度数据冲突合并为同一高阻塞问题，但下注部分风险可降级",
+      "遗漏了扣款时机、按钮状态变化、幂等性说明、服务端权威性声明等边界条件，但均为低风险",
+      "可测试性维度未指出异常流程验收标准缺失，与测试点设计不完全匹配",
+      "部分描述（如“UI展示概率”与结算口径冲突）被合并进同一个大问题，可能导致读者忽略其独立影响"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。"
+  },
+  "review_notes": [
+    "保留主模型的问题骨架，仅对部分描述进行微调，并将下注筹码冲突的风险描述融入原问题中，未单独拆分。",
+    "补充了5个低风险遗漏点，均通过candidate_lineage.added记录，并追溯到missed_findings。",
+    "在可测试性维度新增了异常流程验收标准缺失问题，以匹配主模型测试点设计。",
+    "修正了主模型在‘逻辑一致性与数值平衡’维度中‘UI展示概率’子问题的描述，使其更明确地归属到用户体验风险，但仍在同一大问题内。",
+    "未对主模型的三项高阻塞问题进行降级，因为根本冲突依然存在且证据充分。",
+    "candidate_report的评分保持C，因核心问题未解决，但补充了低风险提醒后，报告已可直接交付。",
+    "dual_pass trace 提示：candidate_lineage 不为空，但未完整覆盖 primary/candidate 的问题血缘；当前候选稿暂不建议默认直出。",
+    "dual_pass trace 提示：candidate 存在未被 lineage 覆盖的问题映射，需补齐 kept/added/merged/dropped 后再考虑默认直出。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "missed_issue_id": "MISS_01",
+      "title": "扣款时机未明确",
+      "description": "需求文档未说明下注金额是在点击‘开始’时立即扣除，还是在开局前预先冻结。这会影响余额校验、异常恢复（如断线重连后退款）和幂等逻辑。",
+      "severity": "低",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程、3.1 下注系统",
+      "recommendation": "明确扣款时机（建议在服务端收到‘开始’请求时原子扣款），并补充扣款失败时的客户端提示与回退规则。"
+    },
+    {
+      "missed_issue_id": "MISS_02",
+      "title": "按钮状态变化（开始/继续）未明确",
+      "description": "需求文档未描述每通过一条马路后，操作按钮如何变化。是始终显示‘开始’但点击后继续前进，还是变为‘继续’？UI截图未覆盖此状态，需明确以避免玩家混淆。",
+      "severity": "低",
+      "evidence": "小鸡.docx / 2.1 完整游戏流程、图片1-8",
+      "recommendation": "补充按钮状态流转规则：开局前显示‘开始’，每通过一条马路后显示‘继续’（或保持‘开始’），点击后触发下一步判定，并确保与提现按钮的互斥关系。"
+    },
+    {
+      "missed_issue_id": "MISS_03",
+      "title": "重复点击幂等性与并发控制缺失",
+      "description": "文档未说明快速连续点击‘开始’或‘提现’时的处理机制。可能造成多次扣款、重复发奖或状态错乱。",
+      "severity": "低",
+      "evidence": "小鸡.docx / 整体流程",
+      "recommendation": "补充幂等性规则：服务端应基于局ID和操作序列号进行去重，客户端在请求未返回前禁用按钮，防止重复触发。"
+    },
+    {
+      "missed_issue_id": "MISS_04",
+      "title": "服务端权威性未明确声明",
+      "description": "作为博弈类游戏，随机结果（爆炸步数/碰撞判定）、赔率计算、奖金发放均应由服务端权威执行，客户端仅做表现。但文档未明确此原则，尤其在碰撞检测描述中提及‘骆驼与车辆碰撞盒重叠即判定失败’，可能被误解为客户端判定。",
+      "severity": "低",
+      "evidence": "小鸡.docx / 3.2 移动与碰撞系统",
+      "recommendation": "在系统设计章节增加服务端权威性说明，明确所有随机结果与结算逻辑由服务端计算下发，客户端仅根据服务端指令播放动画和展示结果，碰撞检测仅为表现。"
+    },
+    {
+      "missed_issue_id": "MISS_05",
+      "title": "异常流程验收标准缺失（弱网、重复点击、并发）",
+      "description": "文档虽提供了主流程测试点，但未将弱网延迟、重复点击、并发请求等异常场景的验收标准纳入需求，导致测试设计可能遗漏关键用例。",
+      "severity": "低",
+      "evidence": "小鸡.docx / 整体",
+      "recommendation": "在需求文档中补充异常流程的验收条款，覆盖弱网下请求超时重试、重复点击幂等、同时点击多个按钮等场景，并给出预期行为。"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "state_machine_recovery",
+        "primary_issue_ids": [
+          "state_machine_recovery"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "art_naming_conflict",
+        "primary_issue_ids": [
+          "art_naming_conflict"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "difficulty_mapping_conflict",
+        "primary_issue_ids": [
+          "difficulty_mapping_conflict"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "super_prize_missing",
+        "primary_issue_ids": [
+          "super_prize_missing"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "max_payout_risk",
+        "primary_issue_ids": [
+          "max_payout_risk"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "deduction_timing",
+        "source_missed_issue_ids": [
+          "MISS_01"
+        ],
+        "reason": "主模型未覆盖扣款时机边界，需补充以确保余额校验和恢复逻辑可设计。"
+      },
+      {
+        "candidate_issue_id": "button_state_transition",
+        "source_missed_issue_ids": [
+          "MISS_02"
+        ],
+        "reason": "主模型未提及按钮状态变化，影响UI开发与玩家体验。"
+      },
+      {
+        "candidate_issue_id": "idempotency",
+        "source_missed_issue_ids": [
+          "MISS_03"
+        ],
+        "reason": "主模型未强调重复点击的幂等性，属于常见异常场景，需补充。"
+      },
+      {
+        "candidate_issue_id": "server_authority",
+        "source_missed_issue_ids": [
+          "MISS_04"
+        ],
+        "reason": "主模型未明确服务端权威声明，博弈类游戏需强调以避免安全风险。"
+      },
+      {
+        "candidate_issue_id": "test_abnormal_scenarios",
+        "source_missed_issue_ids": [
+          "MISS_05"
+        ],
+        "reason": "主模型在可测试性维度未指出异常流程验收标准缺失，与测试点设计不匹配。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 5,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "partial",
+  "candidate_structure_drift": true,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": false,
+  "readiness_conflict": false,
+  "trace_warning": "candidate_lineage present but does not fully cover primary/candidate findings",
+  "lineage_coverage_complete": false,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [
+    "hot_update_history"
+  ],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "candidate_lineage 未完整覆盖 primary/candidate 的问题血缘，当前候选稿暂不建议默认直出。",
+  "candidate_block_reasons": [
+    "quality_assessment_not_ready",
+    "candidate_readiness_not_ready",
+    "normalized_candidate_not_ready",
+    "candidate_lineage_coverage_incomplete",
+    "candidate_unmapped_candidate_findings",
+    "candidate_traceability_partial"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": false,
+    "traceability_status": "partial",
+    "candidate_structurally_ready": false,
+    "candidate_structure_drift": true,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": false,
+    "lineage_coverage_complete": false,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": false,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "traceability_blockers": [
+      "candidate_lineage_coverage_incomplete",
+      "candidate_unmapped_candidate_findings",
+      "candidate_traceability_partial"
+    ],
+    "quality_blockers": [
+      "quality_assessment_not_ready"
+    ],
+    "readiness_blockers": [
+      "candidate_readiness_not_ready",
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

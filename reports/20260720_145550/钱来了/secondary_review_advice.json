@@ -1,0 +1,210 @@
+{
+  "quality_assessment": {
+    "summary": "主模型首版报告准确识别了跨玩法文案残留、风控阈值冲突、银行符号映射缺失等关键阻塞项，逻辑清晰、证据充分。但存在一个高信号核心问题遗漏（免费游戏触发流程矛盾），且F-06将多个不同根因合并为一个问题，表述混杂。",
+    "strengths": [
+      "精准定位了‘4个夺宝符号’的致命复制错误",
+      "发现了风控阈值与理论上限的根本冲突",
+      "指出了银行符号在数值表中的缺失"
+    ],
+    "issues": [
+      "遗漏了免费游戏触发时普通中奖结果展示与数值流程的矛盾",
+      "F-06混合了银行符号映射、购买免费游戏配置、断线重连表现等多个独立问题，建议分点描述但保留同一issue_id"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充遗漏的核心冲突，并对F-06进行了分点重组，证据链完整，可直接交付给研发、测试和产品团队。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已补充遗漏的核心冲突，并对F-06进行了分点重组，证据链完整，可直接交付给研发、测试和产品团队。"
+  },
+  "review_notes": [
+    "主模型报告的F-06合并了多个独立根因，本轮在保留原issue_id的前提下采用分点描述，使问题更清晰。",
+    "新增F-07免费游戏触发流程冲突，作为高阻塞项补充。",
+    "免费符号基础奖金计算规则未明确，因风险较低，仅放入missing_information，未单独列为finding。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED-01",
+      "canonical_title": "免费游戏触发时普通中奖结果展示冲突",
+      "description": "需求文档第3.5.1节要求先弹出普通中奖结算界面，再弹出免费开启界面；但数值文档第52-55行明确‘如触发了免费 不进行 检查A和 展示结果A’，即不展示普通中奖结果。两种流程互相排斥，导致UI状态机无法实现。",
+      "evidence": "钱来了需求文档.docx / 3.5 免费次数 > 3.5.1 基础设定，段落173-174；钱来了数值文档.docx / 七、基础游戏・完整流程总结，段落54-55",
+      "risk": "客户端与服务端就免费游戏触发时的UI跳转逻辑无法对齐，开发、测试均无法落地。",
+      "suggestion": "统一流程：建议采用数值文档的流程（不展示普通中奖，直接进入免费开启界面），并修正需求文档中相关描述。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "F-01",
+        "primary_issue_ids": [
+          "F-01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "F-03",
+        "primary_issue_ids": [
+          "F-03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "F-04",
+        "primary_issue_ids": [
+          "F-04"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSED-01? 未吸收，独立作为F-07"
+        ]
+      },
+      {
+        "candidate_issue_id": "F-05",
+        "primary_issue_ids": [
+          "F-05"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "F-06",
+        "primary_issue_ids": [
+          "F-06"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "F-07",
+        "primary_issue_ids": [],
+        "source_missed_issue_ids": [
+          "MISSED-01"
+        ],
+        "reason": "主模型未覆盖，但属于高阻塞冲突，必须补充。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MISSED-01? 未吸收，独立作为F-07"
+  ],
+  "lineage_counts": {
+    "kept": 5,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 5,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 5,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "候选报告已补充遗漏的核心冲突，并对F-06进行了分点重组，证据链完整，可直接交付给研发、测试和产品团队。",
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {},
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

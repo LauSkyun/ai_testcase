@@ -1,0 +1,313 @@
+model: gpt-5.6-sol
+wire_api: responses
+stage: secondary
+{
+  "quality_assessment": {
+    "summary": "Primary 报告准确识别了跨文档冲突（符号、概率、限红）和核心数值逻辑歧义（服务费公式），但在资金事务节点（扣款/派奖时机）和奖池极端边界（负值熔断）方面存在遗漏。",
+    "strengths": [
+      "准确识别核心符号、概率、限红的跨文档及内部冲突",
+      "敏锐发现服务费计算公式的逻辑歧义",
+      "指出纯概率RTP与奖池控盘机制的耦合缺失"
+    ],
+    "issues": [
+      "遗漏玩家本金扣除与派奖入账的具体事务触发节点",
+      "未明确奖池为负时的透支下限与熔断条件"
+    ],
+    "suggestion_level": "high",
+    "ready_for_direct_output": false,
+    "reason": "资金事务节点和奖池极端边界缺失属于核心资损风险，需补充后方可进入开发。"
+  },
+  "coverage_schema_version": 2,
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "NUM-01",
+            "TEST-01"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落76",
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 基础转盘配置，表格2",
+            "LUCKT 77 数值文档.md / 二、水位线规则，段落13-15"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 中 NUM-01 覆盖了服务费公式歧义，TEST-01 覆盖了多符号交叉结算边界缺失。"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS-03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落65、70",
+            "LUCKY77 转盘投注游戏设计方案.md / 图片1解析"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。Primary 中 CROSS-03 已明确覆盖需求文档、数值文档与UI图片之间的符号命名冲突。"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "CROSS-03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 2.1 触发条件，段落27-28",
+            "LUCKT 77 数值文档.md / 二、水位线规则，表格6"
+          ],
+          "reason": "source_state=conflict; counterevidence=无; primary_coverage=same_control; final=covered_by_primary。触发入口明确为77中奖，但触发概率在两份文档中存在严重冲突（55% vs 29%），Primary 中 CROSS-03 已覆盖此概率冲突。"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 通用投注逻辑，段落13",
+            "LUCKY77 转盘投注游戏设计方案.md / 5. 游戏流程，表格7"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue。游戏流程阶段和时长定义明确，未发现状态结束条件或冲突分支优先级的缺失。"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUND-01"
+          ],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 1.2 通用投注逻辑，段落14",
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落73",
+            "LUCKT 77 数值文档.md / 二、水位线规则，段落12-14"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add。文档仅描述投注操作和不可撤销，未明确本金扣除或冻结的具体事务节点。"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "FUND-02"
+          ],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落76"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add。文档仅描述结算弹窗展示赢钱金额，未明确中奖金额计入钱包的具体事务节点。"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 全文",
+            "LUCKT 77 数值文档.md / 全文"
+          ],
+          "reason": "source_state=missing; counterevidence=无明确中台引用; primary_coverage=not_covered; final=advice_only。文档未提及资金事务失败的回滚与补偿机制，但无证据证明公共流程缺失，按规则仅作为建议。"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、赔付规则，表格3"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue。赔率明确为x2和x8，相对赔付边界清晰。"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "confirmed_add",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [
+            "ECON-01"
+          ],
+          "evidence_checked": [
+            "LUCKT 77 数值文档.md / 二、水位线规则，段落18-19，表格6"
+          ],
+          "reason": "source_state=missing; counterevidence=无; primary_coverage=not_covered; final=confirmed_add。水位线最低至0，未说明奖池为负时的透支下限与熔断条件。"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 6.1 投注参数，表格8",
+            "LUCKT 77 数值文档.md / 二、赔付规则，表格3"
+          ],
+          "reason": "source_state=partial; counterevidence=存在最高投注额与最高赔率乘积的数学有限边界; primary_coverage=not_covered; final=advice_only。虽有倍率和投注上限，但未明确多符号叠加时的单局绝对赔付封顶，按规则仅作为建议。"
+        }
+      ]
+    },
+    {
+      "statistics_time_window": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落71"
+          ],
+          "reason": "source_state=explicit; counterevidence=无; primary_coverage=not_covered; final=no_issue。历史记录明确为最近30场，时间窗口定义一致。"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落71",
+            "LUCKY77 转盘投注游戏设计方案.md / 图片1解析"
+          ],
+          "reason": "source_state=explicit; counterevidence=UI截图可能为局部展示; primary_coverage=not_covered; final=no_issue。UI截图中展示部分历史记录属于正常截断，未发现与正文30场窗口的直接冲突。"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [
+    {
+      "candidate_issue_id": "FUND-01",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "debit_timing",
+      "title": "玩家本金扣除/冻结的事务触发节点缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "需求文档仅说明“进行投注操作”及“不可撤销”，未明确玩家本金是在下注时立即扣除/冻结，还是在结算时统一扣除。",
+      "evidence": "LUCKY77 转盘投注游戏设计方案.md / 1.2 通用投注逻辑，段落14；7.2 功能界面说明，段落73。",
+      "risk": "若下注时不扣款，可能导致玩家余额不足但仍能下注，产生资损；若结算时扣款，需处理下注期间的余额冻结逻辑。缺乏明确节点将导致服务端资金流水设计错误。",
+      "suggestion": "明确玩家本金扣除或冻结的具体事务节点（建议在下注成功时立即冻结/扣除本金），并补充相应的余额校验与流水记录规则。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "资金扣除事务节点未定义",
+      "root_causes": [
+        "资金扣除事务节点未定义"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "NUM-01",
+        "overlap": false,
+        "reason": "NUM-01 关注服务费计算公式歧义，未涉及玩家本金扣除的具体事务触发节点。"
+      },
+      "severity_basis": "high/block_dev: 资金扣除节点缺失直接导致服务端账务流水无法设计，存在严重资损风险，阻塞核心交易链路开发。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索未发现任何关于下注扣款或结算扣款的事务动作描述，仅有投注操作和不可撤销的状态描述。",
+        "searched_locations": [
+          "LUCKY77 转盘投注游戏设计方案.md / 全文",
+          "LUCKT 77 数值文档.md / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "FUND-02",
+      "audit_key": "funds_deduction_payout",
+      "control_key": "payout_timing",
+      "title": "中奖金额计入玩家钱包的事务触发节点缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "需求文档仅说明结算弹窗“展示本轮开奖结果及赢钱金额”，未明确中奖金额实际计入玩家钱包或可用余额的具体事务节点。",
+      "evidence": "LUCKY77 转盘投注游戏设计方案.md / 7.2 功能界面说明，段落76。",
+      "risk": "缺乏明确的派奖入账节点，可能导致服务端派奖逻辑与前端展示不同步，引发玩家客诉或账务不平。",
+      "suggestion": "明确中奖金额计入玩家钱包的具体事务节点（建议在结算阶段 SETTLING 完成后立即入账），并补充相应的流水记录规则。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "资金派奖事务节点未定义",
+      "root_causes": [
+        "资金派奖事务节点未定义"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "TEST-02",
+        "overlap": false,
+        "reason": "TEST-02 关注开奖弹窗TOP3的排序规则，未涉及中奖金额计入钱包的具体事务触发节点。"
+      },
+      "severity_basis": "high/block_dev: 资金派奖节点缺失导致服务端账务流水无法设计，存在严重资损和客诉风险，阻塞核心交易链路开发。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "全文检索未发现任何关于钱包入账或余额增加的事务动作描述，仅有UI展示层面的赢钱金额展示。",
+        "searched_locations": [
+          "LUCKY77 转盘投注游戏设计方案.md / 全文",
+          "LUCKT 77 数值文档.md / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    },
+    {
+      "candidate_issue_id": "ECON-01",
+      "audit_key": "max_payout_economic_boundary",
+      "control_key": "pool_negative_floor",
+      "title": "奖池为负时的透支下限与熔断条件缺失",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "current_state": "数值文档定义了水位线规则（最低至0），并说明了进项修正逻辑，但未明确当奖池值降至0以下时，是否允许透支、透支下限是多少，以及触发熔断的具体条件。",
+      "evidence": "LUCKT 77 数值文档.md / 二、水位线规则，段落18-19，表格6。",
+      "risk": "若奖池允许为负且无下限，可能导致极端情况下平台承担无限资损；若无熔断机制，可能导致系统在异常情况下持续错误开奖。",
+      "suggestion": "明确奖池是否允许为负。若允许，需设定透支下限及回填规则；若不允许，需设定水位为0时的熔断或停服机制，并补充相应的预警与处理流程。",
+      "severity": "high",
+      "blocking": "block_dev",
+      "confidence": "high",
+      "independent_root_cause": "奖池负值边界与熔断机制未定义",
+      "root_causes": [
+        "奖池负值边界与熔断机制未定义"
+      ],
+      "root_cause_count": 1,
+      "primary_overlap_check": {
+        "nearest_primary_issue_id": "NUM-02",
+        "overlap": false,
+        "reason": "NUM-02 关注纯概率RTP与奖池控盘机制的耦合说明，未涉及奖池为负时的具体透支下限与熔断条件。"
+      },
+      "severity_basis": "high/block_dev: 奖池负值边界缺失可能导致平台承担无限资损，属于核心经济系统安全漏洞，阻塞数值与结算系统开发。",
+      "fact_check": {
+        "claim_type": "missing_rule",
+        "source_rule_presence_checked": true,
+        "compatible_interpretation_checked": true,
+        "compatible_interpretation_exists": false,
+        "conclusion": "confirmed",
+        "reason": "数值文档水位线表格最低下限为0，段落18-19仅说明进项修正逻辑，全文未提及奖池为负时的透支处理或熔断机制。",
+        "searched_locations": [
+          "LUCKT 77 数值文档.md / 全文",
+          "LUCKY77 转盘投注游戏设计方案.md / 全文"
+        ],
+        "same_subject_and_scope": false
+      }
+    }
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "review_notes": [
+    "funds_failure_compensation 因无明确中台引用证据，按规则降级为 advice_only，建议补充资金事务失败的回滚与补偿机制。",
+    "single_round_payout_cap 因存在最高投注额与最高赔率乘积的数学有限边界，按规则降级为 advice_only，建议明确多符号叠加时的单局绝对赔付封顶。",
+    "protocol_profile=phase2_v2_2; evidence_packet_id=92560100b340b430f324d6c196130cd53ba7ba72b8f9c66692a70632f5d48ade"
+  ]
+}

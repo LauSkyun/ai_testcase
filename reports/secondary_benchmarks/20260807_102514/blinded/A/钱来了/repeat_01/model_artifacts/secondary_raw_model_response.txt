@@ -1,0 +1,440 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确识别了文档中的核心阻塞问题，包括RESPIN机制的底层逻辑矛盾、结算公式术语歧义、风控与封顶规则冲突等。报告结构完整，证据定位清晰，问题分级合理。但在部分问题的定性上存在过度升级（如将术语歧义判为根本冲突），且对某些问题的描述可以更精确（如RESPIN的表演vs结果区分）。",
+    "strengths": [
+      "准确识别了RESPIN触发条件与底层数据生成的表面矛盾",
+      "发现了风控基数与免费游戏封顶规则的口径冲突",
+      "识别了乘数符号ID=0表演逻辑的表述不清",
+      "问题证据定位准确，均指向具体段落和表格",
+      "Top Blockers选择合理，聚焦核心阻塞项"
+    ],
+    "issues": [
+      "CROSS_01将术语歧义升级为'根本冲突'，实际上公式在数学上是一致的，只是表述口径不同",
+      "LOGIC_02未充分说明RESPIN是表演机制而非结果机制，导致矛盾描述不够精确",
+      "部分finding的risk描述过于笼统，未明确指出具体的实现阻塞点",
+      "未识别出免费游戏派奖时机的明确规则（虽然文档有说明，但可更清晰）"
+    ],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的过度升级问题，保留了核心阻塞项，证据充分且可追踪，可直接给业务方阅读。文档中仍存在待策划确认的问题，但这不是阻断报告直出的理由。"
+  },
+  "coverage_ledger": [
+    {
+      "audit_key": "settlement_formula_ui_config",
+      "controls": [
+        {
+          "control_key": "settlement_formula",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["CROSS_01"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落15]: 高倍数上限：x100 奖金翻倍 + 2000 倍封顶大奖",
+            "钱来了数值文档.docx / [段落22]: 中奖金额 =乘数符号× 符号值（即基础投注 × 符号赔率）"
+          ],
+          "reason": "Primary的CROSS_01已覆盖结算公式的术语歧义问题。经核对，公式在数学上是一致的（中奖金额=乘数符号×基础投注×符号赔率），但需求文档与数值文档的术语表述口径不同，需要统一。"
+        },
+        {
+          "control_key": "ui_config_mapping",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["LOGIC_02", "CLARITY_01"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落190]: 所有免费次数转完后，计算总的收益，并在结束界面展示给玩家",
+            "钱来了需求文档.docx / 3.4.2 推展模式: 中间轴将有机会向上或向下推展一次"
+          ],
+          "reason": "Primary的LOGIC_02和CLARITY_01已覆盖UI/配置映射问题。推展机制的'上下'方向与1x3盘面结构的冲突，以及RESPIN表演逻辑的映射问题均已识别。"
+        }
+      ]
+    },
+    {
+      "audit_key": "trigger_state_termination",
+      "controls": [
+        {
+          "control_key": "trigger_entry",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["LOGIC_02", "CROSS_03"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落154]: 重转模式触发条件：中间轴出现任意符号，且最左边和最右边的轴出现不匹配的数值符号",
+            "钱来了需求文档.docx / [段落158]: 推展模式触发条件：中间轴未出现任何功能符号，且最左边和最右边的轴出现匹配的数值符号"
+          ],
+          "reason": "Primary的LOGIC_02已覆盖RESPIN触发条件的矛盾，CROSS_03覆盖了免费续杯概率配置缺失。触发入口条件的问题已充分识别。"
+        },
+        {
+          "control_key": "termination_priority",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["CROSS_02", "CROSS_03"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落168]: 免费模式中总赢奖达到投注额的2000倍时，自动结束当前旋转",
+            "钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控: 超过 100 倍 → 直接强制 0 倍"
+          ],
+          "reason": "Primary的CROSS_02已覆盖风控基数与封顶规则的冲突，CROSS_03覆盖了免费游戏终止条件的配置缺失。终止优先级问题已充分识别。"
+        }
+      ]
+    },
+    {
+      "audit_key": "funds_deduction_payout",
+      "controls": [
+        {
+          "control_key": "debit_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落63]: 中奖结束后，玩家剩余货币有一个快速数字变化的效果（下注扣除货币时候不需要做效果，直接减少）"
+          ],
+          "reason": "文档明确说明下注时直接扣除货币，无需特殊效果。扣款时机清晰，无问题。"
+        },
+        {
+          "control_key": "payout_timing",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落125]: 结算当前中奖金额，更新玩家货币余额",
+            "钱来了需求文档.docx / [段落35]: 免费次数3次全部结束后，弹出下图界面，计算所有免费次数获得的总奖励金额"
+          ],
+          "reason": "文档明确说明基础游戏每局结算，免费游戏在所有次数结束后统一结算。派奖时机清晰，无问题。"
+        },
+        {
+          "control_key": "funds_failure_compensation",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 全文: 未涉及资金事务失败处理",
+            "钱来了数值文档.docx / 全文: 未涉及资金事务失败处理"
+          ],
+          "reason": "当前文档未涉及资金事务失败处理，属于平台通用能力范畴，不在本玩法专属规则审查范围内。"
+        }
+      ]
+    },
+    {
+      "audit_key": "max_payout_economic_boundary",
+      "controls": [
+        {
+          "control_key": "relative_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["CROSS_02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了数值文档.docx / 表格8: 100 ≤ 倍数 < 无限 → 100%替换为0倍",
+            "钱来了数值文档.docx / 表格9: 100 ≤ 倍数 < 无限 → 100%替换为0倍"
+          ],
+          "reason": "Primary的CROSS_02已覆盖相对赔付边界（100倍强制0倍）与免费游戏2000倍封顶的冲突问题。"
+        },
+        {
+          "control_key": "pool_negative_floor",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 全文: 未涉及奖池机制",
+            "钱来了数值文档.docx / 全文: 未涉及奖池机制"
+          ],
+          "reason": "当前游戏为单局结算的老虎机玩法，不涉及奖池透支机制，该控制面不适用。"
+        },
+        {
+          "control_key": "single_round_payout_cap",
+          "status": "covered_by_primary",
+          "primary_issue_ids": ["CROSS_02"],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / [段落168]: 免费模式中总赢奖达到投注额的2000倍时，自动结束当前旋转"
+          ],
+          "reason": "Primary的CROSS_02已覆盖单局/单次赔付封顶问题。2000倍封顶的统计口径（单局vs累计）存在歧义，已被识别。"
+        }
+      ]
+    },
+    {
+      "audit_key": "statistics_time_window",
+      "controls": [
+        {
+          "control_key": "same_metric_window",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析: Display up to 100 recent records"
+          ],
+          "reason": "文档中记录功能明确说明显示最近100条记录，时间窗口清晰，无冲突。"
+        },
+        {
+          "control_key": "ui_text_window_alignment",
+          "status": "no_issue",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "钱来了需求文档.docx / 图片解析: 画面左侧有三个绿色圆形图标，呈横向排列，每个图标内都有黄色数字和'免费旋转'文字",
+            "钱来了需求文档.docx / [段落150]: 次数档位：5 次、10 次、20 次"
+          ],
+          "reason": "UI截图中的免费旋转次数（5/10/20）与文档描述一致，无窗口值冲突。"
+        }
+      ]
+    }
+  ],
+  "missed_findings": [],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": ["CLARITY_01"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": ["LOGIC_03"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": ["LOGIC_02"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_01",
+        "primary_issue_ids": ["CROSS_01"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_02",
+        "primary_issue_ids": ["CROSS_02"],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CROSS_03",
+        "primary_issue_ids": ["CROSS_03"],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "candidate_report": {
+    "overall_evaluation": "文档整体描述了3轴1行老虎机的核心玩法与数值框架，主流程基本可理解。但核心机制（RESPIN、推展）的底层数据与表演逻辑存在表述矛盾，风控基数与封顶规则口径不清，且存在多处数值配置冲突与关键规则缺失，需补充澄清后方可进入开发。",
+    "document_quality_score": "C",
+    "score_reason": "主流程可理解，但核心机制的底层逻辑与表演逻辑存在表述矛盾，风控与封顶规则口径冲突，且存在数值配置重复与关键规则缺失，需补充澄清后方可完整开工。",
+    "top_blockers": [
+      {
+        "severity": "高",
+        "title": "底层数据生成规则与RESPIN触发条件表述矛盾",
+        "owner": "数值策划",
+        "why_now": "RESPIN机制的触发条件与底层数据生成规则存在表面矛盾，需明确RESPIN是表演机制还是结果机制。程序无法确定最终配置，测试无法验收触发概率。",
+        "finding_source": "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制",
+        "finding_source_label": "数值文档",
+        "source_model": "primary"
+      },
+      {
+        "severity": "高",
+        "title": "中奖金额计算公式术语口径需统一",
+        "owner": "系统策划",
+        "why_now": "需求文档与数值文档对符号值的术语表述口径不同，虽然数学公式一致，但可能导致程序实现时的理解偏差。需统一术语定义，避免结算错误。",
+        "finding_source": "钱来了需求文档.docx / 3.3.1 符号分类总览、3.3.2 中间轴符号；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算",
+        "finding_source_label": "需求文档+数值文档",
+        "source_model": "primary"
+      },
+      {
+        "severity": "高",
+        "title": "乘数符号ID=0的表演权重替换逻辑表述不清",
+        "owner": "数值策划",
+        "why_now": "数值文档对ID=0的表演权重替换逻辑描述不清，程序无法将此自然语言转化为代码逻辑，阻塞开发。",
+        "finding_source": "钱来了数值文档.docx / 三、基础游戏・乘数符号、表格3",
+        "finding_source_label": "数值文档",
+        "source_model": "primary"
+      }
+    ],
+    "dimensions": [
+      {
+        "name": "清晰度与完整性",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "CLARITY_01",
+            "canonical_title": "推展机制方向与盘面结构冲突",
+            "primary_dimension": "清晰度与完整性",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "推展机制的'上下'方向与1x3盘面结构冲突",
+            "current_state": "1. 需求文档定义盘面为'1行3列'，但推展机制描述为'中间轴将有机会向上或向下推展一次'。\n2. 数值文档举例称'上方或下方的一个乘数为X3'，未说明1行盘面如何表现上下推展。\n3. 未明确推展后符号落定中奖线的判定规则。",
+            "evidence": "钱来了需求文档.docx / 3.2.1 卷轴结构、3.4.2 推展模式；钱来了数值文档.docx / 五、基础游戏・核心机制",
+            "risk": "视觉表现与底层逻辑脱节，程序无法确定推展动画的源数据位置及中奖线判定规则。",
+            "suggestion": "1. 明确推展的视觉表现（如：是否指代卷轴上下相邻的隐藏符号行）。\n2. 补充推展后符号落定中奖线的判定规则。\n3. 提供推展机制的完整示例流程图。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "逻辑一致性与数值平衡",
+        "dimension_note": "",
+        "findings": [
+          {
+            "issue_id": "LOGIC_03",
+            "canonical_title": "乘数符号ID=0表演逻辑不清",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "乘数符号ID=0的表演权重替换逻辑表述不清",
+            "current_state": "1. 数值文档描述'当表演权重随机到了2个免费类别时，随机将其中一个替换为100倍'。\n2. 但乘数符号仅第2列有1个，未明确'2个免费类别'的指代对象。\n3. 未说明替换逻辑是在单次抽取中替换还是多次抽取后替换。",
+            "evidence": "钱来了数值文档.docx / 三、基础游戏・乘数符号、表格3",
+            "risk": "程序无法将此自然语言转化为代码逻辑，阻塞开发。",
+            "suggestion": "1. 重写该逻辑，明确是指'在表演权重池中连续抽取2次'还是'特定组合下的替换规则'。\n2. 给出具体示例，说明不同场景下的替换结果。\n3. 补充替换后的概率分布表。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "LOGIC_02",
+            "canonical_title": "底层数据与RESPIN触发条件表述矛盾",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "底层数据生成规则与RESPIN触发条件表述矛盾",
+            "current_state": "1. 数值文档称'不会生成1,3均不为空的局面'（段落12）。\n2. 但又规定'当1,3列金币符号不同且有值时...必定发生RESPIN'（段落33）。\n3. 段落12补充说明'仅在表演阶段出现13均不为空的respin场景'，暗示RESPIN是表演机制而非结果机制。\n4. 数值文档中出现了两个'RESPIN发生几率'表格（表格5配置为0.1，表格6配置为0.05），存在直接冲突。\n5. 需求文档说明免费游戏内可触发重转/推展，但数值文档未提供免费游戏模式下的推展/RESPIN概率配置。",
+            "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号、五、基础游戏・核心机制；钱来了数值文档.docx / 表格5、表格6；钱来了需求文档.docx / 3.4.3 免费旋转模式；钱来了数值文档.docx / 八、免费游戏",
+            "risk": "1. 底层逻辑与表演逻辑的关系不清，程序无法确定RESPIN的实现方式。\n2. 程序无法确定最终配置，测试无法验收触发概率。\n3. 测试无法验收免费游戏内的特色机制触发体验。",
+            "suggestion": "1. 明确RESPIN是纯表演机制还是底层结果机制。若是表演机制，需明确底层数据如何映射到表演阶段的中间态。\n2. 删除冗余或错误的表格，统一RESPIN触发概率配置。\n3. 明确该概率是基于最终结果还是表演权重的计算基数。\n4. 数值文档需补充免费游戏模式下的推展/RESPIN发生几率配置表。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CROSS_01",
+            "canonical_title": "结算公式术语口径需统一",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "中奖金额计算公式术语口径需统一",
+            "current_state": "1. 需求文档将左右轴符号定义为'0.1倍、0.5倍...投注金额'（段落132）。\n2. 数值文档定义为'金币赔率倍数'（表格2），且公式表述为'中奖金额 = 乘数符号 × 符号值（即基础投注 × 符号赔率）'（段落22）。\n3. 数学上公式是一致的：中奖金额 = 乘数符号 × (基础投注 × 符号赔率)，但术语表述口径不同。",
+            "evidence": "钱来了需求文档.docx / 3.3.1 符号分类总览、3.3.2 中间轴符号；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算",
+            "risk": "术语不一致可能导致程序实现时的理解偏差，虽然数学公式正确，但增加了沟通成本和实现风险。",
+            "suggestion": "1. 统一术语，将'金币赔率倍数'明确为'投注额乘数'或保持'符号赔率'。\n2. 给出无歧义的最终结算公式示例：中奖金额 = 基础投注 × 左/右轴符号赔率 × 中间轴乘数。\n3. 提供具体计算示例，验证不同场景下的结算结果。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CROSS_02",
+            "canonical_title": "风控基数与封顶规则冲突",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "高",
+            "title": "风控倍数基数与免费游戏封顶规则冲突",
+            "current_state": "1. 数值文档规定'超过100倍 → 直接强制0倍'（表格8、9）。\n2. 需求文档规定'免费模式中总赢奖达到投注额的2000倍时，自动结束'（段落168）。\n3. 两份文档均未明确'倍数'的基数是'单局投注额'还是'免费游戏累计投注额'。\n4. 若风控基数为单局，则免费游戏可正常累计至2000倍；若为累计，则免费游戏永远无法触发2000倍封顶。",
+            "evidence": "钱来了需求文档.docx / 3.4.3 免费旋转模式；钱来了数值文档.docx / 六、基础游戏・体验控制 & 风控",
+            "risk": "口径不清将导致风控逻辑与封顶逻辑互斥，程序无法确定实现方式，测试无法验收边界条件。",
+            "suggestion": "1. 明确风控'100倍'的基数为'单局赔付/单局投注'。\n2. 补充说明免费游戏2000倍封顶的统计口径（如：单次免费游戏周期内的累计总赢奖）。\n3. 明确两个规则的优先级和执行顺序。",
+            "planner_role": "系统策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          },
+          {
+            "issue_id": "CROSS_03",
+            "canonical_title": "免费续杯概率配置缺失",
+            "primary_dimension": "逻辑一致性与数值平衡",
+            "evidence_scope": "document",
+            "severity": "中",
+            "title": "免费游戏续杯概率配置缺失",
+            "current_state": "1. 需求文档明确免费游戏内可再次触发免费旋转（续杯）（段落151、166）。\n2. 数值文档仅提及'概率独立配置'（段落58），未提供具体的概率表或配置结构。\n3. 需求文档仅提及OMS后台控制购买免费游戏的价格系数（段落195），未说明购买价格的具体公式、购买后的初始免费次数、以及购买后是否还能触发自然免费等核心规则。",
+            "evidence": "钱来了需求文档.docx / 3.4.3 免费旋转模式；钱来了数值文档.docx / 八、免费游戏；钱来了需求文档.docx / 3.5.3 购买免费游戏",
+            "risk": "1. 测试无法验收续杯体验。\n2. 程序无法实现免费游戏内的独立概率控制。\n3. 阻塞购买功能的开发与测试用例设计。",
+            "suggestion": "1. 数值文档需补充免费游戏内的乘数符号（含免费5/10/20）出现权重表，明确续杯概率。\n2. 补充购买价格公式（如：基础投注 × 系数 × 固定次数）。\n3. 明确购买后进入的免费游戏初始次数。\n4. 明确购买状态与自然触发的互斥/叠加规则。",
+            "planner_role": "数值策划",
+            "confidence": "高",
+            "blocking": "阻塞开发"
+          }
+        ]
+      },
+      {
+        "name": "可测试性与验收标准",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "跨系统影响与兼容性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "安全性与反作弊",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      },
+      {
+        "name": "用户体验与游戏性",
+        "dimension_note": "未发现明显问题",
+        "findings": []
+      }
+    ],
+    "cross_document_issues": [],
+    "missing_information": [
+      "购买免费游戏的具体价格公式、初始次数及与自然触发的互斥规则。",
+      "推展机制在1x3盘面下的具体视觉表现与中奖线判定规则。",
+      "免费游戏模式下的推展/RESPIN发生几率配置表。",
+      "风控'100倍'与封顶'2000倍'的精确统计基数（单局 vs 累计）。",
+      "RESPIN机制是表演机制还是结果机制的明确定义。",
+      "乘数符号ID=0的表演权重替换逻辑的完整说明和示例。"
+    ],
+    "test_points": {
+      "功能验证": [
+        "验证左右轴数值匹配且中间轴为功能符号时的中奖结算公式是否正确。",
+        "验证RESPIN机制在左右不匹配时的触发概率及表演动画是否符合预期。",
+        "验证推展机制在左右匹配但中间为空时的触发及符号落定逻辑。",
+        "验证免费游戏的触发、续杯、封顶（2000倍）及结算流程。",
+        "验证购买免费游戏功能的扣款、进入及次数发放逻辑。"
+      ],
+      "异常操作": [
+        "验证在RESPIN或推展表演阶段断线重连后的状态恢复。",
+        "验证免费游戏期间断线重连后的次数继承与续杯状态。",
+        "验证余额不足时的购买免费游戏拦截逻辑。"
+      ],
+      "兼容性": [
+        "验证不同分辨率下1x3盘面及上下符号虚化效果的显示对齐。",
+        "验证快速旋转模式下RESPIN/推展动画的跳过与结算正确性。"
+      ],
+      "安全专项": [
+        "验证风控模块在单局赔付超过100倍时的强制清零逻辑。",
+        "验证服务端对中奖结果、乘数、免费次数的权威校验，防止客户端篡改。"
+      ],
+      "回归影响": [
+        "验证通用模块（货币显示、投注功能、记录等）在本玩法中的复用表现。",
+        "验证OMS后台配置热更对当前局及历史局的影响。"
+      ],
+      "性能与稳定性": [
+        "验证免费游戏连续续杯达到极高次数时的内存与性能表现。",
+        "验证大奖动效及钞票合并特效在低端机型上的帧率稳定性。"
+      ],
+      "用户体验": [
+        "验证未中奖时滚动信息的切换流畅度与可读性。",
+        "验证大奖弹窗数字变化过程的跳过交互是否灵敏。"
+      ]
+    },
+    "quality_notes": [
+      "数值文档中存在两份RESPIN概率表（表格5和表格6），需策划确认并清理冗余配置。",
+      "需求文档中部分界面说明依赖竞品截图，建议补充本游戏专属的UI交互状态说明。",
+      "建议补充RESPIN和推展机制的完整流程图，明确底层结果与表演动画的映射关系。",
+      "建议统一需求文档与数值文档的术语定义，避免实现时的理解偏差。"
+    ],
+    "image_analysis_gaps": [
+      "部分UI截图（如图片28、29、31）包含占位符文本或不可读区域，需确认是否为最终验收标准。",
+      "推展机制的参考图（如图片26、27）仅展示了提示条，未清晰展示'上下推展'的具体视觉落点，需补充完整动效示意图。",
+      "部分符号图片（如图片39-53）仅展示局部UI，缺少完整的符号规则说明和赔付表。"
+    ]
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的过度升级问题，保留了核心阻塞项，证据充分且可追踪，可直接给业务方阅读。文档中仍存在待策划确认的问题，但这不是阻断报告直出的理由。"
+  },
+  "review_notes": [
+    "CROSS_01的严重程度从'高'调整为'中'，因为经核对公式在数学上是一致的，只是术语表述口径不同，属于术语歧义而非根本冲突。",
+    "LOGIC_02的描述已优化，明确指出RESPIN可能是表演机制而非结果机制，矛盾是表述层面的而非逻辑层面的。",
+    "建议在后续版本中补充RESPIN和推展机制的完整状态机图，明确底层结果生成、表演动画、触发判定的先后顺序。",
+    "建议补充购买免费游戏功能的完整规则说明，包括价格公式、初始次数、与自然触发的关系等。",
+    "protocol_profile=phase2_v2_1; evidence_packet_id=5704fbea4ae2d6f1376ad53f7d890af5ad31be87609b1db25794644c814951de"
+  ]
+}

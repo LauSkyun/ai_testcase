@@ -1,0 +1,600 @@
+{
+  "candidate_generation_mode": "deterministic_primary_plus_admitted_delta",
+  "primary_quality_assessment": {
+    "summary": "主模型报告准确识别了核心结算逻辑冲突、RESPIN算法歧义和盘面生成规则混乱等高风险问题，问题定位准确、证据引用完整。但在部分问题的严重度判定上存在过度升级（如推展机制本质为表现激励而非结果干预），且对已有证据支持的公式一致性未做充分反证。",
+    "strengths": [
+      "准确识别风控强制0倍与RESPIN触发条件的致命冲突",
+      "正确定位基础符号盘面生成规则的逻辑混乱",
+      "问题证据引用完整，均定位到具体段落和表格",
+      "candidate_lineage结构完整，kept/added/dropped关系清晰"
+    ],
+    "issues": [
+      "LOGIC_03推展机制判定为高阻塞过度，实为表现激励而非结果干预",
+      "LOGIC_01未充分反证两份文档在加法累加上的一致性",
+      "部分中风险问题（如CLARITY_03缩位展示）证据强度不足以支撑阻塞测试"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": true,
+    "reason": "候选报告已修正主模型的严重度误判，补充了公式一致性的反证说明，结构完整、证据充分、来源可追踪，可直接给业务方阅读。"
+  },
+  "quality_assessment": {
+    "summary": "Candidate 由 Primary 与已准入增量确定性生成。",
+    "strengths": [
+      "完整保留 Primary 骨架、评分和核心问题。"
+    ],
+    "issues": [],
+    "suggestion_level": "low",
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": true,
+    "reason": "Candidate 由系统确定性生成，不依赖模型自评。"
+  },
+  "review_notes": [
+    "LOGIC_01经反证，两份文档在加法累加上一致，问题本质为术语混淆而非根本冲突，保留高严重度但修改描述。",
+    "LOGIC_03推展机制本质为表现激励，数值段落39明确'先得到最终结果盘面，再进行一次表演'，降级为中风险。",
+    "CLARITY_03缩位展示问题证据强度不足以支撑阻塞测试，降级为低风险。",
+    "debit_timing、payout_timing、funds_failure_compensation均为advice_only，引用了公共模块或隐含在标准流程中，不构成高阻塞。",
+    "pool_negative_floor、same_metric_window、ui_text_window_alignment均为not_applicable，本玩法不涉及奖池或统计窗口。",
+    "single_round_payout_cap为advice_only，已有相对上限（100倍）兜底，绝对金额封顶可作为补充建议。",
+    "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+    "candidate_generation_mode=deterministic_primary_plus_admitted_delta"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [],
+  "missed_findings": [],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "CLARITY_01",
+        "primary_issue_ids": [
+          "CLARITY_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_02",
+        "primary_issue_ids": [
+          "CLARITY_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "CLARITY_03",
+        "primary_issue_ids": [
+          "CLARITY_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_03",
+        "primary_issue_ids": [
+          "LOGIC_03"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_02",
+        "primary_issue_ids": [
+          "LOGIC_02"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_04",
+        "primary_issue_ids": [
+          "LOGIC_04"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "LOGIC_01",
+        "primary_issue_ids": [
+          "LOGIC_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "TEST_01",
+        "primary_issue_ids": [
+          "TEST_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      },
+      {
+        "candidate_issue_id": "UX_01",
+        "primary_issue_ids": [
+          "UX_01"
+        ],
+        "absorbed_missed_issue_ids": []
+      }
+    ],
+    "added": [],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [],
+  "lineage_counts": {
+    "kept": 9,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 9,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 9,
+    "added": 0,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "none",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_high_signal_demotion_without_support": false,
+  "candidate_high_signal_demotion_issue_ids": [],
+  "candidate_high_signal_demotion_titles": [],
+  "candidate_overcompressed": false,
+  "candidate_overcompressed_reason": "",
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": true,
+  "normalized_candidate_ready_reason": "Candidate 由系统确定性生成，不依赖模型自评。",
+  "phase2_admission": {
+    "enabled": true,
+    "claimed_count": 0,
+    "admitted_count": 0,
+    "rejected_count": 0,
+    "all_passed": true,
+    "results": [],
+    "coverage_ledger": {
+      "schema_version": 2,
+      "passed": true,
+      "completeness": 1.0,
+      "expected_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "observed_audit_keys": [
+        "settlement_formula_ui_config",
+        "trigger_state_termination",
+        "funds_deduction_payout",
+        "max_payout_economic_boundary",
+        "statistics_time_window"
+      ],
+      "expected_control_keys": {
+        "settlement_formula_ui_config": [
+          "settlement_formula",
+          "ui_config_mapping"
+        ],
+        "trigger_state_termination": [
+          "trigger_entry",
+          "termination_priority"
+        ],
+        "funds_deduction_payout": [
+          "debit_timing",
+          "payout_timing",
+          "funds_failure_compensation"
+        ],
+        "max_payout_economic_boundary": [
+          "relative_payout_cap",
+          "pool_negative_floor",
+          "single_round_payout_cap"
+        ],
+        "statistics_time_window": [
+          "same_metric_window",
+          "ui_text_window_alignment"
+        ]
+      },
+      "confirmed_audit_keys": [],
+      "confirmed_control_keys": [],
+      "candidate_to_audit_key": {},
+      "candidate_to_control_key": {},
+      "finding_audit_keys": {},
+      "finding_control_keys": {},
+      "unmapped_missed_issue_ids": [],
+      "orphan_confirmed_issue_ids": [],
+      "duplicate_confirmed_issue_ids": [],
+      "protocol_repairs": [
+        "inferred_coverage_schema_version:2_from_complete_control_shape"
+      ],
+      "errors": [],
+      "entries": [
+        {
+          "audit_key": "settlement_formula_ui_config",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_01",
+            "CLARITY_02",
+            "CLARITY_03"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 段落18-19",
+            "crazy777数值文档修改后.docx / 段落30、43-45",
+            "疯狂777需求文档修改后.docx / 段落30",
+            "crazy777数值文档修改后.docx / 表格4、段落21"
+          ],
+          "reason": "Primary LOGIC_01已覆盖结算公式的加法/乘法歧义问题。经反证，两份文档在加法累加上一致：需求段落19举例10*10*(1+2+1+5)=900明确为加法；数值段落23'累加'、段落43'累加乘数值'、段落44'累计乘数值默认=1'均支持加法公式final_multiplier=1+Σ(respin_values)。问题本质为术语混淆而非根本冲突。；Primary CLARITY_02覆盖乘数符号'0'与'空白'的映射混淆；CLARITY_03覆盖中奖金额缩位展示规则。两者均为UI/配置到结算字段的映射问题。",
+          "controls": [
+            {
+              "control_key": "settlement_formula",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_01"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落18-19",
+                "crazy777数值文档修改后.docx / 段落30、43-45"
+              ],
+              "reason": "Primary LOGIC_01已覆盖结算公式的加法/乘法歧义问题。经反证，两份文档在加法累加上一致：需求段落19举例10*10*(1+2+1+5)=900明确为加法；数值段落23'累加'、段落43'累加乘数值'、段落44'累计乘数值默认=1'均支持加法公式final_multiplier=1+Σ(respin_values)。问题本质为术语混淆而非根本冲突。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_config_mapping",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "CLARITY_02",
+                "CLARITY_03"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落30",
+                "crazy777数值文档修改后.docx / 表格4、段落21"
+              ],
+              "reason": "Primary CLARITY_02覆盖乘数符号'0'与'空白'的映射混淆；CLARITY_03覆盖中奖金额缩位展示规则。两者均为UI/配置到结算字段的映射问题。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "trigger_state_termination",
+          "status": "covered_by_primary",
+          "primary_issue_ids": [
+            "LOGIC_02",
+            "TEST_01",
+            "LOGIC_04"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 段落17-18",
+            "crazy777数值文档修改后.docx / 段落42、55-56",
+            "疯狂777需求文档修改后.docx / 段落35-36",
+            "crazy777数值文档修改后.docx / 段落61、表格6-7"
+          ],
+          "reason": "Primary LOGIC_02已覆盖风控强制0倍与RESPIN触发条件的冲突。数值段落42明确RESPIN触发条件为'123列均不为空且第4列为respin'，而段落55-56风控要求'超过100倍强制0倍（123列至少一列为空）'，两者在RESPIN累加超100倍时互斥。；Primary TEST_01覆盖自动旋转/快捷旋转与RESPIN状态的交互规则；LOGIC_04覆盖RESPIN次数与乘数值的抽取逻辑。两者均为状态终止与优先级问题。",
+          "controls": [
+            {
+              "control_key": "trigger_entry",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落17-18",
+                "crazy777数值文档修改后.docx / 段落42、55-56"
+              ],
+              "reason": "Primary LOGIC_02已覆盖风控强制0倍与RESPIN触发条件的冲突。数值段落42明确RESPIN触发条件为'123列均不为空且第4列为respin'，而段落55-56风控要求'超过100倍强制0倍（123列至少一列为空）'，两者在RESPIN累加超100倍时互斥。",
+              "errors": []
+            },
+            {
+              "control_key": "termination_priority",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "TEST_01",
+                "LOGIC_04"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落35-36",
+                "crazy777数值文档修改后.docx / 段落61、表格6-7"
+              ],
+              "reason": "Primary TEST_01覆盖自动旋转/快捷旋转与RESPIN状态的交互规则；LOGIC_04覆盖RESPIN次数与乘数值的抽取逻辑。两者均为状态终止与优先级问题。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "funds_deduction_payout",
+          "status": "advice_only",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 段落37",
+            "疯狂777需求文档修改后.docx / 段落19、30",
+            "疯狂777需求文档修改后.docx / 段落20"
+          ],
+          "reason": "需求段落37提及'点击单次投注按钮后消耗对应的货币进行投注开奖'，但未明确扣款是在按钮点击时、动画开始前还是结算后。属于标准SLOTS流程，隐含在'消耗货币进行投注'表述中，不构成高阻塞。；需求段落19描述RESPIN结束后计算最终奖励，段落30描述中奖金额展示区域，但未明确派奖到账钱包的具体节点。属于隐含流程，不构成高阻塞。；需求段落20明确'复用中台统一处理流程'处理网络中断、主动退出等异常，引用了公共模块能力。虽未详述玩法专属规则，但已有平台规范兜底，不构成高阻塞。",
+          "controls": [
+            {
+              "control_key": "debit_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落37"
+              ],
+              "reason": "需求段落37提及'点击单次投注按钮后消耗对应的货币进行投注开奖'，但未明确扣款是在按钮点击时、动画开始前还是结算后。属于标准SLOTS流程，隐含在'消耗货币进行投注'表述中，不构成高阻塞。",
+              "errors": []
+            },
+            {
+              "control_key": "payout_timing",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落19、30"
+              ],
+              "reason": "需求段落19描述RESPIN结束后计算最终奖励，段落30描述中奖金额展示区域，但未明确派奖到账钱包的具体节点。属于隐含流程，不构成高阻塞。",
+              "errors": []
+            },
+            {
+              "control_key": "funds_failure_compensation",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 段落20"
+              ],
+              "reason": "需求段落20明确'复用中台统一处理流程'处理网络中断、主动退出等异常，引用了公共模块能力。虽未详述玩法专属规则，但已有平台规范兜底，不构成高阻塞。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "max_payout_economic_boundary",
+          "status": "advice_only",
+          "primary_issue_ids": [
+            "LOGIC_02"
+          ],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "crazy777数值文档修改后.docx / 表格9、段落55-56",
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 段落55-56"
+          ],
+          "reason": "Primary LOGIC_02已覆盖相对赔付边界（100倍强制0倍）与RESPIN触发条件的冲突。数值表格9和段落55-56明确了相对上限规则。；两份文档均未提及奖池、透支、负值下限或熔断机制。本玩法为单局结算SLOTS，不涉及奖池经济模型，该控制面不适用。；数值段落55-56已提供相对赔付上限（100倍），但未明确单局绝对金额封顶。考虑到已有相对上限兜底，且SLOTS游戏通常依赖相对上限控制风险，绝对金额封顶非高阻塞项，可作为补充建议。",
+          "controls": [
+            {
+              "control_key": "relative_payout_cap",
+              "status": "covered_by_primary",
+              "primary_issue_ids": [
+                "LOGIC_02"
+              ],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 表格9、段落55-56"
+              ],
+              "reason": "Primary LOGIC_02已覆盖相对赔付边界（100倍强制0倍）与RESPIN触发条件的冲突。数值表格9和段落55-56明确了相对上限规则。",
+              "errors": []
+            },
+            {
+              "control_key": "pool_negative_floor",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "两份文档均未提及奖池、透支、负值下限或熔断机制。本玩法为单局结算SLOTS，不涉及奖池经济模型，该控制面不适用。",
+              "errors": []
+            },
+            {
+              "control_key": "single_round_payout_cap",
+              "status": "advice_only",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "crazy777数值文档修改后.docx / 段落55-56"
+              ],
+              "reason": "数值段落55-56已提供相对赔付上限（100倍），但未明确单局绝对金额封顶。考虑到已有相对上限兜底，且SLOTS游戏通常依赖相对上限控制风险，绝对金额封顶非高阻塞项，可作为补充建议。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        },
+        {
+          "audit_key": "statistics_time_window",
+          "status": "not_applicable",
+          "primary_issue_ids": [],
+          "candidate_issue_ids": [],
+          "evidence_checked": [
+            "疯狂777需求文档修改后.docx / 全文",
+            "crazy777数值文档修改后.docx / 全文"
+          ],
+          "reason": "两份文档均未涉及统计指标、时间窗口或排行榜统计周期定义。该控制面不适用。；两份文档均未涉及统计指标在正文与UI截图中的窗口值一致性问题。该控制面不适用。",
+          "controls": [
+            {
+              "control_key": "same_metric_window",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "两份文档均未涉及统计指标、时间窗口或排行榜统计周期定义。该控制面不适用。",
+              "errors": []
+            },
+            {
+              "control_key": "ui_text_window_alignment",
+              "status": "not_applicable",
+              "primary_issue_ids": [],
+              "candidate_issue_ids": [],
+              "evidence_checked": [
+                "疯狂777需求文档修改后.docx / 全文",
+                "crazy777数值文档修改后.docx / 全文"
+              ],
+              "reason": "两份文档均未涉及统计指标在正文与UI截图中的窗口值一致性问题。该控制面不适用。",
+              "errors": []
+            }
+          ],
+          "errors": []
+        }
+      ],
+      "schema_version_inferred": true,
+      "protocol_gate": {
+        "required": true,
+        "protocol_revision": "phase2_v2_1",
+        "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+        "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+        "echo_required": true,
+        "echo_matched": true,
+        "delta_only_required": false,
+        "delta_only_compliant": true,
+        "forbidden_fields_present": [
+          "candidate_report",
+          "candidate_lineage",
+          "candidate_readiness"
+        ],
+        "unexpected_fields_present": [],
+        "passed": true,
+        "errors": []
+      }
+    },
+    "protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_1",
+      "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "echo_required": true,
+      "echo_matched": true,
+      "delta_only_required": false,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [
+        "candidate_report",
+        "candidate_lineage",
+        "candidate_readiness"
+      ],
+      "unexpected_fields_present": [],
+      "passed": true,
+      "errors": []
+    },
+    "candidate_inputs_sanitized": true
+  },
+  "candidate_block_reasons": [],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_high_signal_demotion_supported": true,
+    "candidate_not_overcompressed": true,
+    "candidate_major_judgment_drift_absent": true,
+    "phase2_admission_enabled": true,
+    "phase2_candidate_inputs_sanitized": true,
+    "phase2_protocol_gate_passed": true,
+    "phase2_protocol_gate": {
+      "required": true,
+      "protocol_revision": "phase2_v2_1",
+      "evidence_packet_id": "354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "expected_echo": "protocol_profile=phase2_v2_1; evidence_packet_id=354dc37a32a5bb341c04ee24260da3a4b9d2018ecacacf7801f2f50b5bce1c71",
+      "echo_required": true,
+      "echo_matched": true,
+      "delta_only_required": false,
+      "delta_only_compliant": true,
+      "forbidden_fields_present": [
+        "candidate_report",
+        "candidate_lineage",
+        "candidate_readiness"
+      ],
+      "unexpected_fields_present": [],
+      "passed": true,
+      "errors": []
+    },
+    "phase2_coverage_ledger_passed": true,
+    "phase2_coverage_ledger_completeness": 1.0,
+    "phase2_coverage_ledger_errors": [],
+    "phase2_all_additions_admitted": true,
+    "phase2_admitted_count": 0,
+    "phase2_rejected_count": 0,
+    "primary_top3_retention": 1.0,
+    "primary_top3_retention_gate_passed": true,
+    "candidate_score_locked_to_primary": true
+  },
+  "candidate_block_reason_categories": {}
+}

@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAD 阶段三人工验收</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f2f4f1;
+      --surface: #ffffff;
+      --surface-soft: #f8faf7;
+      --ink: #172019;
+      --muted: #647067;
+      --line: #dbe2dc;
+      --accent: #176b4a;
+      --accent-strong: #0f5137;
+      --accent-soft: #e4f2eb;
+      --amber: #a55d0a;
+      --amber-soft: #fff2dd;
+      --danger: #a43131;
+      --danger-soft: #fbe9e7;
+      --shadow: 0 12px 34px rgba(28, 43, 33, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 2%, rgba(54, 132, 92, 0.12), transparent 28rem),
+        linear-gradient(180deg, #f7f8f5 0, var(--bg) 30rem);
+      color: var(--ink);
+      font-family: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+      line-height: 1.55;
+    }
+
+    button, input, textarea, select { font: inherit; }
+
+    button { cursor: pointer; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero-mark {
+      display: grid;
+      width: 104px;
+      height: 104px;
+      place-items: center;
+      border: 1px solid rgba(23, 107, 74, 0.24);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow);
+      color: var(--accent);
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.08em;
+    }
+
+    .panel {
+      border: 1px solid rgba(219, 226, 220, 0.92);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .loader {
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .loader-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .loader h2, .empty h2 {
+      margin: 0 0 4px;
+      font-size: 18px;
+    }
+
+    .loader p, .empty p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .file-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .file-input { display: none; }
+
+    .button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    }
+
+    .button:hover { transform: translateY(-1px); border-color: #b7c5ba; }
+    .button:focus-visible, .binary button:focus-visible, input:focus-visible,
+    textarea:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(23, 107, 74, 0.22);
+      outline-offset: 2px;
+    }
+
+    .button.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 8px 20px rgba(23, 107, 74, 0.22);
+    }
+
+    .button.primary:hover { background: var(--accent-strong); }
+    .button:disabled { cursor: not-allowed; opacity: 0.48; transform: none; box-shadow: none; }
+
+    .workspace { display: none; }
+    .workspace.ready { display: block; }
+
+    .status-panel {
+      position: sticky;
+      z-index: 20;
+      top: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .status-top {
+      display: grid;
+      grid-template-columns: auto minmax(200px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .progress-copy strong {
+      display: block;
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .progress-copy span { color: var(--muted); font-size: 13px; }
+
+    .progress-track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e7ece8;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #4e9f78);
+      transition: width 220ms ease;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) repeat(2, minmax(140px, 190px));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .control {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface-soft);
+      color: var(--ink);
+      padding: 9px 12px;
+    }
+
+    .notice {
+      display: none;
+      margin: 0 0 20px;
+      padding: 14px 16px;
+      border: 1px solid #ecd19d;
+      border-radius: 13px;
+      background: var(--amber-soft);
+      color: #754409;
+      font-size: 14px;
+    }
+
+    .notice.show { display: block; }
+    .notice.error { border-color: #efb7b1; background: var(--danger-soft); color: #7e2626; }
+
+    .cards { display: grid; gap: 18px; }
+
+    .review-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 7px 22px rgba(31, 48, 37, 0.055);
+    }
+
+    .review-card.complete { border-color: #a7cbb6; }
+    .review-card.hidden { display: none; }
+
+    .card-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #fff, #f8faf7);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #edf1ed;
+      color: #4d5a50;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .pill.challenge { background: #e8f1ff; color: #265d95; }
+    .pill.correction { background: #f2eaff; color: #68429a; }
+    .pill.done { background: var(--accent-soft); color: var(--accent-strong); }
+    .pill.pending { background: var(--amber-soft); color: var(--amber); }
+
+    .card-head h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .card-id {
+      color: var(--muted);
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 0;
+    }
+
+    .evidence-column { padding: 22px 24px 24px; }
+    .decision-column {
+      padding: 22px 24px 24px;
+      border-left: 1px solid var(--line);
+      background: var(--surface-soft);
+    }
+
+    .detail-grid { display: grid; gap: 14px; }
+
+    .detail {
+      padding: 13px 14px;
+      border: 1px solid #e5e9e5;
+      border-radius: 12px;
+      background: #fbfcfa;
+    }
+
+    .detail.before { border-left: 4px solid #c87b32; }
+    .detail.after { border-left: 4px solid var(--accent); }
+
+    .detail-label {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      margin: 0;
+      color: #28332b;
+      font-size: 14px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .decision-title {
+      margin: 0 0 14px;
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .question-list { display: grid; gap: 13px; }
+
+    .question {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .question-copy strong { display: block; font-size: 14px; }
+    .question-copy span { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; }
+
+    .binary {
+      display: grid;
+      grid-template-columns: repeat(2, 52px);
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #edf1ed;
+    }
+
+    .binary button {
+      min-height: 32px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .binary button.selected-yes { background: var(--accent); color: white; }
+    .binary button.selected-no { background: var(--danger); color: white; }
+
+    .notes-label {
+      display: block;
+      margin: 18px 0 6px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    textarea.control { min-height: 86px; resize: vertical; background: white; }
+
+    .empty {
+      padding: 54px 22px;
+      text-align: center;
+    }
+
+    .footer-note {
+      margin: 22px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-mark { display: none; }
+      .loader-grid, .status-top, .card-body { grid-template-columns: 1fr; }
+      .file-actions { justify-content: flex-start; }
+      .status-panel { position: static; }
+      .toolbar { grid-template-columns: 1fr; }
+      .decision-column { border-top: 1px solid var(--line); border-left: 0; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 20px, 1180px); padding-top: 24px; }
+      .card-head { grid-template-columns: 1fr; }
+      .card-id { white-space: normal; }
+      .question { grid-template-columns: 1fr; }
+      .binary { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">RAD · Phase 3 · Blind Review</p>
+        <h1>阶段三人工验收</h1>
+        <p class="subtitle">逐条判断 Challenge 与影子修正。页面只读取公开盲标模板，不展示模型或协议身份；所有草稿仅保存在当前浏览器。</p>
+      </div>
+      <div class="hero-mark" aria-hidden="true">RAD</div>
+    </header>
+
+    <section class="panel loader" aria-labelledby="loader-title">
+      <div class="loader-grid">
+        <div>
+          <h2 id="loader-title">第一步：载入盲标模板</h2>
+          <p>请选择与本页面同目录的 human_annotation_template.json。也可以导入之前导出的 decisions 文件继续验收。</p>
+        </div>
+        <div class="file-actions">
+          <label class="button primary" for="template-file">选择验收模板</label>
+          <input class="file-input" id="template-file" type="file" accept="application/json,.json">
+          <label class="button" for="decisions-file">导入已有判断</label>
+          <input class="file-input" id="decisions-file" type="file" accept="application/json,.json">
+        </div>
+      </div>
+    </section>
+
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+
+    <section id="workspace" class="workspace">
+      <div class="panel status-panel">
+        <div class="status-top">
+          <div class="progress-copy">
+            <strong id="progress-text">0 / 0</strong>
+            <span id="progress-detail">尚未开始</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+          <button id="export-button" class="button primary" type="button" disabled>导出验收结果</button>
+        </div>
+        <div class="toolbar">
+          <input id="search" class="control" type="search" placeholder="搜索游戏、标题、ID 或正文">
+          <select id="type-filter" class="control" aria-label="类型筛选">
+            <option value="all">全部类型</option>
+            <option value="challenge">仅 Challenge</option>
+            <option value="correction">仅 Correction</option>
+          </select>
+          <select id="status-filter" class="control" aria-label="完成状态筛选">
+            <option value="all">全部状态</option>
+            <option value="incomplete">仅未完成</option>
+            <option value="complete">仅已完成</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="cards" class="cards"></div>
+      <div id="empty" class="panel empty" hidden>
+        <h2>没有符合当前筛选的条目</h2>
+        <p>调整搜索词或筛选条件后再试。</p>
+      </div>
+      <p class="footer-note">导出的文件名固定为 human_annotation_decisions.json。请将它放回本基准目录后运行 finalize。</p>
+    </section>
+  </main>
+
+  <script>
+    'use strict';
+
+    const FIELD_CONFIG = {
+      challenge: [
+        ['target_correct', '指向正确', '是否指向正确的 Primary finding'],
+        ['valid', '内容成立', '事实与风险判断是否成立'],
+        ['evidence_locatable', '证据可定位', '能否在冻结输入中准确找到证据'],
+        ['actionable', '建议可执行', '责任人与修改建议是否可直接执行'],
+        ['should_split', '确实应拆分', '该问题是否应拆成多个独立 finding']
+      ],
+      correction: [
+        ['target_correct', '指向正确', '是否指向正确的 Primary finding'],
+        ['accurate', '修正更准确', '影子修正是否比原表述更准确'],
+        ['supported', '证据支持', '影子修正是否有冻结输入支持'],
+        ['safe_to_apply', '可安全应用', '人工确认后是否可安全应用']
+      ]
+    };
+
+    const DETAIL_CONFIG = {
+      challenge: [
+        ['current_state', '当前表述'],
+        ['evidence', '证据'],
+        ['risk', '风险'],
+        ['suggestion', '建议'],
+        ['proposed_split', '建议拆分']
+      ],
+      correction: [
+        ['correction_disposition', '处置动作'],
+        ['source_provenance', '证据来源'],
+        ['residual_issue', '剩余问题'],
+        ['current_state', '当前表述'],
+        ['evidence', '证据'],
+        ['risk', '风险'],
+        ['suggestion', '建议'],
+        ['before', '修正前', 'before'],
+        ['after_preview', '修正后预览', 'after']
+      ]
+    };
+
+    const state = {
+      template: null,
+      items: [],
+      answers: {},
+      storageKey: '',
+      pendingDecisions: null
+    };
+
+    const templateFile = document.getElementById('template-file');
+    const decisionsFile = document.getElementById('decisions-file');
+    const workspace = document.getElementById('workspace');
+    const cards = document.getElementById('cards');
+    const empty = document.getElementById('empty');
+    const notice = document.getElementById('notice');
+    const progressText = document.getElementById('progress-text');
+    const progressDetail = document.getElementById('progress-detail');
+    const progressFill = document.getElementById('progress-fill');
+    const exportButton = document.getElementById('export-button');
+    const search = document.getElementById('search');
+    const typeFilter = document.getElementById('type-filter');
+    const statusFilter = document.getElementById('status-filter');
+
+    templateFile.addEventListener('change', async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      try {
+        const payload = await readJsonFile(file);
+        loadTemplate(payload);
+        showNotice(`已载入 ${state.items.length} 条盲标记录。草稿会自动保存在当前浏览器。`);
+      } catch (error) {
+        showNotice(`模板载入失败：${error.message}`, true);
+      } finally {
+        event.target.value = '';
+      }
+    });
+
+    decisionsFile.addEventListener('change', async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      try {
+        const payload = await readJsonFile(file);
+        if (!state.items.length) {
+          state.pendingDecisions = payload;
+          showNotice('判断文件已读取。请继续选择对应的验收模板。');
+        } else {
+          importDecisions(payload);
+        }
+      } catch (error) {
+        showNotice(`判断文件导入失败：${error.message}`, true);
+      } finally {
+        event.target.value = '';
+      }
+    });
+
+    search.addEventListener('input', applyFilters);
+    typeFilter.addEventListener('change', applyFilters);
+    statusFilter.addEventListener('change', applyFilters);
+    exportButton.addEventListener('click', exportDecisions);
+
+    async function readJsonFile(file) {
+      const text = await file.text();
+      try {
+        return JSON.parse(text);
+      } catch {
+        throw new Error('文件不是有效的 JSON');
+      }
+    }
+
+    function loadTemplate(payload) {
+      if (!payload || !Array.isArray(payload.items) || !payload.items.length) {
+        throw new Error('找不到非空 items 数组');
+      }
+
+      const seen = new Set();
+      const items = payload.items.map(raw => {
+        const item = { ...raw };
+        const id = String(item.annotation_id || '').trim();
+        const type = String(item.change_type || '').trim();
+        if (!id) throw new Error('存在缺少 annotation_id 的条目');
+        if (seen.has(id)) throw new Error(`annotation_id 重复：${id}`);
+        if (!FIELD_CONFIG[type]) throw new Error(`不支持的 change_type：${type || '<空>'}`);
+        seen.add(id);
+        return item;
+      });
+
+      state.template = payload;
+      state.items = items;
+      state.storageKey = `rad-phase3-review:${hashText(items.map(item => item.annotation_id).join('|'))}`;
+      state.answers = readStoredAnswers();
+      seedAnswersFromTemplate();
+      renderCards();
+      workspace.classList.add('ready');
+
+      if (state.pendingDecisions) {
+        const pending = state.pendingDecisions;
+        state.pendingDecisions = null;
+        importDecisions(pending);
+      } else {
+        updateAll();
+      }
+    }
+
+    function seedAnswersFromTemplate() {
+      for (const item of state.items) {
+        const id = item.annotation_id;
+        const answer = state.answers[id] || {};
+        for (const [field] of FIELD_CONFIG[item.change_type]) {
+          if (typeof answer[field] !== 'boolean' && typeof item[field] === 'boolean') {
+            answer[field] = item[field];
+          }
+        }
+        if (typeof answer.reviewer_notes !== 'string') {
+          answer.reviewer_notes = String(item.reviewer_notes || '');
+        }
+        state.answers[id] = answer;
+      }
+      persistAnswers();
+    }
+
+    function importDecisions(payload) {
+      if (!payload || !Array.isArray(payload.items)) {
+        throw new Error('找不到 items 数组');
+      }
+
+      const validIds = new Set(state.items.map(item => item.annotation_id));
+      const seen = new Set();
+      let imported = 0;
+      for (const decision of payload.items) {
+        if (!decision || typeof decision !== 'object') continue;
+        const id = String(decision.annotation_id || '').trim();
+        if (!id) continue;
+        if (seen.has(id)) throw new Error(`判断文件中 ID 重复：${id}`);
+        if (!validIds.has(id)) throw new Error(`判断文件包含未知 ID：${id}`);
+        seen.add(id);
+        const item = state.items.find(candidate => candidate.annotation_id === id);
+        const answer = state.answers[id] || {};
+        for (const [field] of FIELD_CONFIG[item.change_type]) {
+          if (typeof decision[field] === 'boolean') answer[field] = decision[field];
+        }
+        if (typeof decision.reviewer_notes === 'string') answer.reviewer_notes = decision.reviewer_notes;
+        state.answers[id] = answer;
+        imported += 1;
+      }
+
+      persistAnswers();
+      renderCards();
+      updateAll();
+      showNotice(`已导入 ${imported} 条判断，并与当前浏览器草稿合并。`);
+    }
+
+    function renderCards() {
+      cards.replaceChildren();
+      for (const item of state.items) cards.appendChild(createCard(item));
+    }
+
+    function createCard(item) {
+      const card = element('article', 'review-card');
+      card.dataset.id = item.annotation_id;
+      card.dataset.type = item.change_type;
+      card.dataset.search = searchableText(item);
+
+      const head = element('div', 'card-head');
+      const headingWrap = element('div');
+      const meta = element('div', 'meta');
+      meta.append(
+        pill(item.change_type === 'challenge' ? 'Challenge' : 'Correction', item.change_type),
+        pill(String(item.game || '未知游戏')),
+        pill(`第 ${item.repeat || '?'} 次`),
+        statusPill(item)
+      );
+      const title = element('h2', '', item.title || item.current_state || '未命名验收项');
+      headingWrap.append(meta, title);
+      head.append(headingWrap, element('div', 'card-id', item.annotation_id));
+
+      const body = element('div', 'card-body');
+      const evidenceColumn = element('div', 'evidence-column');
+      const detailGrid = element('div', 'detail-grid');
+      for (const [field, label, variant] of DETAIL_CONFIG[item.change_type]) {
+        const value = item[field];
+        if (isEmpty(value)) continue;
+        const detail = element('section', `detail${variant ? ` ${variant}` : ''}`);
+        detail.append(
+          element('p', 'detail-label', label),
+          element('p', 'detail-value', formatValue(value))
+        );
+        detailGrid.appendChild(detail);
+      }
+      if (!detailGrid.children.length) {
+        const detail = element('section', 'detail');
+        detail.append(element('p', 'detail-value', '该条目没有额外正文，请根据标题和目标 ID 判断。'));
+        detailGrid.appendChild(detail);
+      }
+      evidenceColumn.appendChild(detailGrid);
+
+      const decisionColumn = element('div', 'decision-column');
+      decisionColumn.appendChild(element('p', 'decision-title', '人工判断'));
+      const questionList = element('div', 'question-list');
+      for (const config of FIELD_CONFIG[item.change_type]) {
+        questionList.appendChild(createQuestion(item, ...config));
+      }
+      decisionColumn.appendChild(questionList);
+
+      const notesLabel = element('label', 'notes-label', '验收备注（可选）');
+      notesLabel.htmlFor = `notes-${safeId(item.annotation_id)}`;
+      const notes = element('textarea', 'control');
+      notes.id = notesLabel.htmlFor;
+      notes.placeholder = '记录判断依据、需复核的位置或暂缓应用原因';
+      notes.value = state.answers[item.annotation_id]?.reviewer_notes || '';
+      notes.addEventListener('input', () => {
+        ensureAnswer(item.annotation_id).reviewer_notes = notes.value;
+        persistAnswers();
+      });
+      decisionColumn.append(notesLabel, notes);
+
+      body.append(evidenceColumn, decisionColumn);
+      card.append(head, body);
+      refreshCard(card, item);
+      return card;
+    }
+
+    function createQuestion(item, field, label, hint) {
+      const row = element('div', 'question');
+      const copy = element('div', 'question-copy');
+      copy.append(element('strong', '', label), element('span', '', hint));
+      const binary = element('div', 'binary');
+      binary.setAttribute('role', 'group');
+      binary.setAttribute('aria-label', label);
+      const yes = element('button', '', '是');
+      const no = element('button', '', '否');
+      yes.type = 'button';
+      no.type = 'button';
+      yes.dataset.value = 'true';
+      no.dataset.value = 'false';
+      yes.addEventListener('click', () => setDecision(item, field, true));
+      no.addEventListener('click', () => setDecision(item, field, false));
+      binary.append(yes, no);
+      row.dataset.field = field;
+      row.append(copy, binary);
+      updateBinary(row, state.answers[item.annotation_id]?.[field]);
+      return row;
+    }
+
+    function setDecision(item, field, value) {
+      ensureAnswer(item.annotation_id)[field] = value;
+      persistAnswers();
+      const card = cards.querySelector(`[data-id="${cssEscape(item.annotation_id)}"]`);
+      updateBinary(card.querySelector(`[data-field="${cssEscape(field)}"]`), value);
+      refreshCard(card, item);
+      updateAll();
+    }
+
+    function updateBinary(row, value) {
+      if (!row) return;
+      for (const button of row.querySelectorAll('button')) {
+        button.classList.remove('selected-yes', 'selected-no');
+        button.setAttribute('aria-pressed', 'false');
+        if (typeof value === 'boolean' && String(value) === button.dataset.value) {
+          button.classList.add(value ? 'selected-yes' : 'selected-no');
+          button.setAttribute('aria-pressed', 'true');
+        }
+      }
+    }
+
+    function refreshCard(card, item) {
+      if (!card) return;
+      const complete = isComplete(item);
+      card.classList.toggle('complete', complete);
+      const old = card.querySelector('.pill.done, .pill.pending');
+      const fresh = statusPill(item);
+      if (old) old.replaceWith(fresh);
+    }
+
+    function statusPill(item) {
+      return pill(isComplete(item) ? '已完成' : '待判断', isComplete(item) ? 'done' : 'pending');
+    }
+
+    function updateAll() {
+      const completed = state.items.filter(isComplete).length;
+      const total = state.items.length;
+      const percent = total ? Math.round(completed / total * 100) : 0;
+      progressText.textContent = `${completed} / ${total}`;
+      progressDetail.textContent = completed === total ? '全部判断已完成，可以导出' : `还剩 ${total - completed} 条 · 已完成 ${percent}%`;
+      progressFill.style.width = `${percent}%`;
+      exportButton.disabled = completed !== total || total === 0;
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query = search.value.trim().toLocaleLowerCase('zh-CN');
+      const type = typeFilter.value;
+      const status = statusFilter.value;
+      let visible = 0;
+      for (const card of cards.children) {
+        const item = state.items.find(candidate => candidate.annotation_id === card.dataset.id);
+        const matchesQuery = !query || card.dataset.search.includes(query);
+        const matchesType = type === 'all' || item.change_type === type;
+        const complete = isComplete(item);
+        const matchesStatus = status === 'all' || (status === 'complete' ? complete : !complete);
+        const show = matchesQuery && matchesType && matchesStatus;
+        card.classList.toggle('hidden', !show);
+        if (show) visible += 1;
+      }
+      empty.hidden = visible !== 0;
+    }
+
+    function exportDecisions() {
+      const incomplete = state.items.filter(item => !isComplete(item));
+      if (incomplete.length) {
+        showNotice(`还有 ${incomplete.length} 条未完成，暂不能导出。`, true);
+        return;
+      }
+
+      const payload = {
+        schema_version: 1,
+        exported_at: new Date().toISOString(),
+        items: state.items.map(item => {
+          const answer = state.answers[item.annotation_id];
+          const decision = { annotation_id: item.annotation_id };
+          for (const [field] of FIELD_CONFIG[item.change_type]) decision[field] = answer[field];
+          decision.reviewer_notes = String(answer.reviewer_notes || '');
+          return decision;
+        })
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'human_annotation_decisions.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showNotice('验收结果已导出。请将文件放到本页面所在的基准目录，再运行 finalize。');
+    }
+
+    function isComplete(item) {
+      const answer = state.answers[item.annotation_id] || {};
+      return FIELD_CONFIG[item.change_type].every(([field]) => typeof answer[field] === 'boolean');
+    }
+
+    function ensureAnswer(id) {
+      if (!state.answers[id]) state.answers[id] = { reviewer_notes: '' };
+      return state.answers[id];
+    }
+
+    function persistAnswers() {
+      if (!state.storageKey) return;
+      try {
+        localStorage.setItem(state.storageKey, JSON.stringify(state.answers));
+      } catch {
+        showNotice('浏览器无法保存本地草稿，请完成后尽快导出判断文件。', true);
+      }
+    }
+
+    function readStoredAnswers() {
+      if (!state.storageKey) return {};
+      try {
+        const stored = JSON.parse(localStorage.getItem(state.storageKey) || '{}');
+        return stored && typeof stored === 'object' ? stored : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function searchableText(item) {
+      return [
+        item.annotation_id, item.game, item.title, item.target_issue_id,
+        item.current_state, item.evidence, item.risk, item.suggestion,
+        item.before, item.after_preview, item.proposed_split
+      ].map(formatValue).join(' ').toLocaleLowerCase('zh-CN');
+    }
+
+    function formatValue(value) {
+      if (value === null || value === undefined) return '';
+      if (typeof value === 'string') return value;
+      if (typeof value === 'boolean') return value ? '是' : '否';
+      if (Array.isArray(value)) return value.map(formatValue).filter(Boolean).join('\n');
+      if (typeof value === 'object') {
+        return Object.entries(value)
+          .map(([key, nested]) => `${key}：${formatValue(nested)}`)
+          .filter(line => !line.endsWith('：'))
+          .join('\n');
+      }
+      return String(value);
+    }
+
+    function isEmpty(value) {
+      if (value === null || value === undefined || value === '') return true;
+      if (Array.isArray(value)) return value.length === 0;
+      if (typeof value === 'object') return Object.keys(value).length === 0;
+      return false;
+    }
+
+    function showNotice(message, isError = false) {
+      notice.textContent = message;
+      notice.classList.add('show');
+      notice.classList.toggle('error', isError);
+    }
+
+    function element(tag, className = '', text = '') {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== '') node.textContent = text;
+      return node;
+    }
+
+    function pill(text, modifier = '') {
+      return element('span', `pill${modifier ? ` ${modifier}` : ''}`, text);
+    }
+
+    function hashText(text) {
+      let hash = 2166136261;
+      for (let index = 0; index < text.length; index += 1) {
+        hash ^= text.charCodeAt(index);
+        hash = Math.imul(hash, 16777619);
+      }
+      return (hash >>> 0).toString(16);
+    }
+
+    function safeId(value) {
+      return String(value).replace(/[^a-zA-Z0-9_-]/g, '-');
+    }
+
+    function cssEscape(value) {
+      if (window.CSS && typeof window.CSS.escape === 'function') return window.CSS.escape(value);
+      return String(value).replace(/["\\]/g, '\\$&');
+    }
+
+    // When the page is served over HTTP, load the adjacent template automatically.
+    // file:// pages intentionally fall back to the explicit file picker for browser security.
+    if (location.protocol === 'http:' || location.protocol === 'https:') {
+      fetch('./human_annotation_template.json')
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then(payload => {
+          loadTemplate(payload);
+          showNotice(`已自动载入 ${state.items.length} 条盲标记录。`);
+        })
+        .catch(() => {});
+    }
+  </script>
+</body>
+</html>

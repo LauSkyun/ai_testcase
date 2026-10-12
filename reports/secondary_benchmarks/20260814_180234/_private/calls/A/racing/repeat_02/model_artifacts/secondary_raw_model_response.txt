@@ -1,0 +1,97 @@
+{
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-001",
+      "target_issue_id": "INTERVENTION_MAPPING",
+      "challenge_type": "multiroot",
+      "challenged_claim": "“干扰指数”与“地形概率”缺乏到速度公式的具体映射，干预逻辑无法落地",
+      "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13；musee游戏Racing.docx / 3.3下注部分 段落26",
+      "counterevidence": "",
+      "rationale": "该 finding 混合了两个不同的干预机制：1) 干扰指数（作用于车型速度变量）；2) 隐藏地形概率（作用于地形生成与分布）。两者的配置字段、作用对象和修复动作均不同，根据原子性原则必须拆分。",
+      "recommended_action": "split",
+      "proposed_split": [
+        {
+          "title": "干扰指数缺乏到速度公式变量的映射",
+          "decision_object": "干扰指数",
+          "current_state": "需求文档提到调整车型的“干扰指数”（如1.01-1.1），但未说明该指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。",
+          "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落43及图片13",
+          "risk": "程序无法实现“侧重开某车”的速度干预逻辑。",
+          "suggestion": "明确干扰指数的作用机制，例如直接乘算在Luck变量上，或作为V的修正系数。",
+          "planner_role": "数值策划",
+          "acceptance_criteria": "速度公式中包含干扰指数的明确数学映射，且程序可据此编码。"
+        },
+        {
+          "title": "隐藏地形概率的干预规则与生效阶段缺失",
+          "decision_object": "隐藏地形概率",
+          "current_state": "需求文档提到“调整隐藏地形的出现概率”及“开启两个路段的各地形概率”，但未说明隐藏地形的定义、干预概率的具体配置方式及在3段地形中的生效阶段。",
+          "evidence": "musee游戏Racing.docx / 3.3下注部分 段落26；musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落44",
+          "risk": "地形生成逻辑无法实现干预，导致控盘策略缺失一环。",
+          "suggestion": "补充隐藏地形的定义、概率配置表结构，以及干预时地形概率的覆盖或权重叠加规则。",
+          "planner_role": "系统策划",
+          "acceptance_criteria": "明确隐藏地形概率的配置字段与干预生效逻辑，地形生成模块可据此实现控盘。"
+        }
+      ]
+    },
+    {
+      "challenge_id": "CH-002",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "challenge_type": "evidence_mismatch",
+      "challenged_claim": "evidence 字段包含未解析的列表字符串及重复引用，格式不合规且冗余。",
+      "evidence": "冻结 Primary 报告中 T_VARIABLE_CONFLICT 的 evidence 字段",
+      "counterevidence": "",
+      "rationale": "evidence 字段中出现了 \"['...', '...']\" 格式的字符串，且多次重复引用了相同的段落和图片，违反了证据可追踪和稳定的原则，需清理合并。",
+      "recommended_action": "merge_evidence",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "INTERVENTION_MAPPING",
+      "correction_type": "split",
+      "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40-44及图片13；musee游戏Racing.docx / 3.3下注部分 段落26",
+      "rationale": "将干预逻辑拆分为速度变量映射和地形生成干预两个独立对象，确保修复动作和验收闭环的原子性。",
+      "proposed_changes": {},
+      "replacement_findings": [
+        {
+          "title": "干扰指数缺乏到速度公式变量的映射",
+          "decision_object": "干扰指数",
+          "current_state": "需求文档提到调整车型的“干扰指数”（如1.01-1.1），但未说明该指数如何作用于速度公式 T = L / (V * K * Luck) 中的具体变量。",
+          "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落43及图片13",
+          "risk": "程序无法实现“侧重开某车”的速度干预逻辑。",
+          "suggestion": "明确干扰指数的作用机制，例如直接乘算在Luck变量上，或作为V的修正系数。",
+          "planner_role": "数值策划",
+          "acceptance_criteria": "速度公式中包含干扰指数的明确数学映射，且程序可据此编码。"
+        },
+        {
+          "title": "隐藏地形概率的干预规则与生效阶段缺失",
+          "decision_object": "隐藏地形概率",
+          "current_state": "需求文档提到“调整隐藏地形的出现概率”及“开启两个路段的各地形概率”，但未说明隐藏地形的定义、干预概率的具体配置方式及在3段地形中的生效阶段。",
+          "evidence": "musee游戏Racing.docx / 3.3下注部分 段落26；musee游戏Racing.docx / 3.4开奖逻辑 段落40、段落44",
+          "risk": "地形生成逻辑无法实现干预，导致控盘策略缺失一环。",
+          "suggestion": "补充隐藏地形的定义、概率配置表结构，以及干预时地形概率的覆盖或权重叠加规则。",
+          "planner_role": "系统策划",
+          "acceptance_criteria": "明确隐藏地形概率的配置字段与干预生效逻辑，地形生成模块可据此实现控盘。"
+        }
+      ]
+    },
+    {
+      "correction_id": "CR-002",
+      "challenge_id": "CH-002",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "correction_type": "evidence_fix",
+      "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1及段落2",
+      "rationale": "清理冗余和格式错误的证据引用，保留跨文档变量冲突的核心证据链。",
+      "proposed_changes": {
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1及段落2"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "INTERVENTION_MAPPING 存在多根因混合，已建议拆分为干扰指数映射与隐藏地形概率干预两个独立 finding。",
+    "T_VARIABLE_CONFLICT 的 evidence 字段存在格式错误与冗余引用，已建议清理合并。",
+    "protocol_profile=phase3_v1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b"
+  ]
+}

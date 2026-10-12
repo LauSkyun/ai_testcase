@@ -1,0 +1,109 @@
+{
+  "target_coverage_ledger": [
+    {
+      "target_issue_id": "CLARITY_02",
+      "target_order": 1,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.2、图22",
+      "rationale": "图22确实包含机器人匹配与投放流程图，但正文需求中完全未提及机器人机制及人数统计口径，原finding证据确凿，判断成立。"
+    },
+    {
+      "target_issue_id": "CLARITY_03",
+      "target_order": 2,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格1、表格3",
+      "rationale": "表格1修改记录明确‘删除可见配置，默认全开’，而表格3详细说明中仍保留‘默认白名单可见’，前后矛盾客观存在，原finding成立。"
+    },
+    {
+      "target_issue_id": "CLARITY_01",
+      "target_order": 3,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格4、图1、图5、图7、图21",
+      "rationale": "表格4配置2.9倍，图1标题3X，图5出现2.5倍，图7规则文本3倍，图21引导文案存在3X与2.9X混用，核心赔率多处冲突，原finding成立。"
+    },
+    {
+      "target_issue_id": "LOGIC_02",
+      "target_order": 4,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.4、表格5",
+      "rationale": "段落66描述奖池正常状态偏移概率为{60}%，而表格5后台配置表中对应字段初始值为20%，数值口径分裂，原finding成立。"
+    },
+    {
+      "target_issue_id": "LOGIC_01",
+      "target_order": 5,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.7.5、3.8.3",
+      "rationale": "段落57/68/108的兜底逻辑允许选择赔付最少的选项，结合段落73无人投入赔付视为0的规则，确实存在开出0赔付选项的机制缺陷，原finding成立。"
+    },
+    {
+      "target_issue_id": "LOGIC_03",
+      "target_order": 6,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格3",
+      "rationale": "表格3规定同分按达到时间先后排序，但UI展示列仅有Rank、User、Score，未展示时间信息，规则与展示不匹配，原finding成立。"
+    },
+    {
+      "target_issue_id": "TEST_01",
+      "target_order": 7,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.2、3.6",
+      "rationale": "文档主流程与开奖流程章节均未提及短轮次玩法下的断线重连与局内状态恢复规则，原finding成立。"
+    },
+    {
+      "target_issue_id": "TEST_02",
+      "target_order": 8,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格3",
+      "rationale": "表格3仅说明余额不足时Repeat按钮置灰，未定义上一局多选项下注而本局余额仅够部分下注时的降级交互策略，原finding成立。"
+    },
+    {
+      "target_issue_id": "CROSS_01",
+      "target_order": 9,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.5",
+      "rationale": "3.5节仅定义了半屏与全屏的入口区分，未说明半屏模式下各弹窗的UI层级、适配与拉起规则，原finding成立。"
+    },
+    {
+      "target_issue_id": "SEC_01",
+      "target_order": 10,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 3.7.3、3.7.4、3.8.3",
+      "rationale": "段落57/68/108多次使用‘实时计算’但未界定是下注截止瞬间的快照还是动画期间的动态计算，存在并发超发风险，原finding成立。"
+    },
+    {
+      "target_issue_id": "UX_01",
+      "target_order": 11,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "tiger需求文档.docx / 表格3",
+      "rationale": "表格3结算弹窗模块明确规定‘展示5s后自动收起’且未提供用户主动关闭或暂停的交互，原finding成立。"
+    }
+  ],
+  "challenge_findings": [],
+  "correction_shadows": [],
+  "review_notes": [
+    "本轮审查严格基于冻结输入与共享文档，所有11项Primary finding均具备明确的文档定位与逻辑支撑，未发现反证或过度推断，故全部判定为pass，不生成challenge与correction。",
+    "protocol_profile=phase3_v1_2; primary_report_hash=17234c8819e6fcc4c7124a6c2c994d06b72186af9589cf080800c828c86f9581"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "protocol_revision": "phase3_v1",
+  "mode": "shadow_only",
+  "applied_to_report": false,
+  "primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+  "protocol_gate": {
+    "required": true,
+    "protocol_revision": "phase3_v1",
+    "expected_primary_report_hash": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "expected_echo": "protocol_profile=phase3_v1; primary_report_hash=2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "echo_matched": true,
+    "forbidden_top_level_fields": [],
+    "errors": [],
+    "passed": true
+  },
+  "baseline_lock": {
+    "primary_report_hash_before": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "primary_report_hash_after": "2d6217d86fe65f140b13dda40a48d4f55ad31cc787397303eb5170ad3d0a6c2b",
+    "protected_fields_hash_before": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "protected_fields_hash_after": "860de1e4d42fb0bd3286f956ed7ce70404403f9c792b83059000c716b9462487",
+    "primary_report_unchanged": true,
+    "protected_fields_unchanged": true,
+    "score_locked": true,
+    "score_reason_locked": true,
+    "top_blockers_locked": true,
+    "severity_blocking_locked": true,
+    "passed": true
+  },
+  "accepted_count": 1,
+  "rejected_count": 0,
+  "accepted_corrections": [
+    {
+      "correction_id": "CR-001",
+      "challenge_id": "CH-001",
+      "target_issue_id": "T_VARIABLE_CONFLICT",
+      "correction_type": "narrow_claim",
+      "evidence": "Racing数值文档.docx / 段落2-3、图片1；musee游戏Racing.docx / 3.4开奖逻辑 段落36、图片13",
+      "rationale": "将“公式无法求值的冲突”修正为“跨公式变量命名重名导致的阅读歧义”，问题本质从逻辑冲突降级为文档规范性问题，需澄清变量命名以避免开发误解，但不应作为阻塞开发的致命冲突。",
+      "proposed_changes": {
+        "title": "跨公式变量T命名重名易引发开发误解",
+        "current_state": "需求文档开奖时间公式中的T代表完成时间（Time），而数值文档赔率公式中的T结合上下文（Total bet/W_X）代表总下注额。两者属于不同公式的独立变量，仅因命名相同易被误判为冲突。",
+        "risk": "开发人员在阅读两份文档时，可能误以为存在逻辑冲突或错误地将完成时间代入赔率公式，导致编码错误。",
+        "suggestion": "在数值文档中明确标注赔率公式的T代表Total bet（总下注额），或在需求文档中补充变量命名规范，避免跨文档同名变量歧义。",
+        "confidence": "高"
+      },
+      "replacement_findings": [],
+      "before": {
+        "issue_id": "T_VARIABLE_CONFLICT",
+        "canonical_title": "T变量定义冲突导致公式无法求值",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "开奖时间T与赔率公式中的T变量定义冲突，导致公式无法求值",
+        "current_state": "需求文档中T定义为“实际消耗的秒数（完成时间）”，而数值文档赔率公式中T作为分子参与计算，若T为耗时，则耗时越长赔率越高，违背常理；若T为总下注额，则与需求文档定义冲突。",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落2；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 图片1；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 图片1']；['musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13', 'Racing数值文档.docx / 图片1']",
+        "risk": "变量定义歧义导致赔率公式无法正确编码，结算结果不可预期。",
+        "suggestion": "重新定义赔率公式中的变量，明确T的物理意义（如总下注额、总权重等），并与开奖时间公式中的T区分命名。",
+        "planner_role": "数值策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "after_preview": {
+        "issue_id": "T_VARIABLE_CONFLICT",
+        "canonical_title": "T变量定义冲突导致公式无法求值",
+        "primary_dimension": "逻辑一致性与数值平衡",
+        "evidence_scope": "document",
+        "severity": "高",
+        "title": "跨公式变量T命名重名易引发开发误解",
+        "current_state": "需求文档开奖时间公式中的T代表完成时间（Time），而数值文档赔率公式中的T结合上下文（Total bet/W_X）代表总下注额。两者属于不同公式的独立变量，仅因命名相同易被误判为冲突。",
+        "evidence": "musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13；Racing数值文档.docx / 图片1；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 段落2；musee游戏Racing.docx / 3.3下注部分 段落28；Racing数值文档.docx / 图片1；['musee游戏Racing.docx / 3.3下注部分 段落28', 'Racing数值文档.docx / 图片1']；['musee游戏Racing.docx / 3.4开奖逻辑 段落36及图片13', 'Racing数值文档.docx / 图片1']",
+        "risk": "开发人员在阅读两份文档时，可能误以为存在逻辑冲突或错误地将完成时间代入赔率公式，导致编码错误。",
+        "suggestion": "在数值文档中明确标注赔率公式的T代表Total bet（总下注额），或在需求文档中补充变量命名规范，避免跨文档同名变量歧义。",
+        "planner_role": "数值策划",
+        "confidence": "高",
+        "blocking": "阻塞开发"
+      },
+      "applied_to_report": false,
+      "validation_status": "accepted",
+      "validation_reasons": []
+    }
+  ],
+  "rejected_corrections": []
+}

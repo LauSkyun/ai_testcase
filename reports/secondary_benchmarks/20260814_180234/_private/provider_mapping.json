@@ -1,0 +1,15 @@
+{
+  "warning": "This file unblinds variants. Keep it separate while human annotation is in progress.",
+  "variants": [
+    {
+      "variant_id": "A",
+      "requested_provider": "qwen",
+      "env_prefix": "AI_PROVIDER_QWEN",
+      "model": "gpt-5.6-sol",
+      "wire_api": "responses",
+      "base_url": "http://47.236.3.167:8080",
+      "protocol_profile": "phase3_v1",
+      "provider_config_hash": "1f23a5285e4d72c1ffe7ef15c8d8a79fc011f22841bcf3f2823eb7227839dc52"
+    }
+  ]
+}

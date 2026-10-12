@@ -1,0 +1,188 @@
+{
+  "status": "complete",
+  "primary_model": "gpt-5.4",
+  "secondary_model": "deepseek-v4-pro",
+  "cross_document_section_disabled": true,
+  "pipeline_merge_summary": {
+    "added_findings": 4,
+    "absorbed_split_findings": 0,
+    "absorbed_primary_findings": 0,
+    "duplicate_titles": [],
+    "unsupported_findings": 0,
+    "merge_recommendations": 0
+  },
+  "selected_report_owner": "candidate",
+  "candidate_recommendation_status": "recommended",
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": true,
+    "candidate_readiness_ready": true,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": true,
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true
+  },
+  "candidate_gate_failure_reasons": [],
+  "candidate_gate_failure_categories": {},
+  "candidate_ready_for_direct_output": true,
+  "candidate_ready_reason": "候选报告已修正主模型报告的少量描述错误，并补充了4个关键遗漏项，整体结构完整、证据明确、建议可执行，可直接交给业务方。",
+  "lineage_counts": {
+    "kept": 7,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 7,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 7,
+    "added": 4,
+    "merged": 0,
+    "dropped": 0
+  },
+  "traceability_status": "complete",
+  "readiness_conflict": false,
+  "candidate_structure_drift": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_structurally_ready": true,
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "candidate_contains_multiroot_kept_findings": false,
+  "candidate_multiroot_kept_titles": [],
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "candidate_block_reasons": [],
+  "candidate_block_reason_categories": {},
+  "trace_warning": "",
+  "comparison_summary": {
+    "pipeline_only_count": 0,
+    "candidate_only_count": 0,
+    "pipeline_only_titles": [],
+    "candidate_only_titles": [],
+    "materially_changed_count": 7,
+    "materially_changed_titles": [
+      "游戏术语、赔率展示及统计时间维度在正文与UI截图中严重冲突",
+      "亏损大R累计亏损金额正文与配置表冲突",
+      "档位配置数值在文档多处严重冲突",
+      "特殊人群判定次数重置规则存在矛盾",
+      "结算净赢金额定义不清，影响排行榜与展示",
+      "核心结算兜底逻辑中“实时总奖池”定义及计算口径缺失",
+      "特殊人群保护策略的判定边界条件（局数/时长不足）缺失"
+    ],
+    "materially_changed_examples": [
+      {
+        "compare_key": "primary-issue:UI与正文术语冲突",
+        "issue_id": "UI与正文术语冲突",
+        "title": "游戏术语、赔率展示及统计时间维度在正文与UI截图中严重冲突",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS-02",
+        "issue_id": "亏损大R金额冲突",
+        "title": "亏损大R累计亏损金额正文与配置表冲突",
+        "change_kinds": [
+          "dimension_changed",
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS-01",
+        "issue_id": "档位配置数值冲突",
+        "title": "档位配置数值在文档多处严重冲突",
+        "change_kinds": [
+          "blocking_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS-03",
+        "issue_id": "特殊人群次数重置矛盾",
+        "title": "特殊人群判定次数重置规则存在矛盾",
+        "change_kinds": [
+          "dimension_changed",
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "secondary-origin:MISS-04",
+        "issue_id": "结算净赢定义不清",
+        "title": "结算净赢金额定义不清，影响排行榜与展示",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:实时总奖池定义缺失",
+        "issue_id": "实时总奖池定义缺失",
+        "title": "核心结算兜底逻辑中“实时总奖池”定义及计算口径缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      },
+      {
+        "compare_key": "primary-issue:特殊人群边界缺失",
+        "issue_id": "特殊人群边界缺失",
+        "title": "特殊人群保护策略的判定边界条件（局数/时长不足）缺失",
+        "change_kinds": [
+          "current_state_changed",
+          "risk_changed",
+          "suggestion_changed"
+        ]
+      }
+    ]
+  }
+}

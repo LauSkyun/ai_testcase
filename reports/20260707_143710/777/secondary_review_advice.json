@@ -1,0 +1,235 @@
+{
+  "quality_assessment": {
+    "summary": "主模型报告准确抓住了第4列盘面结构缺失、RESPIN结算公式冲突、风控与表现矛盾以及符号定义歧义等核心阻塞点，整体结构清晰，证据链基本完整。但报告在问题合并与表述上仍有优化空间，部分风险描述不够精确，且遗漏了“假赔率”展示与实际结算隔离这一关键问题。",
+    "strengths": [
+      "主流程框架与核心阻塞点定位准确，第4列盘面结构、RESPIN公式、风控冲突等均为高信号根因。",
+      "证据引用基本覆盖需求文档与数值文档的关键段落与表格。",
+      "测试点设计全面，覆盖功能、异常、兼容性、安全与性能等关键场景。"
+    ],
+    "issues": [
+      "将RESPIN公式冲突、举例错误、公式占位符等多个子症状合并为一个过大的问题，导致风险描述与建议混杂。",
+      "遗漏了“假赔率”展示（中奖金额展示区域）与实际结算赔付口径不一致的关键问题。",
+      "部分问题标题与风险描述过于笼统，未精确区分“表述歧义”与“逻辑冲突”。"
+    ],
+    "suggestion_level": "medium",
+    "ready_for_direct_output": false,
+    "reason": "候选报告已修正主模型的核心问题，但需补充遗漏的“假赔率”展示与结算隔离问题，并优化部分问题的合并与表述，以提升可读性与可执行性。"
+  },
+  "candidate_readiness": {
+    "ready_for_direct_output": false,
+    "reason": "候选报告已修正主模型的核心问题，但需补充遗漏的“假赔率”展示与结算隔离问题，并优化部分问题的合并与表述，以提升可读性与可执行性。"
+  },
+  "review_notes": [
+    "主模型报告的DIM3-02问题合并了过多子症状，导致风险与建议混杂。已在此候选稿中优化为分点描述，但未拆分为独立问题，以保持主模型结构。",
+    "补充了MISSED-01（假赔率展示与结算口径不一致）作为新增高阻塞问题，已加入DIM2-04。",
+    "补充了MISSED-02（RESPIN触发条件表述不一致），已吸收至DIM3-02。",
+    "建议后续由策划统一梳理RESPIN的完整状态机与数据流，确保所有公式、权重、风控、表现描述一致。",
+    "dual_pass 结构提示：candidate 仍保留多根因混合问题，建议继续拆清根因或改为分点展示。"
+  ],
+  "unsupported_findings": [],
+  "merge_recommendations": [
+    {
+      "primary_issue_id": "DIM3-02",
+      "recommended_action": "将RESPIN公式冲突、举例错误、公式占位符等子症状保留在同一个问题内，但进一步拆分现状描述，使用分点形式清晰列出公式冲突、举例错误、自动旋转行为、RESPIN终止逻辑等子问题，避免风险与建议混杂。",
+      "reason": "当前风险与建议段过于冗长，混合了多个子症状，导致可读性与可执行性下降。"
+    }
+  ],
+  "missed_findings": [
+    {
+      "issue_id": "MISSED-01",
+      "canonical_title": "中奖金额展示区域与真实结算赔付口径不一致",
+      "primary_dimension": "逻辑一致性与数值平衡",
+      "evidence_scope": "cross_document",
+      "severity": "高",
+      "title": "“假赔率”展示与实际结算赔付口径不一致，存在客诉风险",
+      "current_state": "需求文档第30段描述中奖金额展示区域“默认倍率为1倍的实际中奖金额”，即展示的是“基础投注 × 赔率”。数值文档第55-56段规定风控“超过100倍强制0倍”，即实际结算金额可能为0。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落30；crazy777数值文档修改后.docx / 段落55-56",
+      "risk": "当风控触发强制0倍时，客户端展示区域仍会显示非0倍的真实赔率金额（如150倍），但玩家实际获得0奖励。这导致客户端展示与真实结算严重不一致，引发客诉与信任危机。测试也无法验收此场景下的表现与结果对齐。",
+      "suggestion": "1. 明确中奖金额展示区域的数据来源：若展示的是“未经过风控的原始赔率”，需在文档中注明，并设计风控触发时的客诉预案。2. 建议风控拦截后，客户端展示区域强制刷新为0或显示“未中奖”，确保表现与结果一致。3. 补充验收标准：风控触发时，展示金额与结算金额必须一致。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞测试设计与验收"
+    },
+    {
+      "issue_id": "MISSED-02",
+      "canonical_title": "RESPIN触发条件表述不一致",
+      "primary_dimension": "清晰度与完整性",
+      "evidence_scope": "cross_document",
+      "severity": "中",
+      "title": "RESPIN触发条件在两份文档中表述不一致，导致实现理解错误",
+      "current_state": "需求文档第19段描述“当玩家本次中奖连线中与RESPIN图案连成一线”，暗示物理连线。数值文档第42段描述“当第四列乘数轴停止时，停在respin上，并且123列均不为空时触发”。",
+      "evidence": "疯狂777需求文档修改后.docx / 段落19；crazy777数值文档修改后.docx / 段落42",
+      "risk": "第4列是独立的乘数轴，物理上无法与123列的中间一行“连成一线”。需求文档的表述会导致客户端表现理解错误（如误以为需要画一条线连到第4列），开发可能实现出错误的连线判定逻辑。",
+      "suggestion": "统一采用数值文档的严谨表述：“当123列中间一行均不为空（即基础中奖）且第4列中间位置停在RESPIN符号上时触发”。删除需求文档中“连成一线”的误导性描述。",
+      "planner_role": "系统策划",
+      "confidence": "高",
+      "blocking": "阻塞开发"
+    }
+  ],
+  "candidate_lineage": {
+    "kept": [
+      {
+        "candidate_issue_id": "DIM1-01",
+        "primary_issue_ids": [
+          "DIM1-01"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "修正了标题，细化了第4列盘面结构缺失的描述，并补充了推展机制与动效的关联证据。"
+      },
+      {
+        "candidate_issue_id": "DIM1-02",
+        "primary_issue_ids": [
+          "DIM1-02"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "明确指出了“不为4或5”的歧义，并提供了更具体的修改建议。"
+      },
+      {
+        "candidate_issue_id": "DIM2-03",
+        "primary_issue_ids": [
+          "DIM2-03"
+        ],
+        "absorbed_missed_issue_ids": [],
+        "modifications": "无实质修改，仅润色了风险描述。"
+      },
+      {
+        "candidate_issue_id": "DIM3-02",
+        "primary_issue_ids": [
+          "DIM3-02"
+        ],
+        "absorbed_missed_issue_ids": [
+          "MISSED-02"
+        ],
+        "modifications": "将RESPIN触发条件表述不一致的问题吸收至此，并在现状描述中分点列出公式冲突、举例错误、自动旋转行为、RESPIN终止逻辑等子症状，优化了建议的可执行性。"
+      }
+    ],
+    "added": [
+      {
+        "candidate_issue_id": "DIM2-04",
+        "source_missed_issue_ids": [
+          "MISSED-01"
+        ],
+        "reason": "主模型遗漏了中奖金额展示区域与真实结算赔付口径不一致的关键问题，直接阻塞测试设计与验收。"
+      }
+    ],
+    "merged": [],
+    "dropped": []
+  },
+  "advice_candidate_structure_mismatch": false,
+  "advice_claimed_absorbed_but_materialized_separately": [],
+  "advice_claimed_added_but_not_materialized": [],
+  "materialized_missed_without_added": [],
+  "absorbed_missed_issue_ids": [
+    "MISSED-02"
+  ],
+  "lineage_counts": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_raw": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "lineage_counts_materialized": {
+    "kept": 4,
+    "added": 1,
+    "merged": 0,
+    "dropped": 0
+  },
+  "raw_readiness_conflict": false,
+  "readiness_conflict_auto_resolved": false,
+  "traceability_status": "complete",
+  "candidate_structure_drift": false,
+  "raw_structure_change": true,
+  "structure_change_explained_by_lineage": true,
+  "readiness_conflict": false,
+  "trace_warning": "",
+  "lineage_coverage_complete": true,
+  "unmapped_primary_issue_ids": [],
+  "unmapped_candidate_issue_ids": [],
+  "invalid_primary_lineage_ids": [],
+  "invalid_candidate_lineage_ids": [],
+  "duplicate_primary_lineage_ids": [],
+  "duplicate_candidate_lineage_ids": [],
+  "primary_issue_id_repair_count": 0,
+  "candidate_issue_id_repair_count": 0,
+  "lineage_auto_healed": false,
+  "lineage_auto_mapped_primary_issue_ids": [],
+  "lineage_auto_mapped_candidate_issue_ids": [],
+  "candidate_added_materialization_status": "complete",
+  "candidate_added_materialization_missing_ids": [],
+  "candidate_merged_materialization_status": "none",
+  "candidate_merged_materialization_missing_ids": [],
+  "candidate_issue_id_split_detected": false,
+  "candidate_issue_id_split_issue_ids": [],
+  "candidate_negated_primary_finding_still_materialized": false,
+  "candidate_negated_primary_issue_ids": [],
+  "candidate_negated_primary_titles": [],
+  "candidate_blocker_conclusion_mismatch": false,
+  "candidate_blocker_conclusion_mismatch_titles": [],
+  "candidate_major_judgment_drift": false,
+  "candidate_structurally_ready": true,
+  "candidate_contains_multiroot_kept_findings": true,
+  "candidate_multiroot_kept_titles": [
+    "风控强制0倍与RESPIN累加表现冲突，缺乏验收与客诉预案"
+  ],
+  "untitled_finding_issue_ids": [],
+  "missing_issue_id_finding_titles": [],
+  "normalized_candidate_ready_for_direct_output": false,
+  "normalized_candidate_ready_reason": "候选报告已修正主模型的核心问题，但需补充遗漏的“假赔率”展示与结算隔离问题，并优化部分问题的合并与表述，以提升可读性与可执行性。",
+  "candidate_block_reasons": [
+    "normalized_candidate_not_ready"
+  ],
+  "candidate_gate_results": {
+    "candidate_report_valid": true,
+    "warning_free": true,
+    "quality_assessment_ready": false,
+    "candidate_readiness_ready": false,
+    "raw_readiness_conflict": false,
+    "readiness_conflict_auto_resolved": false,
+    "readiness_consistent": true,
+    "normalized_candidate_ready": false,
+    "primary_issue_id_repair_count": 0,
+    "candidate_issue_id_repair_count": 0,
+    "lineage_auto_healed": false,
+    "lineage_auto_mapped_primary_issue_ids": [],
+    "lineage_auto_mapped_candidate_issue_ids": [],
+    "suggestion_level_allowed": true,
+    "suggestion_level_conflict": false,
+    "suggestion_level_override_applied": false,
+    "cross_document_section_empty": true,
+    "traceability_consistent": true,
+    "traceability_ready_for_default_output": true,
+    "traceability_status": "complete",
+    "candidate_structurally_ready": true,
+    "candidate_structure_drift": false,
+    "raw_structure_change": true,
+    "structure_change_explained_by_lineage": true,
+    "lineage_coverage_complete": true,
+    "untitled_findings_absent": true,
+    "issue_ids_complete": true,
+    "unmapped_primary_findings_absent": true,
+    "unmapped_candidate_findings_absent": true,
+    "advice_candidate_structure_mismatch_absent": true,
+    "advice_claimed_absorbed_but_materialized_separately_absent": true,
+    "advice_claimed_added_but_not_materialized_absent": true,
+    "materialized_missed_without_added_absent": true,
+    "candidate_merged_materialization_complete": true,
+    "candidate_issue_id_split_absent": true,
+    "candidate_negated_primary_finding_absent": true,
+    "candidate_blocker_conclusion_consistent": true,
+    "candidate_major_judgment_drift_absent": true
+  },
+  "candidate_block_reason_categories": {
+    "readiness_blockers": [
+      "normalized_candidate_not_ready"
+    ]
+  },
+  "candidate_blocked_only_by_editorial_judgment": false,
+  "suggestion_level_conflict": false,
+  "suggestion_level_override_applied": false
+}

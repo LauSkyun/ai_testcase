@@ -1,0 +1,52 @@
+# Dual Pass 索引
+
+## 运行结果
+- 状态：complete
+- 主模型：gpt-5.4
+- 副模型：deepseek-v4-pro
+- 默认最终报告来源：candidate
+- 默认最终报告路径：review_report.md
+- 实际来源副本：review_report_candidate.md
+
+## 推荐门槛
+- 推荐状态：recommended
+- 未通过原因：无
+- Candidate 直出建议：是
+- 原因：主模型报告经过小幅修正即可直接交付，核心阻塞项均已被准确识别，仅需对个别问题描述和标题进行微调，并补充一项遗漏的数值规则歧义。
+- 可追踪性：complete
+- readiness 是否冲突：否
+- candidate 是否有结构漂移：否
+- candidate 是否达到结构直出门槛：是
+- primary issue_id 修复数：0
+- candidate issue_id 修复数：0
+- lineage 是否自动补齐：否
+- suggestion_level 是否与 readiness 冲突：否
+- 是否已对 suggestion_level 冲突做 override：否
+- 当前是否仅被编辑性判断阻断：否
+- advice 与 candidate 落盘是否一致：是
+
+## 产物路径
+- Pipeline：review_report_pipeline.md
+- Candidate：review_report_candidate.md
+- Advice：secondary_review_advice.md
+
+## 评分与问题数
+- Primary：C
+- Pipeline：C
+- Candidate：D
+- Selected：D
+- Pipeline 问题数：8
+- Candidate 问题数：8
+- Selected 问题数：8
+
+## Trace 摘要
+- raw：kept=7, added=1, merged=0, dropped=0
+- materialized：kept=7, added=1, merged=0, dropped=0
+- added 落盘状态：complete
+- merged 落盘状态：none
+
+## 差异摘要
+- Pipeline 独有问题数：0
+- Candidate 独有问题数：0
+- 共享问题中的重大改写数：5
+- 重大改写示例：免费符号触发时的基础赔付乘数及公式缺失；数值底层盘面生成规则与中奖/特色机制前提存在根本性逻辑矛盾；风控截断规则与需求宣称的最大赔付上限直接冲突；购买免费游戏功能与主游戏自然触发免费游戏的互斥规则缺失；免费游戏续杯时，界面提示与次数累加的视觉反馈未明确

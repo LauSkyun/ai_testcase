@@ -1,0 +1,185 @@
+{
+  "target_coverage_ledger": [
+    {
+      "target_issue_id": "CLARITY_01",
+      "target_order": 1,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "clarify",
+      "evidence_checked": "钱来了需求文档.docx / 3.2.1 卷轴结构（段落96-111，描述每轴显示上/中/下3个符号及虚化规则）、3.4.2 推展模式（段落157-160）；钱来了数值文档.docx / 五、基础游戏・核心机制（段落28-31，举例'上方或下方的一个乘数为X3'）",
+      "rationale": "需求文档3.2.1明确描述每轴显示3个符号（最上面/中间/底部），并说明符号到中奖线时各符号的显示比例与位置，说明'1行'指代中奖线而非可见符号行数。视觉描述已为'上下推展'提供兼容解释：中间轴符号可与上下相邻符号替换。原finding称'未说明1行盘面如何表现上下推展'不成立，但'共3个符号位'表述仍与视觉描述存在歧义，需澄清。"
+    },
+    {
+      "target_issue_id": "CLARITY_02",
+      "target_order": 2,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.5.3 购买免费游戏（段落191-198）",
+      "rationale": "需求文档3.5.3仅提及OMS后台控制'购买免费游戏的价格系数'，并说明'支付指定金额，直接购买免费旋转模式'，但未给出价格公式、购买后初始免费次数、与自然触发的互斥规则。'配置表序号（？）'带问号表明策划自身也未确定。原finding证据充分，定性准确。"
+    },
+    {
+      "target_issue_id": "LOGIC_01",
+      "target_order": 3,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了数值文档.docx / 表格5（RESPIN发生几率 0.1）、表格6（RESPIN发生几率 0.05）",
+      "rationale": "数值文档中确实存在两个同名'RESPIN发生几率'表格，数值分别为0.1和0.05，构成直接配置冲突。原finding证据确凿。"
+    },
+    {
+      "target_issue_id": "LOGIC_03",
+      "target_order": 4,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了数值文档.docx / 三、基础游戏・乘数符号（段落13-15）、表格3（乘数符号权重表，ID 12/13/14为免费5/10/20）",
+      "rationale": "数值文档描述'当表演权重随机到了2个免费类别时，随机将其中一个替换为100倍'，但乘数符号仅第2列1个位置，'2个免费类别'指代不明（是连续抽2次？还是特定组合？）。表格3中表演权重列也未体现该替换逻辑。原finding准确指出程序无法将此自然语言转化为代码。"
+    },
+    {
+      "target_issue_id": "LOGIC_02",
+      "target_order": 5,
+      "decision": "challenge",
+      "challenge_type": "compatible_interpretation",
+      "recommended_action": "clarify",
+      "evidence_checked": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12，'不会生成1,3均不为空的局面，仅在表演阶段出现13均不为空的respin场景'）、五、基础游戏・核心机制（段落32-40，RESPIN机制描述及'服务器处理RESPIN机制为，当最终结果不命中时，RESPIN必定不命中'）",
+      "rationale": "数值文档已明确说明'1,3均不为空'仅在表演阶段出现，且服务器处理机制为先生成最终结果再进行RESPIN表演。原finding称'底层逻辑与表演逻辑无法闭环'不成立，文档已给出兼容解释：RESPIN触发条件在表演阶段判定，最终结果通过表演映射到中间态。但触发条件描述未显式标注'表演阶段'，仍需澄清。"
+    },
+    {
+      "target_issue_id": "CROSS_01",
+      "target_order": 6,
+      "decision": "challenge",
+      "challenge_type": "overstated",
+      "recommended_action": "clarify",
+      "evidence_checked": "钱来了需求文档.docx / 3.3.1 符号分类总览（表格3，'分别显示=下注金额*0.1/0.5/1/5/10'）、3.3.2 中间轴符号（段落147，示例'左/右轴为10倍投注，中间轴为x100，则中奖金额=10×100×投注额'）；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算（段落21-22，'中奖金额=乘数符号×符号值（即基础投注×符号赔率）'）、表格2（金币赔率倍数0.1/0.5/1/5/10）",
+      "rationale": "需求文档示例已明确给出无歧义的计算方式（10×100×投注额），数值文档公式'中奖金额=乘数符号×符号值（即基础投注×符号赔率）'在代入示例后逻辑一致（符号值=基础投注×符号赔率=投注额×10，再×乘数符号100）。术语不一致真实存在（'投注金额倍数' vs '金币赔率倍数'），但'公式歧义引发严重资金结算事故'的风险被夸大，示例已提供实现参照。"
+    },
+    {
+      "target_issue_id": "CROSS_02",
+      "target_order": 7,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.4.3 免费旋转模式（段落168，'免费模式中总赢奖达到投注额的2000倍时，自动结束'）；钱来了数值文档.docx / 六、基础游戏・体验控制&风控（段落45-51，'超过100倍→直接强制0倍'，表格8/9）",
+      "rationale": "数值文档'100倍'未明确基数（单局投注额 vs 免费游戏累计投注额），需求文档'2000倍'明确为'投注额的2000倍'（指单次触发时的投注额）。若风控基数为累计，则免费游戏无法达到2000倍封顶。两份文档口径确实冲突，原finding准确。"
+    },
+    {
+      "target_issue_id": "CROSS_03",
+      "target_order": 8,
+      "decision": "pass",
+      "challenge_type": "",
+      "recommended_action": "",
+      "evidence_checked": "钱来了需求文档.docx / 3.4.3 免费旋转模式（段落166，'续杯机制：免费模式中再次出现免费旋转符号且左右匹配，可再次发放5/10/20次免费次数'）；钱来了数值文档.docx / 八、免费游戏（段落56-58，'免费游戏可触发免费游戏，概率独立配置'）",
+      "rationale": "需求文档明确续杯机制，数值文档仅声明'概率独立配置'但未提供具体权重表或配置结构。原finding准确指出配置缺失。"
+    }
+  ],
+  "challenge_findings": [
+    {
+      "challenge_id": "CH-CLARITY_01",
+      "target_issue_id": "CLARITY_01",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "需求文档定义盘面为'1行3列'，推展机制描述为'中间轴将有机会向上或向下推展一次'，未说明1行盘面如何表现上下推展。",
+      "evidence": "钱来了需求文档.docx / 3.2.1 卷轴结构（段落96-111）",
+      "counterevidence": "需求文档3.2.1明确描述每轴显示3个符号（最上面/中间/底部），并规定符号到中奖线时各符号的显示比例（50%/完整/30%）与位置关系，说明'1行'指代中奖线而非可见符号行数。视觉描述已为'上下推展'提供兼容解释。",
+      "rationale": "文档通过视觉描述已说明每轴3符号结构，'上下推展'可解释为中间轴符号与上下相邻符号的替换。原finding'未说明'的判断不成立，但'共3个符号位'表述仍与视觉描述存在歧义，需澄清。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-LOGIC_02",
+      "target_issue_id": "LOGIC_02",
+      "challenge_type": "compatible_interpretation",
+      "challenged_claim": "数值文档称'不会生成1,3均不为空的局面'，但又规定'当1,3列金币符号不同且有值时...必定发生RESPIN'，底层逻辑与表演逻辑无法闭环。",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12）、五、基础游戏・核心机制（段落32-40）",
+      "counterevidence": "数值文档明确说明'不会生成1,3均不为空的局面，仅在表演阶段出现13均不为空的respin场景'，且'服务器处理RESPIN机制为，当最终结果不命中时，RESPIN必定不命中'。文档已解释底层结果与表演阶段的映射关系。",
+      "rationale": "文档已给出兼容解释：RESPIN触发条件在表演阶段判定，最终结果通过表演映射到中间态。原finding'无法闭环'的判断不成立，但触发条件描述未显式标注'表演阶段'，仍需澄清以避免实现混淆。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    },
+    {
+      "challenge_id": "CH-CROSS_01",
+      "target_issue_id": "CROSS_01",
+      "challenge_type": "overstated",
+      "challenged_claim": "中奖金额计算公式与符号定义口径分裂，程序在实现结算公式时可能因术语歧义导致乘区错误，引发严重的资金结算事故。",
+      "evidence": "钱来了需求文档.docx / 3.3.1 符号分类总览（表格3）、3.3.2 中间轴符号（段落147）；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算（段落21-22）、表格2",
+      "counterevidence": "需求文档段落147给出明确示例：'左/右轴为10倍投注，中间轴为x100，则中奖金额=10×100×投注额'。数值文档公式'中奖金额=乘数符号×符号值（即基础投注×符号赔率）'代入示例后逻辑一致（符号值=基础投注×10，再×乘数符号100=1000×投注额）。",
+      "rationale": "术语不一致真实存在（'投注金额倍数' vs '金币赔率倍数'），但需求文档示例已提供无歧义的实现参照，'公式歧义引发严重资金结算事故'的风险被夸大。应降级为术语统一问题。",
+      "recommended_action": "clarify",
+      "proposed_split": []
+    }
+  ],
+  "correction_shadows": [
+    {
+      "correction_id": "CR-CLARITY_01",
+      "challenge_id": "CH-CLARITY_01",
+      "target_issue_id": "CLARITY_01",
+      "correction_disposition": "clarify",
+      "source_provenance": "requirement_text",
+      "evidence": "钱来了需求文档.docx / 3.2.1 卷轴结构（段落96-111）、3.4.2 推展模式（段落157-160）；钱来了数值文档.docx / 五、基础游戏・核心机制（段落28-31）",
+      "rationale": "文档视觉描述已为'上下推展'提供兼容解释（每轴3符号结构），但'共3个符号位'表述与视觉描述存在歧义，需澄清'1行'指代中奖线而非可见符号行数，并补充推展机制的视觉表现说明。",
+      "residual_issue": "文档中'共3个符号位'的表述与视觉描述（每轴显示3个符号）存在歧义，需明确'1行'指代中奖线而非可见符号行数，并补充推展机制的视觉表现说明（如：中间轴符号与上下相邻符号的替换关系）。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "需求文档定义盘面为'3轴×1行，共3个符号位'，但视觉描述显示每轴有3个符号（上/中/下）。推展机制描述为'中间轴将有机会向上或向下推展一次'，数值文档举例称'上方或下方的一个乘数为X3'。",
+        "risk": "文档中'共3个符号位'的表述与视觉描述存在歧义，可能导致程序对盘面结构的理解偏差。",
+        "suggestion": "明确'1行'指代中奖线而非可见符号行数，补充说明每轴显示3个符号（上/中/下），并描述推展机制的视觉表现（如：中间轴符号与上下相邻符号的替换关系）。"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-LOGIC_02",
+      "challenge_id": "CH-LOGIC_02",
+      "target_issue_id": "LOGIC_02",
+      "correction_disposition": "clarify",
+      "source_provenance": "numeric_config",
+      "evidence": "钱来了数值文档.docx / 二、基础游戏・金币符号（段落10-12）、五、基础游戏・核心机制（段落32-40）",
+      "rationale": "文档已说明'1,3均不为空'仅在表演阶段出现，且服务器先生成最终结果再进行RESPIN表演，底层逻辑与表演逻辑可闭环。但RESPIN触发条件描述未显式标注'表演阶段'，仍需澄清。",
+      "residual_issue": "数值文档中RESPIN触发条件（'当1,3列金币符号不同且有值时...必定发生RESPIN'）未明确标注该条件仅在表演阶段判定，可能导致程序实现时的逻辑混淆。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "数值文档称'不会生成1,3均不为空的局面，仅在表演阶段出现13均不为空的respin场景'，并规定'当13列金币符号不同且有值时...必定发生RESPIN'。",
+        "risk": "RESPIN触发条件的描述未明确是针对最终结果还是表演阶段，可能导致程序实现时的逻辑混淆。",
+        "suggestion": "明确说明RESPIN触发条件（1,3列不同且有值）仅在表演阶段判定，并补充表演阶段的数据生成逻辑（如何从最终结果映射到表演阶段的中间态）。"
+      },
+      "replacement_findings": []
+    },
+    {
+      "correction_id": "CR-CROSS_01",
+      "challenge_id": "CH-CROSS_01",
+      "target_issue_id": "CROSS_01",
+      "correction_disposition": "clarify",
+      "source_provenance": "mixed",
+      "evidence": "钱来了需求文档.docx / 3.3.1 符号分类总览（表格3）、3.3.2 中间轴符号（段落147）；钱来了数值文档.docx / 四、基础游戏・投注与中奖计算（段落21-22）、表格2",
+      "rationale": "需求文档示例已明确给出无歧义的计算方式，数值文档公式代入示例后逻辑一致。术语不一致真实存在，但'公式歧义引发严重资金结算事故'的风险被夸大，应降级为术语统一问题。",
+      "residual_issue": "两份文档对左右轴符号的术语定义不一致（需求文档使用'投注金额倍数'，数值文档使用'金币赔率倍数'），需统一术语以避免实现时的术语混淆。",
+      "semantic_checks": {
+        "compatible_interpretation_exists": true,
+        "original_claim_still_valid": false,
+        "residual_issue_exists": true,
+        "protected_fields_need_human_review": false
+      },
+      "proposed_changes": {
+        "current_state": "需求文档将左右轴符号定义为'下注金额*0.1/0.5/1/5/10'，数值文档定义为'金币赔率倍数'（0.1/0.5/1/5/10），公式表述为'中奖金额=乘数符号×符号值（即基础投注×符号赔率）'。需求文档示例：'左/右轴为10倍投注，中间轴为x100，则中奖金额=10×100×投注额'。",
+        "risk": "两份文档对左右轴符号的术语定义不一致，可能导致程序实现时的术语混淆。",
+        "suggestion": "统一术语，将数值文档中的'金币赔率倍数'明确为'投注额乘数'，并在公式中明确说明'符号值=基础投注×投注额乘数'。"
+      },
+      "replacement_findings": []
+    }
+  ],
+  "review_notes": [
+    "CLARITY_01：需求文档3.2.1视觉描述已说明每轴3符号结构，'上下推展'存在兼容解释，但'共3个符号位'表述仍需澄清。",
+    "LOGIC_02：数值文档已说明'1,3均不为空'仅在表演阶段出现，底层与表演逻辑可闭环，但触发条件描述需显式标注'表演阶段'。",
+    "CROSS_01：需求文档示例已提供无歧义计算参照，术语不一致真实存在但公式歧义风险被夸大，降级为术语统一问题。",
+    "protocol_profile=phase3_v1_2; primary_report_hash=4bbfefd2ad138ec647d0c9cb36dfc102ee1f6b78741813c0dc3b402424c723df"
+  ]
+}
